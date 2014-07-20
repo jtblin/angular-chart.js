@@ -96,6 +96,18 @@
       <p>You need to include a link to the css file in your page.</p>
       </p><pre><code>&lt;link rel=&quot;stylesheet&quot; href=&quot;bower_components/dist/angular-chart.css&quot;&gt;</code></pre>
       <p></p>
+      <h3>Colours</h3>
+      <p>Series have beautiful pre-sets colours (to a maximum of 7 series).</p>
+      <ol class="chart-legend">
+        <li><span style="background-color: rgba(151,187,205,1)"></span> Blue</li>
+        <li><span style="background-color: rgba(220,220,220,1)"></span>Light grey</li>
+        <li><span style="background-color: rgba(247,70,74,1)"></span>Red</li>
+        <li><span style="background-color: rgba(70,191,189,1)"></span>Green</li>
+        <li><span style="background-color: rgba(253,180,92,1)"></span>Yellow</li>
+        <li><span style="background-color: rgba(148,159,177,1)"></span>Grey</li>
+        <li><span style="background-color: rgba(77,83,96,1)"></span>Dark Grey</li>
+      </ol>
+      <p>They can be overwritten using <code>Chart.defaults.global.colours</code>.</p>
     </section>
     <section id="directives">
       <div class="page-header">
@@ -106,7 +118,7 @@
           <div class="panel panel-default">
             <div class="panel-heading">Line Chart</div>
             <div class="panel-body">
-              <canvas id="line" class="chart chart-line chart-xl" data="data" labels="labels" legend="true" click="onClick"></canvas>
+              <canvas id="line" class="chart chart-line chart-xl" data="data" labels="labels" legend="true" click="onClick" series="series"></canvas>
             </div>
           </div>
         </div>
@@ -116,36 +128,37 @@
               <div class="settings">
                 <code>.chart-line</code>
                 <ul>
-                  <li><code>data</code>: data series</li>
+                  <li><code>data</code>: series data</li>
                   <li><code>labels</code>: x axis labels</li>
                   <li><code>legend</code> (default: <code>false</code>): show legend below the chart</li>
                   <li><code>options</code> (default: <code>{}</code>): Chart.js options</li>
+                  <li><code>series</code> (default: <code>[]</code>): series labels</li>
                   <li><code>click</code> (optional): onclick event handler</li>
                 </ul>
               </div>
             </tab>
             <tab heading="Markup">
-              <pre><code data-language="html">&lt;canvas id=&quot;line&quot; class=&quot;chart chart-line chart-xl&quot; data=&quot;data&quot; labels=&quot;labels&quot; legend=&quot;true&quot; click=&quot;onClick&quot;&gt;&lt;/canvas&gt; </code></pre>
+              <pre><code data-language="html">&lt;canvas id=&quot;line&quot; class=&quot;chart chart-line&quot; data=&quot;data&quot; labels=&quot;labels&quot; legend=&quot;true&quot; series=&quot;series&quot; click=&quot;onClick&quot;&gt;&lt;/canvas&gt; </code></pre>
             </tab>
             <tab heading="Javascript">
-              <pre><code data-language="javascript">angular.module("app", ["charts"]).controller("LineCtrl", function ($scope) {
+              <pre><code data-language="javascript">angular.module("app", ["charts"]).controller("LineCtrl", ['$scope', '$timeout', function ($scope, $timeout) {
+
   $scope.labels = ["January", "February", "March", "April", "May", "June", "July"];
+  $scope.series = ['Series A', 'Series B'];
   $scope.data = [
-    {"Series A": [65, 59, 80, 81, 56, 55, 40]},
-    {"Series B": [28, 48, 40, 19, 86, 27, 90]}
+    [65, 59, 80, 81, 56, 55, 40],
+    [28, 48, 40, 19, 86, 27, 90]
   ];
   $scope.onClick = function (points, evt) {
     console.log(points, evt);
   };
-  setTimeout(function () {
-    $scope.$apply(function () {
-      $scope.data = [
-        [28, 48, 40, 19, 86, 27, 90],
-        [65, 59, 80, 81, 56, 55, 40]
-      ];
-    });
+  $timeout(function () {
+    $scope.data = [
+      [28, 48, 40, 19, 86, 27, 90],
+      [65, 59, 80, 81, 56, 55, 40]
+    ];
   }, 3000);
-});
+}]);
               </code></pre>
             </tab>
           </tabset>
@@ -158,15 +171,16 @@
               <div class="settings">
                 <code>.chart-bar</code>
                 <ul>
-                  <li><code>data</code>: data series</li>
+                  <li><code>data</code>: series data</li>
                   <li><code>labels</code>: x axis labels</li>
                   <li><code>legend</code> (default: <code>false</code>): show legend below the chart</li>
                   <li><code>options</code> (default: <code>{}</code>): Chart.js options</li>
+                  <li><code>series</code> (default: <code>[]</code>): series labels</li>
                 </ul>
               </div>
             </tab>
             <tab heading="Markup">
-              <pre><code data-language="html">&lt;canvas id=&quot;line&quot; class=&quot;chart chart-bar chart-xl&quot; data=&quot;data&quot; labels=&quot;labels&quot;&gt;&lt;/canvas&gt; </code></pre>
+              <pre><code data-language="html">&lt;canvas id=&quot;bar&quot; class=&quot;chart chart-bar&quot; data=&quot;data&quot; labels=&quot;labels&quot;&gt;&lt;/canvas&gt; </code></pre>
             </tab>
             <tab heading="Javascript">
               <pre><code data-language="javascript">angular.module("app", ["charts"]).controller("BarCtrl", function ($scope) {
@@ -185,7 +199,7 @@
           <div class="panel panel-default">
             <div class="panel-heading">Bar Chart</div>
             <div class="panel-body">
-              <canvas id="bar" class="chart chart-bar" data="data" labels="labels"></canvas>
+              <canvas id="bar" class="chart chart-bar" data="data" labels="labels" series="series"></canvas>
             </div>
           </div>
         </div>
@@ -237,7 +251,7 @@
           <div class="panel panel-default">
             <div class="panel-heading">Chart Data</div>
             <div class="panel-body">
-              <table class="table table-responsive table-condensed">
+              <table class="table table-responsive table-condensed table-striped">
                 <tr>
                   <th ng-repeat="label in labels">{{label}}</th>
                 </tr>

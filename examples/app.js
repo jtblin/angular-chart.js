@@ -6,46 +6,41 @@
     $scope.charts = ['Line', 'Bar', 'Doughnut', 'Pie', 'Polar Area', 'Radar'];
   });
 
-  app.controller("LineCtrl", function ($scope) {
+  app.controller("LineCtrl", ['$scope', '$timeout', function ($scope, $timeout) {
     $scope.labels = ["January", "February", "March", "April", "May", "June", "July"];
+    $scope.series = ['Series A', 'Series B'];
     $scope.data = [
-      {"Series A": [65, 59, 80, 81, 56, 55, 40]},
-      {"Series B": [28, 48, 40, 19, 86, 27, 90]}
+      [65, 59, 80, 81, 56, 55, 40],
+      [28, 48, 40, 19, 86, 27, 90]
     ];
     $scope.onClick = function (points, evt) {
       console.log(points, evt);
     };
-
-    setTimeout(function () {
-      $scope.$apply(function () {
-        $scope.data = [
-          [28, 48, 40, 19, 86, 27, 90],
-          [65, 59, 80, 81, 56, 55, 40]
-        ];
-      });
+    $timeout(function () {
+      $scope.data = [
+        [28, 48, 40, 19, 86, 27, 90],
+        [65, 59, 80, 81, 56, 55, 40]
+      ];
     }, 3000);
-  });
+  }]);
 
   app.controller("BarCtrl", function ($scope) {
     $scope.labels = ['2006', '2007', '2008', '2009', '2010', '2011', '2012'];
-
+    $scope.series = ['Series A', 'Series B'];
     $scope.data = [
-      {"Series A": [65, 59, 80, 81, 56, 55, 40]},
-      {"Series B": [28, 48, 40, 19, 86, 27, 90]}
+      [65, 59, 80, 81, 56, 55, 40],
+      [28, 48, 40, 19, 86, 27, 90]
     ];
   });
 
-  app.controller("DoughnutCtrl", function ($scope) {
+  app.controller("DoughnutCtrl", ['$scope', '$timeout', function ($scope, $timeout) {
     $scope.labels = ["Download Sales", "In-Store Sales", "Mail-Order Sales"];
-
     $scope.data = [300, 500, 100];
 
-    setTimeout(function () {
-      $scope.$apply(function () {
-        $scope.data = [350, 450, 100];
-      });
-    }, 3000);
-  });
+    $timeout(function () {
+      $scope.data = [350, 450, 100];
+    }, 5000);
+  }]);
 
   app.controller("PieCtrl", function ($scope) {
     $scope.labels = ["Download Sales", "In-Store Sales", "Mail-Order Sales"];

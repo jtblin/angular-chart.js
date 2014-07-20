@@ -29,6 +29,10 @@ body { padding-top: 50px; }
   font-size: larger;
 }
 
+.panel-heading {
+  font-weight: bold;
+}
+
 .code .nav-tabs>li.active>a, .code .nav-tabs>li.active>a:hover, .code .nav-tabs>li.active>a:focus {
   background-color: #f8f8f8;
   border: 1px solid #ccc;

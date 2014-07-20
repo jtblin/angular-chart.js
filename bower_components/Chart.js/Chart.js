@@ -885,7 +885,6 @@
 
 								//Include any colour information about the element
 								tooltipLabels.push(helpers.template(this.options.multiTooltipTemplate, element));
-                console.log(element);
 								tooltipColors.push({
 									fill: element._saved.fillColor || element.fillColor,
 									stroke: element._saved.strokeColor || element.strokeColor
