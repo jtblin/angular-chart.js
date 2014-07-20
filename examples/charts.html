@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+  <meta charset="UTF-8">
+  <title>Charts</title>
+  <link rel="stylesheet" href="../dist/angular-chart.css">
+  <link rel="stylesheet" href="../bower_components/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="../bower_components/rainbow/themes/github.css">
+  <link href="bootstrap.css" rel="stylesheet">
+  <link href="app.css" rel="stylesheet">
+</head>
+<body ng-app="examples" id="top">
+  <div class="navbar navbar-default navbar-fixed-top">
+    <div class="container" ng-controller="MenuCtrl">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" ng-click="isCollapsed = !isCollapsed">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand visible-xs" href="#">Angular Charts</a>
+      </div>
+      <nav class="hidden-xs">
+        <ul class="nav navbar-nav">
+          <a href="#top" role="button" class="navbar-brand">
+            Angular Chart
+          </a>
+          <li class="dropdown">
+            <a role="button" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">
+              Directives <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+              <li ng-repeat="chart in charts"><a ng-href="#{{chart | lowercase }}-chart">{{chart}}</a></li>
+            </ul>
+          </li>
+          <li><a href="#getting_started">Getting started</a></li>
+          <li><a href="#reactive">Reactive</a></li>
+        </ul>
+      </nav>
+      <nav class="collapse" collapse="isCollapsed" style="height: 0px;">
+        <ul class="nav navbar-nav">
+          <li><a href="#getting_started" ng-click="isCollapsed = !isCollapsed">Getting started</a></li>
+          <li><a href="#directives" ng-click="isCollapsed = !isCollapsed">Directives</a></li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="text-center aspect-ratio" id="container" ng-controller="TicksCtrl">
+      <canvas width='1200' height='300' id="hero-bar" class="chart chart-line chart-xl" data="data" options="options" labels="labels"></canvas>
+      <div class="header">
+        <h1>
+          Angular Chart
+        </h1>
+
+        <p>Reactive, responsive, beautiful charts for <a href="http://angularjs.org">AngularJS</a> based on <a href="http://www.chartjs.org">Chart.js</a></p>
+
+        <p>
+          <a class="btn btn-default btn-lg" href="https://github.com/jtblin/angular-chart"><i class="icon-github"></i>Code on Github</a>
+          <button type="button" class="btn btn-success btn-lg" ng-click="showDownloadModal()">
+            <i class="fa fa-download"></i> Download <small>(0.1.0)</small>
+          </button>
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <section id="getting_started">
+      <div class="page-header">
+        <h1>Getting started</h1>
+      </div>
+      <h3>Dependencies</h3>
+      <p>
+        This repository contains a set of <strong>native AngularJS directives</strong> for Chart.js. The <strong>only required dependencies</strong> are:
+      </p>
+      <ul>
+        <li><a href="http://angularjs.org" target="_blank">AngularJS</a> (tested with 1.2.20 although it probably works with older versions)</li>
+        <li><a href="http://chartjs.org" target="_blank">Chart.js</a> (requires Chart.js 1.0, tested with version 1.0.1-beta.2).</li>
+      </ul>
+      <h3>Files to download</h3>
+      <p>
+        The easiest is to download with <strong>bower</strong>:
+        <pre>bower install angular-chart --save</pre>
+        Alternatively files can be downloaded <a href="https://github.com/jtblin/angular-chart">downloaded from Github</a>.
+      </p>
+      <p>Whichever method you choose the good news is that the overall size is very small:
+        &lt;5kb for all directives (~1kb with gzip compression!)</p>
+      <h3>Installation</h3>
+      </p><pre><code>&lt;script src=&quot;bower_components/dist/angular-chart.js&quot;&gt;&lt;/script&gt;</code></pre>
+      <p>As soon as you've got all the files downloaded and included in your page you just need to declare
+        a dependency on the <code>angular-chart</code> <a href="http://docs.angularjs.org/guide/module">module</a>:<br>
+      </p><pre><code>angular.module('myModule', ['angular-chart']);</code></pre>
+      <p></p>
+      <h3>CSS</h3>
+      <p>You need to include a link to the css file in your page.</p>
+      </p><pre><code>&lt;link rel=&quot;stylesheet&quot; href=&quot;bower_components/dist/angular-chart.css&quot;&gt;</code></pre>
+      <p></p>
+    </section>
+    <section id="directives">
+      <div class="page-header">
+        <h1>Directives</h1>
+      </div>
+      <div class="row">
+        <div class="col-lg-6 col-sm-12" id="line-chart" ng-controller="LineCtrl">
+          <div class="panel panel-default">
+            <div class="panel-heading">Line Chart</div>
+            <div class="panel-body">
+              <canvas id="line" class="chart chart-line chart-xl" data="data" labels="labels" legend="true" click="onClick"></canvas>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6 col-sm-12 code">
+          <tabset>
+            <tab heading="Settings" class="settings">
+              <div class="settings">
+                <code>.chart-line</code>
+                <ul>
+                  <li><code>data</code>: data series</li>
+                  <li><code>labels</code>: x axis labels</li>
+                  <li><code>legend</code> (default: <code>false</code>): show legend below the chart</li>
+                  <li><code>options</code> (default: <code>{}</code>): Chart.js options</li>
+                  <li><code>click</code> (optional): onclick event handler</li>
+                </ul>
+              </div>
+            </tab>
+            <tab heading="Markup">
+              <pre><code data-language="html">&lt;canvas id=&quot;line&quot; class=&quot;chart chart-line chart-xl&quot; data=&quot;data&quot; labels=&quot;labels&quot; legend=&quot;true&quot; click=&quot;onClick&quot;&gt;&lt;/canvas&gt; </code></pre>
+            </tab>
+            <tab heading="Javascript">
+              <pre><code data-language="javascript">angular.module("app", ["charts"]).controller("LineCtrl", function ($scope) {
+  $scope.labels = ["January", "February", "March", "April", "May", "June", "July"];
+  $scope.data = [
+    {"Series A": [65, 59, 80, 81, 56, 55, 40]},
+    {"Series B": [28, 48, 40, 19, 86, 27, 90]}
+  ];
+  $scope.onClick = function (points, evt) {
+    console.log(points, evt);
+  };
+  setTimeout(function () {
+    $scope.$apply(function () {
+      $scope.data = [
+        [28, 48, 40, 19, 86, 27, 90],
+        [65, 59, 80, 81, 56, 55, 40]
+      ];
+    });
+  }, 3000);
+});
+              </code></pre>
+            </tab>
+          </tabset>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-6 col-sm-12 code">
+          <tabset>
+            <tab heading="Settings" class="settings">
+              <div class="settings">
+                <code>.chart-bar</code>
+                <ul>
+                  <li><code>data</code>: data series</li>
+                  <li><code>labels</code>: x axis labels</li>
+                  <li><code>legend</code> (default: <code>false</code>): show legend below the chart</li>
+                  <li><code>options</code> (default: <code>{}</code>): Chart.js options</li>
+                </ul>
+              </div>
+            </tab>
+            <tab heading="Markup">
+              <pre><code data-language="html">&lt;canvas id=&quot;line&quot; class=&quot;chart chart-bar chart-xl&quot; data=&quot;data&quot; labels=&quot;labels&quot;&gt;&lt;/canvas&gt; </code></pre>
+            </tab>
+            <tab heading="Javascript">
+              <pre><code data-language="javascript">angular.module("app", ["charts"]).controller("BarCtrl", function ($scope) {
+  $scope.labels = ['2006', '2007', '2008', '2009', '2010', '2011', '2012'];
+
+  $scope.data = [
+    {"Series A": [65, 59, 80, 81, 56, 55, 40]},
+    {"Series B": [28, 48, 40, 19, 86, 27, 90]}
+  ];
+})
+              </code></pre>
+            </tab>
+          </tabset>
+        </div>
+        <div class="col-lg-6 col-sm-12" id="bar-chart" ng-controller="BarCtrl">
+          <div class="panel panel-default">
+            <div class="panel-heading">Bar Chart</div>
+            <div class="panel-body">
+              <canvas id="bar" class="chart chart-bar" data="data" labels="labels"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-6 col-sm-12" id="doughnut-chart" ng-controller="DoughnutCtrl">
+          <div class="panel panel-default">
+            <div class="panel-heading">Doughnut Chart</div>
+            <div class="panel-body">
+              <canvas id="doughnut" class="chart chart-doughnut chart-xs" data="data" labels="labels"></canvas>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6 col-sm-12" id="radar-chart" ng-controller="RadarCtrl">
+          <div class="panel panel-default">
+            <div class="panel-heading">Radar Chart</div>
+            <div class="panel-body">
+              <canvas id="area" class="chart chart-radar" data="data" labels="labels" click="onClick"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-6 col-sm-12" id="pie-chart" ng-controller="PieCtrl">
+          <div class="panel panel-default">
+            <div class="panel-heading">Pie Chart</div>
+            <div class="panel-body">
+              <canvas id="pie" class="chart chart-pie chart-xs" data="data" labels="labels"></canvas>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6 col-sm-12" id="polar area-chart" ng-controller="PolarAreaCtrl">
+          <div class="panel panel-default">
+            <div class="panel-heading">Polar Area Chart</div>
+            <div class="panel-body">
+              <canvas id="polar" class="chart chart-polar-area" data="data" labels="labels"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="reactive">
+      <div class="page-header">
+        <h1>Reactive</h1>
+        <p>All charts are reactive and will update automatically when data changes.</p>
+      </div>
+      <div class="row" ng-controller="DataTablesCtrl">
+        <div class="col-lg-6 col-sm-12">
+          <div class="panel panel-default">
+            <div class="panel-heading">Chart Data</div>
+            <div class="panel-body">
+              <table class="table table-responsive table-condensed">
+                <tr>
+                  <th ng-repeat="label in labels">{{label}}</th>
+                </tr>
+                <tr ng-repeat="dataSet in data">
+                  <td ng-repeat="set in dataSet track by $index"><span style="text-align: right;">{{data[$parent.$index][$index]}}</span></td>
+                </tr>
+              </table>
+              <button type="button" class="btn btn-primary pull-right" ng-click="randomize()">Randomize</button>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6 col-sm-12">
+          <div class="panel panel-default">
+            <div class="panel-heading">Reactive Chart</div>
+            <div class="panel-body">
+              <canvas id="tables" class="chart chart-line" data="data" labels="labels"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+  <footer class="footer">
+    <div class="container">
+      <p>Designed and built by <a href="https://github.com/jtblin" target="_blank">Jerome Touffe-Blin</a></p>
+      <p>Code licensed under <a href="https://github.com/jtblin/angular-chart/blob/master/LICENSE">BSD License</a>.</p>
+      <p><a href="https://github.com/jtblin/angular-chart/issues?state=open">Issues</a></p>
+      <p><strong>Credits</strong>: <a href="http://www.chartjs.org/">Chart.js</a> and <a href="https://angularjs.org/">AngularJS</a></p>
+    </div>
+  </footer>
+
+  <script src="../bower_components/angular/angular.min.js"></script>
+  <script src="../bower_components/Chart.js/Chart.js"></script>
+  <script src="../bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+  <script src="../bower_components/rainbow/js/rainbow.min.js"></script>
+  <script src="../bower_components/rainbow/js/language/generic.js"></script>
+  <script src="../bower_components/rainbow/js/language/html.js"></script>
+  <script src="../bower_components/rainbow/js/language/javascript.js"></script>
+  <script src="../angular-chart.js"></script>
+  <script src="smoothscroll.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

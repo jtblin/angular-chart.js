@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+  <meta charset="UTF-8">
+  <title>Realtime ticks</title>
+  <link rel="stylesheet" href="../dist/angular-chart.css">
+  <link href="bootstrap.css" rel="stylesheet">
+</head>
+<body ng-app="examples">
+<div class="container"></div>
+<div id="container" class="container">
+  <div class="row">
+    <div class="col-lg-8 col-sm-12" ng-controller="TicksCtrl">
+      <div class="panel panel-default">
+        <div class="panel-heading">Ticks Chart</div>
+        <div class="panel-body">
+          <canvas id="ticks" class="chart chart-line chart-xl" data="data" options="options" labels="labels"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="../bower_components/angular/angular.min.js"></script>
+<script src="../bower_components/Chart.js/Chart.min.js"></script>
+<script src="../angular-chart.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
