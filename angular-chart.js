@@ -2,6 +2,7 @@
   "use strict";
 
   Chart.defaults.global.responsive = true;
+  Chart.defaults.global.multiTooltipTemplate = "<%if (datasetLabel){%><%=datasetLabel%>: <%}%><%= value %>";
 
   Chart.defaults.global.colours = [
     { // blue
