@@ -1,5 +1,5 @@
 {
-  "name": "angular-chart",
+  "name": "angular-chart.js",
   "version": "0.0.1",
   "main": [
     "./dist/angular-chart.js",

@@ -1,5 +1,5 @@
 (function () {
-  var app = angular.module("examples", ["charts", "ui.bootstrap"]);
+  var app = angular.module("examples", ["chart.js", "ui.bootstrap"]);
 
   app.controller("MenuCtrl", function ($scope) {
     $scope.isCollapsed = true;

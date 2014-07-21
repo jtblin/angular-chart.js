@@ -63,7 +63,7 @@
     }
   ];
 
-  angular.module("charts", [])
+  angular.module("chart.js", [])
     .directive("chartLine", function () { return chart('Line'); })
     .directive("chartBar", function () { return chart('Bar'); })
     .directive("chartRadar", function () { return chart('Radar'); })

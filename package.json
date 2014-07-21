@@ -1,8 +1,8 @@
 {
-  "name": "angular-morris",
+  "name": "angular-chart.js",
   "version": "0.0.0",
   "description": "An angular.js wrapper for Chart.js",
-  "main": "angular-morris.js",
+  "main": "angular-chart.js",
   "directories": {
     "example": "examples"
   },

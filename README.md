@@ -1,4 +1,4 @@
-# angular-chart
+# angular-chart.js
 
 Gorgeous reactive responsive charts for Angular.JS using Chart.js.
 
