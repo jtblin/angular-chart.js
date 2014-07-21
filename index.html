@@ -3,11 +3,11 @@
 <head lang="en">
   <meta charset="UTF-8">
   <title>Charts</title>
-  <link rel="stylesheet" href="../dist/angular-chart.css">
-  <link rel="stylesheet" href="../bower_components/font-awesome/css/font-awesome.min.css">
-  <link rel="stylesheet" href="../bower_components/rainbow/themes/github.css">
-  <link href="bootstrap.css" rel="stylesheet">
-  <link href="app.css" rel="stylesheet">
+  <link rel="stylesheet" href="dist/angular-chart.css">
+  <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="bower_components/rainbow/themes/github.css">
+  <link href="examples/bootstrap.css" rel="stylesheet">
+  <link href="examples/app.css" rel="stylesheet">
 </head>
 <body ng-app="examples" id="top">
   <div class="navbar navbar-default navbar-fixed-top">
@@ -58,9 +58,9 @@
 
         <p>
           <a class="btn btn-default btn-lg" href="https://github.com/jtblin/angular-chart"><i class="icon-github"></i>Code on Github</a>
-          <button type="button" class="btn btn-success btn-lg" ng-click="showDownloadModal()">
+          <a class="btn btn-success btn-lg" href="dist/angular-chart.js.tar.gz" download="angular-chart.js.tar.gz">
             <i class="fa fa-download"></i> Download <small>(0.1.0)</small>
-          </button>
+          </a>
         </p>
       </div>
     </div>
@@ -97,7 +97,7 @@
       </p><pre><code>&lt;link rel=&quot;stylesheet&quot; href=&quot;bower_components/dist/angular-chart.css&quot;&gt;</code></pre>
       <p></p>
       <h3>Colours</h3>
-      <p>Series have beautiful pre-sets colours (to a maximum of 7 series).</p>
+      <p>Series have beautiful pre-sets colours (to a maximum of 7 series). They can be overwritten in <code>Chart.defaults.global.colours</code>.</p>
       <ol class="chart-legend">
         <li><span style="background-color: rgba(151,187,205,1)"></span> Blue</li>
         <li><span style="background-color: rgba(220,220,220,1)"></span>Light grey</li>
@@ -107,7 +107,6 @@
         <li><span style="background-color: rgba(148,159,177,1)"></span>Grey</li>
         <li><span style="background-color: rgba(77,83,96,1)"></span>Dark Grey</li>
       </ol>
-      <p>They can be overwritten using <code>Chart.defaults.global.colours</code>.</p>
     </section>
     <section id="directives">
       <div class="page-header">
@@ -386,15 +385,15 @@
     </div>
   </footer>
 
-  <script src="../bower_components/angular/angular.min.js"></script>
-  <script src="../bower_components/Chart.js/Chart.js"></script>
-  <script src="../bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
-  <script src="../bower_components/rainbow/js/rainbow.min.js"></script>
-  <script src="../bower_components/rainbow/js/language/generic.js"></script>
-  <script src="../bower_components/rainbow/js/language/html.js"></script>
-  <script src="../bower_components/rainbow/js/language/javascript.js"></script>
-  <script src="../angular-chart.js"></script>
-  <script src="smoothscroll.min.js"></script>
-  <script src="app.js"></script>
+  <script src="bower_components/angular/angular.min.js"></script>
+  <script src="bower_components/Chart.js/Chart.min.js"></script>
+  <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+  <script src="bower_components/rainbow/js/rainbow.min.js"></script>
+  <script src="bower_components/rainbow/js/language/generic.js"></script>
+  <script src="bower_components/rainbow/js/language/html.js"></script>
+  <script src="bower_components/rainbow/js/language/javascript.js"></script>
+  <script src="dist/angular-chart.js"></script>
+  <script src="examples/smoothscroll.min.js"></script>
+  <script src="examples/app.js"></script>
 </body>
 </html>
