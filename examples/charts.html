@@ -141,7 +141,7 @@
               <pre><code data-language="html">&lt;canvas id=&quot;line&quot; class=&quot;chart chart-line&quot; data=&quot;data&quot; labels=&quot;labels&quot; legend=&quot;true&quot; series=&quot;series&quot; click=&quot;onClick&quot;&gt;&lt;/canvas&gt; </code></pre>
             </tab>
             <tab heading="Javascript">
-              <pre><code data-language="javascript">angular.module("app", ["charts"]).controller("LineCtrl", ['$scope', '$timeout', function ($scope, $timeout) {
+              <pre><code data-language="javascript">angular.module("app", ["chart.js"]).controller("LineCtrl", ['$scope', '$timeout', function ($scope, $timeout) {
 
   $scope.labels = ["January", "February", "March", "April", "May", "June", "July"];
   $scope.series = ['Series A', 'Series B'];
@@ -183,7 +183,7 @@
               <pre><code data-language="html">&lt;canvas id=&quot;bar&quot; class=&quot;chart chart-bar&quot; data=&quot;data&quot; labels=&quot;labels&quot;&gt;&lt;/canvas&gt; </code></pre>
             </tab>
             <tab heading="Javascript">
-              <pre><code data-language="javascript">angular.module("app", ["charts"]).controller("BarCtrl", function ($scope) {
+              <pre><code data-language="javascript">angular.module("app", ["chart.js"]).controller("BarCtrl", function ($scope) {
   $scope.labels = ['2006', '2007', '2008', '2009', '2010', '2011', '2012'];
 
   $scope.data = [
@@ -213,6 +213,67 @@
             </div>
           </div>
         </div>
+        <div class="col-lg-6 col-sm-12 code">
+          <tabset>
+            <tab heading="Settings" class="settings">
+              <div class="settings">
+                <code>.chart-doughnut</code>
+                <ul>
+                  <li><code>data</code>: series data</li>
+                  <li><code>labels</code>: series labels</li>
+                  <li><code>legend</code> (default: <code>false</code>): show legend below the chart</li>
+                  <li><code>options</code> (default: <code>{}</code>): Chart.js options</li>
+                </ul>
+              </div>
+            </tab>
+            <tab heading="Markup">
+              <pre><code data-language="html">&lt;canvas id=&quot;doughnut&quot; class=&quot;chart chart-doughnut&quot; data=&quot;data&quot; labels=&quot;labels&quot;&gt;&lt;/canvas&gt; </code></pre>
+            </tab>
+            <tab heading="Javascript">
+              <pre><code data-language="javascript">angular.module("app", ["chart.js"]).controller("DoughnutCtrl", function ($scope) {
+  $scope.labels = ["Download Sales", "In-Store Sales", "Mail-Order Sales"];
+  $scope.data = [300, 500, 100];
+
+  $timeout(function () {
+    $scope.data = [350, 450, 100];
+  }, 5000);
+}]);
+              </code></pre>
+            </tab>
+          </tabset>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-6 col-sm-12 code">
+          <tabset>
+            <tab heading="Settings" class="settings">
+              <div class="settings">
+                <code>.chart-radar</code>
+                <ul>
+                  <li><code>data</code>: series data</li>
+                  <li><code>labels</code>: series labels</li>
+                  <li><code>legend</code> (default: <code>false</code>): show legend below the chart</li>
+                  <li><code>options</code> (default: <code>{}</code>): Chart.js options</li>
+                  <li><code>series</code> (default: <code>[]</code>): series labels</li>
+                </ul>
+              </div>
+            </tab>
+            <tab heading="Markup">
+              <pre><code data-language="html">&lt;canvas id=&quot;radar&quot; class=&quot;chart chart-radar&quot; data=&quot;data&quot; labels=&quot;labels&quot;&gt;&lt;/canvas&gt; </code></pre>
+            </tab>
+            <tab heading="Javascript">
+              <pre><code data-language="javascript">angular.module("app", ["chart.js"]).controller("RadarCtrl", function ($scope) {
+  $scope.labels =["Eating", "Drinking", "Sleeping", "Designing", "Coding", "Cycling", "Running"];
+
+  $scope.data = [
+    [65, 59, 90, 81, 56, 55, 40],
+    [28, 48, 40, 19, 96, 27, 100]
+  ];
+}]);
+              </code></pre>
+            </tab>
+          </tabset>
+        </div>
         <div class="col-lg-6 col-sm-12" id="radar-chart" ng-controller="RadarCtrl">
           <div class="panel panel-default">
             <div class="panel-heading">Radar Chart</div>
@@ -230,6 +291,58 @@
               <canvas id="pie" class="chart chart-pie chart-xs" data="data" labels="labels"></canvas>
             </div>
           </div>
+        </div>
+        <div class="col-lg-6 col-sm-12 code">
+          <tabset>
+            <tab heading="Settings" class="settings">
+              <div class="settings">
+                <code>.chart-pie</code>
+                <ul>
+                  <li><code>data</code>: series data</li>
+                  <li><code>labels</code>: series labels</li>
+                  <li><code>legend</code> (default: <code>false</code>): show legend below the chart</li>
+                  <li><code>options</code> (default: <code>{}</code>): Chart.js options</li>
+                </ul>
+              </div>
+            </tab>
+            <tab heading="Markup">
+              <pre><code data-language="html">&lt;canvas id=&quot;pie&quot; class=&quot;chart chart-pie&quot; data=&quot;data&quot; labels=&quot;labels&quot;&gt;&lt;/canvas&gt; </code></pre>
+            </tab>
+            <tab heading="Javascript">
+              <pre><code data-language="javascript">angular.module("app", ["chart.js"]).controller("PieCtrl", function ($scope) {
+  $scope.labels = ["Download Sales", "In-Store Sales", "Mail-Order Sales"];
+  $scope.data = [300, 500, 100];
+}]);
+              </code></pre>
+            </tab>
+          </tabset>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-6 col-sm-12 code">
+          <tabset>
+            <tab heading="Settings" class="settings">
+              <div class="settings">
+                <code>.chart-polar-area</code>
+                <ul>
+                  <li><code>data</code>: series data</li>
+                  <li><code>labels</code>: series labels</li>
+                  <li><code>legend</code> (default: <code>false</code>): show legend below the chart</li>
+                  <li><code>options</code> (default: <code>{}</code>): Chart.js options</li>
+                </ul>
+              </div>
+            </tab>
+            <tab heading="Markup">
+              <pre><code data-language="html">&lt;canvas id=&quot;polar-area&quot; class=&quot;chart chart-polar-area&quot; data=&quot;data&quot; labels=&quot;labels&quot;&gt;&lt;/canvas&gt; </code></pre>
+            </tab>
+            <tab heading="Javascript">
+              <pre><code data-language="javascript">angular.module("app", ["chart.js"]).controller("PolarAreaCtrl", function ($scope) {
+  $scope.labels = ["Download Sales", "In-Store Sales", "Mail-Order Sales", "Tele Sales", "Corporate Sales"];
+  $scope.data = [300, 500, 100, 40, 120];
+}]);
+              </code></pre>
+            </tab>
+          </tabset>
         </div>
         <div class="col-lg-6 col-sm-12" id="polar area-chart" ng-controller="PolarAreaCtrl">
           <div class="panel panel-default">
