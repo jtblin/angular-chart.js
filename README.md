@@ -1,6 +1,6 @@
 # angular-chart.js
 
-Beautiful, reactive, responsive charts for Angular.JS using Chart.js.
+Beautiful, reactive, responsive charts for Angular.JS using Chart.js. [Demo](http://jtblin.github.io/angular-chart.js/)
 
 # Installation
 

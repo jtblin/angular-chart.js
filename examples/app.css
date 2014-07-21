@@ -27,6 +27,7 @@ body { padding-top: 50px; }
   width: 100%;
   top: 50%;
   font-size: larger;
+  z-index: 500;
 }
 
 .panel-heading {
