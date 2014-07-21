@@ -141,7 +141,7 @@
               <pre><code data-language="html">&lt;canvas id=&quot;line&quot; class=&quot;chart chart-line&quot; data=&quot;data&quot; labels=&quot;labels&quot; legend=&quot;true&quot; series=&quot;series&quot; click=&quot;onClick&quot;&gt;&lt;/canvas&gt; </code></pre>
             </tab>
             <tab heading="Javascript">
-              <pre><code data-language="javascript">angular.module("app", ["chart.js"]).controller("LineCtrl", ['$scope', '$timeout', function ($scope, $timeout) {
+              <pre><code data-language="javascript">angular.module("app", ["chart.js"]).controller("LineCtrl", function ($scope) {
 
   $scope.labels = ["January", "February", "March", "April", "May", "June", "July"];
   $scope.series = ['Series A', 'Series B'];
@@ -152,13 +152,7 @@
   $scope.onClick = function (points, evt) {
     console.log(points, evt);
   };
-  $timeout(function () {
-    $scope.data = [
-      [28, 48, 40, 19, 86, 27, 90],
-      [65, 59, 80, 81, 56, 55, 40]
-    ];
-  }, 3000);
-}]);
+});
               </code></pre>
             </tab>
           </tabset>
@@ -190,7 +184,7 @@
     {"Series A": [65, 59, 80, 81, 56, 55, 40]},
     {"Series B": [28, 48, 40, 19, 86, 27, 90]}
   ];
-})
+});
               </code></pre>
             </tab>
           </tabset>
@@ -233,11 +227,7 @@
               <pre><code data-language="javascript">angular.module("app", ["chart.js"]).controller("DoughnutCtrl", function ($scope) {
   $scope.labels = ["Download Sales", "In-Store Sales", "Mail-Order Sales"];
   $scope.data = [300, 500, 100];
-
-  $timeout(function () {
-    $scope.data = [350, 450, 100];
-  }, 5000);
-}]);
+});
               </code></pre>
             </tab>
           </tabset>
@@ -269,7 +259,7 @@
     [65, 59, 90, 81, 56, 55, 40],
     [28, 48, 40, 19, 96, 27, 100]
   ];
-}]);
+});
               </code></pre>
             </tab>
           </tabset>
@@ -312,7 +302,7 @@
               <pre><code data-language="javascript">angular.module("app", ["chart.js"]).controller("PieCtrl", function ($scope) {
   $scope.labels = ["Download Sales", "In-Store Sales", "Mail-Order Sales"];
   $scope.data = [300, 500, 100];
-}]);
+});
               </code></pre>
             </tab>
           </tabset>
@@ -339,7 +329,7 @@
               <pre><code data-language="javascript">angular.module("app", ["chart.js"]).controller("PolarAreaCtrl", function ($scope) {
   $scope.labels = ["Download Sales", "In-Store Sales", "Mail-Order Sales", "Tele Sales", "Corporate Sales"];
   $scope.data = [300, 500, 100, 40, 120];
-}]);
+});
               </code></pre>
             </tab>
           </tabset>
