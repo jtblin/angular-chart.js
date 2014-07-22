@@ -30,6 +30,15 @@ body { padding-top: 50px; }
   font-size: larger;
 }
 
+.social-buttons {
+  margin-top: 20px;
+  list-style-type: none;
+}
+
+.social-buttons > li {
+  display: inline;
+}
+
 .panel-heading {
   font-weight: bold;
 }
