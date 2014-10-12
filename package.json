@@ -1,6 +1,6 @@
 {
   "name": "angular-chart.js",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "An angular.js wrapper for Chart.js",
   "main": "angular-chart.js",
   "directories": {
@@ -13,6 +13,7 @@
   "license": "BSD",
   "devDependencies": {
     "gulp": "^3.8.6",
+    "gulp-bump": "^0.1.11",
     "gulp-csso": "^0.2.9",
     "gulp-gzip": "0.0.8",
     "gulp-jshint": "^1.7.1",
