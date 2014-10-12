@@ -64,6 +64,7 @@
   ];
 
   angular.module("chart.js", [])
+    .directive("chartBase", function () { return chart(); })
     .directive("chartLine", function () { return chart('Line'); })
     .directive("chartBar", function () { return chart('Bar'); })
     .directive("chartRadar", function () { return chart('Radar'); })
@@ -80,6 +81,7 @@
         labels: '=',
         options: '=',
         series: '=',
+        chartType: '=',
         legend: '@',
         click: '='
       },
@@ -88,32 +90,22 @@
 
         scope.$watch('data', function (newVal, oldVal) {
           if (hasDataSets(type) && ! newVal[0].length) return;
-          if (! chart) {
-            chart = getGraph(type, scope);
-            if (scope.legend) {
-              elem.parent().append(chart.generateLegend());
-            }
-          } else {
-            if (hasDataSets(type)){
-              chart.datasets.forEach(function (dataset, i) {
-                dataset.points = dataset.points.map(function (point, j) {
-                  point.value = newVal[i][j];
-                  return point;
-                });
-              });
-            } else {
-              chart.segments.forEach(function (segment, i) {
-                segment.value = newVal[i];
-              });
-            }
-            chart.update();
-          }
+          var chartType = type || scope.chartType;
+          if (! chartType) return;
+          if (chart) updateChart (chart, chartType, newVal);
+          else chart = createChart(chartType, scope, elem);
         }, true);
+
+        scope.$watch('chartType', function (newVal, oldVal) {
+          if (! newVal) return;
+          if (chart) chart.destroy();
+          chart = createChart(newVal, scope, elem);
+        });
       }
     };
   }
 
-  function getGraph (type, scope) {
+  function createChart (type, scope, elem) {
     var cvs = document.getElementById(scope.id), ctx = cvs.getContext("2d");
     var data = hasDataSets(type) ? getDataSets(scope.labels, scope.data, scope.series || []) : getData(scope.labels, scope.data);
     var chart = new Chart(ctx)[type](data, scope.options || {});
@@ -125,7 +117,26 @@
         }
       };
     }
+    if (scope.legend) {
+      elem.parent().append(chart.generateLegend());
+    }
     return chart;
+  }
+
+  function updateChart (chart, type, values) {
+    if (hasDataSets(type)){
+      chart.datasets.forEach(function (dataset, i) {
+        dataset.points = dataset.points.map(function (point, j) {
+          point.value = values[i][j];
+          return point;
+        });
+      });
+    } else {
+      chart.segments.forEach(function (segment, i) {
+        segment.value = values[i];
+      });
+    }
+    chart.update();
   }
 
   function hasDataSets (type) {

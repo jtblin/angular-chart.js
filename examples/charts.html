@@ -344,6 +344,47 @@
           </div>
         </div>
       </div>
+      <div class="row">
+        <div class="col-lg-6 col-sm-12" id="base-chart" ng-controller="BaseCtrl">
+          <div class="panel panel-default">
+            <div class="panel-heading">Dynamic Chart</div>
+            <div class="panel-body">
+              <canvas id="base" class="chart chart-base" chart-type="type" data="data" labels="labels"></canvas>
+            </div>
+          </div>
+          <button type="button" class="btn btn-primary pull-right" ng-click="toggle()">Toggle</button>
+        </div>
+        <div class="col-lg-6 col-sm-12 code">
+          <tabset>
+            <tab heading="Settings" class="settings">
+              <div class="settings">
+                <code>.chart-base</code>
+                <ul>
+                  <li><code>chart-type</code>: chart type e.g. Bar, PolarArea, etc. or other plugins</li>
+                  <li>other options according to chart type</li>
+                </ul>
+              </div>
+            </tab>
+            <tab heading="Markup">
+              <pre><code data-language="html">&lt;canvas id=&quot;chart-base&quot; class=&quot;chart&quot; chart-type=&quot;type&quot; data=&quot;data&quot; labels=&quot;labels&quot;&gt;&lt;/canvas&gt; </code></pre>
+            </tab>
+            <tab heading="Javascript">
+              <pre><code data-language="javascript">angular.module("app", ["chart.js"]).controller("BaseCtrl",
+  function ($scope) {
+    $scope.labels = ["Download Sales", "In-Store Sales", "Mail-Order Sales", "Tele Sales", "Corporate Sales"];
+    $scope.data = [300, 500, 100, 40, 120];
+    $scope.type = 'PolarArea';
+
+    $scope.toggle = function () {
+      $scope.type = $scope.type === 'PolarArea' ?
+        'Pie' : 'PolarArea';
+    };
+});
+              </code></pre>
+            </tab>
+          </tabset>
+        </div>
+      </div>
     </section>
     <section id="reactive">
       <div class="page-header">

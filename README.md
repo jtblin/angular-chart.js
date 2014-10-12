@@ -21,6 +21,9 @@ They all use mostly the same API:
 - `click`: onclick event handler (line, radar)
 - `legend`: (default: `false`): show legend below the chart
 
+There is another directive `chart-base` that takes an extra attribute `chart-type` to define the type
+dynamically.
+
 # Example
 
 ## Markup
