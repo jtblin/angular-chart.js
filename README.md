@@ -1,6 +1,6 @@
 # angular-chart.js
 
-Beautiful, reactive, responsive charts for Angular.JS using Chart.js.
+Beautiful, reactive, responsive charts for Angular.JS using Chart.js. [Demo](http://jtblin.github.io/angular-chart.js/)
 
 # Installation
 
@@ -20,6 +20,9 @@ They all use mostly the same API:
 - `series`: (default: `[]`): series labels (line, bar, radar)
 - `click`: onclick event handler (line, radar)
 - `legend`: (default: `false`): show legend below the chart
+
+There is another directive `chart-base` that takes an extra attribute `chart-type` to define the type
+dynamically.
 
 # Example
 

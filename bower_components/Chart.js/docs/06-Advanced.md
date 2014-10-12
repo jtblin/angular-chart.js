@@ -92,6 +92,9 @@ Chart.Type.extend({
 	initialize:  function(data){
 		this.chart.ctx // The drawing context for this chart
 		this.chart.canvas // the canvas node for this chart
+	},
+	// Used to draw something on the canvas
+	draw: function() {
 	}
 });
 
@@ -119,6 +122,10 @@ Chart.types.Line.extend({
 new Chart(ctx).LineAlt(data);
 // but this logs 'My Line chart extension' in the console.
 ```
+
+### Community extensions
+
+- <a href="https://github.com/Regaddi/Chart.StackedBar.js" target"_blank">Stacked Bar Chart</a> by <a href="https://twitter.com/Regaddi" target="_blank">@Regaddi</a>
 
 ### Creating custom builds
 

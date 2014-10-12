@@ -3,7 +3,7 @@
 
   app.controller("MenuCtrl", function ($scope) {
     $scope.isCollapsed = true;
-    $scope.charts = ['Line', 'Bar', 'Doughnut', 'Pie', 'Polar Area', 'Radar'];
+    $scope.charts = ['Line', 'Bar', 'Doughnut', 'Pie', 'Polar Area', 'Radar', 'Base'];
   });
 
   app.controller("LineCtrl", ['$scope', '$timeout', function ($scope, $timeout) {
@@ -50,6 +50,16 @@
   app.controller("PolarAreaCtrl", function ($scope) {
     $scope.labels = ["Download Sales", "In-Store Sales", "Mail-Order Sales", "Tele Sales", "Corporate Sales"];
     $scope.data = [300, 500, 100, 40, 120];
+  });
+
+  app.controller("BaseCtrl", function ($scope) {
+    $scope.labels = ["Download Sales", "In-Store Sales", "Mail-Order Sales", "Tele Sales", "Corporate Sales"];
+    $scope.data = [300, 500, 100, 40, 120];
+    $scope.type = 'PolarArea';
+
+    $scope.toggle = function () {
+      $scope.type = $scope.type === 'PolarArea' ?  'Pie' : 'PolarArea';
+    };
   });
 
   app.controller("RadarCtrl", function ($scope) {

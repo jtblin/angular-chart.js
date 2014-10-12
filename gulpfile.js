@@ -8,6 +8,7 @@
   var stylish = require('jshint-stylish');
   var tar = require('gulp-tar');
   var gzip = require('gulp-gzip');
+  var bump = require('gulp-bump');
 
   gulp.task('less', function () {
     gulp.src('./*.less')
@@ -18,10 +19,16 @@
       .pipe(gulp.dest('./dist'));
   });
 
-  gulp.task('lint', function() {
+  gulp.task('lint', function () {
     return gulp.src('./*.js')
       .pipe(jshint())
       .pipe(jshint.reporter(stylish));
+  });
+
+  gulp.task('bump', function () {
+    return gulp.src(['./package.json', './bower.json'])
+      .pipe(bump({type:'minor'}))
+      .pipe(gulp.dest('./'));
   });
 
   gulp.task('js', ['lint'], function () {
@@ -32,7 +39,7 @@
       .pipe(gulp.dest('./dist'));
   });
 
-  gulp.task('build', ['js', 'less'], function() {
+  gulp.task('build', ['js', 'less'], function () {
     return gulp.src(['dist/*', '!./dist/*.tar.gz'])
       .pipe(tar('angular-chart.js.tar'))
       .pipe(gzip({ gzipOptions: { level: 9 } }))
