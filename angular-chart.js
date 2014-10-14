@@ -126,9 +126,10 @@
   function updateChart (chart, type, values) {
     if (hasDataSets(type)){
       chart.datasets.forEach(function (dataset, i) {
-        dataset.points = dataset.points.map(function (point, j) {
-          point.value = values[i][j];
-          return point;
+        var dataCollection = dataset.points || dataset.bars || dataset.segments;
+        dataCollection = dataCollection.map(function (dataItem, j) {
+          dataItem.value = values[i][j];
+          return dataItem;
         });
       });
     } else {
