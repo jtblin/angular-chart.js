@@ -93,19 +93,19 @@
           var chartType = type || scope.chartType;
           if (! chartType) return;
           if (chart) updateChart (chart, chartType, newVal);
-          else chart = createChart(chartType, scope, elem);
+          else chart = createChart(chartType, scope, elem, true);
         }, true);
 
         scope.$watch('chartType', function (newVal, oldVal) {
           if (! newVal) return;
           if (chart) chart.destroy();
-          chart = createChart(newVal, scope, elem);
+          chart = createChart(newVal, scope, elem, false);
         });
       }
     };
   }
 
-  function createChart (type, scope, elem) {
+  function createChart (type, scope, elem, createLegend) {
     var cvs = document.getElementById(scope.id), ctx = cvs.getContext("2d");
     var data = hasDataSets(type) ? getDataSets(scope.labels, scope.data, scope.series || []) : getData(scope.labels, scope.data);
     var chart = new Chart(ctx)[type](data, scope.options || {});
@@ -117,7 +117,7 @@
         }
       };
     }
-    if (scope.legend) {
+    if (scope.legend && createLegend) {
       elem.parent().append(chart.generateLegend());
     }
     return chart;
