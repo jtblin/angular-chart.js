@@ -125,11 +125,10 @@
 
   function updateChart (chart, type, values) {
     if (hasDataSets(type)){
-      chart.datasets.forEach(function (dataset, i) {
-        dataset.points = dataset.points.map(function (point, j) {
-          point.value = values[i][j];
-          return point;
-        });
+        chart.datasets.forEach(function (dataset, i) {
+          (dataset.points || dataset.bars).forEach(function (dataItem, j) {
+            dataItem.value = values[i][j];
+          });
       });
     } else {
       chart.segments.forEach(function (segment, i) {
