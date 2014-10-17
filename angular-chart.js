@@ -87,25 +87,39 @@
       },
       link: function (scope, elem, attrs) {
         var chart;
+        var legendCreated = false;
+
+        var createLegend = function () {
+            if (scope.legend && !legendCreated) {
+                elem.parent().append(chart.generateLegend());
+                legendCreated = true;
+            }
+        }
 
         scope.$watch('data', function (newVal, oldVal) {
           if (hasDataSets(type) && ! newVal[0].length) return;
           var chartType = type || scope.chartType;
           if (! chartType) return;
-          if (chart) updateChart (chart, chartType, newVal);
-          else chart = createChart(chartType, scope, elem, true);
+          if (chart) updateChart(chart, chartType, newVal);
+          else {
+              chart = createChart(chartType, scope, elem);
+              createLegend();
+          }
         }, true);
 
         scope.$watch('chartType', function (newVal, oldVal) {
           if (! newVal) return;
           if (chart) chart.destroy();
-          chart = createChart(newVal, scope, elem, false);
+          chart = createChart(newVal, scope, elem);
+          createLegend();
         });
+
+
       }
     };
   }
 
-  function createChart (type, scope, elem, createLegend) {
+  function createChart (type, scope, elem) {
     var cvs = document.getElementById(scope.id), ctx = cvs.getContext("2d");
     var data = hasDataSets(type) ? getDataSets(scope.labels, scope.data, scope.series || []) : getData(scope.labels, scope.data);
     var chart = new Chart(ctx)[type](data, scope.options || {});
@@ -117,9 +131,7 @@
         }
       };
     }
-    if (scope.legend && createLegend) {
-      elem.parent().append(chart.generateLegend());
-    }
+
     return chart;
   }
 
