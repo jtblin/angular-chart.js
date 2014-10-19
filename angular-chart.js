@@ -87,34 +87,20 @@
       },
       link: function (scope, elem, attrs) {
         var chart;
-        var legendCreated = false;
-
-        var createLegend = function () {
-            if (scope.legend && !legendCreated) {
-                elem.parent().append(chart.generateLegend());
-                legendCreated = true;
-            }
-        }
 
         scope.$watch('data', function (newVal, oldVal) {
           if (hasDataSets(type) && ! newVal[0].length) return;
           var chartType = type || scope.chartType;
           if (! chartType) return;
           if (chart) updateChart(chart, chartType, newVal);
-          else {
-              chart = createChart(chartType, scope, elem);
-              createLegend();
-          }
+          else chart = createChart(chartType, scope, elem);
         }, true);
 
         scope.$watch('chartType', function (newVal, oldVal) {
           if (! newVal) return;
           if (chart) chart.destroy();
           chart = createChart(newVal, scope, elem);
-          createLegend();
         });
-
-
       }
     };
   }
@@ -131,8 +117,16 @@
         }
       };
     }
-
+    if (scope.legend) setLegend(elem, chart);
     return chart;
+  }
+
+  function setLegend (elem, chart) {
+    var $parent = elem.parent(),
+        $oldLegend = $parent.find('chart-legend'),
+        legend = '<chart-legend>' + chart.generateLegend() + '</chart-legend>';
+    if ($oldLegend.length) $oldLegend.replaceWith(legend);
+    else $parent.append(legend);
   }
 
   function updateChart (chart, type, values) {
