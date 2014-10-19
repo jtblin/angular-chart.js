@@ -139,7 +139,10 @@
               </div>
             </tab>
             <tab heading="Markup">
-              <pre><code data-language="html">&lt;canvas id=&quot;line&quot; class=&quot;chart chart-line&quot; data=&quot;data&quot; labels=&quot;labels&quot; legend=&quot;true&quot; series=&quot;series&quot; click=&quot;onClick&quot;&gt;&lt;/canvas&gt; </code></pre>
+              <pre><code data-language="html">&lt;canvas id=&quot;line&quot; class=&quot;chart chart-line&quot; data=&quot;data&quot;
+  labels=&quot;labels&quot; legend=&quot;true&quot; series=&quot;series&quot;
+  click=&quot;onClick&quot;&gt;
+&lt;/canvas&gt; </code></pre>
             </tab>
             <tab heading="Javascript">
               <pre><code data-language="javascript">angular.module("app", ["chart.js"]).controller("LineCtrl", function ($scope) {
@@ -175,7 +178,8 @@
               </div>
             </tab>
             <tab heading="Markup">
-              <pre><code data-language="html">&lt;canvas id=&quot;bar&quot; class=&quot;chart chart-bar&quot; data=&quot;data&quot; labels=&quot;labels&quot;&gt;&lt;/canvas&gt; </code></pre>
+              <pre><code data-language="html">&lt;canvas id=&quot;bar&quot; class=&quot;chart chart-bar&quot; data=&quot;data&quot;
+  labels=&quot;labels&quot;&gt;&lt;/canvas&gt; </code></pre>
             </tab>
             <tab heading="Javascript">
               <pre><code data-language="javascript">angular.module("app", ["chart.js"]).controller("BarCtrl", function ($scope) {
@@ -223,7 +227,8 @@
               </div>
             </tab>
             <tab heading="Markup">
-              <pre><code data-language="html">&lt;canvas id=&quot;doughnut&quot; class=&quot;chart chart-doughnut&quot; data=&quot;data&quot; labels=&quot;labels&quot;&gt;&lt;/canvas&gt; </code></pre>
+              <pre><code data-language="html">&lt;canvas id=&quot;doughnut&quot; class=&quot;chart chart-doughnut&quot; data=&quot;data&quot;
+  labels=&quot;labels&quot;&gt;&lt;/canvas&gt; </code></pre>
             </tab>
             <tab heading="Javascript">
               <pre><code data-language="javascript">angular.module("app", ["chart.js"]).controller("DoughnutCtrl", function ($scope) {
@@ -251,7 +256,8 @@
               </div>
             </tab>
             <tab heading="Markup">
-              <pre><code data-language="html">&lt;canvas id=&quot;radar&quot; class=&quot;chart chart-radar&quot; data=&quot;data&quot; labels=&quot;labels&quot;&gt;&lt;/canvas&gt; </code></pre>
+              <pre><code data-language="html">&lt;canvas id=&quot;radar&quot; class=&quot;chart chart-radar&quot; data=&quot;data&quot;
+  labels=&quot;labels&quot;&gt;&lt;/canvas&gt; </code></pre>
             </tab>
             <tab heading="Javascript">
               <pre><code data-language="javascript">angular.module("app", ["chart.js"]).controller("RadarCtrl", function ($scope) {
@@ -298,7 +304,8 @@
               </div>
             </tab>
             <tab heading="Markup">
-              <pre><code data-language="html">&lt;canvas id=&quot;pie&quot; class=&quot;chart chart-pie&quot; data=&quot;data&quot; labels=&quot;labels&quot;&gt;&lt;/canvas&gt; </code></pre>
+              <pre><code data-language="html">&lt;canvas id=&quot;pie&quot; class=&quot;chart chart-pie&quot; data=&quot;data&quot;
+  labels=&quot;labels&quot;&gt;&lt;/canvas&gt; </code></pre>
             </tab>
             <tab heading="Javascript">
               <pre><code data-language="javascript">angular.module("app", ["chart.js"]).controller("PieCtrl", function ($scope) {
@@ -325,7 +332,8 @@
               </div>
             </tab>
             <tab heading="Markup">
-              <pre><code data-language="html">&lt;canvas id=&quot;polar-area&quot; class=&quot;chart chart-polar-area&quot; data=&quot;data&quot; labels=&quot;labels&quot;&gt;&lt;/canvas&gt; </code></pre>
+              <pre><code data-language="html">&lt;canvas id=&quot;polar-area&quot; class=&quot;chart chart-polar-area&quot; data=&quot;data&quot;
+  labels=&quot;labels&quot;&gt;&lt;/canvas&gt; </code></pre>
             </tab>
             <tab heading="Javascript">
               <pre><code data-language="javascript">angular.module("app", ["chart.js"]).controller("PolarAreaCtrl", function ($scope) {
@@ -350,7 +358,7 @@
           <div class="panel panel-default">
             <div class="panel-heading">Dynamic Chart</div>
             <div class="panel-body">
-              <canvas id="base" class="chart chart-base" chart-type="type" data="data" labels="labels"></canvas>
+              <canvas id="base" class="chart chart-base" chart-type="type" data="data" labels="labels" legend="true"></canvas>
             </div>
           </div>
           <button type="button" class="btn btn-primary pull-right" ng-click="toggle()">Toggle</button>
@@ -367,7 +375,8 @@
               </div>
             </tab>
             <tab heading="Markup">
-              <pre><code data-language="html">&lt;canvas id=&quot;base&quot; class=&quot;chart-base&quot; chart-type=&quot;type&quot; data=&quot;data&quot; labels=&quot;labels&quot;&gt;&lt;/canvas&gt; </code></pre>
+              <pre><code data-language="html">&lt;canvas id=&quot;base&quot; class=&quot;chart-base&quot; chart-type=&quot;type&quot; data=&quot;data&quot;
+  labels=&quot;labels&quot; legend=&quot;true&quot;&gt;&lt;/canvas&gt; </code></pre>
             </tab>
             <tab heading="Javascript">
               <pre><code data-language="javascript">angular.module("app", ["chart.js"]).controller("BaseCtrl",
