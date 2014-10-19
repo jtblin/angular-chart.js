@@ -92,7 +92,7 @@
           if (hasDataSets(type) && ! newVal[0].length) return;
           var chartType = type || scope.chartType;
           if (! chartType) return;
-          if (chart) updateChart (chart, chartType, newVal);
+          if (chart) updateChart(chart, chartType, newVal);
           else chart = createChart(chartType, scope, elem);
         }, true);
 
@@ -117,19 +117,24 @@
         }
       };
     }
-    if (scope.legend) {
-      elem.parent().append(chart.generateLegend());
-    }
+    if (scope.legend) setLegend(elem, chart);
     return chart;
+  }
+
+  function setLegend (elem, chart) {
+    var $parent = elem.parent(),
+        $oldLegend = $parent.find('chart-legend'),
+        legend = '<chart-legend>' + chart.generateLegend() + '</chart-legend>';
+    if ($oldLegend.length) $oldLegend.replaceWith(legend);
+    else $parent.append(legend);
   }
 
   function updateChart (chart, type, values) {
     if (hasDataSets(type)){
-      chart.datasets.forEach(function (dataset, i) {
-        dataset.points = dataset.points.map(function (point, j) {
-          point.value = values[i][j];
-          return point;
-        });
+        chart.datasets.forEach(function (dataset, i) {
+          (dataset.points || dataset.bars).forEach(function (dataItem, j) {
+            dataItem.value = values[i][j];
+          });
       });
     } else {
       chart.segments.forEach(function (segment, i) {

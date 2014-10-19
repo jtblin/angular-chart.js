@@ -43,17 +43,17 @@
   }]);
 
   app.controller("PieCtrl", function ($scope) {
-    $scope.labels = ["Download Sales", "In-Store Sales", "Mail-Order Sales"];
+    $scope.labels = ["Download Sales", "In-Store Sales", "Mail Sales"];
     $scope.data = [300, 500, 100];
   });
 
   app.controller("PolarAreaCtrl", function ($scope) {
-    $scope.labels = ["Download Sales", "In-Store Sales", "Mail-Order Sales", "Tele Sales", "Corporate Sales"];
+    $scope.labels = ["Download Sales", "In-Store Sales", "Mail Sales", "Telesales", "Corporate Sales"];
     $scope.data = [300, 500, 100, 40, 120];
   });
 
   app.controller("BaseCtrl", function ($scope) {
-    $scope.labels = ["Download Sales", "In-Store Sales", "Mail-Order Sales", "Tele Sales", "Corporate Sales"];
+    $scope.labels = ["Download Sales", "Store Sales", "Mail Sales", "Telesales", "Corporate Sales"];
     $scope.data = [300, 500, 100, 40, 120];
     $scope.type = 'PolarArea';
 
