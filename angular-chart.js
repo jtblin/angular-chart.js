@@ -81,6 +81,7 @@
         labels: '=',
         options: '=',
         series: '=',
+        colours: '=',
         chartType: '=',
         legend: '@',
         click: '='
@@ -107,7 +108,7 @@
 
   function createChart (type, scope, elem) {
     var cvs = document.getElementById(scope.id), ctx = cvs.getContext("2d");
-    var data = hasDataSets(type) ? getDataSets(scope.labels, scope.data, scope.series || []) : getData(scope.labels, scope.data);
+    var data = hasDataSets(type) ? getDataSets(scope.labels, scope.data, scope.series || [], scope.colours) : getData(scope.labels, scope.data);
     var chart = new Chart(ctx)[type](data, scope.options || {});
     if (scope.click) {
       cvs.onclick = function (evt) {
@@ -148,11 +149,13 @@
     return ['Line', 'Bar', 'Radar'].indexOf(type) > -1;
   }
 
-  function getDataSets (labels, data, series) {
+  function getDataSets (labels, data, series, colours) {
+    console.log(colours);
+    colours = colours || Chart.defaults.global.colours;
     return {
       labels: labels,
       datasets: data.map(function (item, i) {
-        var dataSet = clone(Chart.defaults.global.colours[i]);
+        var dataSet = clone(colours[i]);
         dataSet.label = series[i];
         dataSet.data = item;
         return dataSet;
@@ -168,13 +171,14 @@
     return newObj;
   }
 
-  function getData (labels, data) {
+  function getData (labels, data, colours) {
     return labels.map(function (label, i) {
+      colours = colours || Chart.defaults.global.colours;
       return {
         label: label,
         value: data[i],
-        color: Chart.defaults.global.colours[i].strokeColor,
-        highlight: Chart.defaults.global.colours[i].pointHighlightStroke
+        color: colours[i].strokeColor,
+        highlight: colours[i].pointHighlightStroke
       };
     });
   }

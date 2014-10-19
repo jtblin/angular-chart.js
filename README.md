@@ -18,6 +18,7 @@ They all use mostly the same API:
 - `labels`: x axis labels (line, bar, radar) or series labels (pie, doughnut, polar area)
 - `options`: chart options (as from [Chart.js documentation](http://www.chartjs.org/docs/))
 - `series`: (default: `[]`): series labels (line, bar, radar)
+- `colours`: data colours (will use default colours if not specified)
 - `click`: onclick event handler (line, radar)
 - `legend`: (default: `false`): show legend below the chart
 
