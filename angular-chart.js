@@ -84,7 +84,8 @@
         colours: '=',
         chartType: '=',
         legend: '@',
-        click: '='
+        click: '=',
+        destroyOnUpdate: '='
       },
       link: function (scope, elem, attrs) {
         var chart;
@@ -93,8 +94,14 @@
           if (hasDataSets(type) && ! newVal[0].length) return;
           var chartType = type || scope.chartType;
           if (! chartType) return;
-          if (chart) updateChart(chart, chartType, newVal);
-          else chart = createChart(chartType, scope, elem);
+          if (chart && !destroyOnUpdate) updateChart(chart, chartType, newVal);
+          else {
+          	if (chart) {
+          		chart.destroy();
+          	}
+
+          	chart = createChart(chartType, scope, elem);
+          }
         }, true);
 
         scope.$watch('chartType', function (newVal, oldVal) {
