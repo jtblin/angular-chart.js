@@ -90,7 +90,7 @@
         var chart;
 
         scope.$watch('data', function (newVal, oldVal) {
-          if (hasDataSets(type) && ! newVal[0].length) return;
+          if (! newVal || ! newVal.length || (hasDataSets(type) && ! newVal[0].length)) return;
           var chartType = type || scope.chartType;
           if (! chartType) return;
           if (chart) updateChart(chart, chartType, newVal);
@@ -150,7 +150,6 @@
   }
 
   function getDataSets (labels, data, series, colours) {
-    console.log(colours);
     colours = colours || Chart.defaults.global.colours;
     return {
       labels: labels,
