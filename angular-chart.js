@@ -108,7 +108,9 @@
 
   function createChart (type, scope, elem) {
     var cvs = document.getElementById(scope.id), ctx = cvs.getContext("2d");
-    var data = hasDataSets(type) ? getDataSets(scope.labels, scope.data, scope.series || [], scope.colours) : getData(scope.labels, scope.data);
+    var data = hasDataSets(type) ?
+      getDataSets(scope.labels, scope.data, scope.series || [], scope.colours) :
+      getData(scope.labels, scope.data, scope.colours);
     var chart = new Chart(ctx)[type](data, scope.options || {});
     if (scope.click) {
       cvs.onclick = function (evt) {
@@ -171,8 +173,8 @@
   }
 
   function getData (labels, data, colours) {
+    colours = colours || Chart.defaults.global.colours;
     return labels.map(function (label, i) {
-      colours = colours || Chart.defaults.global.colours;
       return {
         label: label,
         value: data[i],
