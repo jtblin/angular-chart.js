@@ -85,7 +85,6 @@
         chartType: '=',
         legend: '@',
         click: '=',
-        destroyOnUpdate: '='
       },
       link: function (scope, elem, attrs) {
         var chart;
@@ -94,7 +93,7 @@
           if (hasDataSets(type) && ! newVal[0].length) return;
           var chartType = type || scope.chartType;
           if (! chartType) return;
-          if (chart && !destroyOnUpdate) updateChart(chart, chartType, newVal);
+          if (chart && canUpdateChart(newVal, oldVal)) updateChart(chart, chartType, newVal);
           else {
           	if (chart) {
           		chart.destroy();
@@ -111,6 +110,14 @@
         });
       }
     };
+  }
+
+  function canUpdateChart(newVal, oldVal) {
+    var valuesExists = newVal && oldVal;
+    var valuesHaveSameLength = newVal.length === oldVal.length;
+    var dataHasSameLength = newVal[0].length === oldVal[0].length;
+
+    return valuesExists && valuesHaveSameLength && dataHasSameLength;
   }
 
   function createChart (type, scope, elem) {
