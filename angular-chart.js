@@ -90,7 +90,7 @@
         var chart;
 
         scope.$watch('data', function (newVal, oldVal) {
-          if (hasDataSets(type) && ! newVal[0].length) return;
+          if (! newVal || ! newVal.length || (hasDataSets(type) && ! newVal[0].length)) return;
           var chartType = type || scope.chartType;
           if (! chartType) return;
           if (chart && canUpdateChart(newVal, oldVal)) updateChart(chart, chartType, newVal);
@@ -122,7 +122,9 @@
 
   function createChart (type, scope, elem) {
     var cvs = document.getElementById(scope.id), ctx = cvs.getContext("2d");
-    var data = hasDataSets(type) ? getDataSets(scope.labels, scope.data, scope.series || [], scope.colours) : getData(scope.labels, scope.data);
+    var data = hasDataSets(type) ?
+      getDataSets(scope.labels, scope.data, scope.series || [], scope.colours) :
+      getData(scope.labels, scope.data, scope.colours);
     var chart = new Chart(ctx)[type](data, scope.options || {});
     if (scope.click) {
       cvs.onclick = function (evt) {
@@ -164,7 +166,6 @@
   }
 
   function getDataSets (labels, data, series, colours) {
-    console.log(colours);
     colours = colours || Chart.defaults.global.colours;
     return {
       labels: labels,
@@ -186,8 +187,8 @@
   }
 
   function getData (labels, data, colours) {
+    colours = colours || Chart.defaults.global.colours;
     return labels.map(function (label, i) {
-      colours = colours || Chart.defaults.global.colours;
       return {
         label: label,
         value: data[i],
