@@ -29,8 +29,12 @@ dynamically.
 
 ## Markup
 
+Wrap the `canvas` element in a `div` with no margin/padding to prevent distortion of the chart.
+
 ```html
-<canvas id="line" class="chart chart-line" data="data" labels="labels" legend="true" series="series" click="onClick"></canvas> 
+<div class="container-chart">
+  <canvas id="line" class="chart chart-line" data="data" labels="labels" legend="true" series="series" click="onClick"></canvas>
+</div>
 ```
 
 ## Javascript
