@@ -83,7 +83,7 @@
         colours: '=',
         chartType: '=',
         legend: '@',
-        click: '=',
+        click: '='
       },
       link: function (scope, elem, attrs) {
         var chart;
@@ -92,14 +92,17 @@
           if (! newVal || ! newVal.length || (hasDataSets(type) && ! newVal[0].length)) return;
           var chartType = type || scope.chartType;
           if (! chartType) return;
-          if (chart && canUpdateChart(newVal, oldVal)) updateChart(chart, chartType, newVal);
-          else {
-          	if (chart) {
-          		chart.destroy();
-          	}
 
-          	chart = createChart(chartType, scope, elem);
+          if (chart) {
+            if (canUpdateChart(newVal, oldVal, chartType)) {
+              updateChart(chart, chartType, newVal);
+              return;
+            }
+
+            chart.destroy();
           }
+
+          chart = createChart(chartType, scope, elem);
         }, true);
 
         scope.$watch('chartType', function (newVal, oldVal) {
@@ -111,10 +114,19 @@
     };
   }
 
-  function canUpdateChart(newVal, oldVal) {
+  function canUpdateChart(newVal, oldVal, type) {
     var valuesExists = newVal && oldVal;
+
+    if (!valuesExists) {
+      return false;
+    }
+
     var valuesHaveSameLength = newVal.length === oldVal.length;
-    var dataHasSameLength = newVal[0].length === oldVal[0].length;
+    var dataHasSameLength = true;
+
+    if (hasDataSets(type)) {
+      dataHasSameLength = newVal[0].length === oldVal[0].length;
+    }
 
     return valuesExists && valuesHaveSameLength && dataHasSameLength;
   }
