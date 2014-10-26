@@ -11,7 +11,7 @@
   var bump = require('gulp-bump');
 
   gulp.task('less', function () {
-    gulp.src('./*.less')
+    return gulp.src('./*.less')
       .pipe(sourcemaps.init())
       .pipe(less())
       .pipe(csso())
@@ -43,14 +43,14 @@
   });
 
   gulp.task('js', ['lint'], function () {
-    gulp.src('./angular-chart.js')
+    return gulp.src('./angular-chart.js')
       .pipe(sourcemaps.init())
       .pipe(uglify())
       .pipe(sourcemaps.write('./'))
       .pipe(gulp.dest('./dist'));
   });
 
-  gulp.task('build', ['js', 'less'], function () {
+  gulp.task('build', function () {
     return gulp.src(['dist/*', '!./dist/*.tar.gz'])
       .pipe(tar('angular-chart.js.tar'))
       .pipe(gzip({ gzipOptions: { level: 9 } }))
@@ -59,6 +59,6 @@
 
   gulp.watch('./*.js', ['js']);
   gulp.watch('./*.less', ['less']);
-  gulp.task('default', ['build']);
+  gulp.task('default', ['less', 'js']);
 
 })();
