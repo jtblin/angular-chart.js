@@ -92,8 +92,13 @@
           if (! newVal || ! newVal.length || (hasDataSets(type) && ! newVal[0].length)) return;
           var chartType = type || scope.chartType;
           if (! chartType) return;
-          if (chart) updateChart(chart, chartType, newVal);
-          else chart = createChart(chartType, scope, elem);
+
+          if (chart) {
+            if (canUpdateChart(chartType, newVal, oldVal)) return updateChart(chart, chartType, newVal, scope);
+            chart.destroy();
+          }
+
+          chart = createChart(chartType, scope, elem);
         }, true);
 
         scope.$watch('chartType', function (newVal, oldVal) {
@@ -103,6 +108,15 @@
         });
       }
     };
+  }
+
+  function canUpdateChart(type, newVal, oldVal) {
+    if (newVal && oldVal && newVal.length && oldVal.length) {
+      return hasDataSets(type) ?
+        newVal[0].length === oldVal[0].length :
+        newVal.length === oldVal.length;
+    }
+    return false;
   }
 
   function createChart (type, scope, elem) {
@@ -131,9 +145,10 @@
     else $parent.append(legend);
   }
 
-  function updateChart (chart, type, values) {
+  function updateChart (chart, type, values, scope) {
     if (hasDataSets(type)){
         chart.datasets.forEach(function (dataset, i) {
+          if (scope.colours) updateColours(dataset, scope.colours[i]);
           (dataset.points || dataset.bars).forEach(function (dataItem, j) {
             dataItem.value = values[i][j];
           });
@@ -141,9 +156,18 @@
     } else {
       chart.segments.forEach(function (segment, i) {
         segment.value = values[i];
+        if (scope.colours) updateColours(segment, scope.colours[i]);
       });
     }
     chart.update();
+  }
+
+  function updateColours (item, colour) {
+    item.fillColor = colour.fillColor;
+    item.highlightColor = colour.highlightColor;
+    item.strokeColor = colour.strokeColor;
+    item.pointColor = colour.pointColor;
+    item.pointStrokeColor = colour.pointStrokeColor;
   }
 
   function hasDataSets (type) {
