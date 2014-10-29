@@ -94,11 +94,7 @@
           if (! chartType) return;
 
           if (chart) {
-            if (canUpdateChart(newVal, oldVal, chartType)) {
-              updateChart(chart, chartType, newVal);
-              return;
-            }
-
+            if (canUpdateChart(chartType, newVal, oldVal)) return updateChart(chart, chartType, newVal);
             chart.destroy();
           }
 
@@ -114,21 +110,13 @@
     };
   }
 
-  function canUpdateChart(newVal, oldVal, type) {
-    var valuesExists = newVal && oldVal;
-
-    if (!valuesExists) {
-      return false;
+  function canUpdateChart(type, newVal, oldVal) {
+    if (newVal && oldVal && newVal.length && oldVal.length) {
+      return hasDataSets(type) ?
+        newVal[0].length === oldVal[0].length :
+        newVal.length === oldVal.length;
     }
-
-    var valuesHaveSameLength = newVal.length === oldVal.length;
-    var dataHasSameLength = true;
-
-    if (hasDataSets(type)) {
-      dataHasSameLength = newVal[0].length === oldVal[0].length;
-    }
-
-    return valuesExists && valuesHaveSameLength && dataHasSameLength;
+    return false;
   }
 
   function createChart (type, scope, elem) {
