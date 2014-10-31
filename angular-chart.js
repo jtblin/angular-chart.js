@@ -86,7 +86,10 @@
         click: '='
       },
       link: function (scope, elem, attrs) {
-        var chart;
+        var chart, container = document.createElement('div');
+        container.className = 'chart-container';
+        elem.replaceWith(container);
+        container.appendChild(elem[0]);
 
         scope.$watch('data', function (newVal, oldVal) {
           if (! newVal || ! newVal.length || (hasDataSets(type) && ! newVal[0].length)) return;
