@@ -116,7 +116,7 @@
   function canUpdateChart(type, newVal, oldVal) {
     if (newVal && oldVal && newVal.length && oldVal.length) {
       return hasDataSets(type) ?
-        newVal[0].length === oldVal[0].length :
+        newVal.length === oldVal.length && newVal[0].length === oldVal[0].length :
         newVal.length === oldVal.length;
     }
     return false;
