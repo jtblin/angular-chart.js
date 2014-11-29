@@ -25,12 +25,25 @@ They all use mostly the same API:
 There is another directive `chart-base` that takes an extra attribute `chart-type` to define the type
 dynamically.
 
+## Browser compatibility
+
+For IE8 and older browsers, you will need to include [excanvas](https://code.google.com/p/explorercanvas/wiki/Instructions). 
+You will also need [shims](https://github.com/es-shims/es5-shim) for ES5 functions.
+
+```html
+<head>
+<!--[if lt IE 9]><script src="excanvas.js"></script><![endif]-->
+<!--[if lt IE 9]><script src="es5-shim.js"></script><![endif]-->
+</head>
+```
+
 # Example
 
 ## Markup
 
 ```html
-<canvas id="line" class="chart chart-line" data="data" labels="labels" legend="true" series="series" click="onClick"></canvas> 
+<canvas id="line" class="chart chart-line" data="data" labels="labels" 
+	legend="true" series="series" click="onClick"></canvas> 
 ```
 
 ## Javascript
@@ -57,3 +70,17 @@ angular.module("app", ["chart.js"]).controller("LineCtrl", ['$scope', '$timeout'
   }, 3000);
 }]);
 ```
+
+# Contributing
+
+Open issues in [github](https://github.com/jtblin/angular-chart.js/issues). 
+Preferably add a link to a plunker, jsbin, or equivalent. Pull requests welcome.
+
+# Author
+
+Jerome Touffe-Blin, [@jtblin](https://twitter.com/jtlbin), [About me](http://about.me/jtblin)
+
+# License
+
+angular-chart.js is copyright 2014 Jerome Touffe-Blin and contributors. 
+It is licensed under the BSD license. See the include LICENSE file for details.
