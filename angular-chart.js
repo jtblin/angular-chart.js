@@ -91,6 +91,12 @@
         elem.replaceWith(container);
         container.appendChild(elem[0]);
 
+        if (typeof G_vmlCanvasManager === 'object' && G_vmlCanvasManager !== null) {
+          if (typeof G_vmlCanvasManager.initElement === 'function') {
+              G_vmlCanvasManager.initElement(elem[0]);
+          }
+        }
+
         scope.$watch('data', function (newVal, oldVal) {
           if (! newVal || ! newVal.length || (hasDataSets(type) && ! newVal[0].length)) return;
           var chartType = type || scope.chartType;
