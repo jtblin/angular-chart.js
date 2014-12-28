@@ -110,6 +110,18 @@
           chart = createChart(chartType, scope, elem);
         }, true);
 
+        scope.$watch('series', function (newVal, oldVal) {
+          if (! newVal || ! newVal.length) return;
+          var chartType = type || scope.chartType;
+          if (! chartType) return;
+
+          // chart.update() doesn't work for series
+          // have to re-create the chart entirely
+          if (chart) chart.destroy();
+
+          chart = createChart(chartType, scope, elem);
+        }, true);
+
         scope.$watch('chartType', function (newVal, oldVal) {
           if (! newVal) return;
           if (chart) chart.destroy();
