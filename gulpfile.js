@@ -57,8 +57,12 @@
       .pipe(gulp.dest('dist/'));
   });
 
-  gulp.watch('./*.js', ['js']);
-  gulp.watch('./*.less', ['less']);
+  gulp.task('watch', function () {
+    gulp.watch('./*.js', ['js']);
+    gulp.watch('./*.less', ['less']);
+    return true;
+  });
+
   gulp.task('default', ['less', 'js']);
 
 })();
