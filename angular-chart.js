@@ -142,7 +142,7 @@
         }
       };
     }
-    if (scope.legend) setLegend(elem, chart);
+    if (scope.legend && scope.legend !== 'false') setLegend(elem, chart);
     return chart;
   }
 
