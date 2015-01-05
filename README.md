@@ -78,7 +78,7 @@ Preferably add a link to a plunker, jsbin, or equivalent. Pull requests welcome.
 
 # Author
 
-Jerome Touffe-Blin, [@jtblin](https://twitter.com/jtlbin), [About me](http://about.me/jtblin)
+Jerome Touffe-Blin, [@jtblin](https://twitter.com/jtblin), [About me](http://about.me/jtblin)
 
 # License
 
