@@ -35,7 +35,7 @@
   ],
   "dependencies": {
     "angular": "~1.2.0",
-    "Chart.js": "~1.0.1-beta.2"
+    "Chart.js": "~1.0.1"
   },
   "devDependencies": {
     "angular-bootstrap": "~0.11.0",
