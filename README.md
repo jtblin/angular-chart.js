@@ -74,7 +74,9 @@ angular.module("app", ["chart.js"]).controller("LineCtrl", ['$scope', '$timeout'
 # Contributing
 
 Open issues in [github](https://github.com/jtblin/angular-chart.js/issues). 
-Preferably add a link to a plunker, jsbin, or equivalent. Pull requests welcome.
+Please add a link to a plunker, jsbin, or equivalent, here is a 
+[jsbin template](http://jsbin.com/dufibi/3/edit?html,js,output) for convenience. 
+Pull requests welcome.
 
 # Author
 
