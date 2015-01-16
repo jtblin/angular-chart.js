@@ -8,7 +8,10 @@
   var stylish = require('jshint-stylish');
   var tar = require('gulp-tar');
   var gzip = require('gulp-gzip');
-  var bump = require('gulp-bump');
+  var bumper = require('gulp-bump');
+  var git = require('gulp-git');
+  var fs = require('fs');
+  var sequence = require('gulp-sequence');
 
   gulp.task('less', function () {
     return gulp.src('./*.less')
@@ -25,22 +28,9 @@
       .pipe(jshint.reporter(stylish));
   });
 
-  gulp.task('bump-major', function () {
-    return gulp.src(['./package.json', './bower.json'])
-      .pipe(bump({type:'major'}))
-      .pipe(gulp.dest('./'));
-  });
-  gulp.task('bump-minor', function () {
-    return gulp.src(['./package.json', './bower.json'])
-      .pipe(bump({type:'minor'}))
-      .pipe(gulp.dest('./'));
-  });
-
-  gulp.task('bump-patch', function () {
-    return gulp.src(['./package.json', './bower.json'])
-      .pipe(bump({type:'patch'}))
-      .pipe(gulp.dest('./'));
-  });
+  gulp.task('bump-patch', bump('patch'));
+  gulp.task('bump-minor', bump('minor'));
+  gulp.task('bump-major', bump('major'));
 
   gulp.task('js', ['lint'], function () {
     return gulp.src('./angular-chart.js')
@@ -57,12 +47,53 @@
       .pipe(gulp.dest('dist/'));
   });
 
+  gulp.task('update', function (cb) {
+    fs.readFile('./examples/charts.template.html', 'utf8', function (err, file) {
+      if (err) return cb(err);
+      file = file.replace('<!-- version -->', version());
+      fs.writeFile('./examples/charts.html', file, cb);
+    });
+  });
+
+  gulp.task('git', function (cb) {
+    var v = version();
+    gulp.src(['./dist/*', './package.json', './bower.json', './examples/charts.html'])
+      .pipe(git.add())
+      .pipe(git.commit(v))
+      .pipe(git.tag(v, v, function (err) {
+        if (err) cb(err);
+        git.push('origin', 'master', callback(cb));
+        git.push('origin', 'master', {args: '--tags' }, callback(cb));
+      }));
+  });
+
   gulp.task('watch', function () {
     gulp.watch('./*.js', ['js']);
     gulp.watch('./*.less', ['less']);
     return true;
   });
 
-  gulp.task('default', ['less', 'js']);
+  function bump (level) {
+    return function () {
+      return gulp.src(['./package.json', './bower.json'])
+        .pipe(bumper({type: level}))
+        .pipe(gulp.dest('./'));
+    };
+  }
+
+  function version () {
+    return JSON.parse(fs.readFileSync('package.json', 'utf8')).version;
+  }
+
+  function callback (cb) {
+    return function (err) {
+      if (err) cb(err);
+    }
+  }
+
+  gulp.task('default', sequence(['less', 'js'], 'build'));
+  gulp.task('deploy-patch', sequence('default', 'bump-patch', 'update', 'git'));
+  gulp.task('deploy-minor', sequence('default', 'bump-minor', 'update', 'git'));
+  gulp.task('deploy-major', sequence('default', 'bump-patch', 'update', 'git'));
 
 })();
