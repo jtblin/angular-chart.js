@@ -151,7 +151,7 @@
     var chart = new Chart(ctx)[type](data, scope.options || {});
     if (scope.click) {
       cvs.onclick = function (evt) {
-        if (chart.getPointsAtEvent || chart.getSegmentsAtEvent) {
+        if (chart.getPointsAtEvent || chart.getBarsAtEvent || chart.getSegmentsAtEvent) {
           var activePoints = hasDataSets(type) ? chart.getPointsAtEvent(evt) : chart.getSegmentsAtEvent(evt);
           scope.click(activePoints, evt);
         }
