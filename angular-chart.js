@@ -98,12 +98,12 @@
         }
 
         scope.$watch('data', function (newVal, oldVal) {
-          if (! newVal || ! newVal.length || (hasDataSets(type) && ! newVal[0].length)) return;
+          if (! newVal || ! newVal.length || (Array.isArray(newVal[0]) && ! newVal[0].length)) return;
           var chartType = type || scope.chartType;
           if (! chartType) return;
 
           if (chart) {
-            if (canUpdateChart(chartType, newVal, oldVal)) return updateChart(chart, chartType, newVal, scope);
+            if (canUpdateChart(newVal, oldVal)) return updateChart(chart, newVal, scope);
             chart.destroy();
           }
 
@@ -134,9 +134,9 @@
     };
   }
 
-  function canUpdateChart(type, newVal, oldVal) {
+  function canUpdateChart(newVal, oldVal) {
     if (newVal && oldVal && newVal.length && oldVal.length) {
-      return hasDataSets(type) ?
+      return Array.isArray(newVal[0]) ?
         newVal.length === oldVal.length && newVal[0].length === oldVal[0].length :
         oldVal.reduce(sum, 0) > 0 ? newVal.length === oldVal.length : false;
     }
@@ -150,7 +150,7 @@
   function createChart (type, scope, elem) {
     if (! scope.data) return;
     var cvs = elem[0], ctx = cvs.getContext("2d");
-    var data = hasDataSets(type) ?
+    var data = Array.isArray(scope.data[0]) ?
       getDataSets(scope.labels, scope.data, scope.series || [], scope.colours) :
       getData(scope.labels, scope.data, scope.colours);
     var chart = new Chart(ctx)[type](data, scope.options || {});
@@ -177,8 +177,8 @@
     else $parent.append(legend);
   }
 
-  function updateChart (chart, type, values, scope) {
-    if (hasDataSets(type)){
+  function updateChart (chart, values, scope) {
+    if (Array.isArray(scope.data[0])){
         chart.datasets.forEach(function (dataset, i) {
           if (scope.colours) updateColours(dataset, scope.colours[i]);
           (dataset.points || dataset.bars).forEach(function (dataItem, j) {
@@ -200,10 +200,6 @@
     item.strokeColor = colour.strokeColor;
     item.pointColor = colour.pointColor;
     item.pointStrokeColor = colour.pointStrokeColor;
-  }
-
-  function hasDataSets (type) {
-    return ['Line', 'Bar', 'Radar'].indexOf(type) > -1;
   }
 
   function getDataSets (labels, data, series, colours) {
