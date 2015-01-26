@@ -88,7 +88,7 @@
   function callback (cb) {
     return function (err) {
       if (err) cb(err);
-    }
+    };
   }
 
   gulp.task('default', sequence(['less', 'js'], 'build'));
