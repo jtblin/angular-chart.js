@@ -160,6 +160,7 @@
         if (click) {
           var activePoints = click.call(chart, evt);
           scope.click(activePoints, evt);
+          scope.$apply();
         }
       };
     }
