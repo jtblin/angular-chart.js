@@ -138,9 +138,13 @@
     if (newVal && oldVal && newVal.length && oldVal.length) {
       return hasDataSets(type) ?
         newVal.length === oldVal.length && newVal[0].length === oldVal[0].length :
-        newVal.length === oldVal.length;
+        oldVal.reduce(sum, 0) > 0 ? newVal.length === oldVal.length : false;
     }
     return false;
+  }
+
+  function sum (carry, val) {
+    return carry + val;
   }
 
   function createChart (type, scope, elem) {
