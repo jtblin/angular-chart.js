@@ -148,6 +148,7 @@
   }
 
   function createChart (type, scope, elem) {
+    if (! scope.data) return;
     var cvs = elem[0], ctx = cvs.getContext("2d");
     var data = hasDataSets(type) ?
       getDataSets(scope.labels, scope.data, scope.series || [], scope.colours) :
