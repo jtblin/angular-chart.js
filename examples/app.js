@@ -37,11 +37,11 @@
 
   app.controller("DoughnutCtrl", ['$scope', '$timeout', function ($scope, $timeout) {
     $scope.labels = ["Download Sales", "In-Store Sales", "Mail-Order Sales"];
-    $scope.data = [300, 500, 100];
+    $scope.data = [0, 0, 0];
 
     $timeout(function () {
       $scope.data = [350, 450, 100];
-    }, 5000);
+    }, 500);
   }]);
 
   app.controller("PieCtrl", function ($scope) {

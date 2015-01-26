@@ -2,12 +2,12 @@
 <html>
 <head lang="en">
   <meta charset="UTF-8">
-  <title>angular-chart.js - beautiful, reactive, responsive charts for Angular.JS using Chart.js</title>
-  <link rel="stylesheet" href="dist/angular-chart.css">
-  <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
-  <link rel="stylesheet" href="bower_components/rainbow/themes/github.css">
-  <link href="examples/bootstrap.css" rel="stylesheet">
-  <link href="examples/app.css" rel="stylesheet">
+  <title>Charts</title>
+  <link rel="stylesheet" href="../dist/angular-chart.css">
+  <link rel="stylesheet" href="../bower_components/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="../bower_components/rainbow/themes/github.css">
+  <link href="bootstrap.css" rel="stylesheet">
+  <link href="app.css" rel="stylesheet">
 </head>
 <body ng-app="examples" id="top">
   <div class="navbar navbar-default navbar-fixed-top">
@@ -60,19 +60,10 @@
 
         <p>
           <a class="btn btn-default btn-lg" href="https://github.com/jtblin/angular-chart"><i class="icon-github"></i>Code on Github</a>
-          <a class="btn btn-success btn-lg" href="dist/angular-chart.js.tar.gz" download="angular-chart.js.tar.gz">
-            <i class="fa fa-download"></i> Download <small>(0.3.17)</small>
+          <a class="btn btn-success btn-lg" href="../dist/angular-chart.js.tar.gz" download="angular-chart.js.tar.gz">
+            <i class="fa fa-download"></i> Download <small>(<!-- version -->)</small>
           </a>
         </p>
-        <ul class="social-buttons">
-          <li>
-            <iframe src="http://ghbtns.com/github-btn.html?user=jtblin&repo=angular-chart.js&type=watch&count=true" allowtransparency="true" frameborder="0" scrolling="0" width="110" height="20"></iframe>
-          </li>
-          <li>
-            <a href="https://twitter.com/share" class="twitter-share-button" data-via="jtblin" data-hashtags="angularjs">Tweet</a>
-            <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
-          </li>
-        </ul>
       </div>
     </div>
   </div>
@@ -93,7 +84,7 @@
       <p>
         The easiest is to download with <strong>bower</strong>:
         <pre>bower install angular-chart.js --save</pre>
-        Alternatively files can be <a href="https://github.com/jtblin/angular-chart.js">downloaded from Github</a>.
+        Alternatively files can be downloaded <a href="https://github.com/jtblin/angular-chart.js">downloaded from Github</a>.
       </p>
       <p>Whichever method you choose the good news is that the overall size is very small:
         &lt;5kb for all directives (~1kb with gzip compression!)</p>
@@ -454,25 +445,15 @@
     </div>
   </footer>
 
-  <script src="bower_components/angular/angular.min.js"></script>
-  <script src="bower_components/Chart.js/Chart.min.js"></script>
-  <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
-  <script src="bower_components/rainbow/js/rainbow.min.js"></script>
-  <script src="bower_components/rainbow/js/language/generic.js"></script>
-  <script src="bower_components/rainbow/js/language/html.js"></script>
-  <script src="bower_components/rainbow/js/language/javascript.js"></script>
-  <script src="dist/angular-chart.js"></script>
-  <script src="examples/smoothscroll.min.js"></script>
-  <script src="examples/app.js"></script>
-  <script>
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-    ga('create', 'UA-53037324-1', 'auto');
-    ga('send', 'pageview');
-
-  </script>
+  <script src="../bower_components/angular/angular.min.js"></script>
+  <script src="../bower_components/Chart.js/Chart.js"></script>
+  <script src="../bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+  <script src="../bower_components/rainbow/js/rainbow.min.js"></script>
+  <script src="../bower_components/rainbow/js/language/generic.js"></script>
+  <script src="../bower_components/rainbow/js/language/html.js"></script>
+  <script src="../bower_components/rainbow/js/language/javascript.js"></script>
+  <script src="../angular-chart.js"></script>
+  <script src="smoothscroll.min.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>

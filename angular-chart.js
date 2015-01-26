@@ -138,12 +138,17 @@
     if (newVal && oldVal && newVal.length && oldVal.length) {
       return hasDataSets(type) ?
         newVal.length === oldVal.length && newVal[0].length === oldVal[0].length :
-        newVal.length === oldVal.length;
+        oldVal.reduce(sum, 0) > 0 ? newVal.length === oldVal.length : false;
     }
     return false;
   }
 
+  function sum (carry, val) {
+    return carry + val;
+  }
+
   function createChart (type, scope, elem) {
+    if (! scope.data) return;
     var cvs = elem[0], ctx = cvs.getContext("2d");
     var data = hasDataSets(type) ?
       getDataSets(scope.labels, scope.data, scope.series || [], scope.colours) :
@@ -151,9 +156,12 @@
     var chart = new Chart(ctx)[type](data, scope.options || {});
     if (scope.click) {
       cvs.onclick = function (evt) {
-        if (chart.getPointsAtEvent || chart.getBarsAtEvent || chart.getSegmentsAtEvent) {
-          var activePoints = hasDataSets(type) ? chart.getPointsAtEvent(evt) : chart.getSegmentsAtEvent(evt);
+        var click = chart.getPointsAtEvent || chart.getBarsAtEvent || chart.getSegmentsAtEvent;
+
+        if (click) {
+          var activePoints = click.call(chart, evt);
           scope.click(activePoints, evt);
+          scope.$apply();
         }
       };
     }
