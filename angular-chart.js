@@ -148,7 +148,7 @@
   }
 
   function createChart (type, scope, elem) {
-    if (! scope.data) return;
+    if (! scope.data || ! scope.data.length) return;
     var cvs = elem[0], ctx = cvs.getContext("2d");
     var data = Array.isArray(scope.data[0]) ?
       getDataSets(scope.labels, scope.data, scope.series || [], scope.colours) :
@@ -218,7 +218,8 @@
   function clone (obj) {
     var newObj = {};
     for (var key in obj) {
-      if (obj.hasOwnProperty(key)) newObj[key] = obj[key];
+      if (obj.hasOwnProperty(key))
+        newObj[key] = obj[key];
     }
     return newObj;
   }
