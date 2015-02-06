@@ -113,6 +113,13 @@
         scope.$watch('series', resetChart, true);
         scope.$watch('labels', resetChart, true);
 
+        scope.$watch('options', function (newVal, oldVal) {
+          var chartType = type || scope.chartType;
+          if (! chartType) return;
+          if (chart) chart.destroy();
+          chart = createChart(chartType, scope, elem);
+        });
+        
         scope.$watch('chartType', function (newVal, oldVal) {
           if (! newVal) return;
           if (chart) chart.destroy();
