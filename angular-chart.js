@@ -119,6 +119,10 @@
           chart = createChart(newVal, scope, elem);
         });
 
+        scope.$on('$destroy', function() { 
+          if (chart) chart.destroy();
+        });
+        
         function resetChart (newVal, oldVal) {
           if (! newVal || ! newVal.length) return;
           var chartType = type || scope.chartType;
