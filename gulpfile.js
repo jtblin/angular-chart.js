@@ -9,6 +9,7 @@
   var jshint = require('gulp-jshint');
   var stylish = require('jshint-stylish');
   var jscs = require('gulp-jscs');
+  var mocha = require('gulp-mocha');
   var tar = require('gulp-tar');
   var gzip = require('gulp-gzip');
   var bumper = require('gulp-bump');
@@ -34,6 +35,11 @@
   gulp.task('jscs', function () {
     return gulp.src('**/*.js')
       .pipe(jscs());
+  });
+
+  gulp.task('test', function () {
+    return gulp.src('test/*.js', {read: false})
+      .pipe(mocha({ reporter: 'list', timeout: 5000 }));
   });
 
   gulp.task('bump-patch', bump('patch'));
@@ -100,7 +106,8 @@
     return JSON.parse(fs.readFileSync('package.json', 'utf8')).version;
   }
 
-  gulp.task('default', sequence(['less', 'js'], 'build'));
+  gulp.task('default', sequence(['less', 'js'], 'test', 'build'));
+  gulp.task('check', sequence(['lint', 'jscs'], 'test'));
   gulp.task('deploy-patch', sequence('default', 'bump-patch', 'update', 'git-commit', 'git-push'));
   gulp.task('deploy-minor', sequence('default', 'bump-minor', 'update', 'git-commit', 'git-push'));
   gulp.task('deploy-major', sequence('default', 'bump-patch', 'update', 'git-commit', 'git-push'));

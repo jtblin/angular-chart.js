@@ -7,11 +7,14 @@
     "example": "examples"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "gulp check"
   },
   "author": "Jerome Touffe-Blin <jtblin@gmail.com>",
   "license": "BSD",
   "devDependencies": {
+    "chai": "^1.10.0",
+    "cp": "^0.2.0",
+    "gm": "^1.17.0",
     "gulp": "^3.8.6",
     "gulp-bump": "^0.1.11",
     "gulp-csso": "^0.2.9",
@@ -20,11 +23,16 @@
     "gulp-jscs": "^1.4.0",
     "gulp-jshint": "^1.9.2",
     "gulp-less": "^1.3.1",
+    "gulp-mocha": "^2.0.0",
     "gulp-sequence": "^0.3.1",
     "gulp-sourcemaps": "^1.0.0",
     "gulp-tar": "^0.5.0",
     "gulp-uglify": "^0.3.1",
     "jshint-stylish": "^1.0.0",
-    "less": "^1.7.3"
+    "less": "^1.7.3",
+    "mocha": "^2.1.0",
+    "testatic": "^0.1.0",
+    "tmp-sync": "jtblin/node-tmp-sync",
+    "webshot": "^0.15.3"
   }
 }

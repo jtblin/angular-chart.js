@@ -99,15 +99,22 @@ created multiple times during angular `watch` lifecycle.
 
 angular-chart.js listen to the scope `destroy` event and destroy the chart when it happens.
 
-# Contributing
+# Issues
 
 **Issues or feature requests for Chart.js (e.g. new chart type, new axis, etc.) need to be opened on 
 [Chart.js issues tracker](https://github.com/nnnick/Chart.js/issues)**
  
 Open issues in [github](https://github.com/jtblin/angular-chart.js/issues). **Please add a link to a plunker, jsbin, 
 or equivalent.** Here is a [jsbin template](http://jsbin.com/dufibi/3/edit?html,js,output) for convenience.
+
+# Contributing
  
 Pull requests welcome!
+
+1. Fork the repo
+1. Make your changes
+1. Run tests: `npm test`
+1. Submit pull request
 
 ## Contributors
 

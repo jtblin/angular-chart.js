@@ -1,0 +1,4 @@
+--slow 20
+--growl
+--reporter spec
+--require test/support/setup
