@@ -1,5 +1,7 @@
 # angular-chart.js
 
+[![Bower version](https://badge.fury.io/bo/angular-chart.js.svg)](http://badge.fury.io/bo/angular-chart.js)
+[![npm version](https://badge.fury.io/js/angular-chart.js.svg)](http://badge.fury.io/js/angular-chart.js)
 [![Build Status](https://travis-ci.org/jtblin/angular-chart.js.png)](https://travis-ci.org/jtblin/angular-chart.js)
 
 Beautiful, reactive, responsive charts for Angular.JS using [Chart.js](http://www.chartjs.org/). [Demo](http://jtblin.github.io/angular-chart.js/)
