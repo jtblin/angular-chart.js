@@ -9,7 +9,7 @@
   var jshint = require('gulp-jshint');
   var stylish = require('jshint-stylish');
   var jscs = require('gulp-jscs');
-  var mocha = require('gulp-mocha');
+  var mocha = require('gulp-spawn-mocha');
   var tar = require('gulp-tar');
   var gzip = require('gulp-gzip');
   var bumper = require('gulp-bump');
@@ -39,7 +39,7 @@
 
   gulp.task('test', function () {
     return gulp.src('test/*.js', {read: false})
-      .pipe(mocha({ reporter: 'list', timeout: 5000 }));
+      .pipe(mocha({ reporter: 'list', timeout: 5000, require: 'test/support/setup.js' }));
   });
 
   gulp.task('bump-patch', bump('patch'));
