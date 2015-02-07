@@ -55,16 +55,23 @@
     });
   });
 
-  gulp.task('git', function (cb) {
+  gulp.task('git-commit', function () {
     var v = version();
     gulp.src(['./dist/*', './package.json', './bower.json', './examples/charts.html'])
       .pipe(git.add())
       .pipe(git.commit(v))
-      .pipe(git.tag(v, v, function (err) {
-        if (err) cb(err);
-        git.push('origin', 'master', callback(cb));
-        git.push('origin', 'master', {args: '--tags' }, callback(cb));
-      }));
+    ;
+  });
+
+  gulp.task('git-push', function (cb) {
+    var v = version();
+    git.push('origin', 'master', function (err) {
+      if (err) return cb(err);
+      git.tag(v, v, function (err) {
+        if (err) return cb(err);
+        git.push('origin', 'master', {args: '--tags' }, cb);
+      });
+    });
   });
 
   gulp.task('watch', function () {
@@ -85,15 +92,9 @@
     return JSON.parse(fs.readFileSync('package.json', 'utf8')).version;
   }
 
-  function callback (cb) {
-    return function (err) {
-      if (err) cb(err);
-    };
-  }
-
   gulp.task('default', sequence(['less', 'js'], 'build'));
-  gulp.task('deploy-patch', sequence('default', 'bump-patch', 'update', 'git'));
-  gulp.task('deploy-minor', sequence('default', 'bump-minor', 'update', 'git'));
-  gulp.task('deploy-major', sequence('default', 'bump-patch', 'update', 'git'));
+  gulp.task('deploy-patch', sequence('default', 'bump-patch', 'update', 'git-commit', 'git-push'));
+  gulp.task('deploy-minor', sequence('default', 'bump-minor', 'update', 'git-commit', 'git-push'));
+  gulp.task('deploy-major', sequence('default', 'bump-patch', 'update', 'git-commit', 'git-push'));
 
 })();
