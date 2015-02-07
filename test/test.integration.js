@@ -1,3 +1,4 @@
+/*jshint node:true*/
 /*jshint mocha:true*/
 /*global assert:true*/
 describe('integration', function () {
@@ -9,8 +10,9 @@ describe('integration', function () {
       tmp = require('tmp-sync'),
       mkdirp = require('mkdirp').sync,
       cp = require('cp').sync,
+      imgur = require('imgur-node-api'),
       server = require('testatic')(),
-      WEBSHOT_OPTIONS = { renderDelay: 3000, windowSize: { width: 1366, height: 768 }},
+      WEBSHOT_OPTIONS = { renderDelay: 5000, windowSize: { width: 1366, height: 768 }},
       WEBSHOT_FAILED_DIR = 'test/fixtures/shots/',
       dir;
 
@@ -34,13 +36,22 @@ describe('integration', function () {
           url = 'http://localhost:8080/test/fixtures/' + name + '.html';
 
       webshot(url, image, WEBSHOT_OPTIONS, function (err) {
-        if (err) return done(err); // TODO: copy screenshot for manual comparison
-        gm.compare(expected, image, 0.001, function (err, isEqual) {
+        if (err) return done(err);
+        gm.compare(expected, image, 0.002, function (err, isEqual) {
           if (err) return done(err);
           if (! isEqual) {
-            var failed = WEBSHOT_FAILED_DIR + name + '-failed.png';
+            var failed = WEBSHOT_FAILED_DIR + name + '-failed.png',
+                msg = 'Expected screenshots to be similar. Screenshot saved to ' + failed;
             cp(image, failed);
-            assert.fail(isEqual, true, 'Expected screenshots to be similar. Screenshot saved to ' + failed);
+            if (process.env.IMGUR_ID) {
+              imgur.setClientID(process.env.IMGUR_ID);
+              imgur.upload(image, function (err, res) {
+                if (err) return done(err);
+                assert.fail(isEqual, true, msg + ', uploaded to ' + res.data.link);
+              });
+            } else {
+              assert.fail(isEqual, true, msg);
+            }
             return;
           }
           done();

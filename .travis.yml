@@ -1,6 +1,9 @@
 language: node_js
 node_js:
-- "0.10"
+- '0.10'
 before_install:
 - npm install -g grunt-cli
 - sudo apt-get install graphicsmagick
+env:
+  global:
+    secure: YWABlINoIkwl9RFLOW9G0lATEP3aiXXi+DS6TWfvQWWG/jkS5sn7IqWC2U67LjwQ0lDg0yevo3ZD7FyYQ5lr8AVuScAZ6P2o2dm9t/HBKGTG4u016dxbWWYVZ8MAlKT7TfjVD8iDzcWyZedsbpuyaNNp4pGr/CNcvq7TGdJLNkU=

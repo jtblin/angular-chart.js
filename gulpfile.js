@@ -39,7 +39,7 @@
 
   gulp.task('test', function () {
     return gulp.src('test/*.js', {read: false})
-      .pipe(mocha({ reporter: 'list', timeout: 5000, require: 'test/support/setup.js' }));
+      .pipe(mocha({ reporter: 'list', timeout: 10000, require: 'test/support/setup.js' }));
   });
 
   gulp.task('bump-patch', bump('patch'));
