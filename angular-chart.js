@@ -214,21 +214,12 @@
     return {
       labels: labels,
       datasets: data.map(function (item, i) {
-        var dataSet = clone(colours[i]);
+        var dataSet = angular.copy(colours[i]);
         dataSet.label = series[i];
         dataSet.data = item;
         return dataSet;
       })
     };
-  }
-
-  function clone (obj) {
-    var newObj = {};
-    for (var key in obj) {
-      if (obj.hasOwnProperty(key))
-        newObj[key] = obj[key];
-    }
-    return newObj;
   }
 
   function getData (labels, data, colours) {
