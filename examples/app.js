@@ -72,7 +72,7 @@
   });
 
   app.controller('RadarCtrl', function ($scope) {
-    $scope.labels =['Eating', 'Drinking', 'Sleeping', 'Designing', 'Coding', 'Cycling', 'Running'];
+    $scope.labels = ['Eating', 'Drinking', 'Sleeping', 'Designing', 'Coding', 'Cycling', 'Running'];
 
     $scope.data = [
       [65, 59, 90, 81, 56, 55, 40],
@@ -122,7 +122,13 @@
     var maximum = document.getElementById('container').clientWidth / 2 || 300;
     $scope.data = [[]];
     $scope.labels = [];
-    $scope.options = { animation: false, showScale : false, showTooltips : false, pointDot: false, datasetStrokeWidth : 0.5 };
+    $scope.options = {
+      animation: false,
+      showScale: false,
+      showTooltips: false,
+      pointDot: false,
+      datasetStrokeWidth: 0.5
+    };
 
     // Update the dataset at 25FPS for a smoothly-animating chart
     $interval(function () {

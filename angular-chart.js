@@ -91,9 +91,9 @@
         elem.replaceWith(container);
         container.appendChild(elem[0]);
 
-        if (typeof G_vmlCanvasManager === 'object' && G_vmlCanvasManager !== null) {
-          if (typeof G_vmlCanvasManager.initElement === 'function') {
-              G_vmlCanvasManager.initElement(elem[0]);
+        if (typeof window.G_vmlCanvasManager === 'object' && window.G_vmlCanvasManager !== null) {
+          if (typeof window.G_vmlCanvasManager.initElement === 'function') {
+            window.G_vmlCanvasManager.initElement(elem[0]);
           }
         }
 
@@ -142,7 +142,7 @@
   function canUpdateChart(newVal, oldVal) {
     if (newVal && oldVal && newVal.length && oldVal.length) {
       return Array.isArray(newVal[0]) ?
-        newVal.length === oldVal.length && newVal[0].length === oldVal[0].length :
+      newVal.length === oldVal.length && newVal[0].length === oldVal[0].length :
         oldVal.reduce(sum, 0) > 0 ? newVal.length === oldVal.length : false;
     }
     return false;
@@ -177,19 +177,19 @@
 
   function setLegend (elem, chart) {
     var $parent = elem.parent(),
-        $oldLegend = $parent.find('chart-legend'),
-        legend = '<chart-legend>' + chart.generateLegend() + '</chart-legend>';
+      $oldLegend = $parent.find('chart-legend'),
+      legend = '<chart-legend>' + chart.generateLegend() + '</chart-legend>';
     if ($oldLegend.length) $oldLegend.replaceWith(legend);
     else $parent.append(legend);
   }
 
   function updateChart (chart, values, scope) {
-    if (Array.isArray(scope.data[0])){
-        chart.datasets.forEach(function (dataset, i) {
-          if (scope.colours) updateColours(dataset, scope.colours[i]);
-          (dataset.points || dataset.bars).forEach(function (dataItem, j) {
-            dataItem.value = values[i][j];
-          });
+    if (Array.isArray(scope.data[0])) {
+      chart.datasets.forEach(function (dataset, i) {
+        if (scope.colours) updateColours(dataset, scope.colours[i]);
+        (dataset.points || dataset.bars).forEach(function (dataItem, j) {
+          dataItem.value = values[i][j];
+        });
       });
     } else {
       chart.segments.forEach(function (segment, i) {

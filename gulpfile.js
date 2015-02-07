@@ -8,6 +8,7 @@
   var csso = require('gulp-csso');
   var jshint = require('gulp-jshint');
   var stylish = require('jshint-stylish');
+  var jscs = require('gulp-jscs');
   var tar = require('gulp-tar');
   var gzip = require('gulp-gzip');
   var bumper = require('gulp-bump');
@@ -25,16 +26,21 @@
   });
 
   gulp.task('lint', function () {
-    return gulp.src('./**/*.js')
+    return gulp.src('**/*.js')
       .pipe(jshint())
       .pipe(jshint.reporter(stylish));
+  });
+
+  gulp.task('jscs', function () {
+    return gulp.src('**/*.js')
+      .pipe(jscs());
   });
 
   gulp.task('bump-patch', bump('patch'));
   gulp.task('bump-minor', bump('minor'));
   gulp.task('bump-major', bump('major'));
 
-  gulp.task('js', ['lint'], function () {
+  gulp.task('js', ['lint', 'jscs'], function () {
     return gulp.src('./angular-chart.js')
       .pipe(sourcemaps.init())
       .pipe(uglify())
