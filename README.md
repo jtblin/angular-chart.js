@@ -1,5 +1,7 @@
 # angular-chart.js
 
+[![Build Status](https://travis-ci.org/jtblin/angular-chart.js.png)](https://travis-ci.org/jtblin/angular-chart.js)
+
 Beautiful, reactive, responsive charts for Angular.JS using [Chart.js](http://www.chartjs.org/). [Demo](http://jtblin.github.io/angular-chart.js/)
 
 # Installation
