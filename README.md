@@ -81,6 +81,24 @@ angular.module("app", ["chart.js"]).controller("LineCtrl", ['$scope', '$timeout'
 angular-chart.js watch updates on data, series, labels and options and will update, or destroy and recreate, 
 the chart on changes.
 
+## Events
+
+angular-chart.js emits the following events on the `scope` and pass the chart as argument:
+
+* `create`: when chart is created
+* `update`: when chart is updated
+
+```
+$scope.$on('create', function (chart) {
+  console.log(chart);
+});
+```
+
+**Note**: the event can be emitted multiple times for each chart as the chart can be destroyed and
+created multiple times during angular `watch` lifecycle.
+
+angular-chart.js listen to the scope `destroy` event and destroy the chart when it happens.
+
 # Contributing
 
 **Issues or feature requests for Chart.js (e.g. new chart type, new axis, etc.) need to be opened on 

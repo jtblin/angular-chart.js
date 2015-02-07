@@ -159,6 +159,7 @@
       getDataSets(scope.labels, scope.data, scope.series || [], scope.colours) :
       getData(scope.labels, scope.data, scope.colours);
     var chart = new Chart(ctx)[type](data, scope.options || {});
+    scope.$emit('create', chart);
     if (scope.click) {
       cvs.onclick = function (evt) {
         var click = chart.getPointsAtEvent || chart.getBarsAtEvent || chart.getSegmentsAtEvent;
@@ -197,6 +198,7 @@
       });
     }
     chart.update();
+    scope.$emit('update', chart);
   }
 
   function updateColours (item, colour) {
