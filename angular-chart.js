@@ -112,6 +112,7 @@
 
         scope.$watch('series', resetChart, true);
         scope.$watch('labels', resetChart, true);
+        scope.$watch('options', resetChart, true);
 
         scope.$watch('chartType', function (newVal, oldVal) {
           if (! newVal) return;
@@ -119,12 +120,12 @@
           chart = createChart(newVal, scope, elem);
         });
 
-        scope.$on('$destroy', function() { 
+        scope.$on('$destroy', function () {
           if (chart) chart.destroy();
         });
-        
+
         function resetChart (newVal, oldVal) {
-          if (! newVal || ! newVal.length) return;
+          if (isEmpty(newVal)) return;
           var chartType = type || scope.chartType;
           if (! chartType) return;
 
@@ -238,6 +239,12 @@
         highlight: colours[i].pointHighlightStroke
       };
     });
+  }
+
+  function isEmpty (value) {
+    return ! value ||
+      (Array.isArray(value) && ! value.length) ||
+      (typeof value === 'object' && ! Object.keys(value).length);
   }
 
 })();
