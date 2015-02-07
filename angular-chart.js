@@ -1,76 +1,76 @@
 (function () {
-  "use strict";
+  'use strict';
 
   Chart.defaults.global.responsive = true;
-  Chart.defaults.global.multiTooltipTemplate = "<%if (datasetLabel){%><%=datasetLabel%>: <%}%><%= value %>";
+  Chart.defaults.global.multiTooltipTemplate = '<%if (datasetLabel){%><%=datasetLabel%>: <%}%><%= value %>';
 
   Chart.defaults.global.colours = [
     { // blue
-      fillColor: "rgba(151,187,205,0.2)",
-      strokeColor: "rgba(151,187,205,1)",
-      pointColor: "rgba(151,187,205,1)",
-      pointStrokeColor: "#fff",
-      pointHighlightFill: "#fff",
-      pointHighlightStroke: "rgba(151,187,205,0.8)"
+      fillColor: 'rgba(151,187,205,0.2)',
+      strokeColor: 'rgba(151,187,205,1)',
+      pointColor: 'rgba(151,187,205,1)',
+      pointStrokeColor: '#fff',
+      pointHighlightFill: '#fff',
+      pointHighlightStroke: 'rgba(151,187,205,0.8)'
     },
     { // light grey
-      fillColor: "rgba(220,220,220,0.2)",
-      strokeColor: "rgba(220,220,220,1)",
-      pointColor: "rgba(220,220,220,1)",
-      pointStrokeColor: "#fff",
-      pointHighlightFill: "#fff",
-      pointHighlightStroke: "rgba(220,220,220,0.8)"
+      fillColor: 'rgba(220,220,220,0.2)',
+      strokeColor: 'rgba(220,220,220,1)',
+      pointColor: 'rgba(220,220,220,1)',
+      pointStrokeColor: '#fff',
+      pointHighlightFill: '#fff',
+      pointHighlightStroke: 'rgba(220,220,220,0.8)'
     },
     { // red
-      fillColor: "rgba(247,70,74,0.2)",
-      strokeColor: "rgba(247,70,74,1)",
-      pointColor: "rgba(247,70,74,1)",
-      pointStrokeColor: "#fff",
-      pointHighlightFill: "#fff",
-      pointHighlightStroke: "rgba(247,70,74,0.8)"
+      fillColor: 'rgba(247,70,74,0.2)',
+      strokeColor: 'rgba(247,70,74,1)',
+      pointColor: 'rgba(247,70,74,1)',
+      pointStrokeColor: '#fff',
+      pointHighlightFill: '#fff',
+      pointHighlightStroke: 'rgba(247,70,74,0.8)'
     },
     { // green
-      fillColor: "rgba(70,191,189,0.2)",
-      strokeColor: "rgba(70,191,189,1)",
-      pointColor: "rgba(70,191,189,1)",
-      pointStrokeColor: "#fff",
-      pointHighlightFill: "#fff",
-      pointHighlightStroke: "rgba(70,191,189,0.8)"
+      fillColor: 'rgba(70,191,189,0.2)',
+      strokeColor: 'rgba(70,191,189,1)',
+      pointColor: 'rgba(70,191,189,1)',
+      pointStrokeColor: '#fff',
+      pointHighlightFill: '#fff',
+      pointHighlightStroke: 'rgba(70,191,189,0.8)'
     },
     { // yellow
-      fillColor: "rgba(253,180,92,0.2)",
-      strokeColor: "rgba(253,180,92,1)",
-      pointColor: "rgba(253,180,92,1)",
-      pointStrokeColor: "#fff",
-      pointHighlightFill: "#fff",
-      pointHighlightStroke: "rgba(253,180,92,0.8)"
+      fillColor: 'rgba(253,180,92,0.2)',
+      strokeColor: 'rgba(253,180,92,1)',
+      pointColor: 'rgba(253,180,92,1)',
+      pointStrokeColor: '#fff',
+      pointHighlightFill: '#fff',
+      pointHighlightStroke: 'rgba(253,180,92,0.8)'
     },
     { // grey
-      fillColor: "rgba(148,159,177,0.2)",
-      strokeColor: "rgba(148,159,177,1)",
-      pointColor: "rgba(148,159,177,1)",
-      pointStrokeColor: "#fff",
-      pointHighlightFill: "#fff",
-      pointHighlightStroke: "rgba(148,159,177,0.8)"
+      fillColor: 'rgba(148,159,177,0.2)',
+      strokeColor: 'rgba(148,159,177,1)',
+      pointColor: 'rgba(148,159,177,1)',
+      pointStrokeColor: '#fff',
+      pointHighlightFill: '#fff',
+      pointHighlightStroke: 'rgba(148,159,177,0.8)'
     },
     { // dark grey
-      fillColor: "rgba(77,83,96,0.2)",
-      strokeColor: "rgba(77,83,96,1)",
-      pointColor: "rgba(77,83,96,1)",
-      pointStrokeColor: "#fff",
-      pointHighlightFill: "#fff",
-      pointHighlightStroke: "rgba(77,83,96,1)"
+      fillColor: 'rgba(77,83,96,0.2)',
+      strokeColor: 'rgba(77,83,96,1)',
+      pointColor: 'rgba(77,83,96,1)',
+      pointStrokeColor: '#fff',
+      pointHighlightFill: '#fff',
+      pointHighlightStroke: 'rgba(77,83,96,1)'
     }
   ];
 
-  angular.module("chart.js", [])
-    .directive("chartBase", function () { return chart(); })
-    .directive("chartLine", function () { return chart('Line'); })
-    .directive("chartBar", function () { return chart('Bar'); })
-    .directive("chartRadar", function () { return chart('Radar'); })
-    .directive("chartDoughnut", function () { return chart('Doughnut'); })
-    .directive("chartPie", function () { return chart('Pie'); })
-    .directive("chartPolarArea", function () { return chart('PolarArea'); });
+  angular.module('chart.js', [])
+    .directive('chartBase', function () { return chart(); })
+    .directive('chartLine', function () { return chart('Line'); })
+    .directive('chartBar', function () { return chart('Bar'); })
+    .directive('chartRadar', function () { return chart('Radar'); })
+    .directive('chartDoughnut', function () { return chart('Doughnut'); })
+    .directive('chartPie', function () { return chart('Pie'); })
+    .directive('chartPolarArea', function () { return chart('PolarArea'); });
 
   function chart (type) {
     return {
@@ -85,7 +85,7 @@
         legend: '@',
         click: '='
       },
-      link: function (scope, elem, attrs) {
+      link: function (scope, elem/*, attrs */) {
         var chart, container = document.createElement('div');
         container.className = 'chart-container';
         elem.replaceWith(container);
@@ -114,7 +114,7 @@
         scope.$watch('labels', resetChart, true);
         scope.$watch('options', resetChart, true);
 
-        scope.$watch('chartType', function (newVal, oldVal) {
+        scope.$watch('chartType', function (newVal/*, oldVal */) {
           if (! newVal) return;
           if (chart) chart.destroy();
           chart = createChart(newVal, scope, elem);
@@ -124,7 +124,7 @@
           if (chart) chart.destroy();
         });
 
-        function resetChart (newVal, oldVal) {
+        function resetChart (newVal/*, oldVal*/) {
           if (isEmpty(newVal)) return;
           var chartType = type || scope.chartType;
           if (! chartType) return;
@@ -154,7 +154,7 @@
 
   function createChart (type, scope, elem) {
     if (! scope.data || ! scope.data.length) return;
-    var cvs = elem[0], ctx = cvs.getContext("2d");
+    var cvs = elem[0], ctx = cvs.getContext('2d');
     var data = Array.isArray(scope.data[0]) ?
       getDataSets(scope.labels, scope.data, scope.series || [], scope.colours) :
       getData(scope.labels, scope.data, scope.colours);

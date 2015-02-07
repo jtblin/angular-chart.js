@@ -1,4 +1,6 @@
 (function () {
+  'use strict';
+
   var gulp = require('gulp');
   var less = require('gulp-less');
   var sourcemaps = require('gulp-sourcemaps');
@@ -23,7 +25,7 @@
   });
 
   gulp.task('lint', function () {
-    return gulp.src('./*.js')
+    return gulp.src('./**/*.js')
       .pipe(jshint())
       .pipe(jshint.reporter(stylish));
   });
