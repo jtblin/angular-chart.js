@@ -184,22 +184,28 @@
     while (colours.length < scope.data.length) {
       colours.push(scope.getColour());
     }
-    return colours;
+    return colours.map(convertColour);
+  }
+
+  function convertColour (colour) {
+    if (typeof colour === 'object' && colour !== null) return colour;
+    if (typeof colour === 'string' && colour[0] === '#') return getColour(hexToRgb(colour.substr(1)));
+    return getRandomColour();
   }
 
   function getRandomColour () {
-    var c = [getRandomInt(0, 255), getRandomInt(0, 255), getRandomInt(0, 255)];
-    return getColour(c);
+    var colour = [getRandomInt(0, 255), getRandomInt(0, 255), getRandomInt(0, 255)];
+    return getColour(colour);
   }
 
-  function getColour (c) {
+  function getColour (colour) {
     return {
-      fillColor: rgba(c, 0.2),
-      strokeColor: rgba(c, 1),
-      pointColor: rgba(c, 1),
+      fillColor: rgba(colour, 0.2),
+      strokeColor: rgba(colour, 1),
+      pointColor: rgba(colour, 1),
       pointStrokeColor: '#fff',
       pointHighlightFill: '#fff',
-      pointHighlightStroke: rgba(c, 0.8)
+      pointHighlightStroke: rgba(colour, 0.8)
     };
   }
 
@@ -207,8 +213,8 @@
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
-  function rgba(c, a) {
-    return 'rgba(' + c.concat(a).join(',') + ')';
+  function rgba(colour, alpha) {
+    return 'rgba(' + colour.concat(alpha).join(',') + ')';
   }
 
   function getDataSets (labels, data, series, colours) {
@@ -262,6 +268,16 @@
     return ! value ||
       (Array.isArray(value) && ! value.length) ||
       (typeof value === 'object' && ! Object.keys(value).length);
+  }
+
+  // Credit: http://stackoverflow.com/a/11508164/1190235
+  function hexToRgb (hex) {
+    var bigint = parseInt(hex, 16),
+        r = (bigint >> 16) & 255,
+        g = (bigint >> 8) & 255,
+        b = bigint & 255;
+
+    return [r, g, b];
   }
 
 })();
