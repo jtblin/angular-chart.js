@@ -19,7 +19,8 @@ or copy the files from `dist/`. Then add the sources to your code (adjust paths 
 
 # Utilisation
 
-There are 6 types of charts so 6 directives: `chart-line`, `chart-bar`, `chart-radar`, `chart-pie`, `chart-polar-area`, `chart-doughnut`.
+There are 6 types of charts so 6 directives: `chart-line`, `chart-bar`, `chart-radar`, `chart-pie`, 
+`chart-polar-area`, `chart-doughnut`.
 
 They all use mostly the same API:
 
@@ -37,7 +38,8 @@ dynamically.
 
 ## Browser compatibility
 
-For IE8 and older browsers, you will need to include [excanvas](https://code.google.com/p/explorercanvas/wiki/Instructions). 
+For IE8 and older browsers, you will need 
+to include [excanvas](https://code.google.com/p/explorercanvas/wiki/Instructions). 
 You will also need [shims](https://github.com/es-shims/es5-shim) for ES5 functions.
 
 ```html
@@ -103,6 +105,15 @@ $scope.$on('create', function (chart) {
 created multiple times during angular `watch` lifecycle.
 
 angular-chart.js listen to the scope `destroy` event and destroy the chart when it happens.
+
+## Colours
+
+There are a set of 7 default colours. Colours can be replaced using the `colours` attribute.
+If there is more data than colours, colours are generated randomly or can be provided 
+via a function through the `getColour` attribute.
+
+Hex colours are converted to Chart.js colours automatically, 
+including different shades for highlight, fill, stroke, etc.
 
 # Issues
 
