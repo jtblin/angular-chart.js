@@ -113,6 +113,7 @@
         scope.$watch('series', resetChart, true);
         scope.$watch('labels', resetChart, true);
         scope.$watch('options', resetChart, true);
+        scope.$watch('colours', resetChart, true);
 
         scope.$watch('chartType', function (newVal/*, oldVal */) {
           if (! newVal) return;
@@ -186,7 +187,6 @@
   function updateChart (chart, values, scope) {
     if (Array.isArray(scope.data[0])) {
       chart.datasets.forEach(function (dataset, i) {
-        if (scope.colours) updateColours(dataset, scope.colours[i]);
         (dataset.points || dataset.bars).forEach(function (dataItem, j) {
           dataItem.value = values[i][j];
         });
@@ -194,19 +194,10 @@
     } else {
       chart.segments.forEach(function (segment, i) {
         segment.value = values[i];
-        if (scope.colours) updateColours(segment, scope.colours[i]);
       });
     }
     chart.update();
     scope.$emit('update', chart);
-  }
-
-  function updateColours (item, colour) {
-    item.fillColor = colour.fillColor;
-    item.highlightColor = colour.highlightColor;
-    item.strokeColor = colour.strokeColor;
-    item.pointColor = colour.pointColor;
-    item.pointStrokeColor = colour.pointStrokeColor;
   }
 
   function getDataSets (labels, data, series, colours) {

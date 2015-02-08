@@ -82,7 +82,7 @@ angular.module("app", ["chart.js"]).controller("LineCtrl", ['$scope', '$timeout'
 
 ## Reactive
 
-angular-chart.js watch updates on data, series, labels and options and will update, or destroy and recreate, 
+angular-chart.js watch updates on data, series, labels, colours and options and will update, or destroy and recreate, 
 the chart on changes.
 
 ## Events

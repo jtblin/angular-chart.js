@@ -4,8 +4,7 @@
 describe('integration', function () {
   'use strict';
 
-  var expected = 'test/fixtures/charts.png',
-      webshot = require('webshot'),
+  var webshot = require('webshot'),
       gm = require('gm'),
       tmp = require('tmp-sync'),
       mkdirp = require('mkdirp').sync,
@@ -30,10 +29,14 @@ describe('integration', function () {
 
   mkdirp(WEBSHOT_FAILED_DIR);
 
-  ['charts'].forEach(function (name) {
+  [
+    '51-pie-update-colours',
+    'charts'
+  ].forEach(function (name) {
     it('compares screenshots for: ' + name, function (done) {
       var image = dir + name + '.png',
-          url = 'http://localhost:8080/test/fixtures/' + name + '.html';
+          url = 'http://localhost:8080/test/fixtures/' + name + '.html',
+          expected = 'test/fixtures/' + name + '.png';
 
       webshot(url, image, WEBSHOT_OPTIONS, function (err) {
         if (err) return done(err);
@@ -43,7 +46,7 @@ describe('integration', function () {
             var failed = WEBSHOT_FAILED_DIR + name + '-failed.png',
                 msg = 'Expected screenshots to be similar. Screenshot saved to ' + failed;
             cp(image, failed);
-            if (process.env.IMGUR_ID) {
+            if (process.env.CI && process.env.IMGUR_ID) {
               imgur.setClientID(process.env.IMGUR_ID);
               imgur.upload(image, function (err, res) {
                 if (err) return done(err);
