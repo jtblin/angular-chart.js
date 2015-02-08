@@ -30,6 +30,7 @@ describe('integration', function () {
   mkdirp(WEBSHOT_FAILED_DIR);
 
   [
+    '54-not-enough-colours',
     '51-pie-update-colours',
     'charts'
   ].forEach(function (name) {

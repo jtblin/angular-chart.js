@@ -80,7 +80,8 @@
         labels: '=',
         options: '=',
         series: '=',
-        colours: '=',
+        colours: '=?',
+        getColour: '=?',
         chartType: '=',
         legend: '@',
         click: '='
@@ -155,6 +156,8 @@
 
   function createChart (type, scope, elem) {
     if (! scope.data || ! scope.data.length) return;
+    scope.getColour = typeof scope.getColour === 'function' ? scope.getColour : getRandomColour;
+    scope.colours = getColours(scope);
     var cvs = elem[0], ctx = cvs.getContext('2d');
     var data = Array.isArray(scope.data[0]) ?
       getDataSets(scope.labels, scope.data, scope.series || [], scope.colours) :
@@ -176,10 +179,65 @@
     return chart;
   }
 
+  function getColours (scope) {
+    var colours = scope.colours || angular.copy(Chart.defaults.global.colours);
+    while (colours.length < scope.data.length) {
+      colours.push(scope.getColour());
+    }
+    return colours;
+  }
+
+  function getRandomColour () {
+    var c = [getRandomInt(0, 255), getRandomInt(0, 255), getRandomInt(0, 255)];
+    return getColour(c);
+  }
+
+  function getColour (c) {
+    return {
+      fillColor: rgba(c, 0.2),
+      strokeColor: rgba(c, 1),
+      pointColor: rgba(c, 1),
+      pointStrokeColor: '#fff',
+      pointHighlightFill: '#fff',
+      pointHighlightStroke: rgba(c, 0.8)
+    };
+  }
+
+  function getRandomInt (min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
+  function rgba(c, a) {
+    return 'rgba(' + c.concat(a).join(',') + ')';
+  }
+
+  function getDataSets (labels, data, series, colours) {
+    return {
+      labels: labels,
+      datasets: data.map(function (item, i) {
+        var dataSet = angular.copy(colours[i]);
+        dataSet.label = series[i];
+        dataSet.data = item;
+        return dataSet;
+      })
+    };
+  }
+
+  function getData (labels, data, colours) {
+    return labels.map(function (label, i) {
+      return {
+        label: label,
+        value: data[i],
+        color: colours[i].strokeColor,
+        highlight: colours[i].pointHighlightStroke
+      };
+    });
+  }
+
   function setLegend (elem, chart) {
     var $parent = elem.parent(),
-      $oldLegend = $parent.find('chart-legend'),
-      legend = '<chart-legend>' + chart.generateLegend() + '</chart-legend>';
+        $oldLegend = $parent.find('chart-legend'),
+        legend = '<chart-legend>' + chart.generateLegend() + '</chart-legend>';
     if ($oldLegend.length) $oldLegend.replaceWith(legend);
     else $parent.append(legend);
   }
@@ -198,31 +256,6 @@
     }
     chart.update();
     scope.$emit('update', chart);
-  }
-
-  function getDataSets (labels, data, series, colours) {
-    colours = colours || Chart.defaults.global.colours;
-    return {
-      labels: labels,
-      datasets: data.map(function (item, i) {
-        var dataSet = angular.copy(colours[i]);
-        dataSet.label = series[i];
-        dataSet.data = item;
-        return dataSet;
-      })
-    };
-  }
-
-  function getData (labels, data, colours) {
-    colours = colours || Chart.defaults.global.colours;
-    return labels.map(function (label, i) {
-      return {
-        label: label,
-        value: data[i],
-        color: colours[i].strokeColor,
-        highlight: colours[i].pointHighlightStroke
-      };
-    });
   }
 
   function isEmpty (value) {
