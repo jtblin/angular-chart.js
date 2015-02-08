@@ -28,6 +28,7 @@ They all use mostly the same API:
 - `options`: chart options (as from [Chart.js documentation](http://www.chartjs.org/docs/))
 - `series`: (default: `[]`): series labels (line, bar, radar)
 - `colours`: data colours (will use default colours if not specified)
+- `getColour`: function that returns a colour in case there are not enough (will use random colours if not specified)
 - `click`: onclick event handler (line, radar)
 - `legend`: (default: `false`): show legend below the chart
 
@@ -82,7 +83,7 @@ angular.module("app", ["chart.js"]).controller("LineCtrl", ['$scope', '$timeout'
 
 ## Reactive
 
-angular-chart.js watch updates on data, series, labels and options and will update, or destroy and recreate, 
+angular-chart.js watch updates on data, series, labels, colours and options and will update, or destroy and recreate, 
 the chart on changes.
 
 ## Events
