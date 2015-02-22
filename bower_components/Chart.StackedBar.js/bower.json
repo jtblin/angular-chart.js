@@ -1,0 +1,13 @@
+{
+  "name": "Chart.StackedBar.js",
+  "version": "1.0.1",
+  "description": "StackedBar implementation for Chart.js",
+  "homepage": "https://github.com/nnnick/Chart.js",
+  "author": "Regaddi",
+  "main": [
+    "Chart.StackedBar.js"
+  ],
+  "dependencies": {
+    "Chart.js": "1.0.0-beta"
+  }
+}

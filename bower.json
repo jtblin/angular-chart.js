@@ -40,6 +40,10 @@
   "devDependencies": {
     "angular-bootstrap": "~0.11.0",
     "font-awesome": "~4.1.0",
-    "rainbow": "~1.1.9"
+    "rainbow": "~1.1.9",
+    "Chart.StackedBar.js": "~1.0.1"
+  },
+  "resolutions": {
+    "Chart.js": "~1.0.1"
   }
 }
