@@ -84,6 +84,16 @@
     };
   });
 
+  app.controller('StackedBarCtrl', function ($scope) {
+    $scope.labels = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+    $scope.type = 'StackedBar';
+
+    $scope.data = [
+      [65, 59, 90, 81, 56, 55, 40],
+      [28, 48, 40, 19, 96, 27, 100]
+    ];
+  });
+
   app.controller('DataTablesCtrl', function ($scope) {
     $scope.labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
     $scope.data = [
