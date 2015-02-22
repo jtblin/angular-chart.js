@@ -34,7 +34,7 @@ They all use mostly the same API:
 - `legend`: (default: `false`): show legend below the chart
 
 There is another directive `chart-base` that takes an extra attribute `chart-type` to define the type
-dynamically.
+dynamically, see [stacked bar example](http://jtblin.github.io/angular-chart.js/examples/stacked-bars.html).
 
 ## Browser compatibility
 
@@ -96,7 +96,7 @@ angular-chart.js emits the following events on the `scope` and pass the chart as
 * `update`: when chart is updated
 
 ```
-$scope.$on('create', function (chart) {
+$scope.$on('create', function (event, chart) {
   console.log(chart);
 });
 ```
