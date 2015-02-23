@@ -4,15 +4,19 @@
 [![npm version](https://badge.fury.io/js/angular-chart.js.svg)](http://badge.fury.io/js/angular-chart.js)
 [![Build Status](https://travis-ci.org/jtblin/angular-chart.js.png)](https://travis-ci.org/jtblin/angular-chart.js)
 
-Beautiful, reactive, responsive charts for Angular.JS using [Chart.js](http://www.chartjs.org/). [Demo](http://jtblin.github.io/angular-chart.js/)
+Beautiful, reactive, responsive charts for Angular.JS using [Chart.js](http://www.chartjs.org/). 
+
+[Demo](http://jtblin.github.io/angular-chart.js/)
 
 # Installation
 
     bower install angular-chart.js --save
     
-or copy the files from `dist/`. Then add the sources to your code (adjust paths as needed):
+or copy the files from `dist/`. Then add the sources to your code (adjust paths as needed) after 
+adding the dependencies for Angular and Chart.js first:
 
 ```html
+<script src="../bower_components/angular/angular.min.js"></script>
 <script src="/bower_components/Chart.js/Chart.min.js"></script>
 <script src="/bower_components/angular-chart.js/dist/angular-chart.js"></script>
 ```
@@ -30,7 +34,7 @@ They all use mostly the same API:
 - `series`: (default: `[]`): series labels (line, bar, radar)
 - `colours`: data colours (will use default colours if not specified)
 - `getColour`: function that returns a colour in case there are not enough (will use random colours if not specified)
-- `click`: onclick event handler (line, radar)
+- `click`: onclick event handler
 - `legend`: (default: `false`): show legend below the chart
 
 There is another directive `chart-base` that takes an extra attribute `chart-type` to define the type
@@ -120,8 +124,9 @@ including different shades for highlight, fill, stroke, etc.
 **Issues or feature requests for Chart.js (e.g. new chart type, new axis, etc.) need to be opened on 
 [Chart.js issues tracker](https://github.com/nnnick/Chart.js/issues)**
  
-Open issues in [github](https://github.com/jtblin/angular-chart.js/issues). **Please add a link to a plunker, jsbin, 
-or equivalent.** Here is a [jsbin template](http://jsbin.com/dufibi/3/edit?html,js,output) for convenience.
+Please check if issue exists and otherwise open issue in [github](https://github.com/jtblin/angular-chart.js/issues). 
+**Please add a link to a plunker, jsbin, or equivalent.** 
+Here is a [jsbin template](http://jsbin.com/dufibi/3/edit?html,js,output) for convenience.
 
 # Contributing
  
