@@ -15,6 +15,7 @@
   var bumper = require('gulp-bump');
   var git = require('gulp-git');
   var shell = require('gulp-shell');
+  var rename = require('gulp-rename');
   var fs = require('fs');
   var sequence = require('gulp-sequence');
 
@@ -51,8 +52,14 @@
   gulp.task('bump-minor', bump('minor'));
   gulp.task('bump-major', bump('major'));
 
-  gulp.task('js', ['lint', 'style'], function () {
+  gulp.task('bower', function () {
     return gulp.src('./angular-chart.js')
+      .pipe(gulp.dest('./dist'));
+  });
+
+  gulp.task('js', ['lint', 'style', 'bower'], function () {
+    return gulp.src('./angular-chart.js')
+      .pipe(rename('angular-chart.min.js'))
       .pipe(sourcemaps.init())
       .pipe(uglify())
       .pipe(sourcemaps.write('./'))
@@ -115,7 +122,7 @@
     return JSON.parse(fs.readFileSync('package.json', 'utf8')).version;
   }
 
-  gulp.task('default', sequence(['less', 'js'], 'test', 'build'));
+  gulp.task('default', sequence('check', ['less', 'js'], 'build'));
   gulp.task('test', sequence('unit', 'integration'));
   gulp.task('check', sequence(['lint', 'style'], 'test'));
   gulp.task('deploy-patch', sequence('default', 'bump-patch', 'update', 'git-commit', 'git-push', 'npm'));
