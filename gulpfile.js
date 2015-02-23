@@ -33,13 +33,17 @@
       .pipe(jshint.reporter(stylish));
   });
 
-  gulp.task('jscs', function () {
+  gulp.task('style', function () {
     return gulp.src('**/*.js')
       .pipe(jscs());
   });
 
-  gulp.task('test', function () {
-    return gulp.src('test/*.js', {read: false})
+  gulp.task('unit', shell.task([
+    ' ./node_modules/mocha-phantomjs/bin/mocha-phantomjs -R spec test/index.html '
+  ]));
+
+  gulp.task('integration', function () {
+    return gulp.src('test/test.integration.js', {read: false})
       .pipe(mocha({ reporter: 'list', timeout: 10000, require: 'test/support/setup.js' }));
   });
 
@@ -47,7 +51,7 @@
   gulp.task('bump-minor', bump('minor'));
   gulp.task('bump-major', bump('major'));
 
-  gulp.task('js', ['lint', 'jscs'], function () {
+  gulp.task('js', ['lint', 'style'], function () {
     return gulp.src('./angular-chart.js')
       .pipe(sourcemaps.init())
       .pipe(uglify())
@@ -112,7 +116,8 @@
   }
 
   gulp.task('default', sequence(['less', 'js'], 'test', 'build'));
-  gulp.task('check', sequence(['lint', 'jscs'], 'test'));
+  gulp.task('test', sequence('unit', 'integration'));
+  gulp.task('check', sequence(['lint', 'style'], 'test'));
   gulp.task('deploy-patch', sequence('default', 'bump-patch', 'update', 'git-commit', 'git-push', 'npm'));
   gulp.task('deploy-minor', sequence('default', 'bump-minor', 'update', 'git-commit', 'git-push', 'npm'));
   gulp.task('deploy-major', sequence('default', 'bump-patch', 'update', 'git-commit', 'git-push', 'npm'));

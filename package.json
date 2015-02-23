@@ -13,6 +13,7 @@
   "license": "BSD",
   "devDependencies": {
     "chai": "^1.10.0",
+    "chai-string": "^1.1.1",
     "cp": "^0.2.0",
     "gm": "^1.17.0",
     "gulp": "^3.8.6",
@@ -34,6 +35,9 @@
     "less": "^1.7.3",
     "mkdirp": "^0.5.0",
     "mocha": "^2.1.0",
+    "mocha-phantomjs": "^3.5.3",
+    "sinon": "^1.12.2",
+    "sinon-chai": "^2.7.0",
     "testatic": "^0.1.0",
     "tmp-sync": "jtblin/node-tmp-sync",
     "webshot": "^0.15.3"
