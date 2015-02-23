@@ -10,6 +10,10 @@
     "test": "gulp check"
   },
   "author": "Jerome Touffe-Blin <jtblin@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/jtblin/angular-chart.js.git"
+  },
   "license": "BSD",
   "devDependencies": {
     "chai": "^1.10.0",

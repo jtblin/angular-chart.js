@@ -8,6 +8,10 @@
   "authors": [
     "Jerome Touffe-Blin <jtblin@gmail.com>"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/jtblin/angular-chart.js.git"
+  },
   "description": "An angular.js wrapper for Chart.js - reactive, responsive, beautiful charts.",
   "moduleType": [
     "globals"
