@@ -15,6 +15,7 @@
   var bumper = require('gulp-bump');
   var git = require('gulp-git');
   var shell = require('gulp-shell');
+  var rename = require('gulp-rename');
   var fs = require('fs');
   var sequence = require('gulp-sequence');
 
@@ -33,13 +34,17 @@
       .pipe(jshint.reporter(stylish));
   });
 
-  gulp.task('jscs', function () {
+  gulp.task('style', function () {
     return gulp.src('**/*.js')
       .pipe(jscs());
   });
 
-  gulp.task('test', function () {
-    return gulp.src('test/*.js', {read: false})
+  gulp.task('unit', shell.task([
+    ' ./node_modules/mocha-phantomjs/bin/mocha-phantomjs -R spec test/index.html '
+  ]));
+
+  gulp.task('integration', function () {
+    return gulp.src('test/test.integration.js', {read: false})
       .pipe(mocha({ reporter: 'list', timeout: 10000, require: 'test/support/setup.js' }));
   });
 
@@ -47,8 +52,14 @@
   gulp.task('bump-minor', bump('minor'));
   gulp.task('bump-major', bump('major'));
 
-  gulp.task('js', ['lint', 'jscs'], function () {
+  gulp.task('bower', function () {
     return gulp.src('./angular-chart.js')
+      .pipe(gulp.dest('./dist'));
+  });
+
+  gulp.task('js', ['lint', 'style', 'bower'], function () {
+    return gulp.src('./angular-chart.js')
+      .pipe(rename('angular-chart.min.js'))
       .pipe(sourcemaps.init())
       .pipe(uglify())
       .pipe(sourcemaps.write('./'))
@@ -111,8 +122,9 @@
     return JSON.parse(fs.readFileSync('package.json', 'utf8')).version;
   }
 
-  gulp.task('default', sequence(['less', 'js'], 'test', 'build'));
-  gulp.task('check', sequence(['lint', 'jscs'], 'test'));
+  gulp.task('default', sequence('check', ['less', 'js'], 'build'));
+  gulp.task('test', sequence('unit', 'integration'));
+  gulp.task('check', sequence(['lint', 'style'], 'test'));
   gulp.task('deploy-patch', sequence('default', 'bump-patch', 'update', 'git-commit', 'git-push', 'npm'));
   gulp.task('deploy-minor', sequence('default', 'bump-minor', 'update', 'git-commit', 'git-push', 'npm'));
   gulp.task('deploy-major', sequence('default', 'bump-patch', 'update', 'git-commit', 'git-push', 'npm'));

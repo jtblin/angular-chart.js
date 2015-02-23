@@ -1,6 +1,6 @@
 {
   "name": "angular-chart.js",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "main": [
     "./dist/angular-chart.js",
     "./dist/angular-chart.css"
@@ -8,6 +8,10 @@
   "authors": [
     "Jerome Touffe-Blin <jtblin@gmail.com>"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/jtblin/angular-chart.js.git"
+  },
   "description": "An angular.js wrapper for Chart.js - reactive, responsive, beautiful charts.",
   "moduleType": [
     "globals"
@@ -41,9 +45,12 @@
     "angular-bootstrap": "~0.11.0",
     "font-awesome": "~4.1.0",
     "rainbow": "~1.1.9",
-    "Chart.StackedBar.js": "~1.0.1"
+    "Chart.StackedBar.js": "~1.0.1",
+    "angular-mocks": "~1.3.10"
   },
   "resolutions": {
-    "Chart.js": "~1.0.1"
+    "Chart.js": "~1.0.1",
+    "angular": "1.x",
+    "angular-mocks": "1.3.10"
   }
 }
