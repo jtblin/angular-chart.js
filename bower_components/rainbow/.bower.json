@@ -1,0 +1,14 @@
+{
+  "name": "rainbow",
+  "homepage": "https://github.com/ccampbell/rainbow",
+  "version": "1.1.9",
+  "_release": "1.1.9",
+  "_resolution": {
+    "type": "version",
+    "tag": "1.1.9",
+    "commit": "f6795baab59890b3f8c5c49bc223af07afae515b"
+  },
+  "_source": "git://github.com/ccampbell/rainbow.git",
+  "_target": "~1.1.9",
+  "_originalSource": "rainbow"
+}
