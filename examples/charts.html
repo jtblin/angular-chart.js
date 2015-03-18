@@ -137,6 +137,7 @@
                   <li><code>options</code> (default: <code>{}</code>): Chart.js options</li>
                   <li><code>series</code> (default: <code>[]</code>): series labels</li>
                   <li><code>click</code> (optional): onclick event handler</li>
+                  <li><code>hover</code> (optional): onmousemove event handler</li>
                   <li><code>colours</code> (default to global colours): colours for the chart</li>
                 </ul>
               </div>
@@ -158,6 +159,13 @@
   ];
   $scope.onClick = function (points, evt) {
     console.log(points, evt);
+  };
+  $scope.onHover = function (points, evt) {
+	if(points.length>0){
+	  console.log('Point',points[0].value);
+	}else{
+	  console.log('No point');
+	}
   };
 });
               </code></pre>

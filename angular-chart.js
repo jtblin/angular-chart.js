@@ -35,7 +35,8 @@
         getColour: '=?',
         chartType: '=',
         legend: '@',
-        click: '='
+        click: '=',
+        hover: '='
       },
       link: function (scope, elem/*, attrs */) {
         var chart, container = document.createElement('div');
@@ -127,6 +128,17 @@
         if (click) {
           var activePoints = click.call(chart, evt);
           scope.click(activePoints, evt);
+          scope.$apply();
+        }
+      };
+    }
+	if (scope.hover) {
+      cvs.onmousemove = function (evt) {
+		var hover = chart.getPointsAtEvent || chart.getBarsAtEvent || chart.getSegmentsAtEvent;
+
+        if (hover) {
+          var activePoints = hover.call(chart, evt);
+          scope.hover(activePoints, evt);
           scope.$apply();
         }
       };

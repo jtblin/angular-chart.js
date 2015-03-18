@@ -18,6 +18,13 @@
     $scope.onClick = function (points, evt) {
       console.log(points, evt);
     };
+    $scope.onHover = function (points, evt) {
+      if(points.length>0){
+		console.log('Point',points[0].value);
+	  }else{
+		console.log('No point');
+	  }
+    };
 
     $timeout(function () {
       $scope.labels = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
