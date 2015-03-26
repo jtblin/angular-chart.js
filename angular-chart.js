@@ -121,28 +121,27 @@
     var chart = new Chart(ctx)[type](data, scope.options || {});
     scope.$emit('create', chart);
 
-    if (scope.click) {
-      cvs.onclick = function (evt) {
-        var click = chart.getPointsAtEvent || chart.getBarsAtEvent || chart.getSegmentsAtEvent;
+	['hover', 'click'].forEach(function(action){
+		if (scope[action]){
+			  var func = function (evt) {
+				var atEvent = chart.getPointsAtEvent || chart.getBarsAtEvent || chart.getSegmentsAtEvent;
 
-        if (click) {
-          var activePoints = click.call(chart, evt);
-          scope.click(activePoints, evt);
-          scope.$apply();
-        }
-      };
-    }
-	if (scope.hover) {
-      cvs.onmousemove = function (evt) {
-		var hover = chart.getPointsAtEvent || chart.getBarsAtEvent || chart.getSegmentsAtEvent;
-
-        if (hover) {
-          var activePoints = hover.call(chart, evt);
-          scope.hover(activePoints, evt);
-          scope.$apply();
-        }
-      };
-    }
+				if (atEvent) {
+				  var activePoints = atEvent.call(chart, evt);
+				  scope[action](activePoints, evt);
+				  scope.$apply();
+				}
+			  };
+			  switch(action){
+				case 'click':
+					cvs.onclick = func;
+					break;
+				case 'hover':
+					cvs.onmousemove = func;
+					break;
+			  }
+		}
+	});
     if (scope.legend && scope.legend !== 'false') setLegend(elem, chart);
     return chart;
   }

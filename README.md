@@ -36,6 +36,7 @@ They all use mostly the same API:
 - `colours`: data colours (will use default colours if not specified)
 - `getColour`: function that returns a colour in case there are not enough (will use random colours if not specified)
 - `click`: onclick event handler
+- `hover`: onmousemove event handler
 - `legend`: (default: `false`): show legend below the chart
 
 There is another directive `chart-base` that takes an extra attribute `chart-type` to define the type
@@ -142,11 +143,12 @@ Pull requests welcome!
 
 Thank you!
 
-* @ManuelRauber
-* @vad710
-* @JAAulde
-* @offsky
-* @jonathansampson
+* [@ManuelRauber](https://twitter.com/ManuelRauber)
+* [@vad710](https://twitter.com/vad710)
+* [@JAAulde](https://twitter.com/JAAulde)
+* [@offsky](https://twitter.com/offsky)
+* [@jonathansampson](https://twitter.com/jonathansampson)
+* [@idangozlan](https://twitter.com/idangozlan)
 
 # Author
 
@@ -154,5 +156,5 @@ Jerome Touffe-Blin, [@jtblin](https://twitter.com/jtblin), [About me](http://abo
 
 # License
 
-angular-chart.js is copyright 2014 Jerome Touffe-Blin and contributors. 
+angular-chart.js is copyright 2015 Jerome Touffe-Blin and contributors. 
 It is licensed under the BSD license. See the include LICENSE file for details.
