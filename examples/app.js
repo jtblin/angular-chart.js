@@ -19,11 +19,11 @@
       console.log(points, evt);
     };
     $scope.onHover = function (points, evt) {
-      if(points.length>0){
-		console.log('Point', points[0].value);
-	  }else{
-		console.log('No point');
-	  }
+      if( points.length > 0) {
+        console.log('Point', points[0].value);
+      } else {
+        console.log('No point');
+      }
     };
 
     $timeout(function () {

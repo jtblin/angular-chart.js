@@ -122,7 +122,7 @@
     scope.$emit('create', chart);
 
     ['hover', 'click'].forEach(function (action) {
-	  if (scope[action]){
+	  if (scope[action]) {
         var func = function (evt) {
           var atEvent = chart.getPointsAtEvent || chart.getBarsAtEvent || chart.getSegmentsAtEvent;
 
@@ -132,9 +132,9 @@
             scope.$apply();
           }
         };
-        if(action=='click'){
+        if(action == 'click') {
           cvs.onclick = func;
-        }else{
+        } else {
           cvs.onmousemove = func;
         }
       }
