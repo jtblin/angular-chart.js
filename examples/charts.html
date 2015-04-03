@@ -61,7 +61,7 @@
         <p>
           <a class="btn btn-default btn-lg" href="https://github.com/jtblin/angular-chart"><i class="icon-github"></i>Code on Github</a>
           <a class="btn btn-success btn-lg" href="../dist/angular-chart.js.tar.gz" download="angular-chart.js.tar.gz">
-            <i class="fa fa-download"></i> Download <small>(0.5.3)</small>
+            <i class="fa fa-download"></i> Download <small>(0.6.0)</small>
           </a>
         </p>
       </div>
@@ -121,7 +121,7 @@
             <div class="panel-heading">Line Chart</div>
             <div class="panel-body">
               <canvas id="line" class="chart chart-line chart-xl" data="data" labels="labels" legend="true"
-                      click="onClick" hover="onHover" series="series"></canvas>
+                      click="onClick" series="series"></canvas>
             </div>
           </div>
         </div>
@@ -137,7 +137,6 @@
                   <li><code>options</code> (default: <code>{}</code>): Chart.js options</li>
                   <li><code>series</code> (default: <code>[]</code>): series labels</li>
                   <li><code>click</code> (optional): onclick event handler</li>
-                  <li><code>hover</code> (optional): onmousemove event handler</li>
                   <li><code>colours</code> (default to global colours): colours for the chart</li>
                 </ul>
               </div>
@@ -159,13 +158,6 @@
   ];
   $scope.onClick = function (points, evt) {
     console.log(points, evt);
-  };
-  $scope.onHover = function (points, evt) {
-	if(points.length>0){
-	  console.log('Point',points[0].value);
-	}else{
-	  console.log('No point');
-	}
   };
 });
               </code></pre>
