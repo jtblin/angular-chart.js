@@ -35,7 +35,8 @@
         getColour: '=?',
         chartType: '=',
         legend: '@',
-        click: '='
+        click: '=',
+        hover: '='
       },
       link: function (scope, elem/*, attrs */) {
         var chart, container = document.createElement('div');
@@ -120,17 +121,24 @@
     var chart = new Chart(ctx)[type](data, scope.options || {});
     scope.$emit('create', chart);
 
-    if (scope.click) {
-      cvs.onclick = function (evt) {
-        var click = chart.getPointsAtEvent || chart.getBarsAtEvent || chart.getSegmentsAtEvent;
+    ['hover', 'click'].forEach(function (action) {
+      if (scope[action]) {
+        var func = function (evt) {
+          var atEvent = chart.getPointsAtEvent || chart.getBarsAtEvent || chart.getSegmentsAtEvent;
 
-        if (click) {
-          var activePoints = click.call(chart, evt);
-          scope.click(activePoints, evt);
-          scope.$apply();
+          if (atEvent) {
+            var activePoints = atEvent.call(chart, evt);
+            scope[action](activePoints, evt);
+            scope.$apply();
+          }
+        };
+        if (action == 'click') {
+          cvs.onclick = func;
+        } else {
+          cvs.onmousemove = func;
         }
-      };
-    }
+      }
+    });
     if (scope.legend && scope.legend !== 'false') setLegend(elem, chart);
     return chart;
   }
