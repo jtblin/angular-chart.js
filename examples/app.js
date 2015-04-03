@@ -18,7 +18,7 @@
     $scope.onClick = function (points, evt) {
       console.log(points, evt);
     };
-    $scope.onHover = function (points, evt) {
+    $scope.onHover = function (points) {
       if (points.length > 0) {
         console.log('Point', points[0].value);
       } else {

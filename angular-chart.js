@@ -122,25 +122,21 @@
     scope.$emit('create', chart);
 
     ['hover', 'click'].forEach(function (action) {
-      if (scope[action]) {
-        var func = function (evt) {
-          var atEvent = chart.getPointsAtEvent || chart.getBarsAtEvent || chart.getSegmentsAtEvent;
-
-          if (atEvent) {
-            var activePoints = atEvent.call(chart, evt);
-            scope[action](activePoints, evt);
-            scope.$apply();
-          }
-        };
-        if (action == 'click') {
-          cvs.onclick = func;
-        } else {
-          cvs.onmousemove = func;
-        }
-      }
+      if (scope[action]) cvs[action === 'click' ? 'onclick' : 'onmousemove'] = getEventHandler(scope, chart, action);
     });
     if (scope.legend && scope.legend !== 'false') setLegend(elem, chart);
     return chart;
+  }
+
+  function getEventHandler (scope, chart, action) {
+    return function (evt) {
+      var atEvent = chart.getPointsAtEvent || chart.getBarsAtEvent || chart.getSegmentsAtEvent;
+      if (atEvent) {
+        var activePoints = atEvent.call(chart, evt);
+        scope[action](activePoints, evt);
+        scope.$apply();
+      }
+    };
   }
 
   function getColours (scope) {
