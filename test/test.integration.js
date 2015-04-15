@@ -34,6 +34,7 @@ describe('integration', function () {
     '54-not-enough-colours',
     '51-pie-update-colours',
     'configure-pie-colours',
+    'custom-directive',
     'charts'
   ].forEach(function (name) {
     it('compares screenshots for: ' + name, function (done) {

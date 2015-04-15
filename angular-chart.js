@@ -162,10 +162,9 @@
         getDataSets(scope.labels, scope.data, scope.series || [], scope.colours) :
         getData(scope.labels, scope.data, scope.colours);
       var options = angular.extend({},
-        ChartJs.Chart.defaults.global,
-        ChartJs.Chart.defaults.global[type] || {},
         ChartJs.options,
         ChartJs.options[type] || {});
+
       var chart = new ChartJs.Chart(ctx)[type](data, options);
       scope.$emit('create', chart);
 
