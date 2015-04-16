@@ -170,7 +170,8 @@
         getData(scope.labels, scope.data, scope.colours);
       var options = angular.extend({},
         ChartJs.options,
-        ChartJs.options[type] || {});
+        ChartJs.options[type] || {},
+        scope.options);
 
       var chart = new ChartJs.Chart(ctx)[type](data, options);
       scope.$emit('create', chart);

@@ -33,7 +33,7 @@ describe('integration', function () {
     '57-hex-colours',
     '54-not-enough-colours',
     '51-pie-update-colours',
-    'configure-pie-colours',
+    'configure-line-chart',
     'custom-directive',
     'charts'
   ].forEach(function (name) {
