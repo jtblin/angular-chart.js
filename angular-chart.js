@@ -28,7 +28,7 @@
    *   ChartJsProvider.setOptions('Line', { responsive: false });
    * })))
    */
-  function ChartJsProvider() {
+  function ChartJsProvider () {
     var Chart = (typeof window !== 'undefined' && window.Chart) ||
       (typeof require !== 'undefined' && require('chart.js'));
 
@@ -72,7 +72,7 @@
     };
   }
 
-  function ChartJsFactory(ChartJs) {
+  function ChartJsFactory (ChartJs) {
     return function chart (type) {
       return {
         restrict: 'CA',
@@ -147,7 +147,7 @@
       };
     };
 
-    function canUpdateChart(newVal, oldVal) {
+    function canUpdateChart (newVal, oldVal) {
       if (newVal && oldVal && newVal.length && oldVal.length) {
         return Array.isArray(newVal[0]) ?
         newVal.length === oldVal.length && newVal[0].length === oldVal[0].length :
@@ -231,7 +231,7 @@
       return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 
-    function rgba(colour, alpha) {
+    function rgba (colour, alpha) {
       return 'rgba(' + colour.concat(alpha).join(',') + ')';
     }
 
