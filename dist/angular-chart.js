@@ -4,20 +4,13 @@
   angular.module('chart.js', [])
     .provider('ChartJs', ChartJsProvider)
     .factory('ChartJsFactory', ['ChartJs', ChartJsFactory])
-    .directive('chartBase',
-      ['ChartJsFactory', function (ChartJsFactory) { return new ChartJsFactory(); }])
-    .directive('chartLine',
-      ['ChartJsFactory', function (ChartJsFactory) { return new ChartJsFactory('Line'); }])
-    .directive('chartBar',
-      ['ChartJsFactory', function (ChartJsFactory) { return new ChartJsFactory('Bar'); }])
-    .directive('chartRadar',
-      ['ChartJsFactory', function (ChartJsFactory) { return new ChartJsFactory('Radar'); }])
-    .directive('chartDoughnut',
-      ['ChartJsFactory', function (ChartJsFactory) { return new ChartJsFactory('Doughnut'); }])
-    .directive('chartPie',
-      ['ChartJsFactory', function (ChartJsFactory) { return new ChartJsFactory('Pie'); }])
-    .directive('chartPolarArea',
-      ['ChartJsFactory', function (ChartJsFactory) { return new ChartJsFactory('PolarArea'); }]);
+    .directive('chartBase', ['ChartJsFactory', function (ChartJsFactory) { return new ChartJsFactory(); }])
+    .directive('chartLine', ['ChartJsFactory', function (ChartJsFactory) { return new ChartJsFactory('Line'); }])
+    .directive('chartBar', ['ChartJsFactory', function (ChartJsFactory) { return new ChartJsFactory('Bar'); }])
+    .directive('chartRadar', ['ChartJsFactory', function (ChartJsFactory) { return new ChartJsFactory('Radar'); }])
+    .directive('chartDoughnut', ['ChartJsFactory', function (ChartJsFactory) { return new ChartJsFactory('Doughnut'); }])
+    .directive('chartPie', ['ChartJsFactory', function (ChartJsFactory) { return new ChartJsFactory('Pie'); }])
+    .directive('chartPolarArea', ['ChartJsFactory', function (ChartJsFactory) { return new ChartJsFactory('PolarArea'); }]);
 
   /**
    * Wrapper for chart.js
