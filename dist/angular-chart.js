@@ -1,6 +1,19 @@
 (function () {
   'use strict';
 
+  Chart.defaults.global.responsive = true;
+  Chart.defaults.global.multiTooltipTemplate = '<%if (datasetLabel){%><%=datasetLabel%>: <%}%><%= value %>';
+
+  Chart.defaults.global.colours = [
+    '#97BBCD', // blue
+    '#DCDCDC', // light grey
+    '#F7464A', // red
+    '#46BFBD', // green
+    '#FDB45C', // yellow
+    '#949FB1', // grey
+    '#4D5360'  // dark grey
+  ];
+
   angular.module('chart.js', [])
     .provider('ChartJs', ChartJsProvider)
     .factory('ChartJsFactory', ['ChartJs', ChartJsFactory])
@@ -22,6 +35,7 @@
    * })))
    */
   function ChartJsProvider () {
+    var options = {};
     var Chart = (typeof window !== 'undefined' && window.Chart) ||
       (typeof require !== 'undefined' && require('chart.js'));
 
@@ -31,33 +45,24 @@
 
     var ChartJs = {
       Chart: Chart,
-      options: {
-        responsive: true,
-        multiTooltipTemplate: '<%if (datasetLabel){%><%=datasetLabel%>: <%}%><%= value %>',
-        colours: [
-          '#97BBCD', // blue
-          '#DCDCDC', // light grey
-          '#F7464A', // red
-          '#46BFBD', // green
-          '#FDB45C', // yellow
-          '#949FB1', // grey
-          '#4D5360'  // dark grey
-        ]
+      getOptions: function (type) {
+        var typeOptions = type && options[type] || {};
+        return angular.extend({}, options, typeOptions);
       }
     };
 
     /**
      * Allow to set global options during configuration
      */
-    this.setOptions = function (type, options) {
+    this.setOptions = function (type, customOptions) {
       // If no type was specified set option for the global object
-      if (!options) {
-        options = type;
-        ChartJs.options = angular.extend(ChartJs.options, options);
+      if (!customOptions) {
+        customOptions = type;
+        options = angular.extend(options, customOptions);
         return;
       }
       // Set options for the specific chart
-      ChartJs.options[type] = angular.extend(ChartJs.options[type] || {}, options);
+      options[type] = angular.extend(options[type] || {}, customOptions);
     };
 
     this.$get = function () {
@@ -161,11 +166,7 @@
       var data = Array.isArray(scope.data[0]) ?
         getDataSets(scope.labels, scope.data, scope.series || [], scope.colours) :
         getData(scope.labels, scope.data, scope.colours);
-      var options = angular.extend({},
-        ChartJs.options,
-        ChartJs.options[type] || {},
-        scope.options);
-
+      var options = angular.extend({}, ChartJs.getOptions(type), scope.options);
       var chart = new ChartJs.Chart(ctx)[type](data, options);
       scope.$emit('create', chart);
 
@@ -188,10 +189,9 @@
     }
 
     function getColours (type, scope) {
-      var colours = angular.copy(scope.colours  ||
-        (ChartJs.options[type] && ChartJs.options[type].colours)  ||
-        ChartJs.options.colours ||
-        Chart.defaults.global.colours);
+      var colours = angular.copy(scope.colours ||
+        Chart.defaults.global.colours ||
+        ChartJs.getOptions(type).colours);
       while (colours.length < scope.data.length) {
         colours.push(scope.getColour());
       }
