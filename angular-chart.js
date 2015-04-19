@@ -51,7 +51,7 @@
      */
     this.setOptions = function (type, options) {
       // If no type was specified set option for the global object
-      if (options === undefined) {
+      if (!options) {
         options = type;
         ChartJs.options = angular.extend(ChartJs.options, options);
         return;
