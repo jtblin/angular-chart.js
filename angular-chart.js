@@ -26,7 +26,7 @@
       (typeof require !== 'undefined' && require('chart.js'));
 
     if (typeof Chart !== 'function') {
-      throw 'Failed to load chart.js';
+      throw new Error('Failed to load chart.js');
     }
 
     var ChartJs = {
