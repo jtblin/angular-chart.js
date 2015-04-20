@@ -1,6 +1,13 @@
 (function () {
   'use strict';
 
+  var Chart = (typeof window !== 'undefined' && window.Chart) ||
+    (typeof require !== 'undefined' && require('chart.js'));
+
+  if (typeof Chart !== 'function') {
+    throw new Error('Failed to load chart.js');
+  }
+
   Chart.defaults.global.responsive = true;
   Chart.defaults.global.multiTooltipTemplate = '<%if (datasetLabel){%><%=datasetLabel%>: <%}%><%= value %>';
 
@@ -36,13 +43,6 @@
    */
   function ChartJsProvider () {
     var options = {};
-    var Chart = (typeof window !== 'undefined' && window.Chart) ||
-      (typeof require !== 'undefined' && require('chart.js'));
-
-    if (typeof Chart !== 'function') {
-      throw new Error('Failed to load chart.js');
-    }
-
     var ChartJs = {
       Chart: Chart,
       getOptions: function (type) {
