@@ -1,12 +1,17 @@
-(function () {
+(function (factory) {
   'use strict';
-
-  var Chart = (typeof window !== 'undefined' && window.Chart) ||
-    (typeof require !== 'undefined' && require('chart.js'));
-
-  if (typeof Chart !== 'function') {
-    throw new Error('Failed to load chart.js');
+  if (typeof define === 'function' && define.amd) {
+    // AMD. Register as an anonymous module.
+    define(['angular', 'chart.js'], factory);
+  } else if (typeof exports === 'object') {
+    // Node/CommonJS
+    module.exports = factory(require('angular'), require('chart.js'));
+  } else {
+    // Browser globals
+    factory(angular, Chart);
   }
+}(function (angular, Chart) {
+  'use strict';
 
   Chart.defaults.global.responsive = true;
   Chart.defaults.global.multiTooltipTemplate = '<%if (datasetLabel){%><%=datasetLabel%>: <%}%><%= value %>';
@@ -292,4 +297,4 @@
     }
 
   }
-})();
+}));
