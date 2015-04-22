@@ -47,7 +47,12 @@
   "requireSpacesInForStatement": true,
   "requireLineFeedAtFileEnd": true,
   "requireSpacesInFunctionExpression": {
-    "beforeOpeningCurlyBrace": true
+    "beforeOpeningCurlyBrace": true,
+    "beforeOpeningRoundBrace": true
+  },
+  "requireSpacesInFunctionDeclaration": {
+    "beforeOpeningCurlyBrace": true,
+    "beforeOpeningRoundBrace": true
   },
   "requireDotNotation": true,
   "disallowSpacesInsideArrayBrackets": "all",

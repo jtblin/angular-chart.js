@@ -67,7 +67,20 @@ You will also need [shims](https://github.com/es-shims/es5-shim) for ES5 functio
 ## Javascript
 
 ```javascript
-angular.module("app", ["chart.js"]).controller("LineCtrl", ['$scope', '$timeout', function ($scope, $timeout) {
+angular.module("app", ["chart.js"])
+  // Optional configuration
+  .config(['ChartJsProvider', function (ChartJsProvider) {
+    // Configure all charts
+    ChartJsProvider.setOptions({
+      colours: ['#FF5252', '#FF8A80'],
+      responsive: false
+    });
+    // Configure all line charts
+    ChartJsProvider.setOptions('Line', {
+      datasetFill: false
+    });
+  }])
+  .controller("LineCtrl", ['$scope', '$timeout', function ($scope, $timeout) {
 
   $scope.labels = ["January", "February", "March", "April", "May", "June", "July"];
   $scope.series = ['Series A', 'Series B'];

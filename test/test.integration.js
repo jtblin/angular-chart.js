@@ -33,6 +33,8 @@ describe('integration', function () {
     '57-hex-colours',
     '54-not-enough-colours',
     '51-pie-update-colours',
+    'configure-line-chart',
+    'custom-directive',
     'charts'
   ].forEach(function (name) {
     it('compares screenshots for: ' + name, function (done) {
