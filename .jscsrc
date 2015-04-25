@@ -41,7 +41,9 @@
     "|", "^", "&&", "||", "===", "==", ">=",
     "<=", "<", ">", "!=", "!=="
   ],
-  "requireSpaceAfterBinaryOperators": true,
+  "requireSpaceAfterPrefixUnaryOperators": [
+    "!"
+  ],
   "requireSpacesInConditionalExpression": true,
   "requireSpaceBeforeBlockStatements": true,
   "requireSpacesInForStatement": true,
