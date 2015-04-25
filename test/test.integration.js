@@ -11,7 +11,7 @@ describe('integration', function () {
       cp = require('cp').sync,
       imgur = require('imgur-node-api'),
       server = require('testatic')(),
-      WEBSHOT_OPTIONS = { renderDelay: 5000, windowSize: { width: 1366, height: 768 }},
+      WEBSHOT_OPTIONS = { renderDelay: process.env.DELAY || 2500, windowSize: { width: 1366, height: 768 }},
       WEBSHOT_FAILED_DIR = 'test/fixtures/shots/',
       dir;
 
@@ -44,7 +44,7 @@ describe('integration', function () {
 
       webshot(url, image, WEBSHOT_OPTIONS, function (err) {
         if (err) return done(err);
-        gm.compare(expected, image, 0.002, function (err, isEqual) {
+        gm.compare(expected, image, process.env.TOLERANCE || 0.0001, function (err, isEqual) {
           if (err) return done(err);
           if (! isEqual) {
             var failed = WEBSHOT_FAILED_DIR + name + '-failed.png',
