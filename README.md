@@ -156,6 +156,7 @@ Pull requests welcome!
 
 Thank you!
 
+* [@jantimon](https://twitter.com/jantimon)
 * [@ManuelRauber](https://twitter.com/ManuelRauber)
 * [@vad710](https://twitter.com/vad710)
 * [@JAAulde](https://twitter.com/JAAulde)
