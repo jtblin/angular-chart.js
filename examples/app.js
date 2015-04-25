@@ -3,6 +3,18 @@
 
   var app = angular.module('examples', ['chart.js', 'ui.bootstrap']);
 
+  app.config(function (ChartJsProvider) {
+    // Configure all charts
+    ChartJsProvider.setOptions({
+      colours: ['#97BBCD', '#DCDCDC', '#F7464A', '#46BFBD', '#FDB45C', '#949FB1', '#4D5360'],
+      responsive: true
+    });
+    // Configure all doughnut charts
+    ChartJsProvider.setOptions('Doughnut', {
+      animateScale: true
+    });
+  });
+
   app.controller('MenuCtrl', function ($scope) {
     $scope.isCollapsed = true;
     $scope.charts = ['Line', 'Bar', 'Doughnut', 'Pie', 'Polar Area', 'Radar', 'Base'];

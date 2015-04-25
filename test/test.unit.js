@@ -6,14 +6,17 @@
 describe('Unit testing', function () {
   'use strict';
 
-  var $compile, scope, sandbox;
+  var $compile, scope, sandbox, ChartJs, ChartJsProvider;
 
-  beforeEach(module('chart.js'));
+  beforeEach(module('chart.js', function (_ChartJsProvider_) {
+    ChartJsProvider = _ChartJsProvider_;
+  }));
 
-  beforeEach(inject(function (_$compile_, _$rootScope_) {
+  beforeEach(inject(function (_$compile_, _$rootScope_, _ChartJs_) {
     // The injector unwraps the underscores (_) from around the parameter names when matching
     $compile = _$compile_;
     scope = _$rootScope_;
+    ChartJs = _ChartJs_;
     sandbox = sinon.sandbox.create();
   }));
 
@@ -208,6 +211,22 @@ describe('Unit testing', function () {
 
       expect(countCreate).to.equal(2);
       expect(countUpdate).to.equal(0);
+    });
+
+    it('should allow to set a configuration', function () {
+      ChartJsProvider.setOptions({responsive: false});
+      expect(ChartJs.getOptions().responsive).to.equal(false);
+      expect(ChartJs.getOptions('Line').responsive).to.equal(false);
+      ChartJsProvider.setOptions({responsive: true});
+      expect(ChartJs.getOptions().responsive).to.equal(true);
+      expect(ChartJs.getOptions('Line').responsive).to.equal(true);
+    });
+
+    it('should allow to set a configuration for a chart type', function () {
+      ChartJsProvider.setOptions('Line', {responsive: false});
+      expect(ChartJs.getOptions('Line').responsive).to.equal(false);
+      ChartJsProvider.setOptions('Line', {responsive: true});
+      expect(ChartJs.getOptions('Line').responsive).to.equal(true);
     });
 
     ['labels', 'colours', 'series', 'options'].forEach(function (attr) {
