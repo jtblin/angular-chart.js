@@ -61,7 +61,7 @@
      */
     this.setOptions = function (type, customOptions) {
       // If no type was specified set option for the global object
-      if (!customOptions) {
+      if (! customOptions) {
         customOptions = type;
         options = angular.extend(options, customOptions);
         return;
