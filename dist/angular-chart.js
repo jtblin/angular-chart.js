@@ -195,8 +195,9 @@
 
     function getColours (type, scope) {
       var colours = angular.copy(scope.colours ||
-        Chart.defaults.global.colours ||
-        ChartJs.getOptions(type).colours);
+        ChartJs.getOptions(type).colours ||
+        Chart.defaults.global.colours
+      );
       while (colours.length < scope.data.length) {
         colours.push(scope.getColour());
       }
