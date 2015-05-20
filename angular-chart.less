@@ -2,6 +2,10 @@
   list-style-type: none;
   margin-top: 5px;
   text-align: center;
+  /* NOTE: Browsers automatically add 40px of padding-left to all lists, so we should offset that, otherwise the legend is off-center */
+  -webkit-padding-start:0; /* Webkit */
+  -moz-padding-start:0; /* Mozilla */
+  padding-left:0; /* IE (handles all cases, really, but we should also include the vendor-specific properties just to be safe) */
 
   li {
     display: inline-block;
