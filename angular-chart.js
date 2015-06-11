@@ -258,12 +258,12 @@
 
     function getData (labels, data, colours) {
       return labels.map(function (label, i) {
-        return {
+        return angular.extend({}, colours[i], {
           label: label,
           value: data[i],
           color: colours[i].strokeColor,
           highlight: colours[i].pointHighlightStroke
-        };
+        });
       });
     }
 
