@@ -248,10 +248,10 @@
       return {
         labels: labels,
         datasets: data.map(function (item, i) {
-          var dataSet = angular.copy(colours[i]);
-          dataSet.label = series[i];
-          dataSet.data = item;
-          return dataSet;
+          return angular.extend({}, colours[i], {
+            label: series[i],
+            data: item
+          });
         })
       };
     }
