@@ -248,22 +248,22 @@
       return {
         labels: labels,
         datasets: data.map(function (item, i) {
-          var dataSet = angular.copy(colours[i]);
-          dataSet.label = series[i];
-          dataSet.data = item;
-          return dataSet;
+          return angular.extend({}, colours[i], {
+            label: series[i],
+            data: item
+          });
         })
       };
     }
 
     function getData (labels, data, colours) {
       return labels.map(function (label, i) {
-        return {
+        return angular.extend({}, colours[i], {
           label: label,
           value: data[i],
           color: colours[i].strokeColor,
           highlight: colours[i].pointHighlightStroke
-        };
+        });
       });
     }
 
