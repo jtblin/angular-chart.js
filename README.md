@@ -20,6 +20,7 @@ adding the dependencies for Angular and Chart.js first:
 <script src="../bower_components/angular/angular.min.js"></script>
 <script src="/bower_components/Chart.js/Chart.min.js"></script>
 <script src="/bower_components/angular-chart.js/dist/angular-chart.js"></script>
+<link rel="stylesheet" href="css/bower_components/angular-chart.js/dist/angular-chart.css" />
 ```
 
 # Utilisation
