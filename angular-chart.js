@@ -89,7 +89,8 @@
           chartType: '=',
           legend: '@',
           click: '=',
-          hover: '='
+          hover: '=',
+          autoresize: '@'
         },
         link: function (scope, elem/*, attrs */) {
           var chart, container = document.createElement('div');
@@ -146,6 +147,11 @@
 
             chart = createChart(chartType, scope, elem);
           }
+
+          angular.element(window).on('resize', function () {
+            if (isEmpty(scope.autoresize) || scope.autoresize == 'false') return;
+            resetChart(true, false);
+          });
         }
       };
     };
