@@ -148,10 +148,11 @@
             chart = createChart(chartType, scope, elem);
           }
 
-          angular.element(window).on('resize', function () {
-            if (isEmpty(scope.autoresize) || scope.autoresize == 'false') return;
-            resetChart(true, false);
-          });
+          if (scope.autoresize === 'true') {
+            angular.element(window).on('resize', function () {
+              resetChart(true, false);
+            });
+          }
         }
       };
     };
