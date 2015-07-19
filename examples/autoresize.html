@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="../dist/angular-chart.css">
+<style type="text/css">
+	body{ margin: 0; }
+	.header { width: 100%; height: 52px; background: #333; }
+	.box { width: 90%; margin: auto; padding-top: 20px;}
+	.box canvas { width: 100%; height: 340px; }
+	.box .title { text-align: center; font-size: 14pt; font-weight: bold;}
+</style>
+</head>
+
+<body ng-app="app">
+<div id="header" class="header"></div>
+
+<div id="box1" class="box" ng-controller="lineChartCtrl">
+	<div class="title">Chart with autoresize attribute set true</div>
+    <canvas id="canvas1" class="chart chart-line" data="data" labels="labels" legend="true" series="series" autoresize='true'></canvas>
+</div>
+
+<div id="box2" class="box" ng-controller="lineChartCtrl">
+	<div class="title"><div class="title">Chart without autoresize attribute</div></div>
+	 <canvas id="canvas2" class="chart chart-line" data="data" labels="labels" legend="true" series="series" autoresize='false'></canvas>
+</div>
+
+<script src="../bower_components/angular/angular.min.js"></script>
+<script src="../bower_components/Chart.js/Chart.js"></script>
+<script src="../angular-chart.js"></script>
+
+<script>
+var app = angular.module('app',['chart.js']);
+
+app.config(['ChartJsProvider', function (ChartJsProvider) {
+    ChartJsProvider.setOptions({
+        colours: ['#00ff00', '#FF0000'],
+        responsive: false
+    });
+    ChartJsProvider.setOptions('Line', {
+        datasetFill: false,
+        bezierCurve: false
+    });
+}]);
+
+app.controller('lineChartCtrl', ['$scope', function (scope) {
+	scope.labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+    scope.series = ['Series A', 'Series B'];
+    scope.data = [
+      [65, 59, 80, 81, 56, 55, 40],
+      [28, 48, 40, 19, 86, 27, 90]
+    ];   
+}]);
+</script>
+</body>
+</html>
