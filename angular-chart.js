@@ -26,6 +26,12 @@
     '#4D5360'  // dark grey
   ];
 
+  var usingExcanvas = typeof window.G_vmlCanvasManager === 'object' &&
+    window.G_vmlCanvasManager !== null &&
+    typeof window.G_vmlCanvasManager.initElement === 'function';
+
+  if (usingExcanvas) Chart.defaults.global.animation = false;
+
   angular.module('chart.js', [])
     .provider('ChartJs', ChartJsProvider)
     .factory('ChartJsFactory', ['ChartJs', ChartJsFactory])
@@ -97,11 +103,7 @@
           elem.replaceWith(container);
           container.appendChild(elem[0]);
 
-          if (typeof window.G_vmlCanvasManager === 'object' && window.G_vmlCanvasManager !== null) {
-            if (typeof window.G_vmlCanvasManager.initElement === 'function') {
-              window.G_vmlCanvasManager.initElement(elem[0]);
-            }
-          }
+          if (usingExcanvas) window.G_vmlCanvasManager.initElement(elem[0]);
 
           // Order of setting "watch" matter
 
@@ -232,7 +234,12 @@
     }
 
     function rgba (colour, alpha) {
-      return 'rgba(' + colour.concat(alpha).join(',') + ')';
+      if (usingExcanvas) {
+        // rgba not supported by IE8
+        return 'rgb(' + colour.join(',') + ')';
+      } else {
+        return 'rgba(' + colour.concat(alpha).join(',') + ')';
+      }
     }
 
     // Credit: http://stackoverflow.com/a/11508164/1190235
