@@ -41,7 +41,7 @@
   });
 
   gulp.task('unit', shell.task([
-    ' ./node_modules/mocha-phantomjs/bin/mocha-phantomjs -R spec test/index.html '
+    './node_modules/mocha-phantomjs/bin/mocha-phantomjs -R spec test/index.html'
   ]));
 
   gulp.task('integration', function () {
