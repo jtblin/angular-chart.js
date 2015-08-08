@@ -297,6 +297,7 @@
       }
       chart.update();
       scope.$emit('update', chart);
+      if (scope.legend && scope.legend !== 'false') setLegend(elem, chart);
     }
 
     function isEmpty (value) {
