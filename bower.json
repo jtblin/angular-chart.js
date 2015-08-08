@@ -1,6 +1,6 @@
 {
   "name": "angular-chart.js",
-  "version": "0.7.1",
+  "version": "0.7.3",
   "main": [
     "./dist/angular-chart.js",
     "./dist/angular-chart.css"
@@ -34,6 +34,7 @@
     "**/.*",
     "node_modules",
     "bower_components",
+    "examples",
     "test",
     "tests"
   ],
