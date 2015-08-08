@@ -113,7 +113,7 @@
             if (! chartType) return;
 
             if (chart) {
-              if (canUpdateChart(newVal, oldVal)) return updateChart(chart, newVal, scope);
+              if (canUpdateChart(newVal, oldVal)) return updateChart(chart, newVal, scope, elem);
               chart.destroy();
             }
 
@@ -283,7 +283,7 @@
       else $parent.append(legend);
     }
 
-    function updateChart (chart, values, scope) {
+    function updateChart (chart, values, scope, elem) {
       if (Array.isArray(scope.data[0])) {
         chart.datasets.forEach(function (dataset, i) {
           (dataset.points || dataset.bars).forEach(function (dataItem, j) {
