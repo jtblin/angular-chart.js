@@ -17,10 +17,10 @@ or copy the files from `dist/`. Then add the sources to your code (adjust paths 
 adding the dependencies for Angular and Chart.js first:
 
 ```html
+<link rel="stylesheet" href="css/bower_components/angular-chart.js/dist/angular-chart.css" />
 <script src="../bower_components/angular/angular.min.js"></script>
 <script src="/bower_components/Chart.js/Chart.min.js"></script>
 <script src="/bower_components/angular-chart.js/dist/angular-chart.js"></script>
-<link rel="stylesheet" href="css/bower_components/angular-chart.js/dist/angular-chart.css" />
 ```
 
 # Utilisation
@@ -155,16 +155,7 @@ Pull requests welcome!
 
 ## Contributors
 
-Thank you!
-
-* [@jantimon](https://twitter.com/jantimon)
-* [RevanProdigalKnight](https://github.com/RevanProdigalKnight)
-* [@ManuelRauber](https://twitter.com/ManuelRauber)
-* [@vad710](https://twitter.com/vad710)
-* [@JAAulde](https://twitter.com/JAAulde)
-* [@offsky](https://twitter.com/offsky)
-* [@jonathansampson](https://twitter.com/jonathansampson)
-* [@idangozlan](https://twitter.com/idangozlan)
+Thank you to the [contributors](https://github.com/jtblin/angular-chart.js/graphs/contributors)!
 
 # Author
 
