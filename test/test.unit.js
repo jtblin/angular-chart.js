@@ -3,6 +3,8 @@
 /*global inject:true*/
 /*global expect:true*/
 /*global sinon:true*/
+Chart.defaults.global.responsive = false;
+
 describe('Unit testing', function () {
   'use strict';
 

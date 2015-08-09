@@ -34,7 +34,7 @@
 
   angular.module('chart.js', [])
     .provider('ChartJs', ChartJsProvider)
-    .factory('ChartJsFactory', ['ChartJs', ChartJsFactory])
+    .factory('ChartJsFactory', ['ChartJs', '$timeout', ChartJsFactory])
     .directive('chartBase', function (ChartJsFactory) { return new ChartJsFactory(); })
     .directive('chartLine', function (ChartJsFactory) { return new ChartJsFactory('Line'); })
     .directive('chartBar', function (ChartJsFactory) { return new ChartJsFactory('Bar'); })
@@ -81,7 +81,7 @@
     };
   }
 
-  function ChartJsFactory (ChartJs) {
+  function ChartJsFactory (ChartJs, $timeout) {
     return function chart (type) {
       return {
         restrict: 'CA',
@@ -117,7 +117,7 @@
               chart.destroy();
             }
 
-            chart = createChart(chartType, scope, elem);
+            createChart(chartType);
           }, true);
 
           scope.$watch('series', resetChart, true);
@@ -129,7 +129,7 @@
             if (isEmpty(newVal)) return;
             if (angular.equals(newVal, oldVal)) return;
             if (chart) chart.destroy();
-            chart = createChart(newVal, scope, elem);
+            createChart(newVal);
           });
 
           scope.$on('$destroy', function () {
@@ -146,7 +146,31 @@
             // so we have to re-create the chart entirely
             if (chart) chart.destroy();
 
-            chart = createChart(chartType, scope, elem);
+            createChart(chartType);
+          }
+
+          function createChart (type) {
+            if (isResponsive(type, scope) && container.clientHeight === 0) {
+              return $timeout(function () {
+                createChart(type);
+              }, 50);
+            }
+            if (! scope.data || ! scope.data.length) return;
+            scope.getColour = typeof scope.getColour === 'function' ? scope.getColour : getRandomColour;
+            scope.colours = getColours(type, scope);
+            var cvs = elem[0], ctx = cvs.getContext('2d');
+            var data = Array.isArray(scope.data[0]) ?
+              getDataSets(scope.labels, scope.data, scope.series || [], scope.colours) :
+              getData(scope.labels, scope.data, scope.colours);
+            var options = angular.extend({}, ChartJs.getOptions(type), scope.options);
+            chart = new ChartJs.Chart(ctx)[type](data, options);
+            scope.$emit('create', chart);
+
+            ['hover', 'click'].forEach(function (action) {
+              if (scope[action])
+                cvs[action === 'click' ? 'onclick' : 'onmousemove'] = getEventHandler(scope, chart, action);
+            });
+            if (scope.legend && scope.legend !== 'false') setLegend(elem, chart);
           }
         }
       };
@@ -156,7 +180,7 @@
       if (newVal && oldVal && newVal.length && oldVal.length) {
         return Array.isArray(newVal[0]) ?
         newVal.length === oldVal.length && newVal.every(function (element, index) {
-          return element.length === oldVal[index].length;}) :
+          return element.length === oldVal[index].length; }) :
           oldVal.reduce(sum, 0) > 0 ? newVal.length === oldVal.length : false;
       }
       return false;
@@ -164,25 +188,6 @@
 
     function sum (carry, val) {
       return carry + val;
-    }
-
-    function createChart (type, scope, elem) {
-      if (! scope.data || ! scope.data.length) return;
-      scope.getColour = typeof scope.getColour === 'function' ? scope.getColour : getRandomColour;
-      scope.colours = getColours(type, scope);
-      var cvs = elem[0], ctx = cvs.getContext('2d');
-      var data = Array.isArray(scope.data[0]) ?
-        getDataSets(scope.labels, scope.data, scope.series || [], scope.colours) :
-        getData(scope.labels, scope.data, scope.colours);
-      var options = angular.extend({}, ChartJs.getOptions(type), scope.options);
-      var chart = new ChartJs.Chart(ctx)[type](data, options);
-      scope.$emit('create', chart);
-
-      ['hover', 'click'].forEach(function (action) {
-        if (scope[action]) cvs[action === 'click' ? 'onclick' : 'onmousemove'] = getEventHandler(scope, chart, action);
-      });
-      if (scope.legend && scope.legend !== 'false') setLegend(elem, chart);
-      return chart;
     }
 
     function getEventHandler (scope, chart, action) {
@@ -306,5 +311,9 @@
         (typeof value === 'object' && ! Object.keys(value).length);
     }
 
+    function isResponsive (type, scope) {
+      var options = angular.extend({}, Chart.defaults.global, ChartJs.getOptions(type), scope.options);
+      return options.responsive;
+    }
   }
 }));

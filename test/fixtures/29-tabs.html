@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+  <meta charset="UTF-8">
+  <title>Charts in tabs</title>
+  <link rel="stylesheet" href="../../dist/angular-chart.css">
+  <link href="../../examples/bootstrap.css" rel="stylesheet">
+</head>
+<body ng-app="examples">
+<br/>
+<div id="container" class="container">
+  <div class="row" ng-controller="TabsCtrl">
+    <tabset>
+      <tab heading="First tab" active="active">
+        <div class="panel-body">
+          <canvas class="chart chart-line" data="data" labels="labels"></canvas>
+        </div>
+      </tab>
+      <tab heading="Second tab">
+        <div class="panel-body">
+          <canvas class="chart chart-bar" data="data" labels="labels"></canvas>
+        </div>
+      </tab>
+    </tabset>
+  </div>
+</div>
+
+<script src="../../bower_components/angular/angular.js"></script>
+<script src="../../bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+<script src="../../bower_components/Chart.js/Chart.js"></script>
+<script src="../../angular-chart.js"></script>
+<script src="29-tabs.js"></script>
+</body>
+</html>
