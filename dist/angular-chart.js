@@ -12,7 +12,7 @@
   }
 }(function (angular, Chart) {
   'use strict';
-
+    
   Chart.defaults.global.responsive = true;
   Chart.defaults.global.multiTooltipTemplate = '<%if (datasetLabel){%><%=datasetLabel%>: <%}%><%= value %>';
 
@@ -95,7 +95,8 @@
           chartType: '=',
           legend: '@',
           click: '=',
-          hover: '='
+          hover: '=',
+          handler: '=?'
         },
         link: function (scope, elem/*, attrs */) {
           var chart, container = document.createElement('div');
@@ -104,6 +105,13 @@
           container.appendChild(elem[0]);
 
           if (usingExcanvas) window.G_vmlCanvasManager.initElement(elem[0]);
+
+          //adding a handler to recreate the chart from any Controller
+          scope.internalHandler = scope.handler || {};
+          scope.internalHandler.recreateChart = function () {
+              recreateChart();
+          };
+            
 
           // Order of setting "watch" matter
 
@@ -139,14 +147,19 @@
           function resetChart (newVal, oldVal) {
             if (isEmpty(newVal)) return;
             if (angular.equals(newVal, oldVal)) return;
-            var chartType = type || scope.chartType;
-            if (! chartType) return;
+           
 
             // chart.update() doesn't work for series and labels
             // so we have to re-create the chart entirely
-            if (chart) chart.destroy();
+            recreateChart();
+          }
 
-            chart = createChart(chartType, scope, elem);
+          function recreateChart() {
+              var chartType = type || scope.chartType;
+              if (!chartType) return;
+
+              if (chart) chart.destroy();
+              chart = createChart(chartType, scope, elem);
           }
         }
       };
