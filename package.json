@@ -42,7 +42,6 @@
     "mkdirp": "^0.5.0",
     "mocha": "^2.1.0",
     "mocha-phantomjs": "^3.6.0",
-    "phantomjs": "^1.9.7-15",
     "sinon": "^1.12.2",
     "sinon-chai": "^2.7.0",
     "testatic": "^0.1.0",
