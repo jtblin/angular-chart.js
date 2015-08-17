@@ -126,7 +126,9 @@ describe('Unit testing', function () {
       var mock = sandbox.mock(scope);
       // cannot get a hold of the child scope as it isn't created yet
       // so cannot be more precise on expectations
-      mock.expects('$watch').atLeast(6);
+      /* whummer: due to new attribute names (chart-*), only the attributes
+         which are actually present in the markup will be called via $watch (3) */
+      mock.expects('$watch').atLeast(3);
 
       $compile(markup)(scope);
 
