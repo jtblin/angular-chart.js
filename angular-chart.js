@@ -116,7 +116,7 @@
 
           function aliasVar (fromName, toName) {
             scope.$watch(fromName, function (newVal) {
-              if (typeof newVal == 'undefined') return;
+              if (typeof newVal === 'undefined') return;
               scope[toName] = newVal;
             });
           }
