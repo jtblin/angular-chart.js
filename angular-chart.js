@@ -95,7 +95,8 @@
           chartType: '=',
           legend: '@',
           click: '=',
-          hover: '='
+          hover: '=',
+          autoresize: '@'
         },
         link: function (scope, elem/*, attrs */) {
           var chart, container = document.createElement('div');
@@ -171,6 +172,12 @@
                 cvs[action === 'click' ? 'onclick' : 'onmousemove'] = getEventHandler(scope, chart, action);
             });
             if (scope.legend && scope.legend !== 'false') setLegend(elem, chart);
+          }
+
+          if (scope.autoresize === 'true') {
+            angular.element(window).on('resize', function () {
+              resetChart(true, false);
+            });
           }
         }
       };

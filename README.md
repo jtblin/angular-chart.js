@@ -40,6 +40,7 @@ They all use mostly the same API:
 - `click`: onclick event handler
 - `hover`: onmousemove event handler
 - `legend`: (default: `false`): show legend below the chart
+- `autoresize`: (default: `false`): automatically resize the chart when the browser window size changed
 
 There is another directive `chart-base` that takes an extra attribute `chart-type` to define the type
 dynamically, see [stacked bar example](http://jtblin.github.io/angular-chart.js/examples/stacked-bars.html).
