@@ -150,7 +150,7 @@
           }
 
           function createChart (type) {
-            if (isResponsive(type, scope) && container.clientHeight === 0) {
+            if (isResponsive(type, scope) && elem[0].clientHeight === 0 && container.clientHeight === 0) {
               return $timeout(function () {
                 createChart(type);
               }, 50);
