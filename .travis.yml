@@ -1,10 +1,14 @@
 language: node_js
+sudo: false
 node_js:
 - '0.10'
+addons:
+  apt:
+    packages:
+    - graphicsmagick
 before_install:
-- npm install -g bower
-- bower install
-- sudo apt-get install graphicsmagick
+- npm install bower
+- ./node_modules/bower/bin/bower install
 after_success:
 - ./node_modules/codeclimate-test-reporter/bin/codeclimate.js < coverage/lcov.info
 env:
