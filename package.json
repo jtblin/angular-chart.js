@@ -1,6 +1,6 @@
 {
   "name": "angular-chart.js",
-  "version": "0.7.3",
+  "version": "0.7.4",
   "description": "An angular.js wrapper for Chart.js",
   "main": "dist/angular-chart.js",
   "directories": {
@@ -42,11 +42,10 @@
     "mkdirp": "^0.5.0",
     "mocha": "^2.1.0",
     "mocha-phantomjs": "^3.6.0",
-    "phantomjs": "^1.9.7-15",
     "sinon": "^1.12.2",
     "sinon-chai": "^2.7.0",
     "testatic": "^0.1.0",
-    "tmp-sync": "jtblin/node-tmp-sync",
+    "tmp-sync": "^1.1.0",
     "webshot": "^0.15.3"
   }
 }

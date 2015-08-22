@@ -30,6 +30,7 @@ describe('integration', function () {
   mkdirp(WEBSHOT_FAILED_DIR);
 
   [
+    '29-tabs',
     '57-hex-colours',
     '54-not-enough-colours',
     '51-pie-update-colours',
