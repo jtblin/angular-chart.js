@@ -3,7 +3,7 @@
   "homepage": "http://www.chartjs.org",
   "description": "StackedBar implementation for Chart.js",
   "private": true,
-  "version": "1.0.0-beta",
+  "version": "1.0.3",
   "repository": {
     "type": "git",
     "url": "https://github.com/Regaddi/Chart.StackedBar.js.git"
@@ -11,6 +11,7 @@
   "dependences": {
     "Chart.js": ">= 1.0.0-beta"
   },
+  "main": "src/Chart.StackedBar.js",
   "devDependencies": {
     "gulp": "3.5.x",
     "gulp-concat": "~2.1.x",

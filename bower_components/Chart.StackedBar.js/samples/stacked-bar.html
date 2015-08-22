@@ -4,15 +4,18 @@
 		<title>Stacked Bar Chart</title>
 		<script src="http://www.chartjs.org/assets/Chart.min.js"></script>
 		<script src="../src/Chart.StackedBar.js"></script>
+		<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 	</head>
 	<body>
 		<div style="width: 50%">
 			<canvas id="canvas" height="450" width="600"></canvas>
 		</div>
 
+		<button id="randomizeData">Randomize Data</button>
 
 	<script>
 	var randomScalingFactor = function(){ return Math.round(Math.random()*100)};
+	var randomColorFactor = function(){ return Math.round(Math.random()*255)};
 
 	var barChartData = {
 		labels : ["January","February","March","April","May","June","July"],
@@ -44,6 +47,16 @@
 		var ctx = document.getElementById("canvas").getContext("2d");
 		window.myBar = new Chart(ctx).StackedBar(barChartData, {
 			responsive : true
+		});
+
+		$('#randomizeData').click(function(){
+			barChartData.datasets[0].fillColor = 'rgba(' + randomColorFactor() + ',' + randomColorFactor() + ',' + randomColorFactor() + ',.7)';
+			barChartData.datasets[0].data = [randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor()];
+
+			barChartData.datasets[1].fillColor = 'rgba(' + randomColorFactor() + ',' + randomColorFactor() + ',' + randomColorFactor() + ',.7)';
+			barChartData.datasets[1].data = [randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor()];
+
+			window.myBar.update();
 		});
 	};
 	</script>

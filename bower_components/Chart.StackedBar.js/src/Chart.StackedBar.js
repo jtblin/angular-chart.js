@@ -1,9 +1,19 @@
-(function(){
+(function (factory) {
+	"use strict";
+	if (typeof define === 'function' && define.amd) {
+		// AMD. Register as an anonymous module.
+		define(['chart.js'], factory);
+	} else if (typeof exports === 'object') {
+		// Node/CommonJS
+		module.exports = factory(require('chart.js'));
+	} else {
+		// Global browser
+		factory(Chart);
+	}
+}(function (Chart) {
 	"use strict";
 
-	var root = this,
-		Chart = root.Chart,
-		helpers = Chart.helpers;
+	var helpers = Chart.helpers;
 
 	var defaultConfig = {
 		scaleBeginAtZero : true,
@@ -16,6 +26,12 @@
 
 		//Number - Width of the grid lines
 		scaleGridLineWidth : 1,
+
+        //Boolean - Whether to show horizontal lines (except X axis)
+		scaleShowHorizontalLines: true,
+
+		//Boolean - Whether to show vertical lines (except Y axis)
+		scaleShowVerticalLines: true,
 
 		//Boolean - If there is a stroke on each bar
 		barShowStroke : true,
@@ -30,8 +46,19 @@
 		relativeBars : false,
 
 		//String - A legend template
-		legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].fillColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>"
+		legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].fillColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>",
 
+		//Boolean - Show total legend
+		showTotal: false,
+
+		//String - Color of total legend
+		totalColor: '#fff',
+
+		//String - Total Label
+		totalLabel: 'Total',
+
+		//Boolean - Hide labels with value set to 0
+		tooltipHideZero: false
 	};
 
 	Chart.Type.extend({
@@ -40,6 +67,9 @@
 		initialize:  function(data){
 			//Expose options as a scope variable here so we can access it in the ScaleClass
 			var options = this.options;
+
+			// Save data as a source for updating of values & methods
+			this.data = data;
 
 			this.ScaleClass = Chart.Scale.extend({
 				offsetGridLines : true,
@@ -57,7 +87,7 @@
 						if(i === dsIndex && value) {
 							offset += value;
 						} else {
-							offset += datasets[i].bars[barIndex].value;
+							offset = +offset + +datasets[i].bars[barIndex].value;
 						}
 					}
 
@@ -134,18 +164,20 @@
 				this.datasets.push(datasetObject);
 
 				helpers.each(dataset.data,function(dataPoint,index){
-					if (helpers.isNumber(dataPoint)){
-						//Add a new point for each piece of data, passing any required data to draw.
-						datasetObject.bars.push(new this.BarClass({
-							value : dataPoint,
-							label : data.labels[index],
-							datasetLabel: dataset.label,
-							strokeColor : dataset.strokeColor,
-							fillColor : dataset.fillColor,
-							highlightFill : dataset.highlightFill || dataset.fillColor,
-							highlightStroke : dataset.highlightStroke || dataset.strokeColor
-						}));
+					if(!helpers.isNumber(dataPoint)){
+						dataPoint = 0;
 					}
+					//Add a new point for each piece of data, passing any required data to draw.
+					//Add 0 as value if !isNumber (e.g. empty values are useful when 0 values should be hidden in tooltip)
+					datasetObject.bars.push(new this.BarClass({
+						value : dataPoint,
+						label : data.labels[index],
+						datasetLabel: dataset.label,
+						strokeColor : dataset.strokeColor,
+						fillColor : dataset.fillColor,
+						highlightFill : dataset.highlightFill || dataset.fillColor,
+						highlightStroke : dataset.highlightStroke || dataset.strokeColor
+					}));
 				},this);
 
 			},this);
@@ -165,7 +197,192 @@
 
 			this.render();
 		},
+		showTooltip : function(ChartElements, forceRedraw){
+			// Only redraw the chart if we've actually changed what we're hovering on.
+			if (typeof this.activeElements === 'undefined') this.activeElements = [];
+
+			helpers = Chart.helpers;
+
+			var isChanged = (function(Elements){
+				var changed = false;
+
+				if (Elements.length !== this.activeElements.length){
+					changed = true;
+					return changed;
+				}
+
+				helpers.each(Elements, function(element, index){
+					if (element !== this.activeElements[index]){
+						changed = true;
+					}
+				}, this);
+				return changed;
+			}).call(this, ChartElements);
+
+			if (!isChanged && !forceRedraw){
+				return;
+			}
+			else{
+				this.activeElements = ChartElements;
+			}
+			this.draw();
+			if(this.options.customTooltips){
+				this.options.customTooltips(false);
+			}
+			if (ChartElements.length > 0){
+				// If we have multiple datasets, show a MultiTooltip for all of the data points at that index
+				if (this.datasets && this.datasets.length > 1) {
+					var dataArray,
+					dataIndex;
+
+					for (var i = this.datasets.length - 1; i >= 0; i--) {
+						dataArray = this.datasets[i].points || this.datasets[i].bars || this.datasets[i].segments;
+						dataIndex = helpers.indexOf(dataArray, ChartElements[0]);
+						if (dataIndex !== -1){
+							break;
+						}
+					}
+					var tooltipLabels = [],
+					tooltipColors = [],
+					medianPosition = (function(index) {
+
+						// Get all the points at that particular index
+						var Elements = [],
+						dataCollection,
+						xPositions = [],
+						yPositions = [],
+						xMax,
+						yMax,
+						xMin,
+						yMin;
+						helpers.each(this.datasets, function(dataset){
+							dataCollection = dataset.points || dataset.bars || dataset.segments;
+							if (dataCollection[dataIndex] && dataCollection[dataIndex].hasValue()){
+								Elements.push(dataCollection[dataIndex]);
+							}
+						});
+
+						var total = {
+							datasetLabel: this.options.totalLabel,
+							value: 0,
+							fillColor: this.options.totalColor,
+							strokeColor: this.options.totalColor
+						};
+
+						helpers.each(Elements, function(element) {
+							if (this.options.tooltipHideZero && element.value === 0) {
+								return;
+							}
+
+							xPositions.push(element.x);
+							yPositions.push(element.y);
+
+							total.value += element.value;
+
+							//Include any colour information about the element
+							tooltipLabels.push(helpers.template(this.options.multiTooltipTemplate, element));
+							tooltipColors.push({
+								fill: element._saved.fillColor || element.fillColor,
+								stroke: element._saved.strokeColor || element.strokeColor
+							});
+
+						}, this);
+
+						if (this.options.showTotal) {
+							tooltipLabels.push(helpers.template(this.options.multiTooltipTemplate, total));
+							tooltipColors.push({
+								fill: total.fillColor,
+								stroke: total.strokeColor
+							});
+						}
+
+						yMin = helpers.min(yPositions);
+						yMax = helpers.max(yPositions);
+
+						xMin = helpers.min(xPositions);
+						xMax = helpers.max(xPositions);
+
+						return {
+							x: (xMin > this.chart.width/2) ? xMin : xMax,
+							y: (yMin + yMax)/2
+						};
+					}).call(this, dataIndex);
+
+					new Chart.MultiTooltip({
+						x: medianPosition.x,
+						y: medianPosition.y,
+						xPadding: this.options.tooltipXPadding,
+						yPadding: this.options.tooltipYPadding,
+						xOffset: this.options.tooltipXOffset,
+						fillColor: this.options.tooltipFillColor,
+						textColor: this.options.tooltipFontColor,
+						fontFamily: this.options.tooltipFontFamily,
+						fontStyle: this.options.tooltipFontStyle,
+						fontSize: this.options.tooltipFontSize,
+						titleTextColor: this.options.tooltipTitleFontColor,
+						titleFontFamily: this.options.tooltipTitleFontFamily,
+						titleFontStyle: this.options.tooltipTitleFontStyle,
+						titleFontSize: this.options.tooltipTitleFontSize,
+						cornerRadius: this.options.tooltipCornerRadius,
+						labels: tooltipLabels,
+						legendColors: tooltipColors,
+						legendColorBackground : this.options.multiTooltipKeyBackground,
+						title: ChartElements[0].label,
+						chart: this.chart,
+						ctx: this.chart.ctx,
+						custom: this.options.customTooltips
+					}).draw();
+
+				} else {
+					helpers.each(ChartElements, function(Element) {
+						var tooltipPosition = Element.tooltipPosition();
+						new Chart.Tooltip({
+							x: Math.round(tooltipPosition.x),
+							y: Math.round(tooltipPosition.y),
+							xPadding: this.options.tooltipXPadding,
+							yPadding: this.options.tooltipYPadding,
+							fillColor: this.options.tooltipFillColor,
+							textColor: this.options.tooltipFontColor,
+							fontFamily: this.options.tooltipFontFamily,
+							fontStyle: this.options.tooltipFontStyle,
+							fontSize: this.options.tooltipFontSize,
+							caretHeight: this.options.tooltipCaretSize,
+							cornerRadius: this.options.tooltipCornerRadius,
+							text: helpers.template(this.options.tooltipTemplate, Element),
+							chart: this.chart,
+							custom: this.options.customTooltips
+						}).draw();
+					}, this);
+				}
+			}
+			return this;
+		},
 		update : function(){
+
+			//Iterate through each of the datasets, and build this into a property of the chart
+			helpers.each(this.data.datasets,function(dataset,datasetIndex){
+
+				helpers.extend(this.datasets[datasetIndex], {
+					label : dataset.label || null,
+					fillColor : dataset.fillColor,
+					strokeColor : dataset.strokeColor,
+				});
+
+				helpers.each(dataset.data,function(dataPoint,index){
+					helpers.extend(this.datasets[datasetIndex].bars[index], {
+						value : dataPoint,
+						label : this.data.labels[index],
+						datasetLabel: dataset.label,
+						strokeColor : dataset.strokeColor,
+						fillColor : dataset.fillColor,
+						highlightFill : dataset.highlightFill || dataset.fillColor,
+						highlightStroke : dataset.highlightStroke || dataset.strokeColor
+					});
+				},this);
+
+			},this);
+
+
 			this.scale.update();
 			// Reset any highlight colours before updating.
 			helpers.each(this.activeElements, function(activeElement){
@@ -212,7 +429,7 @@
 						if(self.options.relativeBars) {
 							values[barIndex] = 100;
 						} else {
-							values[barIndex] += bar.value;
+							values[barIndex] = +values[barIndex] + +bar.value;
 						}
 					});
 				});
@@ -241,12 +458,14 @@
 					);
 					helpers.extend(this, updatedRanges);
 				},
-				xLabels : labels,
+				xLabels : this.options.xLabels || labels,
 				font : helpers.fontString(this.options.scaleFontSize, this.options.scaleFontStyle, this.options.scaleFontFamily),
 				lineWidth : this.options.scaleLineWidth,
 				lineColor : this.options.scaleLineColor,
 				gridLineWidth : (this.options.scaleShowGridLines) ? this.options.scaleGridLineWidth : 0,
 				gridLineColor : (this.options.scaleShowGridLines) ? this.options.scaleGridLineColor : "rgba(0,0,0,0)",
+                showHorizontalLines : this.options.scaleShowHorizontalLines,
+				showVerticalLines : this.options.scaleShowVerticalLines,
 				padding : (this.options.showScale) ? 0 : (this.options.barShowStroke) ? this.options.barStrokeWidth : 0,
 				showLabels : this.options.scaleShowLabels,
 				display : this.options.showScale
@@ -269,8 +488,9 @@
 			helpers.each(valuesArray,function(value,datasetIndex){
 				if (helpers.isNumber(value)){
 					//Add a new point for each piece of data, passing any required data to draw.
+					//Add 0 as value if !isNumber (e.g. empty values are useful when 0 values should be hidden in tooltip)
 					this.datasets[datasetIndex].bars.push(new this.BarClass({
-						value : value,
+						value : helpers.isNumber(value)?value:0,
 						label : label,
 						x: this.scale.calculateBarX(this.scale.valuesCount+1),
 						y: this.scale.endPoint,
@@ -320,15 +540,17 @@
 						height = this.scale.calculateBarHeight(this.datasets, datasetIndex, index, bar.value);
 
 					//Transition then draw
-					bar.transition({
-						base : this.scale.endPoint - (Math.abs(height) - Math.abs(y)),
-						x : this.scale.calculateBarX(index),
-						y : Math.abs(y),
-						height : Math.abs(height),
-						width : this.scale.calculateBarWidth(this.datasets.length)
-					}, easingDecimal).draw();
+					if(bar.value > 0) {
+						bar.transition({
+							base : this.scale.endPoint - (Math.abs(height) - Math.abs(y)),
+							x : this.scale.calculateBarX(index),
+							y : Math.abs(y),
+							height : Math.abs(height),
+							width : this.scale.calculateBarWidth(this.datasets.length)
+						}, easingDecimal).draw();
+					}
 				},this);
 			},this);
 		}
 	});
-}).call(this);
+}));
