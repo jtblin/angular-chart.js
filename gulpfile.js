@@ -40,14 +40,22 @@
       .pipe(jscs());
   });
 
+  gulp.task('cover', shell.task([
+    './node_modules/istanbul/lib/cli.js instrument angular-chart.js > test/fixtures/coverage.js'
+  ]));
+
   gulp.task('unit', shell.task([
-    './node_modules/mocha-phantomjs/bin/mocha-phantomjs -R spec test/index.html'
+    './node_modules/mocha-phantomjs/bin/mocha-phantomjs -R spec test/index.html -k mocha-phantomjs-istanbul'
   ]));
 
   gulp.task('integration', function () {
     return gulp.src('test/test.integration.js', {read: false})
       .pipe(mocha({ reporter: 'list', timeout: 10000, require: 'test/support/setup.js' }));
   });
+
+  gulp.task('report', shell.task([
+    './node_modules/istanbul/lib/cli.js report --include coverage/coverage.json'
+  ]));
 
   gulp.task('bump-patch', bump('patch'));
   gulp.task('bump-minor', bump('minor'));
@@ -126,7 +134,7 @@
   }
 
   gulp.task('default', sequence('check', ['less', 'js'], 'build'));
-  gulp.task('test', sequence('unit', 'integration'));
+  gulp.task('test', sequence('cover', 'unit', 'integration', 'report'));
   gulp.task('check', sequence(['lint', 'style'], 'test'));
   gulp.task('deploy-patch', sequence('default', 'bump-patch', 'update', 'git-commit', 'git-push', 'npm'));
   gulp.task('deploy-minor', sequence('default', 'bump-minor', 'update', 'git-commit', 'git-push', 'npm'));

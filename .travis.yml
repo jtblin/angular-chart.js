@@ -5,6 +5,8 @@ before_install:
 - npm install -g bower
 - bower install
 - sudo apt-get install graphicsmagick
+after_success:
+- ./node_modules/codeclimate-test-reporter/bin/codeclimate.js < coverage/lcov.info
 env:
   global:
     - secure: YWABlINoIkwl9RFLOW9G0lATEP3aiXXi+DS6TWfvQWWG/jkS5sn7IqWC2U67LjwQ0lDg0yevo3ZD7FyYQ5lr8AVuScAZ6P2o2dm9t/HBKGTG4u016dxbWWYVZ8MAlKT7TfjVD8iDzcWyZedsbpuyaNNp4pGr/CNcvq7TGdJLNkU=

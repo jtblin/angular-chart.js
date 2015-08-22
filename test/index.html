@@ -16,11 +16,12 @@
 <script src="../node_modules/sinon-chai/lib/sinon-chai.js"></script>
 <script>mocha.setup('bdd')</script>
 <script src="../bower_components/angular-mocks/angular-mocks.js"></script>
+<script src="../test/fixtures/coverage.js"></script>
 <script src="../test/test.unit.js"></script>
 <script>
   var expect = chai.expect;
   mocha.checkLeaks();
-  mocha.globals(['angular', 'Chart', 'angular', 'chai', 'expect', 'sinon', 'sinonChai']);
+  mocha.globals(['angular', 'Chart', 'angular', 'chai', 'expect', 'sinon', 'sinonChai', '__coverage__']);
   if (window.mochaPhantomJS)
     mochaPhantomJS.run();
   else
