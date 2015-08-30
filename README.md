@@ -12,16 +12,36 @@ Beautiful, reactive, responsive charts for Angular.JS using [Chart.js](http://ww
 
 # Installation
 
-    bower install angular-chart.js --save
-    
-or copy the files from `dist/`. Then add the sources to your code (adjust paths as needed) after 
+### bower
+
+    bower install --save angular-chart.js
+
+### npm
+
+    npm install --save angular-chart.js
+
+### cdn
+
+    //cdn.jsdelivr.net/angular.chartjs/latest/angular-chart.min.js
+    //cdn.jsdelivr.net/angular.chartjs/latest/angular-chart.css
+
+### manually
+
+or copy the files from `dist/`. 
+
+Then add the sources to your code (adjust paths as needed) after 
 adding the dependencies for Angular and Chart.js first:
 
 ```html
-<link rel="stylesheet" href="css/bower_components/angular-chart.js/dist/angular-chart.css" />
-<script src="../bower_components/angular/angular.min.js"></script>
-<script src="/bower_components/Chart.js/Chart.min.js"></script>
-<script src="/bower_components/angular-chart.js/dist/angular-chart.js"></script>
+<head>
+  <link rel="stylesheet" href="bower_components/angular-chart.js/dist/angular-chart.css" />
+<head>
+<body>
+  ...
+</body>
+  <script src="bower_components/angular/angular.min.js"></script>
+  <script src="bower_components/Chart.js/Chart.min.js"></script>
+  <script src="bower_components/angular-chart.js/dist/angular-chart.min.js"></script>
 ```
 
 # Utilisation
