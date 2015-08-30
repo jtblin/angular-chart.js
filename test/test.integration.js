@@ -4,13 +4,14 @@
 describe('integration', function () {
   'use strict';
 
+  var port = 8045; /* teststatic default port 8080 may be occupied on many systems */
   var webshot = require('webshot'),
       gm = require('gm'),
       tmp = require('tmp-sync'),
       mkdirp = require('mkdirp').sync,
       cp = require('cp').sync,
       imgur = require('imgur-node-api'),
-      server = require('testatic')(),
+      server = require('testatic')('./', port),
       WEBSHOT_OPTIONS = { renderDelay: process.env.DELAY || 2500, windowSize: { width: 1366, height: 768 }},
       WEBSHOT_FAILED_DIR = 'test/fixtures/shots/',
       dir;
@@ -40,30 +41,37 @@ describe('integration', function () {
   ].forEach(function (name) {
     it('compares screenshots for: ' + name, function (done) {
       var image = dir + name + '.png',
-          url = 'http://localhost:8080/test/fixtures/' + name + '.html',
+          url1 = 'http://localhost:' + port + '/test/fixtures/' + name + '.html',
+          url2 = 'http://localhost:' + port + '/test/fixtures/' + name + '.alt.html',
           expected = 'test/fixtures/' + name + '.png';
 
-      webshot(url, image, WEBSHOT_OPTIONS, function (err) {
-        if (err) return done(err);
-        gm.compare(expected, image, process.env.TOLERANCE || 0.001, function (err, isEqual) {
+      function doTest (url, done) {
+        webshot(url, image, WEBSHOT_OPTIONS, function (err) {
           if (err) return done(err);
-          if (! isEqual) {
-            var failed = WEBSHOT_FAILED_DIR + name + '-failed.png',
-                msg = 'Expected screenshots to be similar. Screenshot saved to ' + failed;
-            cp(image, failed);
-            if (process.env.CI && process.env.IMGUR_ID) {
-              imgur.setClientID(process.env.IMGUR_ID);
-              imgur.upload(image, function (err, res) {
-                if (err) return done(err);
-                assert.fail(isEqual, true, msg + ', uploaded to ' + res.data.link);
-              });
-            } else {
-              assert.fail(isEqual, true, msg);
+          gm.compare(expected, image, process.env.TOLERANCE || 0.001, function (err, isEqual) {
+            if (err) return done(err);
+            if (! isEqual) {
+              var failed = WEBSHOT_FAILED_DIR + name + '-failed.png',
+                  msg = 'Expected screenshots to be similar. Screenshot saved to ' + failed;
+              cp(image, failed);
+              if (process.env.CI && process.env.IMGUR_ID) {
+                imgur.setClientID(process.env.IMGUR_ID);
+                imgur.upload(image, function (err, res) {
+                  if (err) return done(err);
+                  assert.fail(isEqual, true, msg + ', uploaded to ' + res.data.link);
+                });
+              } else {
+                assert.fail(isEqual, true, msg);
+              }
+              return;
             }
-            return;
-          }
-          done();
+            done();
+          });
         });
+      }
+
+      doTest(url1, function () {
+        doTest(url2, done);
       });
     });
   });

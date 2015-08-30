@@ -1,0 +1,11 @@
+languages:
+  Ruby: false
+  JavaScript: true
+  PHP: false
+exclude_paths:
+- "dist/*"
+- "bower_components/*"
+- "node_modules/*"
+- "gulpfile.js"
+- "examples/*"
+- "test/fixtures/coverage.js"
