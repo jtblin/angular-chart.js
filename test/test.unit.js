@@ -12,6 +12,7 @@ describe('Unit testing', function () {
 
   beforeEach(module('chart.js', function (_ChartJsProvider_) {
     ChartJsProvider = _ChartJsProvider_;
+    ChartJsProvider.setOptions({ env: 'test' });
   }));
 
   beforeEach(inject(function (_$compile_, _$rootScope_, _ChartJs_) {

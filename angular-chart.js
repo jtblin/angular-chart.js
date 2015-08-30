@@ -114,6 +114,7 @@
 
           if (usingExcanvas) window.G_vmlCanvasManager.initElement(elem[0]);
 
+          ['data', 'labels', 'options', 'series', 'colours', 'legend', 'click', 'hover'].forEach(deprecated);
           function aliasVar (fromName, toName) {
             scope.$watch(fromName, function (newVal) {
               if (typeof newVal === 'undefined') return;
@@ -197,6 +198,16 @@
                 cvs[action === 'click' ? 'onclick' : 'onmousemove'] = getEventHandler(scope, chart, action);
             });
             if (scope.legend && scope.legend !== 'false') setLegend(elem, chart);
+          }
+
+          function deprecated (attr) {
+            if (typeof console !== 'undefined' && ChartJs.getOptions().env !== 'test') {
+              var warn = typeof console.warn === 'function' ? console.warn : console.log;
+              if (!! scope[attr]) {
+                warn.call(console, '"%s" is deprecated and will be removed in a future version. ' +
+                  'Please use "chart-%s" instead.', attr, attr);
+              }
+            }
           }
         }
       };
