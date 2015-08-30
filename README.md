@@ -29,7 +29,7 @@ adding the dependencies for Angular and Chart.js first:
 There are 6 types of charts so 6 directives: `chart-line`, `chart-bar`, `chart-radar`, `chart-pie`, 
 `chart-polar-area`, `chart-doughnut`.
 
-They all use mostly the same API (`[chart-]` indicates an optional prefix):
+They all use mostly the same API (`[chart-]` indicates an optional but recommended prefix):
 
 - `[chart-]data`: series data
 - `[chart-]labels`: x axis labels (line, bar, radar) or series labels (pie, doughnut, polar area)
@@ -41,7 +41,8 @@ They all use mostly the same API (`[chart-]` indicates an optional prefix):
 - `[chart-]hover`: onmousemove event handler
 - `[chart-]legend`: (default: `false`): show legend below the chart
 
-*DEPRECATION WARNING*: Note that all attributes which do *not* use the `[chart-]` prefix are deprecated and may be removed in a future version.
+*DEPRECATION WARNING*: Note that all attributes which do *not* use the `[chart-]` prefix are deprecated 
+and may be removed in a future version.
 
 There is another directive `chart-base` that takes an extra attribute `chart-type` to define the type
 dynamically, see [stacked bar example](http://jtblin.github.io/angular-chart.js/examples/stacked-bars.html).
