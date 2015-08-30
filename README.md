@@ -47,26 +47,13 @@ and may be removed in a future version.
 There is another directive `chart-base` that takes an extra attribute `chart-type` to define the type
 dynamically, see [stacked bar example](http://jtblin.github.io/angular-chart.js/examples/stacked-bars.html).
 
-## Browser compatibility
-
-For IE8 and older browsers, you will need 
-to include [excanvas](https://code.google.com/p/explorercanvas/wiki/Instructions). 
-You will also need [shims](https://github.com/es-shims/es5-shim) for ES5 functions.
-
-```html
-<head>
-<!--[if lt IE 9]><script src="excanvas.js"></script><![endif]-->
-<!--[if lt IE 9]><script src="es5-shim.js"></script><![endif]-->
-</head>
-```
-
 # Example
 
 ## Markup
 
 ```html
-<canvas id="line" class="chart chart-line" data="data" labels="labels" 
-	legend="true" series="series" click="onClick"></canvas> 
+<canvas id="line" class="chart chart-line" chart-data="data" chart-labels="labels" 
+	chart-legend="true" chart-series="series" chart-click="onClick"></canvas> 
 ```
 
 ## Javascript
@@ -143,10 +130,30 @@ including different shades for highlight, fill, stroke, etc.
 
 **Issues or feature requests for Chart.js (e.g. new chart type, new axis, etc.) need to be opened on 
 [Chart.js issues tracker](https://github.com/nnnick/Chart.js/issues)**
+
+**For general questions about usage, please use [http://stackoverflow.com/](http://stackoverflow.com/)**
  
-Please check if issue exists and otherwise open issue in [github](https://github.com/jtblin/angular-chart.js/issues). 
-**Please add a link to a plunker, jsbin, or equivalent.** 
+Please check if issue exists first, otherwise open issue in [github](https://github.com/jtblin/angular-chart.js/issues). 
+**Ensure you add a link to a plunker, jsbin, or equivalent.** 
 Here is a [jsbin template](http://jsbin.com/dufibi/3/edit?html,js,output) for convenience.
+
+## Browser compatibility
+
+For IE8 and older browsers, you will need 
+to include [excanvas](https://code.google.com/p/explorercanvas/wiki/Instructions). 
+You will also need [shims](https://github.com/es-shims/es5-shim) for ES5 functions and
+[getComputedStyle shim](https://github.com/Financial-Times/polyfill-service/blob/master/polyfills/getComputedStyle/polyfill.js).
+
+```html
+<head>
+<!--[if lt IE 9]>
+  <script src="excanvas.js"></script>
+  <script src="es5-shim.js"></script>
+  <script src="ie8-polyfill-getComputedStyle.js"></script>
+  <script>document.defaultView = window;</script>
+<![endif]-->
+</head>
+```
 
 # Contributing
  
