@@ -86,16 +86,25 @@
       return {
         restrict: 'CA',
         scope: {
-          data: '=',
-          labels: '=',
-          options: '=',
-          series: '=',
+          data: '=?',
+          labels: '=?',
+          options: '=?',
+          series: '=?',
           colours: '=?',
           getColour: '=?',
           chartType: '=',
           legend: '@',
-          click: '=',
-          hover: '='
+          click: '=?',
+          hover: '=?',
+
+          chartData: '=?',
+          chartLabels: '=?',
+          chartOptions: '=?',
+          chartSeries: '=?',
+          chartColours: '=?',
+          chartLegend: '@',
+          chartClick: '=?',
+          chartHover: '=?'
         },
         link: function (scope, elem/*, attrs */) {
           var chart, container = document.createElement('div');
@@ -104,6 +113,23 @@
           container.appendChild(elem[0]);
 
           if (usingExcanvas) window.G_vmlCanvasManager.initElement(elem[0]);
+
+          function aliasVar (fromName, toName) {
+            scope.$watch(fromName, function (newVal) {
+              if (typeof newVal === 'undefined') return;
+              scope[toName] = newVal;
+            });
+          }
+          /* provide backward compatibility to "old" directive names, by
+           * having an alias point from the new names to the old names. */
+          aliasVar('chartData', 'data');
+          aliasVar('chartLabels', 'labels');
+          aliasVar('chartOptions', 'options');
+          aliasVar('chartSeries', 'series');
+          aliasVar('chartColours', 'colours');
+          aliasVar('chartLegend', 'legend');
+          aliasVar('chartClick', 'click');
+          aliasVar('chartHover', 'hover');
 
           // Order of setting "watch" matter
 

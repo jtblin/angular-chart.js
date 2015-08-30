@@ -50,7 +50,7 @@
 
   gulp.task('integration', function () {
     return gulp.src('test/test.integration.js', {read: false})
-      .pipe(mocha({ reporter: 'list', timeout: 10000, require: 'test/support/setup.js' }));
+      .pipe(mocha({ reporter: 'list', timeout: 20000, require: 'test/support/setup.js' }));
   });
 
   gulp.task('report', shell.task([
