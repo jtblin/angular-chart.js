@@ -161,16 +161,16 @@ Here is a [jsbin template](http://jsbin.com/dufibi/3/edit?html,js,output) for co
 
 For IE8 and older browsers, you will need 
 to include [excanvas](https://code.google.com/p/explorercanvas/wiki/Instructions). 
-You will also need [shims](https://github.com/es-shims/es5-shim) for ES5 functions and
-[getComputedStyle shim](https://github.com/Financial-Times/polyfill-service/blob/master/polyfills/getComputedStyle/polyfill.js).
+You will also need a [shim](https://github.com/es-shims/es5-shim) for ES5 functions.
+
+You also need to have  ```height``` and ```width``` attributes for the ```<canvas>``` tag of your chart if using IE8 and older browsers. If you *do not* have these attributes, you will need a 
+[getComputedStyle shim](https://github.com/Financial-Times/polyfill-service/blob/master/polyfills/getComputedStyle/polyfill.js) and the line ```document.defaultView = window;```, but there still may be errors (due to code in Chart.js).
 
 ```html
 <head>
 <!--[if lt IE 9]>
   <script src="excanvas.js"></script>
   <script src="es5-shim.js"></script>
-  <script src="ie8-polyfill-getComputedStyle.js"></script>
-  <script>document.defaultView = window;</script>
 <![endif]-->
 </head>
 ```
