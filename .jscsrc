@@ -75,6 +75,7 @@
     "node_modules/**",
     "dist/**",
     "coverage/**",
+    "examples/bundle.js",
     "examples/smoothscroll.min.js",
     "test/fixtures/coverage.js"
   ]

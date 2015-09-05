@@ -180,7 +180,7 @@
             if (isResponsive(type, scope) && elem[0].clientHeight === 0 && container.clientHeight === 0) {
               return $timeout(function () {
                 createChart(type);
-              }, 50);
+              }, 50, false);
             }
             if (! scope.data || ! scope.data.length) return;
             scope.getColour = typeof scope.getColour === 'function' ? scope.getColour : getRandomColour;

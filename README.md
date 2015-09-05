@@ -114,12 +114,23 @@ angular.module("app", ["chart.js"])
 }]);
 ```
 
-## Reactive
+## AMD RequireJS
+
+See [a simple AMD example](examples/amd.js)
+
+## webpack
+
+Due to `chart.js` naming convention which is incompatible with AMD loader, `chart.js` has to be named 
+`chart` in the AMD definition which forces to use an alias to get it to work with `webpack`.
+
+See [webback config example](examples/webpack.config.js)
+
+# Reactive
 
 angular-chart.js watch updates on data, series, labels, colours and options and will update, or destroy and recreate, 
 the chart on changes.
 
-## Events
+# Events
 
 angular-chart.js emits the following events on the `scope` and pass the chart as argument:
 
@@ -137,7 +148,7 @@ created multiple times during angular `watch` lifecycle.
 
 angular-chart.js listen to the scope `destroy` event and destroy the chart when it happens.
 
-## Colours
+# Colours
 
 There are a set of 7 default colours. Colours can be replaced using the `colours` attribute.
 If there is more data than colours, colours are generated randomly or can be provided 
@@ -161,16 +172,16 @@ Here is a [jsbin template](http://jsbin.com/dufibi/3/edit?html,js,output) for co
 
 For IE8 and older browsers, you will need 
 to include [excanvas](https://code.google.com/p/explorercanvas/wiki/Instructions). 
-You will also need [shims](https://github.com/es-shims/es5-shim) for ES5 functions and
-[getComputedStyle shim](https://github.com/Financial-Times/polyfill-service/blob/master/polyfills/getComputedStyle/polyfill.js).
+You will also need a [shim](https://github.com/es-shims/es5-shim) for ES5 functions.
+
+You also need to have  ```height``` and ```width``` attributes for the ```<canvas>``` tag of your chart if using IE8 and older browsers. If you *do not* have these attributes, you will need a 
+[getComputedStyle shim](https://github.com/Financial-Times/polyfill-service/blob/master/polyfills/getComputedStyle/polyfill.js) and the line ```document.defaultView = window;```, but there still may be errors (due to code in Chart.js).
 
 ```html
 <head>
 <!--[if lt IE 9]>
   <script src="excanvas.js"></script>
   <script src="es5-shim.js"></script>
-  <script src="ie8-polyfill-getComputedStyle.js"></script>
-  <script>document.defaultView = window;</script>
 <![endif]-->
 </head>
 ```
