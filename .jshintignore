@@ -2,6 +2,7 @@ bower_components/
 node_modules/
 dist/
 tmp/
+examples/bundle.js
 examples/smoothscroll.min.js
 coverage/
 test/fixtures/coverage.js

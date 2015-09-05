@@ -114,12 +114,23 @@ angular.module("app", ["chart.js"])
 }]);
 ```
 
-## Reactive
+## AMD RequireJS
+
+See [a simple AMD example](examples/amd.js)
+
+## webpack
+
+Due to `chart.js` naming convention that is incompatible with AMD loader, `chart.js has to be named 
+`chart` in the definition which requires to use an alias to get it to work with `webpack`.
+
+See [webback config example](examples/webpack.config.js)
+
+# Reactive
 
 angular-chart.js watch updates on data, series, labels, colours and options and will update, or destroy and recreate, 
 the chart on changes.
 
-## Events
+# Events
 
 angular-chart.js emits the following events on the `scope` and pass the chart as argument:
 
@@ -137,7 +148,7 @@ created multiple times during angular `watch` lifecycle.
 
 angular-chart.js listen to the scope `destroy` event and destroy the chart when it happens.
 
-## Colours
+# Colours
 
 There are a set of 7 default colours. Colours can be replaced using the `colours` attribute.
 If there is more data than colours, colours are generated randomly or can be provided 
