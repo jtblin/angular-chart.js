@@ -120,8 +120,8 @@ See [a simple AMD example](examples/amd.js)
 
 ## webpack
 
-Due to `chart.js` naming convention that is incompatible with AMD loader, `chart.js has to be named 
-`chart` in the definition which requires to use an alias to get it to work with `webpack`.
+Due to `chart.js` naming convention which is incompatible with AMD loader, `chart.js` has to be named 
+`chart` in the AMD definition which forces to use an alias to get it to work with `webpack`.
 
 See [webback config example](examples/webpack.config.js)
 
