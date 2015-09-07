@@ -6,8 +6,7 @@ module.exports = {
   },
   resolve: {
     alias: {
-      'angular-chart': '../angular-chart.js', // should not be required if you installed with npm
-      chart: require.resolve('chart.js')
+      'angular-chart': '../angular-chart.js' // should not be required if you installed with npm
     }
   }
 };

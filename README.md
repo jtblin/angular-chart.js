@@ -118,12 +118,10 @@ angular.module("app", ["chart.js"])
 
 See [a simple AMD example](examples/amd.js)
 
-## webpack
+## CommonJS e.g. webpack
 
-Due to `chart.js` naming convention which is incompatible with AMD loader, `chart.js` has to be named 
-`chart` in the AMD definition which forces to use an alias to get it to work with `webpack`.
-
-See [webback config example](examples/webpack.config.js)
+Module should work with CommonJS out of the box e.g. [browserify](http://browserify.org/) or 
+[webpack](http://webpack.github.io/), see a [webback example](examples/webpack.config.js).
 
 # Reactive
 
