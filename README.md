@@ -121,7 +121,7 @@ See [a simple AMD example](examples/amd.js)
 ## CommonJS e.g. webpack
 
 Module should work with CommonJS out of the box e.g. [browserify](http://browserify.org/) or 
-[webpack](http://webpack.github.io/), see a [webback example](examples/webpack.config.js).
+[webpack](http://webpack.github.io/), see a [webpack example](examples/webpack.config.js).
 
 # Reactive
 
