@@ -19,12 +19,24 @@
   var fs = require('fs');
   var sequence = require('gulp-sequence');
   var ngAnnotate = require('gulp-ng-annotate');
+  var rimraf = require('gulp-rimraf');
+
+  gulp.task('clean', function () {
+    return gulp.src('./dist/*', { read: false })
+      .pipe(rimraf());
+  });
 
   gulp.task('less', function () {
     return gulp.src('./*.less')
-      .pipe(sourcemaps.init())
       .pipe(less())
+      .pipe(gulp.dest('./dist'));
+  });
+
+  gulp.task('css-min', function () {
+    return gulp.src('./dist/*.css')
+      .pipe(sourcemaps.init())
       .pipe(csso())
+      .pipe(rename({ suffix: '.min' }))
       .pipe(sourcemaps.write('./'))
       .pipe(gulp.dest('./dist'));
   });
@@ -63,14 +75,14 @@
 
   gulp.task('bower', function () {
     return gulp.src('./angular-chart.js')
-      .pipe(ngAnnotate({single_quotes: true}))
+      .pipe(ngAnnotate({ single_quotes: true }))
       .pipe(gulp.dest('./dist'));
   });
 
   gulp.task('js', ['lint', 'style', 'bower'], function () {
     return gulp.src('./angular-chart.js')
       .pipe(rename('angular-chart.min.js'))
-      .pipe(ngAnnotate({single_quotes: true}))
+      .pipe(ngAnnotate({ single_quotes: true }))
       .pipe(sourcemaps.init())
       .pipe(uglify())
       .pipe(sourcemaps.write('./'))
@@ -133,7 +145,8 @@
     return JSON.parse(fs.readFileSync('package.json', 'utf8')).version;
   }
 
-  gulp.task('default', sequence('check', ['less', 'js'], 'build'));
+  gulp.task('default', sequence('check', 'assets'));
+  gulp.task('assets', sequence('clean', ['less', 'js'], 'css-min', 'build'));
   gulp.task('test', sequence('cover', 'unit', 'integration', 'report'));
   gulp.task('check', sequence(['lint', 'style'], 'test'));
   gulp.task('deploy-patch', sequence('default', 'bump-patch', 'update', 'git-commit', 'git-push', 'npm'));
