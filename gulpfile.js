@@ -106,7 +106,7 @@
 
   gulp.task('git-commit', function () {
     var v = version();
-    gulp.src(['./dist/*', './package.json', './bower.json', './examples/charts.html'])
+    gulp.src(['./dist/*', './package.json', './bower.json', './examples/charts.html', './test/fixtures/coverage.js'])
       .pipe(git.add())
       .pipe(git.commit(v))
     ;
