@@ -105,7 +105,8 @@
           chartColours: '=?',
           chartLegend: '@',
           chartClick: '=?',
-          chartHover: '=?'
+          chartHover: '=?',
+          chartDataFormatted: '=?'
         },
         link: function (scope, elem/*, attrs */) {
           var chart, container = document.createElement('div');
@@ -132,6 +133,7 @@
           aliasVar('chartLegend', 'legend');
           aliasVar('chartClick', 'click');
           aliasVar('chartHover', 'hover');
+          aliasVar('chartDataFormatted', 'dataFormatted');
 
           // Order of setting "watch" matter
 
@@ -187,7 +189,7 @@
             scope.getColour = typeof scope.getColour === 'function' ? scope.getColour : getRandomColour;
             scope.colours = getColours(type, scope);
             var cvs = elem[0], ctx = cvs.getContext('2d');
-            var data = scope.dataFormatted ? scope.data : (Array.isArray(scope.data[0]) ?
+            var data = scope.chartDataFormatted ? scope.data : (Array.isArray(scope.data[0]) ?
               getDataSets(scope.labels, scope.data, scope.series || [], scope.colours) :
               getData(scope.labels, scope.data, scope.colours));
             var options = angular.extend({}, ChartJs.getOptions(type), scope.options);
