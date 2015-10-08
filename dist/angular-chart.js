@@ -1,3 +1,12 @@
+/*!
+ * angular-chart.js
+ * http://jtblin.github.io/angular-chart.js/
+ * Version: 0.8.4
+ *
+ * Copyright 2014 Jerome Touffe-Blin
+ * Released under the BSD license
+ * https://github.com/jtblin/angular-chart.js/blob/master/LICENSE
+ */
 (function (factory) {
   'use strict';
   if (typeof exports === 'object') {
