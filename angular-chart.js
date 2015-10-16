@@ -153,7 +153,7 @@
           scope.$watch('colours', resetChart, true);
 
           scope.$watch('legend', function () {
-            setLegend(elem, chart, scope);
+            if (chart) setLegend(elem, chart, scope);
           });
 
           scope.$watch('chartType', function (newVal, oldVal) {
