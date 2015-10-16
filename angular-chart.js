@@ -93,7 +93,7 @@
           colours: '=?',
           getColour: '=?',
           chartType: '=',
-          legend: '@',
+          legend: '=?',
           click: '=?',
           hover: '=?',
 
@@ -102,7 +102,7 @@
           chartOptions: '=?',
           chartSeries: '=?',
           chartColours: '=?',
-          chartLegend: '@',
+          chartLegend: '=?',
           chartClick: '=?',
           chartHover: '=?'
         },
@@ -152,6 +152,10 @@
           scope.$watch('options', resetChart, true);
           scope.$watch('colours', resetChart, true);
 
+          scope.$watch('legend', function () {
+            setLegend(elem, chart, scope);
+          });
+
           scope.$watch('chartType', function (newVal, oldVal) {
             if (isEmpty(newVal)) return;
             if (angular.equals(newVal, oldVal)) return;
@@ -197,7 +201,7 @@
             cvs.onclick = scope.click ? getEventHandler(scope, chart, 'click', false) : angular.noop;
             cvs.onmousemove = scope.hover ? getEventHandler(scope, chart, 'hover', true) : angular.noop;
 
-            if (scope.legend && scope.legend !== 'false') setLegend(elem, chart);
+            setLegend(elem, chart, scope);
           }
 
           function deprecated (attr) {
@@ -321,12 +325,16 @@
       });
     }
 
-    function setLegend (elem, chart) {
+    function setLegend (elem, chart, scope) {
       var $parent = elem.parent(),
-          $oldLegend = $parent.find('chart-legend'),
-          legend = '<chart-legend>' + chart.generateLegend() + '</chart-legend>';
-      if ($oldLegend.length) $oldLegend.replaceWith(legend);
-      else $parent.append(legend);
+          $oldLegend = $parent.find('chart-legend');
+      if (scope.legend) {
+        var legend = '<chart-legend>' + chart.generateLegend() + '</chart-legend>';
+        if ($oldLegend.length) $oldLegend.replaceWith(legend);
+        else $parent.append(legend);
+      } else {
+        $oldLegend.remove();
+      }
     }
 
     function updateChart (chart, values, scope, elem) {
@@ -343,7 +351,7 @@
       }
       chart.update();
       scope.$emit('update', chart);
-      if (scope.legend && scope.legend !== 'false') setLegend(elem, chart);
+      setLegend(elem, chart, scope);
     }
 
     function isEmpty (value) {
