@@ -2,7 +2,12 @@
   'use strict';
   if (typeof exports === 'object') {
     // Node/CommonJS
-    module.exports = factory(require('angular'), require('Chart.js'));
+    // https://github.com/nnnick/Chart.js/issues/1562
+    try {
+      module.exports = factory(require('angular'), require('Chart.js'));
+    } catch (err) {
+      module.exports = factory(require('angular'), require('chart.js'));
+    }
   }  else if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
     define(['angular', 'chart'], factory);
