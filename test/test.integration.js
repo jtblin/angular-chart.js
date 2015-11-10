@@ -6,6 +6,7 @@ describe('integration', function () {
 
   var port = 8045; /* teststatic default port 8080 may be occupied on many systems */
   var webshot = require('webshot'),
+      path = require('path'),
       gm = require('gm'),
       tmp = require('tmp-sync'),
       mkdirp = require('mkdirp').sync,
@@ -13,11 +14,11 @@ describe('integration', function () {
       imgur = require('imgur-node-api'),
       server = require('testatic')('./', port),
       WEBSHOT_OPTIONS = { renderDelay: process.env.DELAY || 2500, windowSize: { width: 1366, height: 768 }},
-      WEBSHOT_FAILED_DIR = 'test/fixtures/shots/',
+      WEBSHOT_FAILED_DIR = path.join('test', 'fixtures', 'shots') + path.sep,
       dir;
 
   beforeEach(function () {
-    dir = tmp.in() + '/';
+    dir = tmp.in() + path.sep;
   });
 
   afterEach(function () {
@@ -43,7 +44,7 @@ describe('integration', function () {
       var image = dir + name + '.png',
           url1 = 'http://localhost:' + port + '/test/fixtures/' + name + '.html',
           url2 = 'http://localhost:' + port + '/test/fixtures/' + name + '.alt.html',
-          expected = 'test/fixtures/' + name + '.png';
+          expected = path.join('test', 'fixtures', name + '.png');
 
       function doTest (url, done) {
         webshot(url, image, WEBSHOT_OPTIONS, function (err) {
