@@ -1,6 +1,8 @@
 (function () {
   'use strict';
 
+  var fs = require('fs');
+  var path = require('path');
   var gulp = require('gulp');
   var less = require('gulp-less');
   var sourcemaps = require('gulp-sourcemaps');
@@ -16,7 +18,6 @@
   var git = require('gulp-git');
   var shell = require('gulp-shell');
   var rename = require('gulp-rename');
-  var fs = require('fs');
   var sequence = require('gulp-sequence');
   var ngAnnotate = require('gulp-ng-annotate');
   var rimraf = require('gulp-rimraf');
@@ -57,11 +58,11 @@
   ]));
 
   gulp.task('unit', shell.task([
-    './node_modules/mocha-phantomjs/bin/mocha-phantomjs -R spec test/index.html -k mocha-phantomjs-istanbul'
+    'mocha-phantomjs -R spec ' + path.join('test', 'index.html') + ' -k mocha-phantomjs-istanbul'
   ]));
 
   gulp.task('integration', function () {
-    return gulp.src('test/test.integration.js', {read: false})
+    return gulp.src(path.join('test', 'test.integration.js'), {read: false})
       .pipe(mocha({ reporter: 'list', timeout: 20000, require: 'test/support/setup.js' }));
   });
 
