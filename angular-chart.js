@@ -4,9 +4,9 @@
     // Node/CommonJS
     // https://github.com/nnnick/Chart.js/issues/1562
     try {
-      module.exports = factory(require('angular'), require('Chart.js'));
+      module.exports = factory(typeof angular ? angular : require('angular'), require('Chart.js'));
     } catch (err) {
-      module.exports = factory(require('angular'), require('chart.js'));
+      module.exports = factory(typeof angular ? angular : require('angular'), require('chart.js'));
     }
   }  else if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
