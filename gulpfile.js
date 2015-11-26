@@ -81,7 +81,7 @@
 
   gulp.task('report', function () {
     return gulp.src('coverage/coverage.json')
-      .pipe(istanbulReport());
+      .pipe(istanbulReport({ reporters: ['lcov'] }));
   });
 
   gulp.task('bump-patch', bump('patch'));
