@@ -189,7 +189,9 @@ You also need to have  ```height``` and ```width``` attributes for the ```<canva
 Pull requests welcome!
 
 1. Fork the repo
+1. Install dependencies: `npm install` and `bower install`
 1. Make your changes
+1. Install [GraphicsMagick](http://www.graphicsmagick.org/)
 1. Run tests: `npm test`
 1. Submit pull request
 
