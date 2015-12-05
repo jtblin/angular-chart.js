@@ -49,7 +49,7 @@ describe('integration', function () {
       function doTest (url, done) {
         webshot(url, image, WEBSHOT_OPTIONS, function (err) {
           if (err) return done(err);
-          gm.compare(expected, image, process.env.TOLERANCE || 0.001, function (err, isEqual) {
+          gm.compare(expected, image, process.env.TOLERANCE || 0.002, function (err, isEqual) {
             if (err) return done(err);
             if (! isEqual) {
               var failed = WEBSHOT_FAILED_DIR + name + '-failed.png',
