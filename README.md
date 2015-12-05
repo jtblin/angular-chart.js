@@ -49,20 +49,15 @@ adding the dependencies for Angular and Chart.js first:
 There are 6 types of charts so 6 directives: `chart-line`, `chart-bar`, `chart-radar`, `chart-pie`, 
 `chart-polar-area`, `chart-doughnut`.
 
-They all use mostly the same API (`[chart-]` indicates an optional but recommended prefix):
-
-- `[chart-]data`: series data
-- `[chart-]labels`: x axis labels (line, bar, radar) or series labels (pie, doughnut, polar area)
-- `[chart-]options`: chart options (as from [Chart.js documentation](http://www.chartjs.org/docs/))
-- `[chart-]series`: (default: `[]`): series labels (line, bar, radar)
-- `[chart-]colours`: data colours (will use default colours if not specified)
-- `getColour`: function that returns a colour in case there are not enough (will use random colours if not specified)
-- `[chart-]click`: onclick event handler
-- `[chart-]hover`: onmousemove event handler
-- `[chart-]legend`: (default: `false`): show legend below the chart
-
-*DEPRECATION WARNING*: Note that all attributes which do *not* use the `[chart-]` prefix are deprecated 
-and may be removed in a future version.
+- `chart-data`: series data
+- `chart-labels`: x axis labels (line, bar, radar) or series labels (pie, doughnut, polar area)
+- `chart-options`: chart options (as from [Chart.js documentation](http://www.chartjs.org/docs/))
+- `chart-series`: (default: `[]`): series labels (line, bar, radar)
+- `chart-colours`: data colours (will use default colours if not specified)
+- `get-colour`: function that returns a colour in case there are not enough (will use random colours if not specified)
+- `chart-click`: onclick event handler
+- `chart-hover`: onmousemove event handler
+- `chart-legend`: (default: `false`): show legend below the chart
 
 There is another directive `chart-base` that takes an extra attribute `chart-type` to define the type
 dynamically, see [stacked bar example](http://jtblin.github.io/angular-chart.js/examples/stacked-bars.html).
@@ -72,7 +67,7 @@ dynamically, see [stacked bar example](http://jtblin.github.io/angular-chart.js/
 ## Markup
 
 ```html
-<canvas id="line" class="chart chart-line" chart-data="data" chart-labels="labels" 
+<canvas class="chart chart-line" chart-data="data" chart-labels="labels" 
 	chart-legend="true" chart-series="series" chart-click="onClick"></canvas> 
 ```
 
@@ -84,7 +79,7 @@ angular.module("app", ["chart.js"])
   .config(['ChartJsProvider', function (ChartJsProvider) {
     // Configure all charts
     ChartJsProvider.setOptions({
-      colours: ['#FF5252', '#FF8A80'],
+      chartColours: ['#FF5252', '#FF8A80'],
       responsive: false
     });
     // Configure all line charts
@@ -132,11 +127,11 @@ the chart on changes.
 
 angular-chart.js emits the following events on the `scope` and pass the chart as argument:
 
-* `create`: when chart is created
-* `update`: when chart is updated
+* `chart-create`: when chart is created
+* `chart-update`: when chart is updated
 
 ```
-$scope.$on('create', function (event, chart) {
+$scope.$on('chart-create', function (event, chart) {
   console.log(chart);
 });
 ```

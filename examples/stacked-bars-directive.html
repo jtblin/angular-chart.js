@@ -15,7 +15,7 @@
       <div class="panel panel-default">
         <div class="panel-heading">Stacked Bar Chart</div>
         <div class="panel-body">
-          <canvas class="chart chart-stacked-bar" data="data" labels="labels"></canvas>
+          <canvas class="chart chart-stacked-bar" chart-data="data" chart-labels="labels"></canvas>
         </div>
       </div>
     </div>
@@ -31,8 +31,8 @@
 <script>
   // Create the 'chart-stacked-bar' class/attribute directive:
   angular.module('examples')
-    .directive('chartStackedBar', function (ChartJsFactory) { 
-      return new ChartJsFactory('StackedBar'); 
+    .directive('chartStackedBar', function (ChartJsFactory) {
+      return new ChartJsFactory('StackedBar');
     });
 </script>
 </body>

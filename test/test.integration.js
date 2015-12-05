@@ -42,37 +42,30 @@ describe('integration', function () {
   ].forEach(function (name) {
     it('compares screenshots for: ' + name, function (done) {
       var image = dir + name + '.png',
-          url1 = 'http://localhost:' + port + '/test/fixtures/' + name + '.html',
-          url2 = 'http://localhost:' + port + '/test/fixtures/' + name + '.alt.html',
+          url = 'http://localhost:' + port + '/test/fixtures/' + name + '.html',
           expected = path.join('test', 'fixtures', name + '.png');
 
-      function doTest (url, done) {
-        webshot(url, image, WEBSHOT_OPTIONS, function (err) {
+      webshot(url, image, WEBSHOT_OPTIONS, function (err) {
+        if (err) return done(err);
+        gm.compare(expected, image, process.env.TOLERANCE || 0.002, function (err, isEqual) {
           if (err) return done(err);
-          gm.compare(expected, image, process.env.TOLERANCE || 0.002, function (err, isEqual) {
-            if (err) return done(err);
-            if (! isEqual) {
-              var failed = WEBSHOT_FAILED_DIR + name + '-failed.png',
-                  msg = 'Expected screenshots to be similar. Screenshot saved to ' + failed;
-              cp(image, failed);
-              if (process.env.CI && process.env.IMGUR_ID) {
-                imgur.setClientID(process.env.IMGUR_ID);
-                imgur.upload(image, function (err, res) {
-                  if (err) return done(err);
-                  assert.fail(isEqual, true, msg + ', uploaded to ' + res.data.link);
-                });
-              } else {
-                assert.fail(isEqual, true, msg);
-              }
-              return;
+          if (! isEqual) {
+            var failed = WEBSHOT_FAILED_DIR + name + '-failed.png',
+                msg = 'Expected screenshots to be similar. Screenshot saved to ' + failed;
+            cp(image, failed);
+            if (process.env.CI && process.env.IMGUR_ID) {
+              imgur.setClientID(process.env.IMGUR_ID);
+              imgur.upload(image, function (err, res) {
+                if (err) return done(err);
+                assert.fail(isEqual, true, msg + ', uploaded to ' + res.data.link);
+              });
+            } else {
+              assert.fail(isEqual, true, msg);
             }
-            done();
-          });
+            return;
+          }
+          done();
         });
-      }
-
-      doTest(url1, function () {
-        doTest(url2, done);
       });
     });
   });

@@ -88,17 +88,8 @@
       return {
         restrict: 'CA',
         scope: {
-          data: '=?',
-          labels: '=?',
-          options: '=?',
-          series: '=?',
-          colours: '=?',
           getColour: '=?',
           chartType: '=',
-          legend: '@',
-          click: '=?',
-          hover: '=?',
-
           chartData: '=?',
           chartLabels: '=?',
           chartOptions: '=?',
@@ -116,27 +107,10 @@
 
           if (usingExcanvas) window.G_vmlCanvasManager.initElement(elem[0]);
 
-          ['data', 'labels', 'options', 'series', 'colours', 'legend', 'click', 'hover'].forEach(deprecated);
-          function aliasVar (fromName, toName) {
-            scope.$watch(fromName, function (newVal) {
-              if (typeof newVal === 'undefined') return;
-              scope[toName] = newVal;
-            });
-          }
-          /* provide backward compatibility to "old" directive names, by
-           * having an alias point from the new names to the old names. */
-          aliasVar('chartData', 'data');
-          aliasVar('chartLabels', 'labels');
-          aliasVar('chartOptions', 'options');
-          aliasVar('chartSeries', 'series');
-          aliasVar('chartColours', 'colours');
-          aliasVar('chartLegend', 'legend');
-          aliasVar('chartClick', 'click');
-          aliasVar('chartHover', 'hover');
-
           // Order of setting "watch" matter
 
-          scope.$watch('data', function (newVal, oldVal) {
+          scope.$watch('chartData', function (newVal, oldVal) {
+            //console.log('chartData');
             if (! newVal || ! newVal.length || (Array.isArray(newVal[0]) && ! newVal[0].length)) return;
             var chartType = type || scope.chartType;
             if (! chartType) return;
@@ -149,10 +123,10 @@
             createChart(chartType);
           }, true);
 
-          scope.$watch('series', resetChart, true);
-          scope.$watch('labels', resetChart, true);
-          scope.$watch('options', resetChart, true);
-          scope.$watch('colours', resetChart, true);
+          scope.$watch('chartSeries', resetChart, true);
+          scope.$watch('chartLabels', resetChart, true);
+          scope.$watch('chartOptions', resetChart, true);
+          scope.$watch('chartColours', resetChart, true);
 
           scope.$watch('chartType', function (newVal, oldVal) {
             if (isEmpty(newVal)) return;
@@ -184,32 +158,22 @@
                 createChart(type);
               }, 50, false);
             }
-            if (! scope.data || ! scope.data.length) return;
+            if (! scope.chartData || ! scope.chartData.length) return;
             scope.getColour = typeof scope.getColour === 'function' ? scope.getColour : getRandomColour;
-            scope.colours = getColours(type, scope);
+            scope.chartColours = getColours(type, scope);
             var cvs = elem[0], ctx = cvs.getContext('2d');
-            var data = Array.isArray(scope.data[0]) ?
-              getDataSets(scope.labels, scope.data, scope.series || [], scope.colours) :
-              getData(scope.labels, scope.data, scope.colours);
-            var options = angular.extend({}, ChartJs.getOptions(type), scope.options);
+            var data = Array.isArray(scope.chartData[0]) ?
+              getDataSets(scope.chartLabels, scope.chartData, scope.chartSeries || [], scope.chartColours) :
+              getData(scope.chartLabels, scope.chartData, scope.chartColours);
+            var options = angular.extend({}, ChartJs.getOptions(type), scope.chartOptions);
             chart = new ChartJs.Chart(ctx)[type](data, options);
-            scope.$emit('create', chart);
+            scope.$emit('chart-create', chart);
 
             // Bind events
-            cvs.onclick = scope.click ? getEventHandler(scope, chart, 'click', false) : angular.noop;
-            cvs.onmousemove = scope.hover ? getEventHandler(scope, chart, 'hover', true) : angular.noop;
+            cvs.onclick = scope.chartClick ? getEventHandler(scope, chart, 'click', false) : angular.noop;
+            cvs.onmousemove = scope.chartHover ? getEventHandler(scope, chart, 'hover', true) : angular.noop;
 
-            if (scope.legend && scope.legend !== 'false') setLegend(elem, chart);
-          }
-
-          function deprecated (attr) {
-            if (typeof console !== 'undefined' && ChartJs.getOptions().env !== 'test') {
-              var warn = typeof console.warn === 'function' ? console.warn : console.log;
-              if (!! scope[attr]) {
-                warn.call(console, '"%s" is deprecated and will be removed in a future version. ' +
-                  'Please use "chart-%s" instead.', attr, attr);
-              }
-            }
+            if (scope.chartLegend && scope.chartLegend !== 'false') setLegend(elem, chart);
           }
         }
       };
@@ -245,11 +209,11 @@
     }
 
     function getColours (type, scope) {
-      var colours = angular.copy(scope.colours ||
-        ChartJs.getOptions(type).colours ||
+      var colours = angular.copy(scope.chartColours ||
+        ChartJs.getOptions(type).chartColours ||
         Chart.defaults.global.colours
       );
-      while (colours.length < scope.data.length) {
+      while (colours.length < scope.chartData.length) {
         colours.push(scope.getColour());
       }
       return colours.map(convertColour);
@@ -332,7 +296,7 @@
     }
 
     function updateChart (chart, values, scope, elem) {
-      if (Array.isArray(scope.data[0])) {
+      if (Array.isArray(scope.chartData[0])) {
         chart.datasets.forEach(function (dataset, i) {
           (dataset.points || dataset.bars).forEach(function (dataItem, j) {
             dataItem.value = values[i][j];
@@ -344,8 +308,8 @@
         });
       }
       chart.update();
-      scope.$emit('update', chart);
-      if (scope.legend && scope.legend !== 'false') setLegend(elem, chart);
+      scope.$emit('chart-update', chart);
+      if (scope.chartLegend && scope.chartLegend !== 'false') setLegend(elem, chart);
     }
 
     function isEmpty (value) {
@@ -355,7 +319,7 @@
     }
 
     function isResponsive (type, scope) {
-      var options = angular.extend({}, Chart.defaults.global, ChartJs.getOptions(type), scope.options);
+      var options = angular.extend({}, Chart.defaults.global, ChartJs.getOptions(type), scope.chartOptions);
       return options.responsive;
     }
   }

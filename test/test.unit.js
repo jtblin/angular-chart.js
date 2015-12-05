@@ -30,7 +30,7 @@ describe('Unit testing', function () {
   describe('base', function () {
     it('replaces the element with the appropriate content', function () {
       var markup = '<div style="width: 250px; height:120px">' +
-        '<canvas class="chart chart-line" data="data" labels="labels"></canvas></div>';
+        '<canvas class="chart chart-line" chart-data="data" chart-labels="labels"></canvas></div>';
 
       scope.labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
       scope.data = [
@@ -49,7 +49,7 @@ describe('Unit testing', function () {
         it('creates a ' + type + ' chart using the directive', function () {
           var markup = '<div style="width: 250px; height:120px"><canvas class="chart chart-' +
             (type === 'PolarArea' ? 'polar-area' : type.toLowerCase()) +
-              '" data="data" labels="labels"></canvas></div>';
+              '" chart-data="data" chart-labels="labels"></canvas></div>';
 
           scope.labels = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
@@ -72,7 +72,8 @@ describe('Unit testing', function () {
 
         it('creates a ' + type + ' chart using the "chart-type" attribute"', function () {
           var markup = '<div style="width: 250px; height:120px">' +
-            '<canvas class="chart chart-base" data="data" labels="labels" chart-type="type"></canvas></div>';
+            '<canvas class="chart chart-base" chart-data="data" chart-labels="labels" ' +
+            'chart-type="type"></canvas></div>';
 
           scope.labels = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
           scope.type = type;
@@ -98,7 +99,7 @@ describe('Unit testing', function () {
 
     it('generates the legend', function () {
       var markup = '<div style="width: 250px; height:120px">' +
-        '<canvas class="chart chart-line" data="data" labels="labels" legend="true"></canvas></div>';
+        '<canvas class="chart chart-line" chart-data="data" chart-labels="labels" chart-legend="true"></canvas></div>';
 
       scope.labels = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
       scope.data = [
@@ -116,7 +117,7 @@ describe('Unit testing', function () {
   describe('lifecycle', function () {
     it('watches the attributes of the chart', function () {
       var markup = '<div style="width: 250px; height:120px">' +
-        '<canvas class="chart chart-line" data="data" labels="labels" chart-type="type"></canvas></div>';
+        '<canvas class="chart chart-line" chart-data="data" chart-labels="labels" chart-type="type"></canvas></div>';
 
       scope.labels = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
       scope.data = [
@@ -138,7 +139,8 @@ describe('Unit testing', function () {
 
     it('creates the chart only once', function () {
       var markup = '<div style="width: 250px; height:120px">' +
-        '<canvas class="chart chart-line" data="data" labels="labels" series="series"></canvas></div>';
+        '<canvas class="chart chart-line" chart-data="data" chart-labels="labels" ' +
+        'chart-series="series"></canvas></div>';
       var count = 0;
 
       scope.labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
@@ -147,7 +149,7 @@ describe('Unit testing', function () {
         [65, 59, 80, 81, 56, 55, 40],
         [28, 48, 40, 19, 86, 27, 90]
       ];
-      scope.$on('create', function () {
+      scope.$on('chart-create', function () {
         count++;
       });
 
@@ -159,7 +161,8 @@ describe('Unit testing', function () {
 
     it('updates the chart', function () {
       var markup = '<div style="width: 250px; height:120px">' +
-        '<canvas class="chart chart-line" data="data" labels="labels" series="series"></canvas></div>';
+        '<canvas class="chart chart-line" chart-data="data" chart-labels="labels" ' +
+        'chart-series="series"></canvas></div>';
       var count = 0;
 
       scope.labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
@@ -169,7 +172,7 @@ describe('Unit testing', function () {
         [28, 48, 40, 19, 86, 27, 90]
       ];
 
-      scope.$on('update', function () {
+      scope.$on('chart-update', function () {
         count++;
       });
 
@@ -187,7 +190,8 @@ describe('Unit testing', function () {
 
     it('re-create the chart if data added or removed', function () {
       var markup = '<div style="width: 250px; height:120px">' +
-        '<canvas class="chart chart-line" data="data" labels="labels" series="series"></canvas></div>';
+        '<canvas class="chart chart-line" chart-data="data" chart-labels="labels" ' +
+        'chart-series="series"></canvas></div>';
       var countCreate = 0, countUpdate = 0;
 
       scope.labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
@@ -196,11 +200,11 @@ describe('Unit testing', function () {
         [28, 48, 40, 19, 86, 27, 90]
       ];
 
-      scope.$on('create', function () {
+      scope.$on('chart-create', function () {
         countCreate++;
       });
 
-      scope.$on('update', function () {
+      scope.$on('chart-update', function () {
         countUpdate++;
       });
 
@@ -237,8 +241,8 @@ describe('Unit testing', function () {
     ['labels', 'colours', 'series', 'options'].forEach(function (attr) {
       it('re-creates the chart on ' + attr + ' changes', function () {
         var markup = '<div style="width: 250px; height:120px">' +
-          '<canvas class="chart chart-line" data="data" labels="labels" series="series" ' +
-            'colours="colours" options="options"></canvas></div>';
+          '<canvas class="chart chart-line" chart-data="data" chart-labels="labels" chart-series="series" ' +
+            'chart-colours="colours" chart-options="options"></canvas></div>';
         var count = 0;
 
         scope.options = { scaleShowVerticalLines: false };
@@ -263,7 +267,7 @@ describe('Unit testing', function () {
           [65, 59, 80, 81, 56, 55, 40],
           [28, 48, 40, 19, 86, 27, 90]
         ];
-        scope.$on('create', function () {
+        scope.$on('chart-create', function () {
           count++;
         });
 
@@ -307,8 +311,8 @@ describe('Unit testing', function () {
     ['labels', 'colours', 'series', 'options'].forEach(function (attr) {
       it('does not re-create the chart on ' + attr + ' not changed', function () {
         var markup = '<div style="width: 250px; height:120px">' +
-          '<canvas class="chart chart-line" data="data" labels="labels" series="series" ' +
-            'colours="colours" options="options"></canvas></div>';
+          '<canvas class="chart chart-line" chart-data="data" chart-labels="labels" chart-series="series" ' +
+            'chart-colours="colours" chart-options="options"></canvas></div>';
         var count = 0;
 
         scope.options = { scaleShowVerticalLines: false };
@@ -333,7 +337,7 @@ describe('Unit testing', function () {
           [65, 59, 80, 81, 56, 55, 40],
           [28, 48, 40, 19, 86, 27, 90]
         ];
-        scope.$on('create', function () {
+        scope.$on('chart-create', function () {
           count++;
         });
 
