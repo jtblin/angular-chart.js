@@ -3,8 +3,8 @@
   if (typeof exports === 'object') {
     // Node/CommonJS
     module.exports = factory(
-      typeof angular ? angular : require('angular'),
-      typeof Chart ? Chart : require('chart.js'));
+      typeof angular !== 'undefined' ? angular : require('angular'),
+      typeof Chart !== 'undefined' ? Chart : require('chart.js'));
   }  else if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
     define(['angular', 'chart'], factory);
