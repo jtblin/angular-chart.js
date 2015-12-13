@@ -38,12 +38,12 @@
     .provider('ChartJs', ChartJsProvider)
     .factory('ChartJsFactory', ['ChartJs', '$timeout', ChartJsFactory])
     .directive('chartBase', function (ChartJsFactory) { return new ChartJsFactory(); })
-    .directive('chartLine', function (ChartJsFactory) { return new ChartJsFactory('Line'); })
-    .directive('chartBar', function (ChartJsFactory) { return new ChartJsFactory('Bar'); })
-    .directive('chartRadar', function (ChartJsFactory) { return new ChartJsFactory('Radar'); })
-    .directive('chartDoughnut', function (ChartJsFactory) { return new ChartJsFactory('Doughnut'); })
-    .directive('chartPie', function (ChartJsFactory) { return new ChartJsFactory('Pie'); })
-    .directive('chartPolarArea', function (ChartJsFactory) { return new ChartJsFactory('PolarArea'); });
+    .directive('chartLine', function (ChartJsFactory) { return new ChartJsFactory('line'); })
+    .directive('chartBar', function (ChartJsFactory) { return new ChartJsFactory('bar'); })
+    .directive('chartRadar', function (ChartJsFactory) { return new ChartJsFactory('radar'); })
+    .directive('chartDoughnut', function (ChartJsFactory) { return new ChartJsFactory('doughnut'); })
+    .directive('chartPie', function (ChartJsFactory) { return new ChartJsFactory('pie'); })
+    .directive('chartPolarArea', function (ChartJsFactory) { return new ChartJsFactory('polarArea'); });
 
   /**
    * Wrapper for chart.js
@@ -162,16 +162,19 @@
             scope.getColour = typeof scope.getColour === 'function' ? scope.getColour : getRandomColour;
             scope.chartColours = getColours(type, scope);
             var cvs = elem[0], ctx = cvs.getContext('2d');
-            var data = Array.isArray(scope.chartData[0]) ?
-              getDataSets(scope.chartLabels, scope.chartData, scope.chartSeries || [], scope.chartColours) :
-              getData(scope.chartLabels, scope.chartData, scope.chartColours);
+            var data = getDataSets(scope.chartLabels, scope.chartData, scope.chartSeries || [], scope.chartColours);
             var options = angular.extend({}, ChartJs.getOptions(type), scope.chartOptions);
-            chart = new ChartJs.Chart(ctx)[type](data, options);
+            console.log(type);
+            chart = new ChartJs.Chart(ctx, {
+              type: type.toLowerCase(),
+              data: data,
+              options: options
+            });
             scope.$emit('chart-create', chart);
 
             // Bind events
-            cvs.onclick = scope.chartClick ? getEventHandler(scope, chart, 'click', false) : angular.noop;
-            cvs.onmousemove = scope.chartHover ? getEventHandler(scope, chart, 'hover', true) : angular.noop;
+            cvs.onclick = scope.chartClick ? getEventHandler(scope, chart, 'chartClick', false) : angular.noop;
+            cvs.onmousemove = scope.chartHover ? getEventHandler(scope, chart, 'chartHover', true) : angular.noop;
 
             if (scope.chartLegend && scope.chartLegend !== 'false') setLegend(elem, chart);
           }
@@ -196,7 +199,7 @@
     function getEventHandler (scope, chart, action, triggerOnlyOnChange) {
       var lastState = null;
       return function (evt) {
-        var atEvent = chart.getPointsAtEvent || chart.getBarsAtEvent || chart.getSegmentsAtEvent;
+        var atEvent = chart.getElementsAtEvent || chart.getPointsAtEvent;
         if (atEvent) {
           var activePoints = atEvent.call(chart, evt);
           if (triggerOnlyOnChange === false || angular.equals(lastState, activePoints) === false) {
@@ -232,12 +235,12 @@
 
     function getColour (colour) {
       return {
-        fillColor: rgba(colour, 0.2),
-        strokeColor: rgba(colour, 1),
-        pointColor: rgba(colour, 1),
-        pointStrokeColor: '#fff',
-        pointHighlightFill: '#fff',
-        pointHighlightStroke: rgba(colour, 0.8)
+        backgroundColor: rgba(colour, 0.2),
+        borderColor: rgba(colour, 1),
+        pointBackgroundColor: rgba(colour, 1),
+        pointBorderColor: '#fff',
+        pointHoverBackgroundColor: '#fff',
+        pointHoverBorderColor: rgba(colour, 0.8)
       };
     }
 
@@ -270,7 +273,8 @@
         datasets: data.map(function (item, i) {
           return angular.extend({}, colours[i], {
             label: series[i],
-            data: item
+            data: item,
+            fill: true
           });
         })
       };
@@ -296,17 +300,19 @@
     }
 
     function updateChart (chart, values, scope, elem) {
-      if (Array.isArray(scope.chartData[0])) {
-        chart.datasets.forEach(function (dataset, i) {
-          (dataset.points || dataset.bars).forEach(function (dataItem, j) {
-            dataItem.value = values[i][j];
-          });
-        });
-      } else {
-        chart.segments.forEach(function (segment, i) {
-          segment.value = values[i];
-        });
-      }
+        //console.log('chart.data.datasets', chart.data.datasets);
+      return;
+      chart.data.datasets.forEach(function (dataset, i) {
+        //debugger;
+        //dataset.data.forEach(function (dataItem, j) {
+        //  dataItem.value = values[i][j];
+        //});
+        for (var j = 0; j < values[i].length; j++) {
+          //console.log(values[i][j]);
+          dataset.data[j] = values[i][j];
+        }
+      });
+
       chart.update();
       scope.$emit('chart-update', chart);
       if (scope.chartLegend && scope.chartLegend !== 'false') setLegend(elem, chart);

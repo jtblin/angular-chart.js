@@ -66,18 +66,18 @@
     $scope.data = [0, 0, 0];
 
     $timeout(function () {
-      $scope.data = [350, 450, 100];
+      $scope.data = [[350, 450, 100]];
     }, 500);
   }]);
 
   app.controller('PieCtrl', function ($scope) {
     $scope.labels = ['Download Sales', 'In-Store Sales', 'Mail Sales'];
-    $scope.data = [300, 500, 100];
+    $scope.data = [[300, 500, 100]];
   });
 
   app.controller('PolarAreaCtrl', function ($scope) {
     $scope.labels = ['Download Sales', 'In-Store Sales', 'Mail Sales', 'Telesales', 'Corporate Sales'];
-    $scope.data = [300, 500, 100, 40, 120];
+    $scope.data = [[300, 500, 100, 40, 120]];
   });
 
   app.controller('BaseCtrl', function ($scope) {
@@ -161,11 +161,21 @@
     $scope.data = [[]];
     $scope.labels = [];
     $scope.options = {
-      animation: false,
-      showScale: false,
-      showTooltips: false,
-      pointDot: false,
-      datasetStrokeWidth: 0.5
+      //animation: false,
+      //xAxes: [{
+      //  display: false
+      //}],
+      //scale: {
+      //  display: false,
+      //  gridLines: {
+      //    display: false
+      //  }
+      //},
+      //showTooltips: false,
+      //point: {
+      //  radius: 0
+      //},
+      //datasetStrokeWidth: 0.5
     };
 
     // Update the dataset at 25FPS for a smoothly-animating chart
