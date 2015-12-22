@@ -109,6 +109,7 @@
           chartHover: '=?'
         },
         link: function (scope, elem/*, attrs */) {
+          var cancel_watch_for_colours = null;
           var chart, container = document.createElement('div');
           container.className = 'chart-container';
           elem.replaceWith(container);
@@ -135,6 +136,12 @@
           aliasVar('chartHover', 'hover');
 
           // Order of setting "watch" matter
+          function setColoursListener() {
+            // Sets and returns the variable used to cancel the watch for colours, preventing the 
+            // diagram from being created due to a change occuring while creating a diagram
+            cancel_watch_for_colours = scope.$watch('colours', resetChart, true);
+            return cancel_watch_for_colours;
+          }
 
           scope.$watch('data', function (newVal, oldVal) {
             if (! newVal || ! newVal.length || (Array.isArray(newVal[0]) && ! newVal[0].length)) return;
@@ -152,7 +159,7 @@
           scope.$watch('series', resetChart, true);
           scope.$watch('labels', resetChart, true);
           scope.$watch('options', resetChart, true);
-          scope.$watch('colours', resetChart, true);
+          setColoursListener();
 
           scope.$watch('chartType', function (newVal, oldVal) {
             if (isEmpty(newVal)) return;
@@ -185,6 +192,8 @@
               }, 50, false);
             }
             if (! scope.data || ! scope.data.length) return;
+            // Disable the existing watch. It has been installed before and it is installed again
+            cancel_watch_for_colours();
             scope.getColour = typeof scope.getColour === 'function' ? scope.getColour : getRandomColour;
             scope.colours = getColours(type, scope);
             var cvs = elem[0], ctx = cvs.getContext('2d');
@@ -200,6 +209,9 @@
             cvs.onmousemove = scope.hover ? getEventHandler(scope, chart, 'hover', true) : angular.noop;
 
             if (scope.legend && scope.legend !== 'false') setLegend(elem, chart);
+            
+            // Install the listener again to make sure we're picking up changes set to the options attribute
+            setColoursListener();
           }
 
           function deprecated (attr) {
