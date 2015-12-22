@@ -202,7 +202,7 @@
               getData(scope.labels, scope.data, scope.colours);
             var options = angular.extend({}, ChartJs.getOptions(type), scope.options);
             chart = new ChartJs.Chart(ctx)[type](data, options);
-            scope.$emit('create', chart);
+            scope.$emit('chart-created', chart);
 
             // Bind events
             cvs.onclick = scope.click ? getEventHandler(scope, chart, 'click', false) : angular.noop;
@@ -356,7 +356,7 @@
         });
       }
       chart.update();
-      scope.$emit('update', chart);
+      scope.$emit('chart-updated', chart);
       if (scope.legend && scope.legend !== 'false') setLegend(elem, chart);
     }
 
