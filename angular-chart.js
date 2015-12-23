@@ -109,7 +109,7 @@
           chartHover: '=?'
         },
         link: function (scope, elem/*, attrs */) {
-          var cancel_watch_for_colours = null;
+          var cancelWatchForColours = null;
           var chart, container = document.createElement('div');
           container.className = 'chart-container';
           elem.replaceWith(container);
@@ -139,8 +139,8 @@
           function setColoursListener() {
             // Sets and returns the variable used to cancel the watch for colours, preventing the 
             // diagram from being created due to a change occuring while creating a diagram
-            cancel_watch_for_colours = scope.$watch('colours', resetChart, true);
-            return cancel_watch_for_colours;
+            cancelWatchForColours = scope.$watch('colours', resetChart, true);
+            return cancelWatchForColours;
           }
 
           scope.$watch('data', function (newVal, oldVal) {
@@ -193,7 +193,7 @@
             }
             if (! scope.data || ! scope.data.length) return;
             // Disable the existing watch. It has been installed before and it is installed again
-            cancel_watch_for_colours();
+            cancelWatchForColours();
             scope.getColour = typeof scope.getColour === 'function' ? scope.getColour : getRandomColour;
             scope.colours = getColours(type, scope);
             var cvs = elem[0], ctx = cvs.getContext('2d');
@@ -202,7 +202,7 @@
               getData(scope.labels, scope.data, scope.colours);
             var options = angular.extend({}, ChartJs.getOptions(type), scope.options);
             chart = new ChartJs.Chart(ctx)[type](data, options);
-            scope.$emit('chart-created', chart);
+            scope.$emit('create', chart);
 
             // Bind events
             cvs.onclick = scope.click ? getEventHandler(scope, chart, 'click', false) : angular.noop;
@@ -356,7 +356,7 @@
         });
       }
       chart.update();
-      scope.$emit('chart-updated', chart);
+      scope.$emit('update', chart);
       if (scope.legend && scope.legend !== 'false') setLegend(elem, chart);
     }
 
