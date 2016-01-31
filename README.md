@@ -10,6 +10,15 @@ Beautiful, reactive, responsive charts for Angular.JS using [Chart.js](http://ww
 
 [Demo](http://jtblin.github.io/angular-chart.js/)
 
+# Chart.js 2.0
+
+If you are interested by the upcoming 2.0 version of Chart.js, please checkout the 
+[chartjs-2.0 branch](https://github.com/jtblin/angular-chart.js/tree/chartjs-2.0). Report issues
+and feedback for this version by opening issues prefixed by "chartjs-2.0" in the title.
+
+See https://github.com/jtblin/angular-chart.js/issues/123 for more details and subscribe to it to get 
+the latest progress on Chart.js 2.0 integration.
+
 # Installation
 
 ### bower
