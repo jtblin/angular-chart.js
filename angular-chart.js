@@ -16,8 +16,7 @@
   'use strict';
 
   Chart.defaults.global.multiTooltipTemplate = '<%if (datasetLabel){%><%=datasetLabel%>: <%}%><%= value %>';
-
-  Chart.defaults.global.colours = [
+  Chart.defaults.global.colors = [
     '#97BBCD', // blue
     '#DCDCDC', // light grey
     '#F7464A', // red
@@ -93,7 +92,7 @@
           chartLabels: '=?',
           chartOptions: '=?',
           chartSeries: '=?',
-          chartColours: '=?',
+          chartColors: '=?',
           chartClick: '=?',
           chartHover: '=?'
         },
@@ -120,7 +119,7 @@
           scope.$watch('chartSeries', resetChart, true);
           scope.$watch('chartLabels', resetChart, true);
           scope.$watch('chartOptions', resetChart, true);
-          scope.$watch('chartColours', resetChart, true);
+          scope.$watch('chartColors', resetChart, true);
 
           scope.$watch('chartType', function (newVal, oldVal) {
             if (isEmpty(newVal)) return;
@@ -155,11 +154,11 @@
             }
             if (! scope.chartData || ! scope.chartData.length) return;
             scope.getColour = typeof scope.getColour === 'function' ? scope.getColour : getRandomColour;
-            scope.chartColours = getColours(type, scope);
+            scope.chartColors = getColors(type, scope);
             var cvs = elem[0], ctx = cvs.getContext('2d');
             var data = Array.isArray(scope.chartData[0]) ?
-              getDataSets(scope.chartLabels, scope.chartData, scope.chartSeries || [], scope.chartColours) :
-              getData(scope.chartLabels, scope.chartData, scope.chartColours);
+              getDataSets(scope.chartLabels, scope.chartData, scope.chartSeries || [], scope.chartColors) :
+              getData(scope.chartLabels, scope.chartData, scope.chartColors);
 
             var options = angular.extend({}, ChartJs.getOptions(type), scope.chartOptions);
             chart = new ChartJs.Chart(ctx, {
@@ -206,15 +205,15 @@
       };
     }
 
-    function getColours (type, scope) {
-      var colours = angular.copy(scope.chartColours ||
-        ChartJs.getOptions(type).chartColours ||
-        Chart.defaults.global.colours
+    function getColors (type, scope) {
+      var colors = angular.copy(scope.chartColors ||
+        ChartJs.getOptions(type).chartColors ||
+        Chart.defaults.global.colors
       );
-      while (colours.length < scope.chartData.length) {
-        colours.push(scope.getColour());
+      while (colors.length < scope.chartData.length) {
+        colors.push(scope.getColour());
       }
-      return colours.map(convertColour);
+      return colors.map(convertColour);
     }
 
     function convertColour (colour) {
@@ -262,11 +261,11 @@
       return [r, g, b];
     }
 
-    function getDataSets (labels, data, series, colours) {
+    function getDataSets (labels, data, series, colors) {
       return {
         labels: labels,
         datasets: data.map(function (item, i) {
-          return angular.extend({}, colours[i], {
+          return angular.extend({}, colors[i], {
             label: series[i],
             data: item,
             fill: true
@@ -275,15 +274,15 @@
       };
     }
 
-    function getData (labels, data, colours) {
+    function getData (labels, data, colors) {
       return {
         labels: labels,
         datasets: [{
           data: data,
-          backgroundColor: colours.map(function (colour) {
+          backgroundColor: colors.map(function (colour) {
             return colour.pointBackgroundColor;
           }),
-          hoverBackgroundColor: colours.map(function (colour) {
+          hoverBackgroundColor: colors.map(function (colour) {
             return colour.backgroundColor;
           })
         }]
