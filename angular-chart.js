@@ -15,7 +15,6 @@
 }(function (angular, Chart) {
   'use strict';
 
-  Chart.defaults.global.responsive = true;
   Chart.defaults.global.multiTooltipTemplate = '<%if (datasetLabel){%><%=datasetLabel%>: <%}%><%= value %>';
 
   Chart.defaults.global.colours = [
@@ -95,28 +94,23 @@
           chartOptions: '=?',
           chartSeries: '=?',
           chartColours: '=?',
-          chartLegend: '@',
           chartClick: '=?',
           chartHover: '=?'
         },
         link: function (scope, elem/*, attrs */) {
-          var chart, container = document.createElement('div');
-          container.className = 'chart-container';
-          elem.replaceWith(container);
-          container.appendChild(elem[0]);
+          var chart;
 
           if (usingExcanvas) window.G_vmlCanvasManager.initElement(elem[0]);
 
           // Order of setting "watch" matter
 
           scope.$watch('chartData', function (newVal, oldVal) {
-            //console.log('chartData');
             if (! newVal || ! newVal.length || (Array.isArray(newVal[0]) && ! newVal[0].length)) return;
             var chartType = type || scope.chartType;
             if (! chartType) return;
 
             if (chart) {
-              if (canUpdateChart(newVal, oldVal)) return updateChart(chart, newVal, scope, elem);
+              if (canUpdateChart(newVal, oldVal)) return updateChart(chart, newVal, scope);
               chart.destroy();
             }
 
@@ -153,7 +147,8 @@
           }
 
           function createChart (type) {
-            if (isResponsive(type, scope) && elem[0].clientHeight === 0 && container.clientHeight === 0) {
+            // TODO: check parent?
+            if (isResponsive(type, scope) && elem[0].clientHeight === 0) {
               return $timeout(function () {
                 createChart(type);
               }, 50, false);
@@ -162,11 +157,13 @@
             scope.getColour = typeof scope.getColour === 'function' ? scope.getColour : getRandomColour;
             scope.chartColours = getColours(type, scope);
             var cvs = elem[0], ctx = cvs.getContext('2d');
-            var data = getDataSets(scope.chartLabels, scope.chartData, scope.chartSeries || [], scope.chartColours);
+            var data = Array.isArray(scope.chartData[0]) ?
+              getDataSets(scope.chartLabels, scope.chartData, scope.chartSeries || [], scope.chartColours) :
+              getData(scope.chartLabels, scope.chartData, scope.chartColours);
+
             var options = angular.extend({}, ChartJs.getOptions(type), scope.chartOptions);
-            console.log(type);
             chart = new ChartJs.Chart(ctx, {
-              type: type.toLowerCase(),
+              type: type,
               data: data,
               options: options
             });
@@ -175,8 +172,6 @@
             // Bind events
             cvs.onclick = scope.chartClick ? getEventHandler(scope, chart, 'chartClick', false) : angular.noop;
             cvs.onmousemove = scope.chartHover ? getEventHandler(scope, chart, 'chartHover', true) : angular.noop;
-
-            if (scope.chartLegend && scope.chartLegend !== 'false') setLegend(elem, chart);
           }
         }
       };
@@ -281,41 +276,31 @@
     }
 
     function getData (labels, data, colours) {
-      return labels.map(function (label, i) {
-        return angular.extend({}, colours[i], {
-          label: label,
-          value: data[i],
-          color: colours[i].strokeColor,
-          highlight: colours[i].pointHighlightStroke
+      return {
+        labels: labels,
+        datasets: [{
+          data: data,
+          backgroundColor: colours.map(function (colour) {
+            return colour.pointBackgroundColor;
+          }),
+          hoverBackgroundColor: colours.map(function (colour) {
+            return colour.backgroundColor;
+          })
+        }]
+      };
+    }
+
+    function updateChart (chart, values, scope) {
+      if (Array.isArray(scope.chartData[0])) {
+        chart.data.datasets.forEach(function (dataset, i) {
+          dataset.data = values[i];
         });
-      });
-    }
-
-    function setLegend (elem, chart) {
-      var $parent = elem.parent(),
-          $oldLegend = $parent.find('chart-legend'),
-          legend = '<chart-legend>' + chart.generateLegend() + '</chart-legend>';
-      if ($oldLegend.length) $oldLegend.replaceWith(legend);
-      else $parent.append(legend);
-    }
-
-    function updateChart (chart, values, scope, elem) {
-        //console.log('chart.data.datasets', chart.data.datasets);
-      return;
-      chart.data.datasets.forEach(function (dataset, i) {
-        //debugger;
-        //dataset.data.forEach(function (dataItem, j) {
-        //  dataItem.value = values[i][j];
-        //});
-        for (var j = 0; j < values[i].length; j++) {
-          //console.log(values[i][j]);
-          dataset.data[j] = values[i][j];
-        }
-      });
+      } else {
+        chart.data.datasets[0].data = values;
+      }
 
       chart.update();
       scope.$emit('chart-update', chart);
-      if (scope.chartLegend && scope.chartLegend !== 'false') setLegend(elem, chart);
     }
 
     function isEmpty (value) {

@@ -6,8 +6,7 @@
   app.config(function (ChartJsProvider) {
     // Configure all charts
     ChartJsProvider.setOptions({
-      colours: ['#97BBCD', '#DCDCDC', '#F7464A', '#46BFBD', '#FDB45C', '#949FB1', '#4D5360'],
-      responsive: true
+      colours: ['#97BBCD', '#DCDCDC', '#F7464A', '#46BFBD', '#FDB45C', '#949FB1', '#4D5360']
     });
     // Configure all doughnut charts
     ChartJsProvider.setOptions('Doughnut', {
@@ -49,7 +48,7 @@
   }]);
 
   app.controller('BarCtrl', ['$scope', '$timeout', function ($scope, $timeout) {
-    $scope.options = { scaleShowVerticalLines: false };
+    $scope.options = { legend: { display: true } };
     $scope.labels = ['2006', '2007', '2008', '2009', '2010', '2011', '2012'];
     $scope.series = ['Series A', 'Series B'];
     $scope.data = [
@@ -57,7 +56,7 @@
       [28, 48, 40, 19, 86, 27, 90]
     ];
     $timeout(function () {
-      $scope.options = { scaleShowVerticalLines: true };
+      $scope.options = { legend: { display: false } };
     }, 3000);
   }]);
 
@@ -66,32 +65,33 @@
     $scope.data = [0, 0, 0];
 
     $timeout(function () {
-      $scope.data = [[350, 450, 100]];
+      $scope.data = [350, 450, 100];
     }, 500);
   }]);
 
   app.controller('PieCtrl', function ($scope) {
     $scope.labels = ['Download Sales', 'In-Store Sales', 'Mail Sales'];
-    $scope.data = [[300, 500, 100]];
+    $scope.data = [300, 500, 100];
   });
 
   app.controller('PolarAreaCtrl', function ($scope) {
     $scope.labels = ['Download Sales', 'In-Store Sales', 'Mail Sales', 'Telesales', 'Corporate Sales'];
-    $scope.data = [[300, 500, 100, 40, 120]];
+    $scope.data = [300, 500, 100, 40, 120];
   });
 
   app.controller('BaseCtrl', function ($scope) {
     $scope.labels = ['Download Sales', 'Store Sales', 'Mail Sales', 'Telesales', 'Corporate Sales'];
     $scope.data = [300, 500, 100, 40, 120];
-    $scope.type = 'PolarArea';
+    $scope.type = 'polarArea';
 
     $scope.toggle = function () {
-      $scope.type = $scope.type === 'PolarArea' ?  'Pie' : 'PolarArea';
+      $scope.type = $scope.type === 'polarArea' ?  'pie' : 'polarArea';
     };
   });
 
   app.controller('RadarCtrl', function ($scope) {
     $scope.labels = ['Eating', 'Drinking', 'Sleeping', 'Designing', 'Coding', 'Cycling', 'Running'];
+    $scope.options = { legend: { display: false } };
 
     $scope.data = [
       [65, 59, 90, 81, 56, 55, 40],
@@ -146,6 +146,7 @@
         pointHighlightStroke: 'rgba(77,83,96,1)'
       }
     ];
+    $scope.options = { legend: { display: false } };
     $scope.randomize = function () {
       $scope.data = $scope.data.map(function (data) {
         return data.map(function (y) {
@@ -161,27 +162,40 @@
     $scope.data = [[]];
     $scope.labels = [];
     $scope.options = {
-      //animation: false,
-      //xAxes: [{
-      //  display: false
-      //}],
-      //scale: {
-      //  display: false,
-      //  gridLines: {
-      //    display: false
-      //  }
-      //},
-      //showTooltips: false,
-      //point: {
-      //  radius: 0
-      //},
-      //datasetStrokeWidth: 0.5
+      animation: {
+        duration: 0
+      },
+      elements: {
+        line: {
+          borderWidth: 0.5
+        },
+        point: {
+          radius: 0.1
+        }
+      },
+      legend: {
+        display: false
+      },
+      scales: {
+        xAxes: [{
+          display: false
+        }],
+        yAxes: [{
+          display: false
+        }],
+        gridLines: {
+          display: false
+        }
+      },
+      tooltips: {
+        enabled: false
+      }
     };
 
     // Update the dataset at 25FPS for a smoothly-animating chart
-    $interval(function () {
-      getLiveChartData();
-    }, 40);
+    //$interval(function () {
+    //  getLiveChartData();
+    //}, 40);
 
     function getLiveChartData () {
       if ($scope.data[0].length) {
