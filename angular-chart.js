@@ -43,7 +43,8 @@
     .directive('chartRadar', function (ChartJsFactory) { return new ChartJsFactory('Radar'); })
     .directive('chartDoughnut', function (ChartJsFactory) { return new ChartJsFactory('Doughnut'); })
     .directive('chartPie', function (ChartJsFactory) { return new ChartJsFactory('Pie'); })
-    .directive('chartPolarArea', function (ChartJsFactory) { return new ChartJsFactory('PolarArea'); });
+    .directive('chartPolarArea', function (ChartJsFactory) { return new ChartJsFactory('PolarArea'); })
+    .name;
 
   /**
    * Wrapper for chart.js
