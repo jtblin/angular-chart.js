@@ -267,8 +267,7 @@
         datasets: data.map(function (item, i) {
           return angular.extend({}, colors[i], {
             label: series[i],
-            data: item,
-            fill: true
+            data: item
           });
         })
       };
