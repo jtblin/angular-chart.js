@@ -193,9 +193,9 @@
     };
 
     // Update the dataset at 25FPS for a smoothly-animating chart
-    //$interval(function () {
-    //  getLiveChartData();
-    //}, 40);
+    $interval(function () {
+      getLiveChartData();
+    }, 40);
 
     function getLiveChartData () {
       if ($scope.data[0].length) {
