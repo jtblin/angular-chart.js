@@ -4,10 +4,8 @@
   var fs = require('fs');
   var path = require('path');
   var gulp = require('gulp');
-  var less = require('gulp-less');
   var sourcemaps = require('gulp-sourcemaps');
   var uglify = require('gulp-uglify');
-  var csso = require('gulp-csso');
   var jshint = require('gulp-jshint');
   var stylish = require('jshint-stylish');
   var jscs = require('gulp-jscs');
@@ -28,21 +26,6 @@
   gulp.task('clean', function () {
     return gulp.src('./dist/*', { read: false })
       .pipe(rimraf());
-  });
-
-  gulp.task('less', function () {
-    return gulp.src('./*.less')
-      .pipe(less())
-      .pipe(gulp.dest('./dist'));
-  });
-
-  gulp.task('css-min', function () {
-    return gulp.src('./dist/*.css')
-      .pipe(sourcemaps.init())
-      .pipe(csso())
-      .pipe(rename({ suffix: '.min' }))
-      .pipe(sourcemaps.write('./'))
-      .pipe(gulp.dest('./dist'));
   });
 
   gulp.task('lint', function () {
@@ -144,7 +127,6 @@
 
   gulp.task('watch', function () {
     gulp.watch('./*.js', ['js']);
-    gulp.watch('./*.less', ['less']);
     return true;
   });
 
@@ -161,7 +143,7 @@
   }
 
   gulp.task('default', sequence('check', 'assets'));
-  gulp.task('assets', sequence('clean', ['less', 'js'], 'css-min', 'build'));
+  gulp.task('assets', sequence('clean', 'js', 'build'));
   gulp.task('test', sequence('cover', 'unit', 'integration', 'report'));
   gulp.task('check', sequence(['lint', 'style'], 'test'));
   gulp.task('deploy-patch', sequence('default', 'bump-patch', 'update', 'git-commit', 'git-push', 'npm'));
