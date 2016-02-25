@@ -37,13 +37,13 @@
   return angular.module('chart.js', [])
     .provider('ChartJs', ChartJsProvider)
     .factory('ChartJsFactory', ['ChartJs', '$timeout', ChartJsFactory])
-    .directive('chartBase', function (ChartJsFactory) { return new ChartJsFactory(); })
-    .directive('chartLine', function (ChartJsFactory) { return new ChartJsFactory('line'); })
-    .directive('chartBar', function (ChartJsFactory) { return new ChartJsFactory('bar'); })
-    .directive('chartRadar', function (ChartJsFactory) { return new ChartJsFactory('radar'); })
-    .directive('chartDoughnut', function (ChartJsFactory) { return new ChartJsFactory('doughnut'); })
-    .directive('chartPie', function (ChartJsFactory) { return new ChartJsFactory('pie'); })
-    .directive('chartPolarArea', function (ChartJsFactory) { return new ChartJsFactory('polarArea'); });
+    .directive('chartBase', ['ChartJsFactory', function (ChartJsFactory) { return new ChartJsFactory(); }])
+    .directive('chartLine', ['ChartJsFactory', function (ChartJsFactory) { return new ChartJsFactory('line'); }])
+    .directive('chartBar', ['ChartJsFactory', function (ChartJsFactory) { return new ChartJsFactory('bar'); }])
+    .directive('chartRadar', ['ChartJsFactory', function (ChartJsFactory) { return new ChartJsFactory('radar'); }])
+    .directive('chartDoughnut', ['ChartJsFactory', function (ChartJsFactory) { return new ChartJsFactory('doughnut'); }])
+    .directive('chartPie', ['ChartJsFactory', function (ChartJsFactory) { return new ChartJsFactory('pie'); }])
+    .directive('chartPolarArea', ['ChartJsFactory', function (ChartJsFactory) { return new ChartJsFactory('polarArea'); }]);
 
   /**
    * Wrapper for chart.js
