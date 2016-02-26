@@ -30,7 +30,6 @@
     "gulp-jscs": "^3.0.2",
     "gulp-jshint": "^1.9.2",
     "gulp-mocha-phantomjs": "^0.10.1",
-    "gulp-ng-annotate": "^1.1.0",
     "gulp-rename": "^1.2.0",
     "gulp-rimraf": "^0.2.0",
     "gulp-sequence": "^0.4.1",
