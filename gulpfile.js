@@ -19,7 +19,6 @@
   var shell = require('gulp-shell');
   var rename = require('gulp-rename');
   var sequence = require('gulp-sequence');
-  var ngAnnotate = require('gulp-ng-annotate');
   var rimraf = require('gulp-rimraf');
   var istanbul = require('gulp-istanbul');
   var istanbulReport = require('gulp-istanbul-report');
@@ -90,14 +89,12 @@
 
   gulp.task('bower', function () {
     return gulp.src('./angular-chart.js')
-      .pipe(ngAnnotate({ single_quotes: true }))
       .pipe(gulp.dest('./dist'));
   });
 
   gulp.task('js', ['lint', 'style', 'bower'], function () {
     return gulp.src('./angular-chart.js')
       .pipe(rename('angular-chart.min.js'))
-      .pipe(ngAnnotate({ single_quotes: true }))
       .pipe(sourcemaps.init())
       .pipe(uglify())
       .pipe(sourcemaps.write('./'))
