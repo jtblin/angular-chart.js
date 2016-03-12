@@ -141,10 +141,8 @@
             var chartType = type || scope.chartType;
             if (! chartType) return;
 
-            if (chart) {
-              if (canUpdateChart(newVal, oldVal)) return updateChart(chart, newVal, scope, elem);
-              chart.destroy();
-            }
+            if (chart && canUpdateChart(newVal, oldVal))
+              return updateChart(chart, newVal, scope, elem);
 
             createChart(chartType);
           }, true);
@@ -157,7 +155,6 @@
           scope.$watch('chartType', function (newVal, oldVal) {
             if (isEmpty(newVal)) return;
             if (angular.equals(newVal, oldVal)) return;
-            if (chart) chart.destroy();
             createChart(newVal);
           });
 
@@ -173,8 +170,6 @@
 
             // chart.update() doesn't work for series and labels
             // so we have to re-create the chart entirely
-            if (chart) chart.destroy();
-
             createChart(chartType);
           }
 
@@ -192,6 +187,10 @@
               getDataSets(scope.labels, scope.data, scope.series || [], colours) :
               getData(scope.labels, scope.data, colours);
             var options = angular.extend({}, ChartJs.getOptions(type), scope.options);
+
+            // Destroy old chart if it exists to avoid ghost charts issue
+            // https://github.com/jtblin/angular-chart.js/issues/187
+            if (chart) chart.destroy();
             chart = new ChartJs.Chart(ctx)[type](data, options);
             scope.$emit('create', chart);
 
