@@ -110,10 +110,8 @@
             var chartType = type || scope.chartType;
             if (! chartType) return;
 
-            if (chart) {
-              if (canUpdateChart(newVal, oldVal)) return updateChart(chart, newVal, scope);
-              chart.destroy();
-            }
+            if (chart && canUpdateChart(newVal, oldVal))
+              return updateChart(chart, newVal, scope);
 
             createChart(chartType);
           }, true);
@@ -126,7 +124,6 @@
           scope.$watch('chartType', function (newVal, oldVal) {
             if (isEmpty(newVal)) return;
             if (angular.equals(newVal, oldVal)) return;
-            if (chart) chart.destroy();
             createChart(newVal);
           });
 
@@ -142,8 +139,6 @@
 
             // chart.update() doesn't work for series and labels
             // so we have to re-create the chart entirely
-            if (chart) chart.destroy();
-
             createChart(chartType);
           }
 
@@ -156,13 +151,16 @@
             }
             if (! scope.chartData || ! scope.chartData.length) return;
             scope.chartGetColor = typeof scope.chartGetColor === 'function' ? scope.chartGetColor : getRandomColor;
-            scope.chartColors = getColors(type, scope);
+            var colors = getColors(type, scope);
             var cvs = elem[0], ctx = cvs.getContext('2d');
             var data = Array.isArray(scope.chartData[0]) ?
-              getDataSets(scope.chartLabels, scope.chartData, scope.chartSeries || [], scope.chartColors) :
-              getData(scope.chartLabels, scope.chartData, scope.chartColors);
+              getDataSets(scope.chartLabels, scope.chartData, scope.chartSeries || [], colors) :
+              getData(scope.chartLabels, scope.chartData, colors);
 
             var options = angular.extend({}, ChartJs.getOptions(type), scope.chartOptions);
+            // Destroy old chart if it exists to avoid ghost charts issue
+            // https://github.com/jtblin/angular-chart.js/issues/187
+            if (chart) chart.destroy();
             chart = new ChartJs.Chart(ctx, {
               type: type,
               data: data,
@@ -212,9 +210,13 @@
         ChartJs.getOptions(type).chartColors ||
         Chart.defaults.global.colors
       );
+      var notEnoughColors = colors.length < scope.chartData.length;
       while (colors.length < scope.chartData.length) {
         colors.push(scope.chartGetColor());
       }
+      // mutate colors in this case as we don't want
+      // the colors to change on each refresh
+      if (notEnoughColors) scope.chartColors = colors;
       return colors.map(convertColor);
     }
 
