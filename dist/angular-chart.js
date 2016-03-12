@@ -186,11 +186,11 @@
             }
             if (! scope.data || ! scope.data.length) return;
             scope.getColour = typeof scope.getColour === 'function' ? scope.getColour : getRandomColour;
-            scope.colours = getColours(type, scope);
+            var colours = getColours(type, scope);
             var cvs = elem[0], ctx = cvs.getContext('2d');
             var data = Array.isArray(scope.data[0]) ?
-              getDataSets(scope.labels, scope.data, scope.series || [], scope.colours) :
-              getData(scope.labels, scope.data, scope.colours);
+              getDataSets(scope.labels, scope.data, scope.series || [], colours) :
+              getData(scope.labels, scope.data, colours);
             var options = angular.extend({}, ChartJs.getOptions(type), scope.options);
             chart = new ChartJs.Chart(ctx)[type](data, options);
             scope.$emit('create', chart);
@@ -245,13 +245,18 @@
     }
 
     function getColours (type, scope) {
+      var notEnoughColours = false;
       var colours = angular.copy(scope.colours ||
         ChartJs.getOptions(type).colours ||
         Chart.defaults.global.colours
       );
       while (colours.length < scope.data.length) {
         colours.push(scope.getColour());
+        notEnoughColours = true;
       }
+      // mutate colours in this case as we don't want
+      // the colours to change on each refresh
+      if (notEnoughColours) scope.colours = colours;
       return colours.map(convertColour);
     }
 
