@@ -156,11 +156,11 @@
             }
             if (! scope.chartData || ! scope.chartData.length) return;
             scope.chartGetColor = typeof scope.chartGetColor === 'function' ? scope.chartGetColor : getRandomColor;
-            scope.chartColors = getColors(type, scope);
+            var colors = getColors(type, scope);
             var cvs = elem[0], ctx = cvs.getContext('2d');
             var data = Array.isArray(scope.chartData[0]) ?
-              getDataSets(scope.chartLabels, scope.chartData, scope.chartSeries || [], scope.chartColors) :
-              getData(scope.chartLabels, scope.chartData, scope.chartColors);
+              getDataSets(scope.chartLabels, scope.chartData, scope.chartSeries || [], colors) :
+              getData(scope.chartLabels, scope.chartData, colors);
 
             var options = angular.extend({}, ChartJs.getOptions(type), scope.chartOptions);
             chart = new ChartJs.Chart(ctx, {
@@ -212,9 +212,13 @@
         ChartJs.getOptions(type).chartColors ||
         Chart.defaults.global.colors
       );
+      var notEnoughColors = colors.length < scope.chartData.length;
       while (colors.length < scope.chartData.length) {
         colors.push(scope.chartGetColor());
       }
+      // mutate colors in this case as we don't want
+      // the colors to change on each refresh
+      if (notEnoughColors) scope.chartColors = colors;
       return colors.map(convertColor);
     }
 
