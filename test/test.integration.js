@@ -47,7 +47,7 @@ describe('integration', function () {
 
       webshot(url, image, WEBSHOT_OPTIONS, function (err) {
         if (err) return done(err);
-        gm.compare(expected, image, process.env.TOLERANCE || 0.002, function (err, isEqual) {
+        gm.compare(expected, image, process.env.TOLERANCE || 0.00001, function (err, isEqual) {
           if (err) return done(err);
           if (! isEqual) {
             var failed = WEBSHOT_FAILED_DIR + name + '-failed.png',

@@ -6,12 +6,11 @@
   app.config(function (ChartJsProvider) {
     // Configure all charts
     ChartJsProvider.setOptions({
-      colours: ['#FF5252', '#FF8A80'],
-      responsive: false
+      chartColors: ['#FF5252', '#FF8A80']
     });
     // Configure all line charts
-    ChartJsProvider.setOptions('Line', {
-      datasetFill: false
+    ChartJsProvider.setOptions('line', {
+      showLines: false
     });
   });
 
@@ -21,7 +20,9 @@
 
     // Configure only this instance
     $scope.options = {
-      scaleLineWidth: 5
+      legend: {
+        display: false
+      }
     };
 
     $timeout(function () {

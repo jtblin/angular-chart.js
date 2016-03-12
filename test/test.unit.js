@@ -28,32 +28,16 @@ describe('Unit testing', function () {
   });
 
   describe('base', function () {
-    it('replaces the element with the appropriate content', function () {
-      var markup = '<div style="width: 250px; height:120px">' +
-        '<canvas class="chart chart-line" chart-data="data" chart-labels="labels"></canvas></div>';
-
-      scope.labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
-      scope.data = [
-        [65, 59, 80, 81, 56, 55, 40],
-        [28, 48, 40, 19, 86, 27, 90]
-      ];
-
-      var element = $compile(markup)(scope);
-      scope.$digest();
-
-      expect(element.html()).to.startWith('<div class="chart-container"><canvas ');
-    });
-
     describe('chart types', function () {
-      ['Line', 'Bar', 'Radar', 'Pie', 'Doughnut', 'PolarArea'].forEach(function (type) {
+      ['line', 'bar', 'radar', 'pie', 'doughnut', 'polarArea'].forEach(function (type) {
         it('creates a ' + type + ' chart using the directive', function () {
           var markup = '<div style="width: 250px; height:120px"><canvas class="chart chart-' +
-            (type === 'PolarArea' ? 'polar-area' : type.toLowerCase()) +
+            (type === 'polarArea' ? 'polar-area' : type) +
               '" chart-data="data" chart-labels="labels"></canvas></div>';
 
           scope.labels = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
-          if (['Line', 'Bar', 'Radar'].indexOf(type) > - 1)
+          if (['line', 'bar', 'radar'].indexOf(type) > - 1)
             scope.data = [
               [65, 59, 80, 81, 56, 55, 40],
               [28, 48, 40, 19, 86, 27, 90]
@@ -61,13 +45,20 @@ describe('Unit testing', function () {
           else
             scope.data = [300, 500, 100];
 
-          var mock = sandbox.mock(Chart.prototype);
-          mock.expects(type);
+          var spyChart = sandbox.spy(ChartJs, 'Chart');
+
+          scope.$on('chart-create', function (evt, chart) {
+            expect(chart).to.be.an.instanceOf(Chart.Controller);
+          });
 
           $compile(markup)(scope);
           scope.$digest();
 
-          mock.verify();
+          expect(spyChart).to.have.been.calledWithNew;
+          expect(spyChart).to.have.been.calledWithExactly(
+            sinon.match.any,
+            sinon.match({ type: type, data: sinon.match.object, options: sinon.match.object })
+          );
         });
 
         it('creates a ' + type + ' chart using the "chart-type" attribute"', function () {
@@ -78,7 +69,7 @@ describe('Unit testing', function () {
           scope.labels = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
           scope.type = type;
 
-          if (['Line', 'Bar', 'Radar'].indexOf(type) > - 1)
+          if (['line', 'bar', 'radar'].indexOf(type) > - 1)
             scope.data = [
               [65, 59, 80, 81, 56, 55, 40],
               [28, 48, 40, 19, 86, 27, 90]
@@ -86,31 +77,22 @@ describe('Unit testing', function () {
           else
             scope.data = [300, 500, 100];
 
-          var mock = sandbox.mock(Chart.prototype);
-          mock.expects(type);
+          var spyChart = sandbox.spy(ChartJs, 'Chart');
+
+          scope.$on('chart-create', function (evt, chart) {
+            expect(chart).to.be.an.instanceOf(Chart.Controller);
+          });
 
           $compile(markup)(scope);
           scope.$digest();
 
-          mock.verify();
+          expect(spyChart).to.have.been.calledWithNew;
+          expect(spyChart).to.have.been.calledWithExactly(
+            sinon.match.any,
+            sinon.match({ type: type, data: sinon.match.object, options: sinon.match.object })
+          );
         });
       });
-    });
-
-    it('generates the legend', function () {
-      var markup = '<div style="width: 250px; height:120px">' +
-        '<canvas class="chart chart-line" chart-data="data" chart-labels="labels" chart-legend="true"></canvas></div>';
-
-      scope.labels = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-      scope.data = [
-        [65, 59, 80, 81, 56, 55, 40],
-        [28, 48, 40, 19, 86, 27, 90]
-      ];
-
-      var element = $compile(markup)(scope);
-      scope.$digest();
-
-      expect(element.html()).to.have.string('<chart-legend>');
     });
   });
 
@@ -128,8 +110,6 @@ describe('Unit testing', function () {
       var mock = sandbox.mock(scope);
       // cannot get a hold of the child scope as it isn't created yet
       // so cannot be more precise on expectations
-      /* whummer: due to new attribute names (chart-*), only the attributes
-         which are actually present in the markup will be updated via $watch (3) */
       mock.expects('$watch').atLeast(3);
 
       $compile(markup)(scope);
@@ -238,17 +218,17 @@ describe('Unit testing', function () {
       expect(ChartJs.getOptions('Line').responsive).to.equal(true);
     });
 
-    ['labels', 'colours', 'series', 'options'].forEach(function (attr) {
+    ['labels', 'colors', 'series', 'options'].forEach(function (attr) {
       it('re-creates the chart on ' + attr + ' changes', function () {
         var markup = '<div style="width: 250px; height:120px">' +
           '<canvas class="chart chart-line" chart-data="data" chart-labels="labels" chart-series="series" ' +
-            'chart-colours="colours" chart-options="options"></canvas></div>';
+            'chart-colors="colors" chart-options="options"></canvas></div>';
         var count = 0;
 
         scope.options = { scaleShowVerticalLines: false };
         scope.labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
         scope.series = ['Series A', 'Series B'];
-        scope.colours = [{
+        scope.colors = [{
           fillColor: 'rgba(127,253,31,0.2)',
           pointColor: 'rgba(127,253,31,1)',
           pointHighlightFill: '#fff',
@@ -278,8 +258,8 @@ describe('Unit testing', function () {
           case 'labels':
             scope.labels = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
             break;
-          case 'colours':
-            scope.colours = [{
+          case 'colors':
+            scope.colors = [{
               fillColor: 'rgba(253,31,94,0.2)',
               pointColor: 'rgba(253,31,94,1)',
               pointHighlightFill: '#fff',
@@ -308,17 +288,17 @@ describe('Unit testing', function () {
       });
     });
 
-    ['labels', 'colours', 'series', 'options'].forEach(function (attr) {
+    ['labels', 'colors', 'series', 'options'].forEach(function (attr) {
       it('does not re-create the chart on ' + attr + ' not changed', function () {
         var markup = '<div style="width: 250px; height:120px">' +
           '<canvas class="chart chart-line" chart-data="data" chart-labels="labels" chart-series="series" ' +
-            'chart-colours="colours" chart-options="options"></canvas></div>';
+            'chart-colors="colors" chart-options="options"></canvas></div>';
         var count = 0;
 
         scope.options = { scaleShowVerticalLines: false };
         scope.labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
         scope.series = ['Series A', 'Series B'];
-        scope.colours = [{
+        scope.colors = [{
           fillColor: 'rgba(127,253,31,0.2)',
           pointColor: 'rgba(127,253,31,1)',
           pointHighlightFill: '#fff',
@@ -348,8 +328,8 @@ describe('Unit testing', function () {
           case 'labels':
             scope.labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
             break;
-          case 'colours':
-            scope.colours = [{
+          case 'colors':
+            scope.colors = [{
               fillColor: 'rgba(127,253,31,0.2)',
               pointColor: 'rgba(127,253,31,1)',
               pointHighlightFill: '#fff',

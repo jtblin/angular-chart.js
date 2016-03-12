@@ -2,6 +2,9 @@
   'use strict';
 
   var app = angular.module('examples', ['chart.js', 'ui.bootstrap']);
+  Chart.defaults.global.legend = {
+    display: false
+  };
 
   app.controller('TabsCtrl', function ($scope) {
     $scope.labels = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
