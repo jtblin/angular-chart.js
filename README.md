@@ -12,6 +12,18 @@ Beautiful, reactive, responsive charts for Angular.JS using [Chart.js](http://ww
 
 # Installation
 
+## Chart.js 2.0 and 1.0.0-alpha1 branch
+
+This is the `1.0.0-alpha1` branch which requires Chart.js 2.0 beta2 version. Following semantic versioning,
+there are numerous breaking changes in this version notably:
+
+* all options now need to use the `chart-` prefix
+* `chart-colours` is now `chart-colors` and `chart-get-colour` is now `chart-get-color`
+* chart types are in `camelCase` e.g. `line` and `polarArea`
+* legend is now a Chart.js option so the `chart-legend` attribute has been removed
+* events emitted on creation and update are now prefixed with `chart-` e.g. `chart-create`
+* obviously all Chart.js breaking changes as well in how options are set, etc.
+
 ### bower
 
     bower install --save angular-chart.js
@@ -82,7 +94,7 @@ angular.module("app", ["chart.js"])
       responsive: false
     });
     // Configure all line charts
-    ChartJsProvider.setOptions('Line', {
+    ChartJsProvider.setOptions('line', {
       datasetFill: false
     });
   }])
