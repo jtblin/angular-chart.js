@@ -38,13 +38,13 @@
     "tests"
   ],
   "dependencies": {
-    "angular": "1.x",
+    "angular": "1.4.x",
     "Chart.js": "2.0.0-beta2"
   },
   "devDependencies": {
     "Chart.StackedBar.js": "~1.0.1",
     "angular-bootstrap": "~0.11.0",
-    "angular-mocks": "1.x",
+    "angular-mocks": "1.4.x",
     "font-awesome": "~4.1.0",
     "rainbow": "~1.1.9",
     "requirejs": "~2.1.20"
