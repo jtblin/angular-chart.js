@@ -88,7 +88,7 @@
       return {
         restrict: 'CA',
         scope: {
-          getColor: '=?',
+          chartGetColor: '=?',
           chartType: '=',
           chartData: '=?',
           chartLabels: '=?',
@@ -155,7 +155,7 @@
               }, 50, false);
             }
             if (! scope.chartData || ! scope.chartData.length) return;
-            scope.getColor = typeof scope.getColor === 'function' ? scope.getColor : getRandomColor;
+            scope.chartGetColor = typeof scope.chartGetColor === 'function' ? scope.chartGetColor : getRandomColor;
             scope.chartColors = getColors(type, scope);
             var cvs = elem[0], ctx = cvs.getContext('2d');
             var data = Array.isArray(scope.chartData[0]) ?
@@ -213,7 +213,7 @@
         Chart.defaults.global.colors
       );
       while (colors.length < scope.chartData.length) {
-        colors.push(scope.getColor());
+        colors.push(scope.chartGetColor());
       }
       return colors.map(convertColor);
     }

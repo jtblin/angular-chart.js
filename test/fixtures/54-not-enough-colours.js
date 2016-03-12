@@ -10,7 +10,7 @@
     var cnt = 0;
     $scope.colors = [];
     $scope.labels = ['Series A', 'Series B'];
-    $scope.getColor = function () {
+    $scope.chartGetColor = function () {
       return ++cnt % 2 > 0 ?
       { // red
         backgroundColor: 'rgba(247,70,74,0.2)',
