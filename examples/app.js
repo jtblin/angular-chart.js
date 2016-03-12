@@ -172,7 +172,7 @@
           borderWidth: 0.5
         },
         point: {
-          radius: 0.1
+          radius: 0
         }
       },
       legend: {
