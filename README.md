@@ -53,11 +53,10 @@ There are 6 types of charts so 6 directives: `chart-line`, `chart-bar`, `chart-r
 - `chart-labels`: x axis labels (line, bar, radar) or series labels (pie, doughnut, polar area)
 - `chart-options`: chart options (as from [Chart.js documentation](http://www.chartjs.org/docs/))
 - `chart-series`: (default: `[]`): series labels (line, bar, radar)
-- `chart-colours`: data colours (will use default colours if not specified)
-- `get-colour`: function that returns a colour in case there are not enough (will use random colours if not specified)
+- `chart-colors`: data colors (will use default colors if not specified)
+- `get-color`: function that returns a color in case there are not enough (will use random colors if not specified)
 - `chart-click`: onclick event handler
 - `chart-hover`: onmousemove event handler
-- `chart-legend`: (default: `false`): show legend below the chart
 
 There is another directive `chart-base` that takes an extra attribute `chart-type` to define the type
 dynamically, see [stacked bar example](http://jtblin.github.io/angular-chart.js/examples/stacked-bars.html).
@@ -68,7 +67,7 @@ dynamically, see [stacked bar example](http://jtblin.github.io/angular-chart.js/
 
 ```html
 <canvas class="chart chart-line" chart-data="data" chart-labels="labels" 
-	chart-legend="true" chart-series="series" chart-click="onClick"></canvas> 
+	chart-series="series" chart-click="onClick"></canvas> 
 ```
 
 ## Javascript
@@ -79,7 +78,7 @@ angular.module("app", ["chart.js"])
   .config(['ChartJsProvider', function (ChartJsProvider) {
     // Configure all charts
     ChartJsProvider.setOptions({
-      chartColours: ['#FF5252', '#FF8A80'],
+      chartColors: ['#FF5252', '#FF8A80'],
       responsive: false
     });
     // Configure all line charts
@@ -120,7 +119,7 @@ Module should work with CommonJS out of the box e.g. [browserify](http://browser
 
 # Reactive
 
-angular-chart.js watch updates on data, series, labels, colours and options and will update, or destroy and recreate, 
+angular-chart.js watch updates on data, series, labels, colors and options and will update, or destroy and recreate, 
 the chart on changes.
 
 # Events
@@ -141,13 +140,13 @@ created multiple times during angular `watch` lifecycle.
 
 angular-chart.js listen to the scope `destroy` event and destroy the chart when it happens.
 
-# Colours
+# Colors
 
-There are a set of 7 default colours. Colours can be replaced using the `colours` attribute.
-If there is more data than colours, colours are generated randomly or can be provided 
-via a function through the `getColour` attribute.
+There are a set of 7 default colors. Colors can be replaced using the `colors` attribute.
+If there is more data than colors, colors are generated randomly or can be provided 
+via a function through the `getColor` attribute.
 
-Hex colours are converted to Chart.js colours automatically, 
+Hex colors are converted to Chart.js colors automatically, 
 including different shades for highlight, fill, stroke, etc.
 
 # Issues

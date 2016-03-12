@@ -16,6 +16,8 @@
   'use strict';
 
   Chart.defaults.global.multiTooltipTemplate = '<%if (datasetLabel){%><%=datasetLabel%>: <%}%><%= value %>';
+  Chart.defaults.global.elements.line.borderWidth = 2;
+  Chart.defaults.global.elements.rectangle.borderWidth = 2;
   Chart.defaults.global.colors = [
     '#97BBCD', // blue
     '#DCDCDC', // light grey
@@ -86,7 +88,7 @@
       return {
         restrict: 'CA',
         scope: {
-          getColour: '=?',
+          getColor: '=?',
           chartType: '=',
           chartData: '=?',
           chartLabels: '=?',
@@ -153,7 +155,7 @@
               }, 50, false);
             }
             if (! scope.chartData || ! scope.chartData.length) return;
-            scope.getColour = typeof scope.getColour === 'function' ? scope.getColour : getRandomColour;
+            scope.getColor = typeof scope.getColor === 'function' ? scope.getColor : getRandomColor;
             scope.chartColors = getColors(type, scope);
             var cvs = elem[0], ctx = cvs.getContext('2d');
             var data = Array.isArray(scope.chartData[0]) ?
@@ -211,30 +213,30 @@
         Chart.defaults.global.colors
       );
       while (colors.length < scope.chartData.length) {
-        colors.push(scope.getColour());
+        colors.push(scope.getColor());
       }
-      return colors.map(convertColour);
+      return colors.map(convertColor);
     }
 
-    function convertColour (colour) {
-      if (typeof colour === 'object' && colour !== null) return colour;
-      if (typeof colour === 'string' && colour[0] === '#') return getColour(hexToRgb(colour.substr(1)));
-      return getRandomColour();
+    function convertColor (color) {
+      if (typeof color === 'object' && color !== null) return color;
+      if (typeof color === 'string' && color[0] === '#') return getColor(hexToRgb(color.substr(1)));
+      return getRandomColor();
     }
 
-    function getRandomColour () {
-      var colour = [getRandomInt(0, 255), getRandomInt(0, 255), getRandomInt(0, 255)];
-      return getColour(colour);
+    function getRandomColor () {
+      var color = [getRandomInt(0, 255), getRandomInt(0, 255), getRandomInt(0, 255)];
+      return getColor(color);
     }
 
-    function getColour (colour) {
+    function getColor (color) {
       return {
-        backgroundColor: rgba(colour, 0.2),
-        borderColor: rgba(colour, 1),
-        pointBackgroundColor: rgba(colour, 1),
+        backgroundColor: rgba(color, 0.2),
+        borderColor: rgba(color, 1),
+        pointBackgroundColor: rgba(color, 1),
         pointBorderColor: '#fff',
         pointHoverBackgroundColor: '#fff',
-        pointHoverBorderColor: rgba(colour, 0.8)
+        pointHoverBorderColor: rgba(color, 0.8)
       };
     }
 
@@ -242,12 +244,12 @@
       return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 
-    function rgba (colour, alpha) {
+    function rgba (color, alpha) {
       if (usingExcanvas) {
         // rgba not supported by IE8
-        return 'rgb(' + colour.join(',') + ')';
+        return 'rgb(' + color.join(',') + ')';
       } else {
-        return 'rgba(' + colour.concat(alpha).join(',') + ')';
+        return 'rgba(' + color.concat(alpha).join(',') + ')';
       }
     }
 
@@ -267,8 +269,7 @@
         datasets: data.map(function (item, i) {
           return angular.extend({}, colors[i], {
             label: series[i],
-            data: item,
-            fill: true
+            data: item
           });
         })
       };
@@ -279,11 +280,11 @@
         labels: labels,
         datasets: [{
           data: data,
-          backgroundColor: colors.map(function (colour) {
-            return colour.pointBackgroundColor;
+          backgroundColor: colors.map(function (color) {
+            return color.pointBackgroundColor;
           }),
-          hoverBackgroundColor: colors.map(function (colour) {
-            return colour.backgroundColor;
+          hoverBackgroundColor: colors.map(function (color) {
+            return color.backgroundColor;
           })
         }]
       };

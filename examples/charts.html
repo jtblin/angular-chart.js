@@ -3,7 +3,6 @@
 <head lang="en">
   <meta charset="UTF-8">
   <title>Charts</title>
-  <link rel="stylesheet" href="../dist/angular-chart.css">
   <link rel="stylesheet" href="../bower_components/font-awesome/css/font-awesome.min.css">
   <link rel="stylesheet" href="../bower_components/rainbow/themes/github.css">
   <link href="bootstrap.css" rel="stylesheet">
@@ -50,7 +49,7 @@
   </div>
   <div class="container-fluid">
     <div class="text-center aspect-ratio" id="container" ng-controller="TicksCtrl">
-      <canvas width='1200' height='300' id="hero-bar" class="chart chart-line chart-xl" chart-data="data"
+      <canvas width='1200' height='300' id="hero-bar" class="chart chart-line" chart-data="data"
               chart-options="options" chart-labels="labels"></canvas>
       <div class="header">
         <h1>
@@ -100,11 +99,11 @@
       <p>You need to include a link to the css file in your page.</p>
       </p><pre><code>&lt;link rel=&quot;stylesheet&quot; href=&quot;bower_components/angular-chart.js/dist/angular-chart.css&quot;&gt;</code></pre>
       <p></p>
-      <h3>Colours</h3>
-      <p>Series have beautiful pre-sets colours (to a maximum of 7 series, after that colours will be randomly generated).
-        They can be overwritten using <code>Chart.defaults.global.colours</code>.</p>
+      <h3>Colors</h3>
+      <p>Series have beautiful pre-sets colors (to a maximum of 7 series, after that colors will be randomly generated).
+        They can be overwritten using <code>Chart.defaults.global.colors</code>.</p>
       <ol class="chart-legend">
-        <li><span style="background-color: rgba(151,187,205,1)"></span> Blue</li>
+        <li><span style="background-color: rgba(151,187,205,1)"></span>Blue</li>
         <li><span style="background-color: rgba(220,220,220,1)"></span>Light grey</li>
         <li><span style="background-color: rgba(247,70,74,1)"></span>Red</li>
         <li><span style="background-color: rgba(70,191,189,1)"></span>Green</li>
@@ -122,7 +121,7 @@
           <div class="panel panel-default">
             <div class="panel-heading">Line Chart</div>
             <div class="panel-body">
-              <canvas id="line" class="chart chart-line" chart-data="data" chart-labels="labels" chart-legend="true"
+              <canvas id="line" class="chart chart-line" chart-data="data" chart-labels="labels"
                       chart-click="onClick" chart-hover="onHover" chart-series="series"></canvas>
             </div>
           </div>
@@ -135,18 +134,17 @@
                 <ul>
                   <li><code>chart-data</code>: series data</li>
                   <li><code>chart-labels</code>: x axis labels</li>
-                  <li><code>chart-legend</code> (default: <code>false</code>): show legend below the chart</li>
                   <li><code>chart-options</code> (default: <code>{}</code>): Chart.js options</li>
                   <li><code>chart-series</code> (default: <code>[]</code>): series labels</li>
                   <li><code>chart-click</code> (optional): onclick event handler</li>
                   <li><code>chart-hover</code> (optional): onmousemove event handler</li>
-                  <li><code>chart-colours</code> (default to global colours): colours for the chart</li>
+                  <li><code>chart-colors</code> (default to global colors): colors for the chart</li>
                 </ul>
               </div>
             </tab>
             <tab heading="Markup">
               <pre><code data-language="html">&lt;canvas id=&quot;line&quot; class=&quot;chart chart-line&quot; chart-data=&quot;data&quot;
-  chart-labels=&quot;labels&quot; chart-legend=&quot;true&quot; chart-series=&quot;series&quot;
+  chart-labels=&quot;labels&quot; chart-series=&quot;series&quot;
   chart-click=&quot;onClick&quot; &gt;
 &lt;/canvas&gt; </code></pre>
             </tab>
@@ -177,12 +175,11 @@
                 <ul>
                   <li><code>chart-data</code>: series data</li>
                   <li><code>chart-labels</code>: x axis labels</li>
-                  <li><code>chart-legend</code> (default: <code>false</code>): show legend below the chart</li>
                   <li><code>chart-options</code> (default: <code>{}</code>): Chart.js options</li>
                   <li><code>chart-series</code> (default: <code>[]</code>): series labels</li>
                   <li><code>chart-click</code> (optional): onclick event handler</li>
                   <li><code>chart-hover</code> (optional): onmousemove event handler</li>
-                  <li><code>chart-colours</code> (default to global colours): colours for the chart</li>
+                  <li><code>chart-colors</code> (default to global colors): colors for the chart</li>
                 </ul>
               </div>
             </tab>
@@ -221,7 +218,7 @@
             <div class="panel-heading">Doughnut Chart</div>
             <div class="panel-body">
               <canvas id="doughnut" class="chart chart-doughnut chart-xs" chart-data="data"
-                      chart-labels="labels" chart-legend="false"></canvas>
+                      chart-labels="labels"></canvas>
             </div>
           </div>
         </div>
@@ -233,11 +230,10 @@
                 <ul>
                   <li><code>chart-data</code>: series data</li>
                   <li><code>chart-labels</code>: series labels</li>
-                  <li><code>chart-legend</code> (default: <code>false</code>): show legend below the chart</li>
                   <li><code>chart-options</code> (default: <code>{}</code>): Chart.js options</li>
                   <li><code>chart-click</code> (optional): onclick event handler</li>
                   <li><code>chart-hover</code> (optional): onmousemove event handler</li>
-                  <li><code>chart-colours</code> (default to global colours): colours for the chart</li>
+                  <li><code>chart-colors</code> (default to global colors): colors for the chart</li>
                 </ul>
               </div>
             </tab>
@@ -265,18 +261,17 @@
                 <ul>
                   <li><code>chart-data</code>: series data</li>
                   <li><code>chart-labels</code>: series labels</li>
-                  <li><code>chart-legend</code> (default: <code>false</code>): show legend below the chart</li>
                   <li><code>chart-options</code> (default: <code>{}</code>): Chart.js options</li>
                   <li><code>chart-series</code> (default: <code>[]</code>): series labels</li>
                   <li><code>chart-click</code> (optional): onclick event handler</li>
                   <li><code>chart-hover</code> (optional): onmousemove event handler</li>
-                  <li><code>chart-colours</code> (default to global colours): colours for the chart</li>
+                  <li><code>chart-colors</code> (default to global colors): colors for the chart</li>
                 </ul>
               </div>
             </tab>
             <tab heading="Markup">
               <pre><code data-language="html">&lt;canvas id=&quot;radar&quot; class=&quot;chart chart-radar&quot;
-  chart-data=&quot;data&quot; chart-labels=&quot;labels&quot;&gt;
+  chart-data=&quot;data&quot; chart-options=&quot;options&quot; chart-labels=&quot;labels&quot;&gt;
 &lt;/canvas&gt; </code></pre>
             </tab>
             <tab heading="Javascript">
@@ -297,7 +292,7 @@
             <div class="panel-heading">Radar Chart</div>
             <div class="panel-body">
               <canvas id="area" class="chart chart-radar" chart-data="data"
-                      chart-labels="labels" chart-click="onClick"></canvas>
+                      chart-labels="labels" chart-options="options" chart-click="onClick"></canvas>
             </div>
           </div>
         </div>
@@ -307,7 +302,8 @@
           <div class="panel panel-default">
             <div class="panel-heading">Pie Chart</div>
             <div class="panel-body">
-              <canvas id="pie" class="chart chart-pie chart-xs" chart-data="data" chart-labels="labels"></canvas>
+              <canvas id="pie" class="chart chart-pie chart-xs" chart-data="data"
+                      chart-labels="labels" chart-options="options"></canvas>
             </div>
           </div>
         </div>
@@ -319,17 +315,16 @@
                 <ul>
                   <li><code>chart-data</code>: series data</li>
                   <li><code>chart-labels</code>: series labels</li>
-                  <li><code>chart-legend</code> (default: <code>false</code>): show legend below the chart</li>
                   <li><code>chart-options</code> (default: <code>{}</code>): Chart.js options</li>
                   <li><code>chart-click</code> (optional): onclick event handler</li>
                   <li><code>chart-hover</code> (optional): onmousemove event handler</li>
-                  <li><code>chart-colours</code> (default to global colours): colours for the chart</li>
+                  <li><code>chart-colors</code> (default to global colors): colors for the chart</li>
                 </ul>
               </div>
             </tab>
             <tab heading="Markup">
               <pre><code data-language="html">&lt;canvas id=&quot;pie&quot; class=&quot;chart chart-pie&quot;
-  chart-data=&quot;data&quot; chart-labels=&quot;labels&quot;&gt;
+  chart-data=&quot;data&quot; chart-labels=&quot;labels&quot; chart-options=&quot;options&quot;&gt;
 &lt;/canvas&gt; </code></pre>
             </tab>
             <tab heading="Javascript">
@@ -351,17 +346,16 @@
                 <ul>
                   <li><code>chart-data</code>: series data</li>
                   <li><code>chart-labels</code>: series labels</li>
-                  <li><code>chart-legend</code> (default: <code>false</code>): show legend below the chart</li>
                   <li><code>chart-options</code> (default: <code>{}</code>): Chart.js options</li>
                   <li><code>chart-click</code> (optional): onclick event handler</li>
                   <li><code>chart-hover</code> (optional): onmousemove event handler</li>
-                  <li><code>chart-colours</code> (default to global colours): colours for the chart</li>
+                  <li><code>chart-colors</code> (default to global colors): colors for the chart</li>
                 </ul>
               </div>
             </tab>
             <tab heading="Markup">
               <pre><code data-language="html">&lt;canvas id=&quot;polar-area&quot; class=&quot;chart chart-polar-area&quot;
-  chart-data=&quot;data&quot; chart-labels=&quot;labels&quot;&gt;
+  chart-data=&quot;data&quot; chart-labels=&quot;labels&quot; chart-options=&quot;options&quot;&gt;
 &lt;/canvas&gt; </code></pre>
             </tab>
             <tab heading="Javascript">
@@ -377,7 +371,8 @@
           <div class="panel panel-default">
             <div class="panel-heading">Polar Area Chart</div>
             <div class="panel-body">
-              <canvas id="polar" class="chart chart-polar-area" chart-data="data" chart-labels="labels"></canvas>
+              <canvas id="polar" class="chart chart-polar-area" chart-data="data"
+                      chart-labels="labels" chart-options="options"></canvas>
             </div>
           </div>
         </div>
@@ -388,7 +383,7 @@
             <div class="panel-heading">Dynamic Chart</div>
             <div class="panel-body">
               <canvas id="base" class="chart chart-base" chart-type="type" chart-data="data"
-                      chart-labels="labels" chart-legend="true"></canvas>
+                      chart-labels="labels"></canvas>
             </div>
           </div>
           <button type="button" class="btn btn-primary pull-right" ng-click="toggle()">Toggle</button>
@@ -406,7 +401,7 @@
             </tab>
             <tab heading="Markup">
               <pre><code data-language="html">&lt;canvas id=&quot;base&quot; class=&quot;chart-base&quot; chart-type=&quot;type&quot;
-  chart-data=&quot;data&quot; chart-labels=&quot;labels&quot; chart-legend=&quot;true&quot;&gt;
+  chart-data=&quot;data&quot; chart-labels=&quot;labels&quot; &gt;
 &lt;/canvas&gt; </code></pre>
             </tab>
             <tab heading="Javascript">
@@ -453,8 +448,8 @@
           <div class="panel panel-default">
             <div class="panel-heading">Reactive Chart</div>
             <div class="panel-body">
-              <canvas id="tables" class="chart chart-line" chart-data="data"
-                      chart-labels="labels" chart-colours="colours"></canvas>
+              <canvas id="tables" class="chart chart-line" chart-data="data" chart-options="options"
+                      chart-labels="labels" chart-colors="colors"></canvas>
             </div>
           </div>
         </div>

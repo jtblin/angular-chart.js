@@ -3,7 +3,6 @@
 <head lang="en">
   <meta charset="UTF-8">
   <title>Charts</title>
-  <link rel="stylesheet" href="../dist/angular-chart.css">
   <link rel="stylesheet" href="../bower_components/font-awesome/css/font-awesome.min.css">
   <link rel="stylesheet" href="../bower_components/rainbow/themes/github.css">
   <link href="bootstrap.css" rel="stylesheet">
@@ -303,7 +302,8 @@
           <div class="panel panel-default">
             <div class="panel-heading">Pie Chart</div>
             <div class="panel-body">
-              <canvas id="pie" class="chart chart-pie chart-xs" chart-data="data" chart-labels="labels"></canvas>
+              <canvas id="pie" class="chart chart-pie chart-xs" chart-data="data"
+                      chart-labels="labels" chart-options="options"></canvas>
             </div>
           </div>
         </div>
@@ -324,7 +324,7 @@
             </tab>
             <tab heading="Markup">
               <pre><code data-language="html">&lt;canvas id=&quot;pie&quot; class=&quot;chart chart-pie&quot;
-  chart-data=&quot;data&quot; chart-labels=&quot;labels&quot;&gt;
+  chart-data=&quot;data&quot; chart-labels=&quot;labels&quot; chart-options=&quot;options&quot;&gt;
 &lt;/canvas&gt; </code></pre>
             </tab>
             <tab heading="Javascript">
@@ -355,7 +355,7 @@
             </tab>
             <tab heading="Markup">
               <pre><code data-language="html">&lt;canvas id=&quot;polar-area&quot; class=&quot;chart chart-polar-area&quot;
-  chart-data=&quot;data&quot; chart-labels=&quot;labels&quot;&gt;
+  chart-data=&quot;data&quot; chart-labels=&quot;labels&quot; chart-options=&quot;options&quot;&gt;
 &lt;/canvas&gt; </code></pre>
             </tab>
             <tab heading="Javascript">
@@ -371,7 +371,8 @@
           <div class="panel panel-default">
             <div class="panel-heading">Polar Area Chart</div>
             <div class="panel-body">
-              <canvas id="polar" class="chart chart-polar-area" chart-data="data" chart-labels="labels"></canvas>
+              <canvas id="polar" class="chart chart-polar-area" chart-data="data"
+                      chart-labels="labels" chart-options="options"></canvas>
             </div>
           </div>
         </div>

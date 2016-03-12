@@ -6,7 +6,7 @@
   app.config(function (ChartJsProvider) {
     // Configure all charts
     ChartJsProvider.setOptions({
-      colours: ['#97BBCD', '#DCDCDC', '#F7464A', '#46BFBD', '#FDB45C', '#949FB1', '#4D5360']
+      colors: ['#97BBCD', '#DCDCDC', '#F7464A', '#46BFBD', '#FDB45C', '#949FB1', '#4D5360']
     });
     // Configure all doughnut charts
     ChartJsProvider.setOptions('Doughnut', {
@@ -72,11 +72,13 @@
   app.controller('PieCtrl', function ($scope) {
     $scope.labels = ['Download Sales', 'In-Store Sales', 'Mail Sales'];
     $scope.data = [300, 500, 100];
+    $scope.options = { legend: { display: false } };
   });
 
   app.controller('PolarAreaCtrl', function ($scope) {
     $scope.labels = ['Download Sales', 'In-Store Sales', 'Mail Sales', 'Telesales', 'Corporate Sales'];
     $scope.data = [300, 500, 100, 40, 120];
+    $scope.options = { legend: { display: false } };
   });
 
   app.controller('BaseCtrl', function ($scope) {
@@ -128,7 +130,7 @@
       [65, 59, 80, 81, 56, 55, 40],
       [28, 48, 40, 19, 86, 27, 90]
     ];
-    $scope.colours = [
+    $scope.colors = [
       { // grey
         fillColor: 'rgba(148,159,177,0.2)',
         strokeColor: 'rgba(148,159,177,1)',
