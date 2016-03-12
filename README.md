@@ -164,17 +164,6 @@ via a function through the `getColour` attribute.
 Hex colours are converted to Chart.js colours automatically, 
 including different shades for highlight, fill, stroke, etc.
 
-# Issues
-
-**Issues or feature requests for Chart.js (e.g. new chart type, new axis, etc.) need to be opened on 
-[Chart.js issues tracker](https://github.com/nnnick/Chart.js/issues)**
-
-**For general questions about usage, please use [http://stackoverflow.com/](http://stackoverflow.com/)**
- 
-Please check if issue exists first, otherwise open issue in [github](https://github.com/jtblin/angular-chart.js/issues). 
-**Ensure you add a link to a plunker, jsbin, or equivalent.** 
-Here is a [jsbin template](http://jsbin.com/dufibi/3/edit?html,js,output) for convenience.
-
 ## Browser compatibility
 
 For IE8 and older browsers, you will need 
@@ -193,16 +182,22 @@ You also need to have  ```height``` and ```width``` attributes for the ```<canva
 </head>
 ```
 
+# Issues
+
+**Issues or feature requests for Chart.js (e.g. new chart type, new axis, etc.) need to be opened on 
+[Chart.js issues tracker](https://github.com/nnnick/Chart.js/issues)**
+
+**For general questions about usage, please use [http://stackoverflow.com/](http://stackoverflow.com/)**
+ 
+Please check if issue exists first, otherwise open issue in [github](https://github.com/jtblin/angular-chart.js/issues). 
+**Ensure you add a link to a plunker, jsbin, or equivalent.** 
+Here is a [jsbin template](http://jsbin.com/dufibi/3/edit?html,js,output) for convenience.
+
 # Contributing
  
 Pull requests welcome!
 
-1. Fork the repo
-1. Install dependencies: `npm install` and `bower install`
-1. Make your changes
-1. Install [GraphicsMagick](http://www.graphicsmagick.org/)
-1. Run tests: `npm test`
-1. Submit pull request
+See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Contributors
 
