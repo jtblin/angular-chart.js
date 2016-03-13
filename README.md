@@ -140,6 +140,7 @@ angular-chart.js emits the following events on the `scope` and pass the chart as
 
 * `chart-create`: when chart is created
 * `chart-update`: when chart is updated
+* `chart-destroy`: when chart is destroyed
 
 ```
 $scope.$on('chart-create', function (event, chart) {

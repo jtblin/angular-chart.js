@@ -321,7 +321,7 @@
     }
 
     function destroyChart(chart, scope) {
-      if(!chart) return;
+      if(! chart) return;
       chart.destroy();
       scope.$emit('chart-destroy', chart);
     }
