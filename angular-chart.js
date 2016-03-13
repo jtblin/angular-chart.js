@@ -106,7 +106,10 @@
           // Order of setting "watch" matter
 
           scope.$watch('chartData', function (newVal, oldVal) {
-            if (! newVal || ! newVal.length || (Array.isArray(newVal[0]) && ! newVal[0].length)) return;
+            if (! newVal || ! newVal.length || (Array.isArray(newVal[0]) && ! newVal[0].length)) {
+              destroyChart(chart, scope);
+              return;
+            }
             var chartType = type || scope.chartType;
             if (! chartType) return;
 
@@ -128,7 +131,7 @@
           });
 
           scope.$on('$destroy', function () {
-            if (chart) chart.destroy();
+            destroyChart(chart, scope);
           });
 
           function resetChart (newVal, oldVal) {
@@ -160,7 +163,8 @@
             var options = angular.extend({}, ChartJs.getOptions(type), scope.chartOptions);
             // Destroy old chart if it exists to avoid ghost charts issue
             // https://github.com/jtblin/angular-chart.js/issues/187
-            if (chart) chart.destroy();
+            destroyChart(chart, scope);
+
             chart = new ChartJs.Chart(ctx, {
               type: type,
               data: data,
@@ -314,6 +318,12 @@
     function isResponsive (type, scope) {
       var options = angular.extend({}, Chart.defaults.global, ChartJs.getOptions(type), scope.chartOptions);
       return options.responsive;
+    }
+
+    function destroyChart(chart, scope) {
+      if(!chart) return;
+      chart.destroy();
+      scope.$emit('chart-destroy', chart);
     }
   }
 }));
