@@ -7,9 +7,9 @@
 
 ### Pull Request check-list
 
-[ ] Run `gulp test` to ensure there are no linting, or style issues and all tests pass.
-[ ] Squash your commits into a few commits only.
-[ ] Make sure the commit message is short, concise and descriptive of the issues you're fixing.
-[ ] Avoid mixing up multiple issues and/or features, open one pull request for each issue.
-[ ] Have you updated the documentation and / or examples?
-[ ] Have you included a new test?
+- [ ] Run `gulp test` to ensure there are no linting, or style issues and all tests pass.
+- [ ] Squash your commits into a few commits only.
+- [ ] Make sure the commit message is short, concise and descriptive of the issues you're fixing.
+- [ ] Avoid mixing up multiple issues and/or features, open one pull request for each issue.
+- [ ] Have you updated the documentation and / or examples?
+- [ ] Have you included a new test?
