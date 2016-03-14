@@ -185,10 +185,10 @@ describe('Unit testing', function () {
       expect(count).to.equal(1);
     });
 
-    it('re-create the chart if data added or removed', function () {
+    it('destroy the chart if all data is removed', function () {
       var markup = '<div style="width: 250px; height:120px">' +
         '<canvas class="chart chart-line" data="data" labels="labels" series="series"></canvas></div>';
-      var countCreate = 0, countUpdate = 0;
+      var countCreate = 0, countUpdate = 0, countDestroy = 0;
 
       scope.labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
       scope.data = [
@@ -204,6 +204,44 @@ describe('Unit testing', function () {
         countUpdate++;
       });
 
+      scope.$on('destroy', function() {
+        countDestroy++;
+      });
+
+      $compile(markup)(scope);
+      scope.$digest();
+
+      scope.data = [];
+      scope.$digest();
+
+      expect(countCreate).to.equal(1);
+      expect(countUpdate).to.equal(0);
+      expect(countDestroy).to.equal(1);
+    });
+
+    it('re-create the chart if data added or removed', function () {
+      var markup = '<div style="width: 250px; height:120px">' +
+        '<canvas class="chart chart-line" data="data" labels="labels" series="series"></canvas></div>';
+      var countCreate = 0, countUpdate = 0, countDestroy = 0;
+
+      scope.labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+      scope.data = [
+        [65, 59, 80, 81, 56, 55, 40],
+        [28, 48, 40, 19, 86, 27, 90]
+      ];
+
+      scope.$on('create', function () {
+        countCreate++;
+      });
+
+      scope.$on('update', function () {
+        countUpdate++;
+      });
+
+      scope.$on('destroy', function() {
+        countDestroy++;
+      });
+
       $compile(markup)(scope);
       scope.$digest();
 
@@ -216,6 +254,7 @@ describe('Unit testing', function () {
 
       expect(countCreate).to.equal(2);
       expect(countUpdate).to.equal(0);
+      expect(countDestroy).to.equal(1);
     });
 
     it('should allow to set a configuration', function () {
