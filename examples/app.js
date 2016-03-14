@@ -37,6 +37,8 @@
       }
     };
 
+    $scope.multiAxis = true;
+
     $scope.options = {
       scales: {
         yAxes: [

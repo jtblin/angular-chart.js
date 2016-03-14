@@ -95,7 +95,7 @@
           chartColors: '=?',
           chartClick: '=?',
           chartHover: '=?',
-          chartYAxes: '@'
+          chartYAxes: '=?'
         },
         link: function (scope, elem/*, attrs */) {
           var chart;
