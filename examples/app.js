@@ -37,14 +37,34 @@
       }
     };
 
-    $timeout(function () {
-      $scope.labels = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-      $scope.data = [
-        [28, 48, 40, 19, 86, 27, 90],
-        [65, 59, 80, 81, 56, 55, 40]
-      ];
-      $scope.series = ['Series C', 'Series D'];
-    }, 3000);
+    $scope.options = {
+      scales: {
+        yAxes: [
+          {
+            id: "y-axis-1",
+            type: "linear",
+            display: true,
+            position: "left"
+          },
+          {
+            id: "y-axis-2",
+            type: "linear",
+            display: true,
+            position: "right"
+          }
+        ]
+      }
+    };
+
+    // $timeout(function () {
+    //   $scope.labels = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+    //   $scope.data = [
+    //     [28, 48, 40, 19, 86, 27, 90],
+    //     [65, 59, 80, 81, 56, 55, 40]
+    //   ];
+    //   $scope.series = ['Series C', 'Series D'];
+    // }, 3000);
+
   }]);
 
   app.controller('BarCtrl', ['$scope', '$timeout', function ($scope, $timeout) {
