@@ -126,7 +126,7 @@
             <div class="panel-heading">Line Chart</div>
             <div class="panel-body">
               <canvas id="line" class="chart chart-line" chart-data="data" chart-labels="labels"
-                      chart-click="onClick" chart-hover="onHover" chart-series="series"></canvas>
+                      chart-click="onClick" chart-hover="onHover" chart-series="series" chart-options="options" chart-y-axes="multiAxis"></canvas>
             </div>
           </div>
         </div>
@@ -143,13 +143,14 @@
                   <li><code>chart-click</code> (optional): onclick event handler</li>
                   <li><code>chart-hover</code> (optional): onmousemove event handler</li>
                   <li><code>chart-colors</code> (default to global colors): colors for the chart</li>
+                  <li><code>chart-y-axes</code> (optional): if true add multiple axis, <strong>required:</strong> ids y-axis-{n} in the options (view Javascript)</li>
                 </ul>
               </div>
             </tab>
             <tab heading="Markup">
-              <pre><code data-language="html">&lt;canvas id=&quot;line&quot; class=&quot;chart chart-line&quot; chart-data=&quot;data&quot;
-  chart-labels=&quot;labels&quot; chart-series=&quot;series&quot;
-  chart-click=&quot;onClick&quot; &gt;
+            <pre><code data-language="html">&lt;canvas id=&quot;line&quot; class=&quot;chart chart-line&quot; chart-data=&quot;data&quot;
+chart-labels=&quot;labels&quot; chart-series=&quot;series&quot; chart-options=&quot;options&quot;
+chart-y-axes=&quot;true&quot; chart-click=&quot;onClick&quot;
 &lt;/canvas&gt; </code></pre>
             </tab>
             <tab heading="Javascript">
@@ -163,6 +164,24 @@
   ];
   $scope.onClick = function (points, evt) {
     console.log(points, evt);
+  };
+  $scope.options = {
+    scales: {
+      yAxes: [
+        {
+          id: "y-axis-1",
+          type: "linear",
+          display: true,
+          position: "left"
+        },
+        {
+          id: "y-axis-2",
+          type: "linear",
+          display: true,
+          position: "right"
+        }
+      ]
+    }
   };
 });
               </code></pre>
@@ -184,6 +203,7 @@
                   <li><code>chart-click</code> (optional): onclick event handler</li>
                   <li><code>chart-hover</code> (optional): onmousemove event handler</li>
                   <li><code>chart-colors</code> (default to global colors): colors for the chart</li>
+                  <li><code>chart-y-axes</code> (optional): if true add multiple axis, <strong>required:</strong>: ids y-axis-{n} in the options</li>
                 </ul>
               </div>
             </tab>

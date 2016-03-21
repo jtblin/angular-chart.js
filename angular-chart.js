@@ -96,7 +96,8 @@
           chartSeries: '=?',
           chartColors: '=?',
           chartClick: '=?',
-          chartHover: '=?'
+          chartHover: '=?',
+          chartYAxes: '=?'
         },
         link: function (scope, elem/*, attrs */) {
           var chart;
@@ -157,7 +158,7 @@
             var colors = getColors(type, scope);
             var cvs = elem[0], ctx = cvs.getContext('2d');
             var data = Array.isArray(scope.chartData[0]) ?
-              getDataSets(scope.chartLabels, scope.chartData, scope.chartSeries || [], colors) :
+              getDataSets(scope.chartLabels, scope.chartData, scope.chartSeries || [], colors, scope.chartYAxes) :
               getData(scope.chartLabels, scope.chartData, colors);
 
             var options = angular.extend({}, ChartJs.getOptions(type), scope.chartOptions);
@@ -269,14 +270,18 @@
       return [r, g, b];
     }
 
-    function getDataSets (labels, data, series, colors) {
+    function getDataSets (labels, data, series, colors, yaxis) {
       return {
         labels: labels,
         datasets: data.map(function (item, i) {
-          return angular.extend({}, colors[i], {
+          var dataset = angular.extend({}, colors[i], {
             label: series[i],
             data: item
           });
+          if (yaxis) {
+            dataset.yAxisID = 'y-axis-' + (i + 1);
+          }
+          return dataset;
         })
       };
     }
