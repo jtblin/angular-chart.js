@@ -95,7 +95,7 @@
           chartColors: '=?',
           chartClick: '=?',
           chartHover: '=?',
-          chartYAxes: '@'
+          chartYAxes: '=?'
         },
         link: function (scope, elem/*, attrs */) {
           var chart;
@@ -271,7 +271,7 @@
             data: item
           });
           if (yaxis) {
-            dataset.yAxisID = 'y-axis-' + (i+1);
+            dataset.yAxisID = 'y-axis-' + (i + 1);
           }
           return dataset;
         })
