@@ -96,7 +96,8 @@
           chartSeries: '=?',
           chartColors: '=?',
           chartClick: '=?',
-          chartHover: '=?'
+          chartHover: '=?',
+          chartYAxes: '=?'
         },
         link: function (scope, elem/*, attrs */) {
           var chart;
@@ -106,7 +107,10 @@
           // Order of setting "watch" matter
 
           scope.$watch('chartData', function (newVal, oldVal) {
-            if (! newVal || ! newVal.length || (Array.isArray(newVal[0]) && ! newVal[0].length)) return;
+            if (! newVal || ! newVal.length || (Array.isArray(newVal[0]) && ! newVal[0].length)) {
+              destroyChart(chart, scope);
+              return;
+            }
             var chartType = type || scope.chartType;
             if (! chartType) return;
 
@@ -128,7 +132,7 @@
           });
 
           scope.$on('$destroy', function () {
-            if (chart) chart.destroy();
+            destroyChart(chart, scope);
           });
 
           function resetChart (newVal, oldVal) {
@@ -154,13 +158,14 @@
             var colors = getColors(type, scope);
             var cvs = elem[0], ctx = cvs.getContext('2d');
             var data = Array.isArray(scope.chartData[0]) ?
-              getDataSets(scope.chartLabels, scope.chartData, scope.chartSeries || [], colors) :
+              getDataSets(scope.chartLabels, scope.chartData, scope.chartSeries || [], colors, scope.chartYAxes) :
               getData(scope.chartLabels, scope.chartData, colors);
 
             var options = angular.extend({}, ChartJs.getOptions(type), scope.chartOptions);
             // Destroy old chart if it exists to avoid ghost charts issue
             // https://github.com/jtblin/angular-chart.js/issues/187
-            if (chart) chart.destroy();
+            destroyChart(chart, scope);
+
             chart = new ChartJs.Chart(ctx, {
               type: type,
               data: data,
@@ -199,7 +204,6 @@
           if (triggerOnlyOnChange === false || angular.equals(lastState, activePoints) === false) {
             lastState = activePoints;
             scope[action](activePoints, evt);
-            scope.$apply();
           }
         }
       };
@@ -265,14 +269,18 @@
       return [r, g, b];
     }
 
-    function getDataSets (labels, data, series, colors) {
+    function getDataSets (labels, data, series, colors, yaxis) {
       return {
         labels: labels,
         datasets: data.map(function (item, i) {
-          return angular.extend({}, colors[i], {
+          var dataset = angular.extend({}, colors[i], {
             label: series[i],
             data: item
           });
+          if (yaxis) {
+            dataset.yAxisID = 'y-axis-' + (i + 1);
+          }
+          return dataset;
         })
       };
     }
@@ -314,6 +322,12 @@
     function isResponsive (type, scope) {
       var options = angular.extend({}, Chart.defaults.global, ChartJs.getOptions(type), scope.chartOptions);
       return options.responsive;
+    }
+
+    function destroyChart(chart, scope) {
+      if(! chart) return;
+      chart.destroy();
+      scope.$emit('chart-destroy', chart);
     }
   }
 }));
