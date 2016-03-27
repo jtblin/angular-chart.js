@@ -204,7 +204,6 @@
           if (triggerOnlyOnChange === false || angular.equals(lastState, activePoints) === false) {
             lastState = activePoints;
             scope[action](activePoints, evt);
-            scope.$apply();
           }
         }
       };
