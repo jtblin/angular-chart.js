@@ -42,16 +42,16 @@
       scales: {
         yAxes: [
           {
-            id: "y-axis-1",
-            type: "linear",
+            id: 'y-axis-1',
+            type: 'linear',
             display: true,
-            position: "left"
+            position: 'left'
           },
           {
-            id: "y-axis-2",
-            type: "linear",
+            id: 'y-axis-2',
+            type: 'linear',
             display: true,
-            position: "right"
+            position: 'right'
           }
         ]
       }
