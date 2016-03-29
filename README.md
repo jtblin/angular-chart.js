@@ -14,7 +14,7 @@ Beautiful, reactive, responsive charts for Angular.JS using [Chart.js](http://ww
 
 ## Chart.js 2.0 and 1.0.0-alpha1 branch
 
-This is the `1.0.0-alpha1` branch which requires Chart.js 2.0 beta2 version. Following semantic versioning,
+This is the `1.0.0-alpha` branch which requires Chart.js 2.0 beta2 version. Following semantic versioning,
 there are numerous breaking changes in this version notably:
 
 * all options now need to use the `chart-` prefix
@@ -22,6 +22,7 @@ there are numerous breaking changes in this version notably:
 * chart types are in `camelCase` e.g. `line` and `polarArea`
 * legend is now a Chart.js option so the `chart-legend` attribute has been removed
 * events emitted on creation and update are now prefixed with `chart-` e.g. `chart-create`
+* `$scope.$apply` is not called anymore on mouse hover functions calls
 * obviously all Chart.js breaking changes as well in how options are set, etc.
 
 ### bower
@@ -35,7 +36,6 @@ there are numerous breaking changes in this version notably:
 ### cdn
 
     //cdn.jsdelivr.net/angular.chartjs/latest/angular-chart.min.js
-    //cdn.jsdelivr.net/angular.chartjs/latest/angular-chart.css
 
 ### manually
 
@@ -46,14 +46,14 @@ adding the dependencies for Angular and Chart.js first:
 
 ```html
 <head>
-  <link rel="stylesheet" href="bower_components/angular-chart.js/dist/angular-chart.css" />
+  ...
 <head>
 <body>
   ...
 </body>
-  <script src="bower_components/angular/angular.min.js"></script>
-  <script src="bower_components/Chart.js/Chart.min.js"></script>
-  <script src="bower_components/angular-chart.js/dist/angular-chart.min.js"></script>
+  <script src="node_modules/angular/angular.min.js"></script>
+  <script src="node_modules/Chart.js/Chart.min.js"></script>
+  <script src="node_modules/angular-chart.js/dist/angular-chart.min.js"></script>
 ```
 
 # Utilisation
@@ -66,7 +66,7 @@ There are 6 types of charts so 6 directives: `chart-line`, `chart-bar`, `chart-r
 - `chart-options`: chart options (as from [Chart.js documentation](http://www.chartjs.org/docs/))
 - `chart-series`: (default: `[]`): series labels (line, bar, radar)
 - `chart-colors`: data colors (will use default colors if not specified)
-- `get-color`: function that returns a color in case there are not enough (will use random colors if not specified)
+- `chart-get-color`: function that returns a color in case there are not enough (will use random colors if not specified)
 - `chart-click`: onclick event handler
 - `chart-hover`: onmousemove event handler
 
@@ -143,7 +143,7 @@ angular-chart.js emits the following events on the `scope` and pass the chart as
 * `chart-destroy`: when chart is destroyed
 
 ```
-$scope.$on('chart-create', function (event, chart) {
+$scope.$on('chart-create', function (evt, chart) {
   console.log(chart);
 });
 ```
@@ -151,7 +151,7 @@ $scope.$on('chart-create', function (event, chart) {
 **Note**: the event can be emitted multiple times for each chart as the chart can be destroyed and
 created multiple times during angular `watch` lifecycle.
 
-angular-chart.js listen to the scope `destroy` event and destroy the chart when it happens.
+angular-chart.js listens to the scope `$destroy` event and destroys the chart when it happens.
 
 # Colors
 
@@ -161,17 +161,6 @@ via a function through the `getColor` attribute.
 
 Hex colors are converted to Chart.js colors automatically, 
 including different shades for highlight, fill, stroke, etc.
-
-# Issues
-
-**Issues or feature requests for Chart.js (e.g. new chart type, new axis, etc.) need to be opened on 
-[Chart.js issues tracker](https://github.com/nnnick/Chart.js/issues)**
-
-**For general questions about usage, please use [http://stackoverflow.com/](http://stackoverflow.com/)**
- 
-Please check if issue exists first, otherwise open issue in [github](https://github.com/jtblin/angular-chart.js/issues). 
-**Ensure you add a link to a plunker, jsbin, or equivalent.** 
-Here is a [jsbin template](http://jsbin.com/dufibi/3/edit?html,js,output) for convenience.
 
 ## Browser compatibility
 
@@ -191,16 +180,22 @@ You also need to have  ```height``` and ```width``` attributes for the ```<canva
 </head>
 ```
 
+# Issues
+
+**Issues or feature requests for Chart.js (e.g. new chart type, new axis, etc.) need to be opened on 
+[Chart.js issues tracker](https://github.com/nnnick/Chart.js/issues)**
+
+**For general questions about usage, please use [http://stackoverflow.com/](http://stackoverflow.com/)**
+ 
+Please check if issue exists first, otherwise open issue in [github](https://github.com/jtblin/angular-chart.js/issues). 
+**Ensure you add a link to a plunker, jsbin, or equivalent.** 
+Here is a [jsbin template](http://jsbin.com/dufibi/3/edit?html,js,output) for convenience.
+
 # Contributing
  
 Pull requests welcome!
 
-1. Fork the repo
-1. Install dependencies: `npm install` and `bower install`
-1. Make your changes
-1. Install [GraphicsMagick](http://www.graphicsmagick.org/)
-1. Run tests: `npm test`
-1. Submit pull request
+See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Contributors
 
@@ -212,5 +207,5 @@ Jerome Touffe-Blin, [@jtblin](https://twitter.com/jtblin), [About me](http://abo
 
 # License
 
-angular-chart.js is copyright 2015 Jerome Touffe-Blin and contributors. 
+angular-chart.js is copyright 2016 Jerome Touffe-Blin and contributors. 
 It is licensed under the BSD license. See the include LICENSE file for details.
