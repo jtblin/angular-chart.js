@@ -189,12 +189,16 @@
             var data = Array.isArray(scope.data[0]) ?
               getDataSets(scope.labels, scope.data, scope.series || [], colours) :
               getData(scope.labels, scope.data, colours);
+              
             var options = angular.extend({}, ChartJs.getOptions(type), scope.options);
+            
 
             // Destroy old chart if it exists to avoid ghost charts issue
             // https://github.com/jtblin/angular-chart.js/issues/187
             destroyChart(chart, scope);
-            chart = new ChartJs.Chart(ctx)[type](data, options);
+            //chart = new ChartJs.Chart(ctx)[type](data, options);
+            chart = new ChartJs.Chart(ctx, {type: type, data: data, options: options});
+            
             scope.$emit('create', chart);
 
             // Bind events
@@ -274,13 +278,15 @@
     }
 
     function getColour (colour) {
+    	
+    	
       return {
-        fillColor: rgba(colour, 0.2),
-        strokeColor: rgba(colour, 1),
-        pointColor: rgba(colour, 1),
-        pointStrokeColor: '#fff',
-        pointHighlightFill: '#fff',
-        pointHighlightStroke: rgba(colour, 0.8)
+        backgroundColor: rgba(colour, 0.2),
+        borderColor: rgba(colour, 1),
+        pointBackgroundColor: rgba(colour, 1),
+        pointBorderColor: '#fff',
+        pointHoverBackgroundColor: '#fff',
+        pointHoverBorderColor: rgba(colour, 0.8)
       };
     }
 
@@ -324,8 +330,8 @@
         return angular.extend({}, colours[i], {
           label: label,
           value: data[i],
-          color: colours[i].strokeColor,
-          highlight: colours[i].pointHighlightStroke
+          color: colours[i].borderColor,
+          highlight: colours[i].pointBorderColor
         });
       });
     }
