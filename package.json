@@ -1,6 +1,6 @@
 {
   "name": "angular-chart.js",
-  "version": "1.0.0-alpha3",
+  "version": "1.0.0-alpha4",
   "description": "An angular.js wrapper for Chart.js",
   "main": "dist/angular-chart.js",
   "directories": {
@@ -52,6 +52,6 @@
   },
   "dependencies": {
     "angular": "~1.4.5",
-    "chart.js": "git://github.com/nnnick/Chart.js.git#v2.0-dev"
+    "chart.js": "~2.0.0"
   }
 }
