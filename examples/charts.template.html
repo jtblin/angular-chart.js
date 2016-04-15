@@ -7,6 +7,39 @@
   <link rel="stylesheet" href="../bower_components/rainbow/themes/github.css">
   <link href="bootstrap.css" rel="stylesheet">
   <link href="app.css" rel="stylesheet">
+  <style>
+    .chart-legend {
+      list-style-type: none;
+      margin-top: 5px;
+      text-align: center;
+    /* NOTE: Browsers automatically add 40px of padding-left to all lists, so we should offset that, otherwise the legend is off-center */
+      -webkit-padding-start: 0;
+    /* Webkit */
+      -moz-padding-start: 0;
+    /* Mozilla */
+      padding-left: 0;
+    /* IE (handles all cases, really, but we should also include the vendor-specific properties just to be safe) */
+    }
+    .chart-legend li {
+      display: inline-block;
+      white-space: nowrap;
+      position: relative;
+      margin-bottom: 4px;
+      border-radius: 5px;
+      padding: 2px 8px 2px 28px;
+      font-size: smaller;
+      cursor: default;
+    }
+    .chart-legend li span {
+      display: block;
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 20px;
+      height: 20px;
+      border-radius: 5px;
+    }
+  </style>
 </head>
 <body ng-app="examples" id="top">
   <div class="navbar navbar-default navbar-fixed-top">
@@ -78,7 +111,7 @@
       </p>
       <ul>
         <li><a href="http://angularjs.org" target="_blank">AngularJS</a> (tested with 1.2.x, 1.3.x and 1.4.x although it probably works with older versions)</li>
-        <li><a href="http://chartjs.org" target="_blank">Chart.js</a> (requires Chart.js 1.0, tested with version 1.0.1 and 1.0.2).</li>
+        <li><a href="http://chartjs.org" target="_blank">Chart.js</a> (requires Chart.js 2.0.x).</li>
       </ul>
       <h3>Files to download</h3>
       <p>
@@ -90,14 +123,15 @@
       <p>Whichever method you choose the good news is that the overall size is very small:
         &lt;5kb for all directives (~1kb with gzip compression!)</p>
       <h3>Installation</h3>
-      </p><pre><code>&lt;script src=&quot;bower_components/angular-chart.js/dist/angular-chart.js&quot;&gt;&lt;/script&gt;</code></pre>
+      <p>You need to include the dependencies in your page:</p>
+      <pre><code>&lt;script src=&quot;bower_components/angular-chart.js/dist/angular-chart.min.js&quot;&gt;&lt;/script&gt;
+&lt;script src="bower_components/Chart.js/Chart.min.js">&lt;/script&gt;
+&lt;script src="bower_components/angular-chart.js/dist/angular-chart.min.js">&lt;/script&gt;</code></pre>
       <p>As soon as you've got all the files downloaded and included in your page you just need to declare
         a dependency on the <code>chart.js</code> <a href="http://docs.angularjs.org/guide/module">module</a>:<br>
       </p><pre><code>angular.module('myModule', ['chart.js']);</code></pre>
       <p></p>
       <h3>CSS</h3>
-      <p>You need to include a link to the css file in your page.</p>
-      </p><pre><code>&lt;link rel=&quot;stylesheet&quot; href=&quot;bower_components/angular-chart.js/dist/angular-chart.css&quot;&gt;</code></pre>
       <p></p>
       <h3>Colors</h3>
       <p>Series have beautiful pre-sets colors (to a maximum of 7 series, after that colors will be randomly generated).

@@ -10,6 +10,8 @@
     define(['angular', 'chart'], factory);
   } else {
     // Browser globals
+    if (typeof angular === 'undefined' || typeof Chart === 'undefined') throw new Error('Chart.js library needs to included, ' +
+      'see http://jtblin.github.io/angular-chart.js/');
     factory(angular, Chart);
   }
 }(function (angular, Chart) {
