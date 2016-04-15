@@ -40,7 +40,7 @@
   ],
   "dependencies": {
     "angular": "1.4.x",
-    "Chart.js": "~1.0.1"
+    "Chart.js": "~1.1.1"
   },
   "devDependencies": {
     "Chart.StackedBar.js": "~1.0.1",
@@ -49,8 +49,5 @@
     "font-awesome": "~4.1.0",
     "rainbow": "~1.1.9",
     "requirejs": "~2.1.20"
-  },
-  "resolutions": {
-    "Chart.js": "~1.0.2"
   }
 }

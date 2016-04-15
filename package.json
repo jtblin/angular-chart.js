@@ -54,6 +54,6 @@
   },
   "dependencies": {
     "angular": "^1.4.5",
-    "chart.js": "^1.0.2"
+    "chart.js": "^1.1.1"
   }
 }
