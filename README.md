@@ -13,9 +13,9 @@ Beautiful, reactive, responsive charts for Angular.JS using [Chart.js](http://ww
 
 # Installation
 
-## Chart.js 2.0 and 1.0.0-alpha1 branch
+## Chart.js 2.0 and 1.0.0-alpha branch
 
-This is the `1.0.0-alpha` branch which requires Chart.js 2.0 beta2 version. Following semantic versioning,
+This is the `1.0.0-alpha` branch which requires Chart.js 2.0.0 version. Following semantic versioning,
 there are numerous breaking changes in this version notably:
 
 * all options now need to use the `chart-` prefix
