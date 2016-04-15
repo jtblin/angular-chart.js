@@ -42,7 +42,6 @@
     "Chart.js": "~2.0.0"
   },
   "devDependencies": {
-    "Chart.StackedBar.js": "~1.0.1",
     "angular-bootstrap": "~0.11.0",
     "angular-mocks": "1.4.x",
     "font-awesome": "~4.1.0",
