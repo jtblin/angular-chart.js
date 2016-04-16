@@ -127,6 +127,10 @@
     return true;
   });
 
+  gulp.task('docker-test', shell.task([
+    'npm run docker-test'
+  ]));
+
   function bump (level) {
     return function () {
       return gulp.src(['./package.json', './bower.json'])
@@ -139,7 +143,7 @@
     return JSON.parse(fs.readFileSync('package.json', 'utf8')).version;
   }
 
-  gulp.task('default', sequence('check', 'assets'));
+  gulp.task('default', sequence('docker-test', 'assets'));
   gulp.task('assets', sequence('clean', 'js', 'build'));
   gulp.task('test', sequence('cover', 'unit', 'integration', 'report'));
   gulp.task('check', sequence(['lint', 'style'], 'test'));

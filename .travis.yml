@@ -1,4 +1,3 @@
-language: node_js
 sudo: required
 services:
 - docker
@@ -16,3 +15,4 @@ env:
     - secure: YWABlINoIkwl9RFLOW9G0lATEP3aiXXi+DS6TWfvQWWG/jkS5sn7IqWC2U67LjwQ0lDg0yevo3ZD7FyYQ5lr8AVuScAZ6P2o2dm9t/HBKGTG4u016dxbWWYVZ8MAlKT7TfjVD8iDzcWyZedsbpuyaNNp4pGr/CNcvq7TGdJLNkU=
     - CI=1
     - REPORTER=list
+    - TOLERANCE=0.0001
