@@ -33,10 +33,14 @@
     }, 0);
   }]);
 
-  app.controller('DoughnutCtrl', function ($scope) {
+  app.controller('DoughnutCtrl', ['$scope', '$timeout', function ($scope, $timeout) {
     $scope.labels = ['Download Sales', 'In-Store Sales', 'Mail-Order Sales'];
-    $scope.data = [350, 450, 100];
-  });
+    $scope.data = [0, 0, 0];
+    // TODO: investigate why chart was not showing up without this hack
+    $timeout(function () {
+      $scope.data = [350, 450, 100];
+    }, 0);
+  }]);
 
   app.controller('PieCtrl', ['$scope', '$timeout', function ($scope, $timeout) {
     $scope.labels = ['Download Sales', 'In-Store Sales', 'Mail Sales'];
