@@ -7,6 +7,8 @@
     "example": "examples"
   },
   "scripts": {
+    "codeclimate": "./node_modules/codeclimate-test-reporter/bin/codeclimate.js < coverage/lcov.info",
+    "docker": "docker build -t angular-chart.js . && docker run --rm -it -v `pwd`/coverage:/src/coverage angular-chart.js",
     "test": "gulp check"
   },
   "author": "Jerome Touffe-Blin <jtblin@gmail.com>",
