@@ -52,7 +52,7 @@
           hooks: 'mocha-phantomjs-istanbul',
           coverageFile: 'coverage/coverage.json'
         },
-        reporter: 'spec'
+        reporter: process.env.REPORTER || 'spec'
     }));
   });
 
