@@ -107,14 +107,12 @@ describe('Unit testing', function () {
         [28, 48, 40, 19, 86, 27, 90]
       ];
 
-      var mock = sandbox.mock(scope);
-      // cannot get a hold of the child scope as it isn't created yet
-      // so cannot be more precise on expectations
-      mock.expects('$watch').atLeast(3);
-
+      var spy = sandbox.spy(scope, '$watch');
       $compile(markup)(scope);
 
-      mock.verify();
+      // cannot get a hold of the child scope as it isn't created yet
+      // so cannot be more precise on expectations
+      expect(spy.calledThrice).to.be.true;
     });
 
     it('creates the chart only once', function () {
