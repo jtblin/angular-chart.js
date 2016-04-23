@@ -19,9 +19,9 @@ Describe the issue. What is the issue and what did you expect?
 
 Please make sure to review and check all of these items:
 
-[ ] Use latest version of the library
-[ ] Make sure you've included all the dependencies e.g Chart.js, angular, css file
-[ ] Include a repro case, see below.
+- [ ] Use latest version of the library
+- [ ] Make sure you've included all the dependencies e.g Chart.js, angular, css file
+- [ ] Include a repro case, see below.
 
 
 ### Step to reproduce

@@ -1,19 +1,18 @@
 language: node_js
-sudo: false
-node_js:
-- '0.10'
-addons:
-  apt:
-    packages:
-    - graphicsmagick
-before_install:
-- npm install bower
-- ./node_modules/bower/bin/bower install
+sudo: required
+services:
+- docker
+install:
+- docker build -t jtblin/angular-chart.js .
+script:
+- docker run --name angular-chart.js -it -e REPORTER=$REPORTER -e CODECLIMATE_REPO_TOKEN=$CODECLIMATE_REPO_TOKEN -e CI=$CI -e TOLERANCE=$TOLERANCE -e DELAY=$DELAY -e IMGUR_ID=$IMGUR_ID jtblin/angular-chart.js
 after_success:
-- ./node_modules/codeclimate-test-reporter/bin/codeclimate.js < coverage/lcov.info
+- docker start angular-chart.js
+- docker exec -it angular-chart.js npm run codeclimate
+- docker stop angular-chart.js
+- docker rm angular-chart.js
 env:
   global:
     - secure: YWABlINoIkwl9RFLOW9G0lATEP3aiXXi+DS6TWfvQWWG/jkS5sn7IqWC2U67LjwQ0lDg0yevo3ZD7FyYQ5lr8AVuScAZ6P2o2dm9t/HBKGTG4u016dxbWWYVZ8MAlKT7TfjVD8iDzcWyZedsbpuyaNNp4pGr/CNcvq7TGdJLNkU=
     - CI=1
-    - TOLERANCE=0.002
-    - DELAY=5000
+    - REPORTER=list
