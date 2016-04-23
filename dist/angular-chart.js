@@ -281,7 +281,7 @@
             data: item
           });
           if (yaxis) {
-            dataset.yAxisID = 'y-axis-' + (i + 1);
+            dataset.yAxisID = yaxis[i];
           }
           return dataset;
         })
