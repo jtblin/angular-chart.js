@@ -55,7 +55,7 @@
     "webshot": "^0.18.0"
   },
   "dependencies": {
-    "angular": "^1.4.5",
+    "angular": "1.x",
     "chart.js": "^1.1.1"
   }
 }
