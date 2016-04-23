@@ -8,7 +8,7 @@
   },
   "scripts": {
     "codeclimate": "./node_modules/codeclimate-test-reporter/bin/codeclimate.js < coverage/lcov.info",
-    "docker": "docker run docker-build && docker run docker-test",
+    "docker": "npm run docker-build && npm run docker-test",
     "docker-build": "docker build -t angular-chart.js .",
     "docker-test": "docker run --rm -i -v $(pwd)/coverage/:/src/coverage/ -v $(pwd)/test/:/src/test/ -v $(pwd)/angular-chart.js:/src/angular-chart.js angular-chart.js",
     "test": "gulp check"
