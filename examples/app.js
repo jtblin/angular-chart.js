@@ -36,7 +36,7 @@
         console.log('No point');
       }
     };
-    $scope.multiAxis = true;
+    $scope.multiAxis = ['y-axis-1', 'y-axis-2'];
 
     $scope.options = {
       scales: {
