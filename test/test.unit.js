@@ -35,15 +35,16 @@ describe('Unit testing', function () {
             (type === 'polarArea' ? 'polar-area' : type) +
               '" chart-data="data" chart-labels="labels"></canvas></div>';
 
-          scope.labels = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-
-          if (['line', 'bar', 'radar'].indexOf(type) > - 1)
+          if (['line', 'bar', 'radar'].indexOf(type) > - 1) {
+            scope.labels = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
             scope.data = [
               [65, 59, 80, 81, 56, 55, 40],
               [28, 48, 40, 19, 86, 27, 90]
             ];
-          else
+          } else {
+            scope.labels = ['Downloads', 'In store', 'Mail orders'];
             scope.data = [300, 500, 100];
+          }
 
           var spyChart = sandbox.spy(ChartJs, 'Chart');
 
@@ -66,16 +67,18 @@ describe('Unit testing', function () {
             '<canvas class="chart chart-base" chart-data="data" chart-labels="labels" ' +
             'chart-type="type"></canvas></div>';
 
-          scope.labels = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
           scope.type = type;
 
-          if (['line', 'bar', 'radar'].indexOf(type) > - 1)
+          if (['line', 'bar', 'radar'].indexOf(type) > - 1) {
+            scope.labels = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
             scope.data = [
               [65, 59, 80, 81, 56, 55, 40],
               [28, 48, 40, 19, 86, 27, 90]
             ];
-          else
+          } else {
+            scope.labels = ['Downloads', 'In store', 'Mail orders'];
             scope.data = [300, 500, 100];
+          }
 
           var spyChart = sandbox.spy(ChartJs, 'Chart');
 
