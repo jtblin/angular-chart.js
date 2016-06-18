@@ -32,6 +32,7 @@ describe('integration', function () {
   mkdirp(WEBSHOT_FAILED_DIR);
 
   [
+    'horizontal-bar-chart',
     '29-tabs',
     '57-hex-colours',
     '54-not-enough-colours',

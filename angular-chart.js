@@ -31,11 +31,11 @@
     '#4D5360'  // dark grey
   ];
 
-  var usingExcanvas = typeof window.G_vmlCanvasManager === 'object' &&
+  var useExcanvas = typeof window.G_vmlCanvasManager === 'object' &&
     window.G_vmlCanvasManager !== null &&
     typeof window.G_vmlCanvasManager.initElement === 'function';
 
-  if (usingExcanvas) Chart.defaults.global.animation = false;
+  if (useExcanvas) Chart.defaults.global.animation = false;
 
   return angular.module('chart.js', [])
     .provider('ChartJs', ChartJsProvider)
@@ -43,6 +43,7 @@
     .directive('chartBase', ['ChartJsFactory', function (ChartJsFactory) { return new ChartJsFactory(); }])
     .directive('chartLine', ['ChartJsFactory', function (ChartJsFactory) { return new ChartJsFactory('line'); }])
     .directive('chartBar', ['ChartJsFactory', function (ChartJsFactory) { return new ChartJsFactory('bar'); }])
+    .directive('chartHorizontalBar', ['ChartJsFactory', function (ChartJsFactory) { return new ChartJsFactory('horizontalBar'); }])
     .directive('chartRadar', ['ChartJsFactory', function (ChartJsFactory) { return new ChartJsFactory('radar'); }])
     .directive('chartDoughnut', ['ChartJsFactory', function (ChartJsFactory) { return new ChartJsFactory('doughnut'); }])
     .directive('chartPie', ['ChartJsFactory', function (ChartJsFactory) { return new ChartJsFactory('pie'); }])
@@ -105,7 +106,7 @@
         link: function (scope, elem/*, attrs */) {
           var chart;
 
-          if (usingExcanvas) window.G_vmlCanvasManager.initElement(elem[0]);
+          if (useExcanvas) window.G_vmlCanvasManager.initElement(elem[0]);
 
           // Order of setting "watch" matter
 
@@ -254,12 +255,8 @@
     }
 
     function rgba (color, alpha) {
-      if (usingExcanvas) {
-        // rgba not supported by IE8
-        return 'rgb(' + color.join(',') + ')';
-      } else {
-        return 'rgba(' + color.concat(alpha).join(',') + ')';
-      }
+      // rgba not supported by IE8
+      return useExcanvas ? 'rgb(' + color.join(',') + ')' : 'rgba(' + color.concat(alpha).join(',') + ')';
     }
 
     // Credit: http://stackoverflow.com/a/11508164/1190235

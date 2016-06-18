@@ -29,13 +29,13 @@ describe('Unit testing', function () {
 
   describe('base', function () {
     describe('chart types', function () {
-      ['line', 'bar', 'radar', 'pie', 'doughnut', 'polarArea'].forEach(function (type) {
+      ['line', 'bar', 'horizontalBar', 'radar', 'pie', 'doughnut', 'polarArea'].forEach(function (type) {
         it('creates a ' + type + ' chart using the directive', function () {
-          var markup = '<div style="width: 250px; height:120px"><canvas class="chart chart-' +
-            (type === 'polarArea' ? 'polar-area' : type) +
-              '" chart-data="data" chart-labels="labels"></canvas></div>';
+          var markup = '<canvas class="chart chart-' +
+            (type === 'polarArea' ? 'polar-area' : type === 'horizontalBar' ? 'horizontal-bar' : type) +
+              '" chart-data="data" chart-labels="labels"></canvas>';
 
-          if (['line', 'bar', 'radar'].indexOf(type) > - 1) {
+          if (['line', 'bar', 'horizontalBar', 'radar'].indexOf(type) > - 1) {
             scope.labels = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
             scope.data = [
               [65, 59, 80, 81, 56, 55, 40],
@@ -62,14 +62,14 @@ describe('Unit testing', function () {
           );
         });
 
-        it('creates a ' + type + ' chart using the "chart-type" attribute"', function () {
+        it('creates a ' + type + ' chart using the "chart-type" attribute', function () {
           var markup = '<div style="width: 250px; height:120px">' +
             '<canvas class="chart chart-base" chart-data="data" chart-labels="labels" ' +
             'chart-type="type"></canvas></div>';
 
           scope.type = type;
 
-          if (['line', 'bar', 'radar'].indexOf(type) > - 1) {
+          if (['line', 'bar', 'horizontalBar', 'radar'].indexOf(type) > - 1) {
             scope.labels = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
             scope.data = [
               [65, 59, 80, 81, 56, 55, 40],

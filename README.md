@@ -55,8 +55,8 @@ adding the dependencies for Angular and Chart.js first:
 
 # Utilisation
 
-There are 6 types of charts so 6 directives: `chart-line`, `chart-bar`, `chart-radar`, `chart-pie`, 
-`chart-polar-area`, `chart-doughnut`.
+There are 6 types of charts so 6 directives: `chart-line`, `chart-bar`, `chart-horizontal-bar`, `chart-radar`, 
+`chart-pie`, `chart-polar-area`, `chart-doughnut`.
 
 - `chart-data`: series data
 - `chart-labels`: x axis labels (line, bar, radar) or series labels (pie, doughnut, polar area)
