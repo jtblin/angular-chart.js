@@ -102,7 +102,8 @@
           chartColors: '=?',
           chartClick: '=?',
           chartHover: '=?',
-          chartYAxes: '=?'
+          chartYAxes: '=?',
+          chartDatasetOverload: '=?'
         },
         link: function (scope, elem/*, attrs */) {
           var chart;
@@ -129,6 +130,7 @@
           scope.$watch('chartLabels', resetChart, true);
           scope.$watch('chartOptions', resetChart, true);
           scope.$watch('chartColors', resetChart, true);
+          scope.$watch('chartDatasetOverload', resetChart, true);
 
           scope.$watch('chartType', function (newVal, oldVal) {
             if (isEmpty(newVal)) return;
@@ -167,7 +169,7 @@
             var colors = getColors(type, scope);
             var cvs = elem[0], ctx = cvs.getContext('2d');
             var data = Array.isArray(scope.chartData[0]) ?
-              getDataSets(scope.chartLabels, scope.chartData, scope.chartSeries || [], colors, scope.chartYAxes) :
+              getDataSets(scope.chartLabels, scope.chartData, scope.chartSeries || [], colors, scope.chartYAxes, scope.chartDatasetOverload) :
               getData(scope.chartLabels, scope.chartData, colors);
 
             var options = angular.extend({}, ChartJs.getOptions(type), scope.chartOptions);
@@ -274,7 +276,7 @@
       return [r, g, b];
     }
 
-    function getDataSets (labels, data, series, colors, yaxis) {
+    function getDataSets (labels, data, series, colors, yaxis, datasetOverload) {
       return {
         labels: labels,
         datasets: data.map(function (item, i) {
@@ -284,6 +286,9 @@
           });
           if (yaxis) {
             dataset.yAxisID = yaxis[i];
+          }
+          if (datasetOverload) {
+            angular.merge(dataset,datasetOverload[i])
           }
           return dataset;
         })
