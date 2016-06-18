@@ -26,10 +26,6 @@ there are numerous breaking changes in this version notably:
 * `$scope.$apply` is not called anymore on mouse hover functions calls
 * obviously all Chart.js breaking changes as well in how options are set, etc.
 
-### bower
-
-    bower install --save angular-chart.js
-
 ### npm
 
     npm install --save angular-chart.js
@@ -53,7 +49,7 @@ adding the dependencies for Angular and Chart.js first:
   ...
 </body>
   <script src="node_modules/angular/angular.min.js"></script>
-  <script src="node_modules/Chart.js/Chart.min.js"></script>
+  <script src="node_modules/chart.js/Chart.min.js"></script>
   <script src="node_modules/angular-chart.js/dist/angular-chart.min.js"></script>
 ```
 

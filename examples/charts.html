@@ -3,8 +3,8 @@
 <head lang="en">
   <meta charset="UTF-8">
   <title>Charts</title>
-  <link rel="stylesheet" href="../bower_components/font-awesome/css/font-awesome.min.css">
-  <link rel="stylesheet" href="../bower_components/rainbow/themes/github.css">
+  <link rel="stylesheet" href="../node_modules/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="../node_modules/Rainbow/themes/github.css">
   <link href="bootstrap.css" rel="stylesheet">
   <link href="app.css" rel="stylesheet">
   <style>
@@ -115,18 +115,18 @@
       </ul>
       <h3>Files to download</h3>
       <p>
-        The easiest is to download with <strong>bower</strong>:
-        <pre>bower install angular-chart.js --save</pre>
-        Alternatively files can be <a href="https://github.com/jtblin/angular-chart.js">downloaded from Github</a> or via npm.
+        The easiest is to download with <strong>npm</strong>:
+        <pre>npm install angular-chart.js --save</pre>
+        Alternatively files can be <a href="https://github.com/jtblin/angular-chart.js">downloaded from Github</a> or via bower.
         See <a href="https://github.com/jtblin/angular-chart.js">readme</a> for more information.
       </p>
       <p>Whichever method you choose the good news is that the overall size is very small:
         &lt;5kb for all directives (~1kb with gzip compression!)</p>
       <h3>Installation</h3>
       <p>You need to include the dependencies in your page:</p>
-      <pre><code>&lt;script src=&quot;bower_components/angular-chart.js/dist/angular-chart.min.js&quot;&gt;&lt;/script&gt;
-&lt;script src="bower_components/Chart.js/Chart.min.js">&lt;/script&gt;
-&lt;script src="bower_components/angular-chart.js/dist/angular-chart.min.js">&lt;/script&gt;</code></pre>
+      <pre><code>&lt;script src=&quot;node_modules/angular-chart.js/dist/angular-chart.min.js&quot;&gt;&lt;/script&gt;
+&lt;script src="node_modules/chart.js/Chart.min.js">&lt;/script&gt;
+&lt;script src="node_modules/angular-chart.js/dist/angular-chart.min.js">&lt;/script&gt;</code></pre>
       <p>As soon as you've got all the files downloaded and included in your page you just need to declare
         a dependency on the <code>chart.js</code> <a href="http://docs.angularjs.org/guide/module">module</a>:<br>
       </p><pre><code>angular.module('myModule', ['chart.js']);</code></pre>
@@ -523,13 +523,13 @@ chart-y-axes=&quot;true&quot; chart-click=&quot;onClick&quot;
     </div>
   </footer>
 
-  <script src="../bower_components/angular/angular.min.js"></script>
-  <script src="../bower_components/Chart.js/dist/Chart.min.js"></script>
-  <script src="../bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
-  <script src="../bower_components/rainbow/js/rainbow.min.js"></script>
-  <script src="../bower_components/rainbow/js/language/generic.js"></script>
-  <script src="../bower_components/rainbow/js/language/html.js"></script>
-  <script src="../bower_components/rainbow/js/language/javascript.js"></script>
+  <script src="../node_modules/angular/angular.min.js"></script>
+  <script src="../node_modules/chart.js/dist/Chart.min.js"></script>
+  <script src="../node_modules/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+  <script src="../node_modules/Rainbow/js/rainbow.min.js"></script>
+  <script src="../node_modules/Rainbow/js/language/generic.js"></script>
+  <script src="../node_modules/Rainbow/js/language/html.js"></script>
+  <script src="../node_modules/Rainbow/js/language/javascript.js"></script>
   <script src="../angular-chart.js"></script>
   <script src="smoothscroll.min.js"></script>
   <script src="app.js"></script>

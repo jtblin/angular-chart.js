@@ -1,6 +1,5 @@
 .idea/
 node_modules/
 test/fixtures/shots/
-bower_components/
 coverage/
 examples/bundle.js
