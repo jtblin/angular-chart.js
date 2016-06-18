@@ -151,20 +151,20 @@
     ];
     $scope.colors = [
       { // grey
-        fillColor: 'rgba(148,159,177,0.2)',
-        strokeColor: 'rgba(148,159,177,1)',
-        pointColor: 'rgba(148,159,177,1)',
-        pointStrokeColor: '#fff',
-        pointHighlightFill: '#fff',
-        pointHighlightStroke: 'rgba(148,159,177,0.8)'
+        backgroundColor: 'rgba(148,159,177,0.2)',
+        pointBackgroundColor: 'rgba(148,159,177,1)',
+        pointHoverBackgroundColor: 'rgba(148,159,177,1)',
+        borderColor: 'rgba(148,159,177,1)',
+        pointBorderColor: '#fff',
+        pointHoverBorderColor: 'rgba(148,159,177,0.8)'
       },
       { // dark grey
-        fillColor: 'rgba(77,83,96,0.2)',
-        strokeColor: 'rgba(77,83,96,1)',
-        pointColor: 'rgba(77,83,96,1)',
-        pointStrokeColor: '#fff',
-        pointHighlightFill: '#fff',
-        pointHighlightStroke: 'rgba(77,83,96,1)'
+        backgroundColor: 'rgba(77,83,96,0.2)',
+        pointBackgroundColor: 'rgba(77,83,96,1)',
+        pointHoverBackgroundColor: 'rgba(77,83,96,1)',
+        borderColor: 'rgba(77,83,96,1)',
+        pointBorderColor: '#fff',
+        pointHoverBorderColor: 'rgba(77,83,96,0.8)'
       }
     ];
     $scope.options = { legend: { display: false } };

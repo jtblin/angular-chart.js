@@ -18,6 +18,7 @@
   'use strict';
 
   Chart.defaults.global.multiTooltipTemplate = '<%if (datasetLabel){%><%=datasetLabel%>: <%}%><%= value %>';
+  Chart.defaults.global.tooltips.mode = 'label';
   Chart.defaults.global.elements.line.borderWidth = 2;
   Chart.defaults.global.elements.rectangle.borderWidth = 2;
   Chart.defaults.global.legend.display = false;
@@ -242,11 +243,11 @@
     function getColor (color) {
       return {
         backgroundColor: rgba(color, 0.2),
-        borderColor: rgba(color, 1),
         pointBackgroundColor: rgba(color, 1),
+        pointHoverBackgroundColor: rgba(color, 0.8),
+        borderColor: rgba(color, 1),
         pointBorderColor: '#fff',
-        pointHoverBackgroundColor: rgba(color, 1),
-        pointHoverBorderColor: rgba(color, 0.8)
+        pointHoverBorderColor: rgba(color, 1)
       };
     }
 
