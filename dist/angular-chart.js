@@ -18,6 +18,7 @@
   'use strict';
 
   Chart.defaults.global.multiTooltipTemplate = '<%if (datasetLabel){%><%=datasetLabel%>: <%}%><%= value %>';
+  Chart.defaults.global.tooltips.mode = 'label';
   Chart.defaults.global.elements.line.borderWidth = 2;
   Chart.defaults.global.elements.rectangle.borderWidth = 2;
   Chart.defaults.global.legend.display = false;
@@ -31,11 +32,11 @@
     '#4D5360'  // dark grey
   ];
 
-  var usingExcanvas = typeof window.G_vmlCanvasManager === 'object' &&
+  var useExcanvas = typeof window.G_vmlCanvasManager === 'object' &&
     window.G_vmlCanvasManager !== null &&
     typeof window.G_vmlCanvasManager.initElement === 'function';
 
-  if (usingExcanvas) Chart.defaults.global.animation = false;
+  if (useExcanvas) Chart.defaults.global.animation = false;
 
   return angular.module('chart.js', [])
     .provider('ChartJs', ChartJsProvider)
@@ -106,7 +107,7 @@
         link: function (scope, elem/*, attrs */) {
           var chart;
 
-          if (usingExcanvas) window.G_vmlCanvasManager.initElement(elem[0]);
+          if (useExcanvas) window.G_vmlCanvasManager.initElement(elem[0]);
 
           // Order of setting "watch" matter
 
@@ -137,6 +138,10 @@
 
           scope.$on('$destroy', function () {
             destroyChart(chart, scope);
+          });
+
+          scope.$on('$resize', function () {
+            if (chart) chart.resize();
           });
 
           function resetChart (newVal, oldVal) {
@@ -242,11 +247,11 @@
     function getColor (color) {
       return {
         backgroundColor: rgba(color, 0.2),
-        borderColor: rgba(color, 1),
         pointBackgroundColor: rgba(color, 1),
+        pointHoverBackgroundColor: rgba(color, 0.8),
+        borderColor: rgba(color, 1),
         pointBorderColor: '#fff',
-        pointHoverBackgroundColor: '#fff',
-        pointHoverBorderColor: rgba(color, 0.8)
+        pointHoverBorderColor: rgba(color, 1)
       };
     }
 
@@ -255,12 +260,8 @@
     }
 
     function rgba (color, alpha) {
-      if (usingExcanvas) {
-        // rgba not supported by IE8
-        return 'rgb(' + color.join(',') + ')';
-      } else {
-        return 'rgba(' + color.concat(alpha).join(',') + ')';
-      }
+      // rgba not supported by IE8
+      return useExcanvas ? 'rgb(' + color.join(',') + ')' : 'rgba(' + color.concat(alpha).join(',') + ')';
     }
 
     // Credit: http://stackoverflow.com/a/11508164/1190235
