@@ -140,6 +140,10 @@
             destroyChart(chart, scope);
           });
 
+          scope.$on('$resize', function () {
+            if (chart) chart.resize();
+          });
+
           function resetChart (newVal, oldVal) {
             if (isEmpty(newVal)) return;
             if (angular.equals(newVal, oldVal)) return;

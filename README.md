@@ -133,6 +133,11 @@ the chart on changes.
 
 # Events
 
+angular-chart.js listens to the following events on the `scope` and acts accordingly:
+
+* `$destroy`: call `.destroy()` on the chart
+* `$resize`: call `.resize()` on the chart
+
 angular-chart.js emits the following events on the `scope` and pass the chart as argument:
 
 * `chart-create`: when chart is created
