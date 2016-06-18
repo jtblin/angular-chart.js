@@ -245,7 +245,7 @@
         borderColor: rgba(color, 1),
         pointBackgroundColor: rgba(color, 1),
         pointBorderColor: '#fff',
-        pointHoverBackgroundColor: '#fff',
+        pointHoverBackgroundColor: rgba(color, 1),
         pointHoverBorderColor: rgba(color, 0.8)
       };
     }
