@@ -28,7 +28,7 @@ describe('Unit testing', function () {
 
   describe('base', function () {
     describe('chart types', function () {
-      ['line', 'bar', 'horizontalBar', 'radar', 'pie', 'doughnut', 'polarArea'].forEach(function (type) {
+      ['line', 'bar', 'horizontalBar', 'radar', 'pie', 'doughnut', 'polarArea', 'bubble'].forEach(function (type) {
         it('creates a ' + type + ' chart using the directive', function () {
           var markup = '<canvas class="chart chart-' +
             (type === 'polarArea' ? 'polar-area' : type === 'horizontalBar' ? 'horizontal-bar' : type) +

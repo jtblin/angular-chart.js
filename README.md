@@ -63,11 +63,13 @@ adding the dependencies for Angular and Chart.js first:
 
 # Utilisation
 
-There are 7 types of charts so 7 directives: `chart-line`, `chart-bar`, `chart-horizontal-bar`, `chart-radar`, 
-`chart-pie`, `chart-polar-area`, `chart-doughnut`.
+There are 8 types of charts so 8 directives: `chart-line`, `chart-bar`, `chart-horizontal-bar`, `chart-radar`, 
+`chart-pie`, `chart-polar-area`, `chart-doughnut`, `chart-bubble`.
+
+Here are the options for all directives:
 
 - `chart-data`: series data
-- `chart-labels`: x axis labels (line, bar, radar) or series labels (pie, doughnut, polar area)
+- `chart-labels`: x axis labels (line, bar, horizontal bar, radar, bubble) or series labels (pie, doughnut, polar area)
 - `chart-options`: chart options (as from [Chart.js documentation](http://www.chartjs.org/docs/))
 - `chart-series`: (default: `[]`): series labels (line, bar, radar)
 - `chart-colors`: data colors (will use default colors if not specified)
@@ -77,9 +79,12 @@ There are 7 types of charts so 7 directives: `chart-line`, `chart-bar`, `chart-h
 - `chart-dataset-override`: override individual datasets to allow per dataset configuration e.g. y-axis, mixed type chart
 
 There is another directive `chart-base` that takes an extra attribute `chart-type` to define the type
-dynamically, see [stacked bar example](http://jtblin.github.io/angular-chart.js/examples/stacked-bars.html).
+dynamically. 
 
-You can create mixed type chart using the `chart-dataset-override`, see [example](examples/dataset-override.html).
+You can create mixed type chart using the `chart-dataset-override`, see 
+[bar-line example](http://jtblin.github.io/angular-chart.js/examples/dataset-override.html).
+
+See also [stacked bar example](http://jtblin.github.io/angular-chart.js/examples/stacked-bars.html).
 
 # Example
 
@@ -135,7 +140,7 @@ See [a simple AMD example](examples/amd.js)
 ## CommonJS e.g. webpack
 
 Module should work with CommonJS out of the box e.g. [browserify](http://browserify.org/) or 
-[webpack](http://webpack.github.io/), see a [webpack example](examples/webpack.config.js).
+[webpack](http://webpack.github.io/), see a [webpack example](examples/webpack.commonjs.js).
 
 # Reactive
 
@@ -181,8 +186,10 @@ For IE8 and older browsers, you will need
 to include [excanvas](https://code.google.com/p/explorercanvas/wiki/Instructions). 
 You will also need a [shim](https://github.com/es-shims/es5-shim) for ES5 functions.
 
-You also need to have  ```height``` and ```width``` attributes for the ```<canvas>``` tag of your chart if using IE8 and older browsers. If you *do not* have these attributes, you will need a 
-[getComputedStyle shim](https://github.com/Financial-Times/polyfill-service/blob/master/polyfills/getComputedStyle/polyfill.js) and the line ```document.defaultView = window;```, but there still may be errors (due to code in Chart.js).
+You also need to have  ```height``` and ```width``` attributes for the ```<canvas>``` tag of your chart 
+if using IE8 and older browsers. If you *do not* have these attributes, you will need a 
+[getComputedStyle shim](https://github.com/Financial-Times/polyfill-service/blob/master/polyfills/getComputedStyle/polyfill.js) 
+and the line ```document.defaultView = window;```, but there still may be errors (due to code in Chart.js).
 
 ```html
 <head>

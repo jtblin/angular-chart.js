@@ -49,6 +49,7 @@
     .directive('chartDoughnut', ['ChartJsFactory', function (ChartJsFactory) { return new ChartJsFactory('doughnut'); }])
     .directive('chartPie', ['ChartJsFactory', function (ChartJsFactory) { return new ChartJsFactory('pie'); }])
     .directive('chartPolarArea', ['ChartJsFactory', function (ChartJsFactory) { return new ChartJsFactory('polarArea'); }])
+    .directive('chartBubble', ['ChartJsFactory', function (ChartJsFactory) { return new ChartJsFactory('bubble'); }])
     .name;
 
   /**
@@ -267,8 +268,7 @@
     }
 
     function hasData (scope) {
-      return scope.chartData && scope.chartData.length &&
-        scope.chartLabels && scope.chartLabels.length;
+      return scope.chartData && scope.chartData.length;
     }
 
     function getChartColorFn (scope) {

@@ -443,7 +443,7 @@ chart-dataset-override=&quot;datasetOverride&quot; chart-click=&quot;onClick&quo
         </div>
       </div>
       <div class="row">
-        <div class="col-lg-6 col-sm-12" id="horizontal-chart" ng-controller="BarCtrl">
+        <div class="col-lg-6 col-sm-12" id="horizontal bar-chart" ng-controller="BarCtrl">
           <div class="panel panel-default">
             <div class="panel-heading">Horizontal Bar Chart</div>
             <div class="panel-body">
@@ -495,6 +495,72 @@ chart-dataset-override=&quot;datasetOverride&quot; chart-click=&quot;onClick&quo
           <tabset>
             <tab heading="Settings" class="settings">
               <div class="settings">
+                <code>.chart-bubble</code>
+                <ul>
+                  <li><code>chart-data</code>: series data</li>
+                  <li><code>chart-labels</code>: x axis labels</li>
+                  <li><code>chart-options</code> (default: <code>{}</code>): Chart.js options</li>
+                  <li><code>chart-series</code> (default: <code>[]</code>): series labels</li>
+                  <li><code>chart-click</code> (optional): onclick event handler</li>
+                  <li><code>chart-hover</code> (optional): onmousemove event handler</li>
+                  <li><code>chart-colors</code> (default to global colors): colors for the chart</li>
+                  <li><code>chart-dataset-override</code> (optional): override datasets individually</li>
+                </ul>
+              </div>
+            </tab>
+            <tab heading="Markup">
+              <pre><code data-language="html"><!--see examples/bubble.html for random bubbles source code-->
+&lt;canvas id=&quot;base&quot; class=&quot;chart-bubble&quot; chart-data=&quot;data&quot;
+  chart-series=&quot;series&quot; &gt;
+&lt;/canvas&gt; </code></pre>
+            </tab>
+            <tab heading="Javascript">
+              <pre><code data-language="javascript">angular.module("app", ["chart.js"]).controller("BubbleCtrl",
+  function ($scope) {
+    // see examples/bubble.js for random bubbles source code
+    $scope.series = ['Series A', 'Series B'];
+
+    $scope.data = [
+      [{
+        x: 40,
+        y: 10,
+        r: 20
+      }],
+      [{
+        x: 10,
+        y: 40,
+        r: 50
+      }]
+    ];
+});
+              </code></pre>
+            </tab>
+          </tabset>
+        </div>
+        <div class="col-lg-6 col-sm-12" id="bubble-chart" ng-controller="BubbleCtrl">
+          <div class="panel panel-default">
+            <div class="panel-heading">Bubble Chart</div>
+            <div class="panel-body">
+              <canvas id="bubble" class="chart chart-bubble" chart-data="data" chart-options="options"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-6 col-sm-12" id="base-chart" ng-controller="BaseCtrl">
+          <div class="panel panel-default">
+            <div class="panel-heading">Dynamic Chart</div>
+            <div class="panel-body">
+              <canvas id="base" class="chart chart-base" chart-type="type" chart-data="data"
+                      chart-labels="labels"></canvas>
+            </div>
+          </div>
+          <button type="button" class="btn btn-primary pull-right" ng-click="toggle()">Toggle</button>
+        </div>
+        <div class="col-lg-6 col-sm-12 code">
+          <tabset>
+            <tab heading="Settings" class="settings">
+              <div class="settings">
                 <code>.chart-base</code>
                 <ul>
                   <li><code>chart-type</code>: chart type e.g. Bar, PolarArea, etc. or other plugins</li>
@@ -522,16 +588,6 @@ chart-dataset-override=&quot;datasetOverride&quot; chart-click=&quot;onClick&quo
               </code></pre>
             </tab>
           </tabset>
-        </div>
-        <div class="col-lg-6 col-sm-12" id="base-chart" ng-controller="BaseCtrl">
-          <div class="panel panel-default">
-            <div class="panel-heading">Dynamic Chart</div>
-            <div class="panel-body">
-              <canvas id="base" class="chart chart-base" chart-type="type" chart-data="data"
-                      chart-labels="labels"></canvas>
-            </div>
-          </div>
-          <button type="button" class="btn btn-primary pull-right" ng-click="toggle()">Toggle</button>
         </div>
       </div>
     </section>
