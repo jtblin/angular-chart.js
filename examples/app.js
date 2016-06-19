@@ -36,7 +36,7 @@
         console.log('No point');
       }
     };
-    $scope.multiAxis = ['y-axis-1', 'y-axis-2'];
+    $scope.datasetOverride = [{ yAxisID: 'y-axis-1' }, { yAxisID: 'y-axis-2' }];
 
     $scope.options = {
       scales: {
@@ -143,7 +143,7 @@
     ];
   });
 
-  app.controller("MixedChartCtrl", ['$scope', function ($scope) {
+  app.controller('MixedChartCtrl', ['$scope', function ($scope) {
     $scope.colors = ['#45b7cd', '#ff6384', '#ff8e72'];
 
     $scope.labels = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
@@ -153,15 +153,15 @@
     ];
     $scope.datasetOverride = [
       {
-        label: "Bar chart",
+        label: 'Bar chart',
         borderWidth: 1,
         type: 'bar'
       },
       {
-        label: "Line chart",
+        label: 'Line chart',
         borderWidth: 3,
-        hoverBackgroundColor: "rgba(255,99,132,0.4)",
-        hoverBorderColor: "rgba(255,99,132,1)",
+        hoverBackgroundColor: 'rgba(255,99,132,0.4)',
+        hoverBorderColor: 'rgba(255,99,132,1)',
         type: 'line'
       }
     ];

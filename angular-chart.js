@@ -102,7 +102,6 @@
           chartColors: '=?',
           chartClick: '=?',
           chartHover: '=?',
-          chartYAxes: '=?',
           chartDatasetOverride: '=?'
         },
         link: function (scope, elem/*, attrs */) {
@@ -169,7 +168,7 @@
             var colors = getColors(type, scope);
             var cvs = elem[0], ctx = cvs.getContext('2d');
             var data = Array.isArray(scope.chartData[0]) ?
-              getDataSets(scope.chartLabels, scope.chartData, scope.chartSeries || [], colors, scope.chartYAxes, scope.chartDatasetOverride) :
+              getDataSets(scope.chartLabels, scope.chartData, scope.chartSeries || [], colors, scope.chartDatasetOverride) :
               getData(scope.chartLabels, scope.chartData, colors, scope.chartDatasetOverride);
 
             var options = angular.extend({}, ChartJs.getOptions(type), scope.chartOptions);
@@ -281,7 +280,7 @@
         scope.chartLabels && scope.chartLabels.length;
     }
 
-    function getDataSets (labels, data, series, colors, yaxis, datasetOverride) {
+    function getDataSets (labels, data, series, colors, datasetOverride) {
       return {
         labels: labels,
         datasets: data.map(function (item, i) {
@@ -289,9 +288,6 @@
             label: series[i],
             data: item
           });
-          if (yaxis) {
-            dataset.yAxisID = yaxis[i];
-          }
           if (datasetOverride && datasetOverride.length >= i) {
             angular.merge(dataset, datasetOverride[i]);
           }

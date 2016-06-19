@@ -71,7 +71,7 @@ There are 7 types of charts so 7 directives: `chart-line`, `chart-bar`, `chart-h
 - `chart-get-color`: function that returns a color in case there are not enough (will use random colors if not specified)
 - `chart-click`: onclick event handler
 - `chart-hover`: onmousemove event handler
-- `chart-dataset-override`: override individual datasets to allow per dataset configuration
+- `chart-dataset-override`: override individual datasets to allow per dataset configuration e.g. y-axis, mixed type chart
 
 There is another directive `chart-base` that takes an extra attribute `chart-type` to define the type
 dynamically, see [stacked bar example](http://jtblin.github.io/angular-chart.js/examples/stacked-bars.html).
