@@ -1,3 +1,5 @@
+'use strict';
+
 angular.module("app", ["chart.js"]).controller("LineCtrl", ['$scope', function ($scope) {
   $scope.series = ['Series A', 'Series B'];
   $scope.data = [
