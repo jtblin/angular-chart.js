@@ -17,7 +17,7 @@ script and options.
 ## Chart.js 2.0 and 1.0.0-alpha branch
 
 This is the `1.0.0-alpha` branch which requires Chart.js 2.0.0 version. Following semantic versioning,
-there are numerous breaking changes in this version notably:
+there are numerous **breaking changes** in this version notably:
 
 * all options now need to use the `chart-` prefix
 * `chart-colours` is now `chart-colors` and `chart-get-colour` is now `chart-get-color`
@@ -28,6 +28,7 @@ there are numerous breaking changes in this version notably:
 * obviously all Chart.js breaking changes as well in how options are set, etc.
 * disabling the `responsive` option doesn't work via global `Chart.defaults.global.responsive` anymore, 
 but must be set via standard options e.g. `ChartJsProvider.setOptions({ responsive: false });`
+* factory now returns a module name instead of a module instance
 
 ### npm
 

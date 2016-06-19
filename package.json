@@ -57,7 +57,7 @@
     "sinon-chai": "^2.7.0",
     "testatic": "^0.1.0",
     "tmp-sync": "^1.1.0",
-    "webpack": "^1.12.15",
+    "webpack": "^1.13.1",
     "webshot": "^0.18.0"
   },
   "dependencies": {
