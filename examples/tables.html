@@ -3,7 +3,6 @@
 <head lang="en">
   <meta charset="UTF-8">
   <title>Data tables</title>
-  <link rel="stylesheet" href="../dist/angular-chart.css">
   <link href="bootstrap.css" rel="stylesheet">
 </head>
 <body ng-app="examples">
@@ -30,16 +29,16 @@
       <div class="panel panel-default">
         <div class="panel-heading">Reactive Chart</div>
         <div class="panel-body">
-          <canvas id="tables" class="chart chart-line" data="data" labels="labels"></canvas>
+          <canvas id="tables" class="chart chart-line" chart-data="data" chart-labels="labels"></canvas>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<script src="../bower_components/angular/angular.min.js"></script>
-<script src="../bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
-<script src="../bower_components/Chart.js/Chart.min.js"></script>
+<script src="../node_modules/angular/angular.min.js"></script>
+<script src="../node_modules/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+<script src="../node_modules/chart.js/dist/Chart.min.js"></script>
 <script src="../angular-chart.js"></script>
 <script src="app.js"></script>
 </body>

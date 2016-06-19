@@ -71,7 +71,6 @@
   "disallowKeywords": [ "with" ],
 
   "excludeFiles": [
-    "bower_components/**",
     "node_modules/**",
     "dist/**",
     "coverage/**",

@@ -1,0 +1,11 @@
+{
+  "strict"        : true,     // true: Requires all functions run in ES5 Strict Mode
+  "indent"        : 2,        // {int} Number of spaces to use for indentation
+  "newcap"        : true,     // true: Require capitalization of all constructor functions e.g. `new F()`
+  "quotmark"      : "single", // Quotation mark consistency
+  "undef"         : true,     // true: Require all non-global variables to be declared (prevents global leaks)
+  "unused"        : true,     // true: Require all defined variables be used
+  "node"          : true,     // Node.js
+  "-W058"         : true,     // Missing '()' invoking a constructor
+  "-W064"         : true      // Missing 'new' prefix when invoking a constructor
+}

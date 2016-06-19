@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+  <meta charset="UTF-8">
+  <title>Charts with datasets overrides</title>
+  <link href="../../examples/bootstrap.css" rel="stylesheet">
+</head>
+<body ng-app="app">
+<br/>
+<div id="container" class="container">
+  <div class="page-header">
+    <h1>Dataset overrides</h1>
+  </div>
+  <div class="row" ng-controller="OverrideCtrl">
+    <div class="col-lg-6 col-sm-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">Mixed chart</div>
+        <div class="panel-body">
+          <canvas class="chart chart-bar" chart-data="data1" chart-labels="labels1"
+                  chart-colors="colors" chart-dataset-override="datasetOverride1"></canvas>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-6 col-sm-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">Doughnut dataset override</div>
+        <div class="panel-body">
+          <canvas class="chart chart-doughnut" chart-data="data2" chart-labels="labels2"
+                  chart-colors="colors" chart-dataset-override="datasetOverride2"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="../../node_modules/angular/angular.min.js"></script>
+<script src="../../node_modules/chart.js/dist/Chart.min.js"></script>
+<script src="../../angular-chart.js"></script>
+<script src="dataset-override.js"></script>
+</body>
+</html>

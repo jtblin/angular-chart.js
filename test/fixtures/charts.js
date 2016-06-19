@@ -2,6 +2,9 @@
   'use strict';
 
   var app = angular.module('charts', ['chart.js']);
+  Chart.defaults.global.legend = {
+    display: false
+  };
 
   app.controller('LineCtrl', ['$scope', '$timeout', function ($scope, $timeout) {
     $scope.labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];

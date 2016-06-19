@@ -3,8 +3,8 @@
 
   require.config({
     paths: {
-      angular: '../bower_components/angular/angular.min',
-      chart: '../bower_components/Chart.js/Chart',
+      angular: '../node_modules/angular/angular.min',
+      chart: '../node_modules/chart.js/dist/Chart',
       'angular-chart': '../angular-chart'
     },
     shim: {

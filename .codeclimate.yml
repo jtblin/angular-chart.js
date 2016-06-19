@@ -4,7 +4,6 @@ languages:
   PHP: false
 exclude_paths:
 - "dist/*"
-- "bower_components/*"
 - "node_modules/*"
 - "gulpfile.js"
 - "examples/*"

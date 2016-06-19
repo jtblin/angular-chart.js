@@ -3,5 +3,5 @@ WORKDIR /src
 ADD . ./
 RUN chown -R node:node /src
 USER node
-RUN npm install && npm install bower && ./node_modules/bower/bin/bower install
+RUN npm install
 CMD ["npm", "test"]

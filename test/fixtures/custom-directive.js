@@ -2,8 +2,11 @@
   'use strict';
 
   var app = angular.module('pie', ['chart.js']);
+  Chart.defaults.global.legend = {
+    display: false
+  };
 
-  app.directive('mySpecialPie', function (ChartJsFactory) { return new ChartJsFactory('Pie'); });
+  app.directive('mySpecialPie', function (ChartJsFactory) { return new ChartJsFactory('pie'); });
 
   app.controller('PieCtrl', ['$scope', '$timeout', function ($scope, $timeout) {
     $scope.labels = ['Series A', 'Series B'];
