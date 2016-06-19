@@ -26,6 +26,8 @@ there are numerous breaking changes in this version notably:
 * events emitted on creation and update are now prefixed with `chart-` e.g. `chart-create`
 * `$scope.$apply` is not called anymore on mouse hover functions calls
 * obviously all Chart.js breaking changes as well in how options are set, etc.
+* disabling the `responsive` option doesn't work via global `Chart.defaults.global.responsive` anymore, 
+but must be set via standard options e.g. `ChartJsProvider.setOptions({ responsive: false });`
 
 ### npm
 

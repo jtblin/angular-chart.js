@@ -3,7 +3,6 @@
 /*global inject:true*/
 /*global expect:true*/
 /*global sinon:true*/
-Chart.defaults.global.responsive = false;
 
 describe('Unit testing', function () {
   'use strict';
@@ -12,7 +11,7 @@ describe('Unit testing', function () {
 
   beforeEach(module('chart.js', function (_ChartJsProvider_) {
     ChartJsProvider = _ChartJsProvider_;
-    ChartJsProvider.setOptions({ env: 'test' });
+    ChartJsProvider.setOptions({ env: 'test', responsive: false });
   }));
 
   beforeEach(inject(function (_$compile_, _$rootScope_, _ChartJs_) {
