@@ -102,7 +102,7 @@
           chartColors: '=?',
           chartClick: '=?',
           chartHover: '=?',
-          chartYAxes: '=?'
+          chartDatasetOverride: '=?'
         },
         link: function (scope, elem/*, attrs */) {
           var chart;
@@ -129,6 +129,7 @@
           scope.$watch('chartLabels', resetChart, true);
           scope.$watch('chartOptions', resetChart, true);
           scope.$watch('chartColors', resetChart, true);
+          scope.$watch('chartDatasetOverride', resetChart, true);
 
           scope.$watch('chartType', function (newVal, oldVal) {
             if (isEmpty(newVal)) return;
@@ -162,13 +163,13 @@
                 createChart(type);
               }, 50, false);
             }
-            if (! scope.chartData || ! scope.chartData.length) return;
+            if (! hasData(scope)) return;
             scope.chartGetColor = typeof scope.chartGetColor === 'function' ? scope.chartGetColor : getRandomColor;
             var colors = getColors(type, scope);
             var cvs = elem[0], ctx = cvs.getContext('2d');
             var data = Array.isArray(scope.chartData[0]) ?
-              getDataSets(scope.chartLabels, scope.chartData, scope.chartSeries || [], colors, scope.chartYAxes) :
-              getData(scope.chartLabels, scope.chartData, colors);
+              getDataSets(scope.chartLabels, scope.chartData, scope.chartSeries || [], colors, scope.chartDatasetOverride) :
+              getData(scope.chartLabels, scope.chartData, colors, scope.chartDatasetOverride);
 
             var options = angular.extend({}, ChartJs.getOptions(type), scope.chartOptions);
             // Destroy old chart if it exists to avoid ghost charts issue
@@ -274,7 +275,12 @@
       return [r, g, b];
     }
 
-    function getDataSets (labels, data, series, colors, yaxis) {
+    function hasData (scope) {
+      return scope.chartData && scope.chartData.length &&
+        scope.chartLabels && scope.chartLabels.length;
+    }
+
+    function getDataSets (labels, data, series, colors, datasetOverride) {
       return {
         labels: labels,
         datasets: data.map(function (item, i) {
@@ -282,16 +288,16 @@
             label: series[i],
             data: item
           });
-          if (yaxis) {
-            dataset.yAxisID = yaxis[i];
+          if (datasetOverride && datasetOverride.length >= i) {
+            angular.merge(dataset, datasetOverride[i]);
           }
           return dataset;
         })
       };
     }
 
-    function getData (labels, data, colors) {
-      return {
+    function getData (labels, data, colors, datasetOverride) {
+      var dataset = {
         labels: labels,
         datasets: [{
           data: data,
@@ -303,6 +309,10 @@
           })
         }]
       };
+      if (datasetOverride) {
+        angular.merge(dataset.datasets[0], datasetOverride);
+      }
+      return dataset;
     }
 
     function updateChart (chart, values, scope) {

@@ -9,7 +9,8 @@
 
 Beautiful, reactive, responsive charts for Angular.JS using [Chart.js](http://www.chartjs.org/). 
 
-[Demo](http://jtblin.github.io/angular-chart.js/)
+Have a look at the [demo site](http://jtblin.github.io/angular-chart.js/) to see examples with detailed markup, 
+script and options.
 
 # Installation
 
@@ -34,6 +35,10 @@ there are numerous breaking changes in this version notably:
 
     //cdn.jsdelivr.net/angular.chartjs/latest/angular-chart.min.js
 
+### bower
+
+    bower install --save angular-chart.js
+
 ### manually
 
 or copy the files from `dist/`. 
@@ -55,7 +60,7 @@ adding the dependencies for Angular and Chart.js first:
 
 # Utilisation
 
-There are 6 types of charts so 6 directives: `chart-line`, `chart-bar`, `chart-horizontal-bar`, `chart-radar`, 
+There are 7 types of charts so 7 directives: `chart-line`, `chart-bar`, `chart-horizontal-bar`, `chart-radar`, 
 `chart-pie`, `chart-polar-area`, `chart-doughnut`.
 
 - `chart-data`: series data
@@ -66,9 +71,12 @@ There are 6 types of charts so 6 directives: `chart-line`, `chart-bar`, `chart-h
 - `chart-get-color`: function that returns a color in case there are not enough (will use random colors if not specified)
 - `chart-click`: onclick event handler
 - `chart-hover`: onmousemove event handler
+- `chart-dataset-override`: override individual datasets to allow per dataset configuration e.g. y-axis, mixed type chart
 
 There is another directive `chart-base` that takes an extra attribute `chart-type` to define the type
 dynamically, see [stacked bar example](http://jtblin.github.io/angular-chart.js/examples/stacked-bars.html).
+
+You can create mixed type chart using the `chart-dataset-override`, see [example](examples/dataset-override.html).
 
 # Example
 
@@ -92,7 +100,7 @@ angular.module("app", ["chart.js"])
     });
     // Configure all line charts
     ChartJsProvider.setOptions('line', {
-      datasetFill: false
+      showLines: false
     });
   }])
   .controller("LineCtrl", ['$scope', '$timeout', function ($scope, $timeout) {
