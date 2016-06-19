@@ -1,6 +1,6 @@
-'use strict';
+angular.module('app', ['chart.js']).controller('OverrideCtrl', ['$scope', function ($scope) {
+  'use strict';
 
-angular.module("app", ["chart.js"]).controller("OverrideCtrl", ['$scope', function ($scope) {
   $scope.colors = ['#45b7cd', '#ff6384', '#ff8e72'];
 
   $scope.labels1 = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
@@ -10,20 +10,20 @@ angular.module("app", ["chart.js"]).controller("OverrideCtrl", ['$scope', functi
   ];
   $scope.datasetOverride1 = [
     {
-      label: "Override Series A",
+      label: 'Override Series A',
       borderWidth: 1,
       type: 'bar'
     },
     {
-      label: "Override Series B",
+      label: 'Override Series B',
       borderWidth: 3,
-      hoverBackgroundColor: "rgba(255,99,132,0.4)",
-      hoverBorderColor: "rgba(255,99,132,1)",
+      hoverBackgroundColor: 'rgba(255,99,132,0.4)',
+      hoverBorderColor: 'rgba(255,99,132,1)',
       type: 'line'
     }
   ];
 
-  $scope.labels2 = ['Download Sales', 'In-Store Sales', 'Mail-Order Sales'];;
+  $scope.labels2 = ['Download Sales', 'In-Store Sales', 'Mail-Order Sales'];
   $scope.data2 = [350, 450, 100];
   $scope.datasetOverride2 = {
     hoverBackgroundColor: ['#45b7cd', '#ff6384', '#ff8e72'],

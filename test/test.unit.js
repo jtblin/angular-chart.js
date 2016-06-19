@@ -111,12 +111,12 @@ describe('Unit testing', function () {
         ];
         scope.datasetOverride = [
           {
-            label: "Bar chart",
+            label: 'Bar chart',
             borderWidth: 1,
             type: 'bar'
           },
           {
-            label: "Line chart",
+            label: 'Line chart',
             borderWidth: 3,
             type: 'line'
           }
