@@ -209,7 +209,7 @@ and the line ```document.defaultView = window;```, but there still may be errors
  
 Please check if issue exists first, otherwise open issue in [github](https://github.com/jtblin/angular-chart.js/issues). 
 **Ensure you add a link to a plunker, jsbin, or equivalent.** 
-Here is a [jsbin template](http://jsbin.com/dufibi/3/edit?html,js,output) for convenience.
+Here is a [jsbin template](http://jsbin.com/rodunob/edit?html,js,output) for convenience.
 
 # Contributing
  
