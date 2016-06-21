@@ -14,10 +14,10 @@ script and options.
 
 # Installation
 
-## Chart.js 2.0 and 1.0.0-alpha branch
+## Chart.js 2.0 and 1.0.0-beta branch
 
-This is the `1.0.0-alpha` branch which requires Chart.js 2.0.0 version. Following semantic versioning,
-there are numerous **breaking changes** in this version notably:
+This is the `1.0.0-beta` branch which requires Chart.js 2.x version. Following semantic versioning,
+there are numerous **breaking changes** since 0.x, notably:
 
 * all options now need to use the `chart-` prefix
 * `chart-colours` is now `chart-colors` and `chart-get-colour` is now `chart-get-color`
@@ -35,6 +35,8 @@ but must be set via standard options e.g. `ChartJsProvider.setOptions({ responsi
     npm install --save angular-chart.js
 
 ### cdn
+
+**CND is not available anymore until we merge into master**
 
     //cdn.jsdelivr.net/angular.chartjs/latest/angular-chart.min.js
 
