@@ -12,12 +12,15 @@
     ChartJsProvider.setOptions('doughnut', {
       cutoutPercentage: 60
     });
+    ChartJsProvider.setOptions('bubble', {
+      tooltips: { enabled: false }
+    });
   });
 
-  app.controller('MenuCtrl', function ($scope) {
+  app.controller('MenuCtrl', ['$scope', function ($scope) {
     $scope.isCollapsed = true;
-    $scope.charts = ['Line', 'Bar', 'Doughnut', 'Pie', 'Polar Area', 'Radar', 'Base'];
-  });
+    $scope.charts = ['Line', 'Bar', 'Doughnut', 'Pie', 'Polar Area', 'Radar', 'Horizontal Bar', 'Bubble', 'Base'];
+  }]);
 
   app.controller('LineCtrl', ['$scope', function ($scope) {
     $scope.labels = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
@@ -77,19 +80,19 @@
     }, 500);
   }]);
 
-  app.controller('PieCtrl', function ($scope) {
+  app.controller('PieCtrl', ['$scope', function ($scope) {
     $scope.labels = ['Download Sales', 'In-Store Sales', 'Mail Sales'];
     $scope.data = [300, 500, 100];
     $scope.options = { legend: { display: false } };
-  });
+  }]);
 
-  app.controller('PolarAreaCtrl', function ($scope) {
+  app.controller('PolarAreaCtrl', ['$scope', function ($scope) {
     $scope.labels = ['Download Sales', 'In-Store Sales', 'Mail Sales', 'Telesales', 'Corporate Sales'];
     $scope.data = [300, 500, 100, 40, 120];
     $scope.options = { legend: { display: false } };
-  });
+  }]);
 
-  app.controller('BaseCtrl', function ($scope) {
+  app.controller('BaseCtrl', ['$scope', function ($scope) {
     $scope.labels = ['Download Sales', 'Store Sales', 'Mail Sales', 'Telesales', 'Corporate Sales'];
     $scope.data = [300, 500, 100, 40, 120];
     $scope.type = 'polarArea';
@@ -97,9 +100,9 @@
     $scope.toggle = function () {
       $scope.type = $scope.type === 'polarArea' ?  'pie' : 'polarArea';
     };
-  });
+  }]);
 
-  app.controller('RadarCtrl', function ($scope) {
+  app.controller('RadarCtrl', ['$scope', function ($scope) {
     $scope.labels = ['Eating', 'Drinking', 'Sleeping', 'Designing', 'Coding', 'Cycling', 'Running'];
     $scope.options = { legend: { display: false } };
 
@@ -111,9 +114,9 @@
     $scope.onClick = function (points, evt) {
       console.log(points, evt);
     };
-  });
+  }]);
 
-  app.controller('StackedBarCtrl', function ($scope) {
+  app.controller('StackedBarCtrl', ['$scope', function ($scope) {
     $scope.labels = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
     $scope.type = 'StackedBar';
     $scope.series = ['2015', '2016'];
@@ -132,16 +135,16 @@
       [65, 59, 90, 81, 56, 55, 40],
       [28, 48, 40, 19, 96, 27, 100]
     ];
-  });
+  }]);
 
-  app.controller('TabsCtrl', function ($scope) {
+  app.controller('TabsCtrl', ['$scope', function ($scope) {
     $scope.labels = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
     $scope.active = true;
     $scope.data = [
       [65, 59, 90, 81, 56, 55, 40],
       [28, 48, 40, 19, 96, 27, 100]
     ];
-  });
+  }]);
 
   app.controller('MixedChartCtrl', ['$scope', function ($scope) {
     $scope.colors = ['#45b7cd', '#ff6384', '#ff8e72'];
@@ -167,7 +170,7 @@
     ];
   }]);
 
-  app.controller('DataTablesCtrl', function ($scope) {
+  app.controller('DataTablesCtrl', ['$scope', function ($scope) {
     $scope.labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
     $scope.data = [
       [65, 59, 80, 81, 56, 55, 40],
@@ -200,7 +203,52 @@
         });
       });
     };
-  });
+  }]);
+
+  app.controller('BubbleCtrl', ['$scope', '$interval', function ($scope, $interval) {
+    $scope.options = {
+      scales: {
+        xAxes: [{
+          display: false,
+          ticks: {
+            max: 125,
+            min: -125,
+            stepSize: 10
+          }
+        }],
+        yAxes: [{
+          display: false,
+          ticks: {
+            max: 125,
+            min: -125,
+            stepSize: 10
+          }
+        }]
+      }
+    };
+
+    createChart();
+    $interval(createChart, 2000);
+
+    function createChart () {
+      $scope.data = [];
+      for (var i = 0; i < 50; i++) {
+        $scope.data.push([{
+          x: randomScalingFactor(),
+          y: randomScalingFactor(),
+          r: randomRadius()
+        }]);
+      }
+    }
+
+    function randomScalingFactor () {
+      return (Math.random() > 0.5 ? 1.0 : -1.0) * Math.round(Math.random() * 100);
+    }
+
+    function randomRadius () {
+      return Math.abs(randomScalingFactor()) / 4;
+    }
+  }]);
 
   app.controller('TicksCtrl', ['$scope', '$interval', function ($scope, $interval) {
     var maximum = document.getElementById('container').clientWidth / 2 || 300;

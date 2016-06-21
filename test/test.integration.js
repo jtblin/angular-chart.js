@@ -32,6 +32,7 @@ describe('integration', function () {
   mkdirp(WEBSHOT_FAILED_DIR);
 
   [
+    'bubble',
     'dataset-override',
     'horizontal-bar-chart',
     '29-tabs',

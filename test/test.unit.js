@@ -3,7 +3,6 @@
 /*global inject:true*/
 /*global expect:true*/
 /*global sinon:true*/
-Chart.defaults.global.responsive = false;
 
 describe('Unit testing', function () {
   'use strict';
@@ -12,7 +11,7 @@ describe('Unit testing', function () {
 
   beforeEach(module('chart.js', function (_ChartJsProvider_) {
     ChartJsProvider = _ChartJsProvider_;
-    ChartJsProvider.setOptions({ env: 'test' });
+    ChartJsProvider.setOptions({ env: 'test', responsive: false });
   }));
 
   beforeEach(inject(function (_$compile_, _$rootScope_, _ChartJs_) {
@@ -29,7 +28,7 @@ describe('Unit testing', function () {
 
   describe('base', function () {
     describe('chart types', function () {
-      ['line', 'bar', 'horizontalBar', 'radar', 'pie', 'doughnut', 'polarArea'].forEach(function (type) {
+      ['line', 'bar', 'horizontalBar', 'radar', 'pie', 'doughnut', 'polarArea', 'bubble'].forEach(function (type) {
         it('creates a ' + type + ' chart using the directive', function () {
           var markup = '<canvas class="chart chart-' +
             (type === 'polarArea' ? 'polar-area' : type === 'horizontalBar' ? 'horizontal-bar' : type) +

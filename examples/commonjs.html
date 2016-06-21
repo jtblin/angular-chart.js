@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+  <meta charset="UTF-8">
+  <title>CommonJS</title>
+  <link href="bootstrap.css" rel="stylesheet">
+</head>
+<body ng-app="app">
+<br/>
+<div class="container">
+  <div class="row" ng-controller="CommonJSCtrl">
+    <div class="col-lg-6 col-sm-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">CommonJS</div>
+        <div class="panel-body">
+          <canvas class="chart chart-line" chart-data="data" chart-series="series" chart-labels="labels"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="commonjs.bundle.js"></script>
+</body>
+</html>
