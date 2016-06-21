@@ -15,14 +15,14 @@ Beautiful, reactive, responsive charts for Angular.JS using [Chart.js](http://ww
 
 This is the stable version of angular-chart.js that uses the v1.1.x version of Chart.js.
 
-# v1.0.0-alpha - Chart.js v2.0.x
+# v1.0.0-beta - Chart.js v2.x
 
-If you are interested by the 2.0 version of Chart.js, please checkout the 
-[chartjs-2.0 branch](https://github.com/jtblin/angular-chart.js/tree/chartjs-2.0). Report issues
+If you are interested by the 2.x version of Chart.js, please checkout the 
+[chartjs-2.x branch](https://github.com/jtblin/angular-chart.js/tree/chartjs-2.0). Report issues
 and feedback for this version by opening issues labelled with `v1.x`.
 
 See https://github.com/jtblin/angular-chart.js/issues/123 for more details and subscribe to it to get 
-the latest progress on Chart.js 2.0 integration.
+the latest progress on Chart.js 2.x integration.
 
 # Installation
 
