@@ -56,6 +56,6 @@
   },
   "dependencies": {
     "angular": "1.x",
-    "chart.js": "^1.1.1"
+    "chart.js": "1.0.1-beta.4"
   }
 }
