@@ -269,7 +269,7 @@ describe('Unit testing', function () {
     it('re-create the chart if data added or removed', function () {
       var markup = '<div style="width: 250px; height:120px">' +
         '<canvas class="chart chart-line" chart-data="data" chart-labels="labels" ' +
-          'chart-series="series"></canvas></div>';
+        'chart-series="series"></canvas></div>';
       var countCreate = 0, countUpdate = 0, countDestroy = 0;
 
       scope.labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];

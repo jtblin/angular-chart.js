@@ -1,4 +1,4 @@
-FROM jtblin/debian-node-graphicsmagick:stretch-node-v4.4.3-gm-v1.3.23
+FROM jtblin/debian-node-graphicsmagick:stretch-node-v4.4.7-gm-v1.3.24
 WORKDIR /src
 ADD . ./
 RUN chown -R node:node /src

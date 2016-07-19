@@ -12,24 +12,9 @@ Beautiful, reactive, responsive charts for Angular.JS using [Chart.js](http://ww
 Have a look at the [demo site](http://jtblin.github.io/angular-chart.js/) to see examples with detailed markup, 
 script and options.
 
-# v0.x - Chart.js v1.1.x - stable
-
-This is the stable version of angular-chart.js that uses the v1.1.x version of Chart.js.
-
-# v1.0.0-alpha - Chart.js v2.0.x
-
-If you are interested by the 2.0 version of Chart.js, please checkout the 
-[chartjs-2.0 branch](https://github.com/jtblin/angular-chart.js/tree/chartjs-2.0). Report issues
-and feedback for this version by opening issues labelled with `v1.x`.
-
-See https://github.com/jtblin/angular-chart.js/issues/123 for more details and subscribe to it to get 
-the latest progress on Chart.js 2.0 integration.
-
 # Installation
 
-## Chart.js 2.0 and 1.0.0-beta branch
-
-This is the `1.0.0-beta` branch which requires Chart.js 2.x version. Following semantic versioning,
+This is the `1.x` branch which requires Chart.js 2.x version. Following semantic versioning,
 there are numerous **breaking changes** since 0.x, notably:
 
 * all options now need to use the `chart-` prefix
@@ -48,8 +33,6 @@ but must be set via standard options e.g. `ChartJsProvider.setOptions({ responsi
     npm install --save angular-chart.js
 
 ### cdn
-
-**CND is not available anymore until we merge into master**
 
     //cdn.jsdelivr.net/angular.chartjs/latest/angular-chart.min.js
 
@@ -224,7 +207,14 @@ and the line ```document.defaultView = window;```, but there still may be errors
  
 Please check if issue exists first, otherwise open issue in [github](https://github.com/jtblin/angular-chart.js/issues). 
 **Ensure you add a link to a plunker, jsbin, or equivalent.** 
+
 Here is a [jsbin template](http://jsbin.com/rodunob/edit?html,js,output) for convenience.
+
+# v0.x - Chart.js v1.x - deprecated
+
+This is the deprecated version of angular-chart.js that uses the v1.x version of Chart.js.
+If you want to use this version, please checkout the 
+[chartjs-1.x branch](https://github.com/jtblin/angular-chart.js/tree/chartjs-1.x)
 
 # Contributing
  
