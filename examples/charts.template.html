@@ -3,11 +3,43 @@
 <head lang="en">
   <meta charset="UTF-8">
   <title>Charts</title>
-  <link rel="stylesheet" href="../dist/angular-chart.css">
-  <link rel="stylesheet" href="../bower_components/font-awesome/css/font-awesome.min.css">
-  <link rel="stylesheet" href="../bower_components/rainbow/themes/github.css">
+  <link rel="stylesheet" href="../node_modules/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="../node_modules/Rainbow/themes/github.css">
   <link href="bootstrap.css" rel="stylesheet">
   <link href="app.css" rel="stylesheet">
+  <style>
+    .chart-legend {
+      list-style-type: none;
+      margin-top: 5px;
+      text-align: center;
+    /* NOTE: Browsers automatically add 40px of padding-left to all lists, so we should offset that, otherwise the legend is off-center */
+      -webkit-padding-start: 0;
+    /* Webkit */
+      -moz-padding-start: 0;
+    /* Mozilla */
+      padding-left: 0;
+    /* IE (handles all cases, really, but we should also include the vendor-specific properties just to be safe) */
+    }
+    .chart-legend li {
+      display: inline-block;
+      white-space: nowrap;
+      position: relative;
+      margin-bottom: 4px;
+      border-radius: 5px;
+      padding: 2px 8px 2px 28px;
+      font-size: smaller;
+      cursor: default;
+    }
+    .chart-legend li span {
+      display: block;
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 20px;
+      height: 20px;
+      border-radius: 5px;
+    }
+  </style>
 </head>
 <body ng-app="examples" id="top">
   <div class="navbar navbar-default navbar-fixed-top">
@@ -38,6 +70,7 @@
           </li>
           <li><a href="#getting_started">Getting started</a></li>
           <li><a href="#reactive">Reactive</a></li>
+          <li><a href="#mixed">Mixed type charts</a></li>
         </ul>
       </nav>
       <nav class="collapse" collapse="isCollapsed" style="height: 0px;">
@@ -50,7 +83,7 @@
   </div>
   <div class="container-fluid">
     <div class="text-center aspect-ratio" id="container" ng-controller="TicksCtrl">
-      <canvas width='1200' height='300' id="hero-bar" class="chart chart-line chart-xl" chart-data="data"
+      <canvas width='1200' height='300' id="hero-bar" class="chart chart-line" chart-data="data"
               chart-options="options" chart-labels="labels"></canvas>
       <div class="header">
         <h1>
@@ -79,32 +112,32 @@
       </p>
       <ul>
         <li><a href="http://angularjs.org" target="_blank">AngularJS</a> (tested with 1.2.x, 1.3.x, 1.4.x and 1.5.x although it probably works with older versions)</li>
-        <li><a href="http://chartjs.org" target="_blank">Chart.js</a> (requires Chart.js 1.x, tested with version 1.0.1, 1.0.2 and 1.1.1).</li>
+        <li><a href="http://chartjs.org" target="_blank">Chart.js</a> (requires Chart.js 2.0.x).</li>
       </ul>
       <h3>Files to download</h3>
       <p>
-        The easiest is to download with <strong>bower</strong>:
-        <pre>bower install angular-chart.js --save</pre>
-        Alternatively files can be <a href="https://github.com/jtblin/angular-chart.js">downloaded from Github</a> or via npm.
+        The easiest is to download with <strong>npm</strong>:
+        <pre>npm install angular-chart.js --save</pre>
+        Alternatively files can be <a href="https://github.com/jtblin/angular-chart.js">downloaded from Github</a> or via bower.
         See <a href="https://github.com/jtblin/angular-chart.js">readme</a> for more information.
       </p>
       <p>Whichever method you choose the good news is that the overall size is very small:
         &lt;5kb for all directives (~1kb with gzip compression!)</p>
       <h3>Installation</h3>
-      </p><pre><code>&lt;script src=&quot;bower_components/angular-chart.js/dist/angular-chart.js&quot;&gt;&lt;/script&gt;</code></pre>
+      <p>You need to include the dependencies in your page:</p>
+      <pre><code>&lt;script src="node_modules/chart.js/Chart.min.js">&lt;/script&gt;
+&lt;script src="node_modules/angular-chart.js/dist/angular-chart.min.js">&lt;/script&gt;</code></pre>
       <p>As soon as you've got all the files downloaded and included in your page you just need to declare
         a dependency on the <code>chart.js</code> <a href="http://docs.angularjs.org/guide/module">module</a>:<br>
       </p><pre><code>angular.module('myModule', ['chart.js']);</code></pre>
       <p></p>
       <h3>CSS</h3>
-      <p>You need to include a link to the css file in your page.</p>
-      </p><pre><code>&lt;link rel=&quot;stylesheet&quot; href=&quot;bower_components/angular-chart.js/dist/angular-chart.css&quot;&gt;</code></pre>
       <p></p>
-      <h3>Colours</h3>
-      <p>Series have beautiful pre-sets colours (to a maximum of 7 series, after that colours will be randomly generated).
-        They can be overwritten using <code>Chart.defaults.global.colours</code>.</p>
+      <h3>Colors</h3>
+      <p>Series have beautiful pre-sets colors (to a maximum of 7 series, after that colors will be randomly generated).
+        They can be overwritten using <code>Chart.defaults.global.colors</code>.</p>
       <ol class="chart-legend">
-        <li><span style="background-color: rgba(151,187,205,1)"></span> Blue</li>
+        <li><span style="background-color: rgba(151,187,205,1)"></span>Blue</li>
         <li><span style="background-color: rgba(220,220,220,1)"></span>Light grey</li>
         <li><span style="background-color: rgba(247,70,74,1)"></span>Red</li>
         <li><span style="background-color: rgba(70,191,189,1)"></span>Green</li>
@@ -112,9 +145,9 @@
         <li><span style="background-color: rgba(148,159,177,1)"></span>Grey</li>
         <li><span style="background-color: rgba(77,83,96,1)"></span>Dark Grey</li>
       </ol>
-      <p>You can also use the provider: <code>ChartJsProvider</code> in a <code>.config()</code></p>
+      <p>You can also use the provider : <code>ChartJsProvider</code> in a <code>.config()</code></p>
       <p><pre><code>(function (ChartJsProvider) {
-  ChartJsProvider.setOptions({ colours : [ '#803690', '#00ADF9', '#DCDCDC', '#46BFBD', '#FDB45C', '#949FB1', '#4D5360'] });
+  ChartJsProvider.setOptions({ colors : [ '#803690', '#00ADF9', '#DCDCDC', '#46BFBD', '#FDB45C', '#949FB1', '#4D5360'] });
 }); </code></pre></p>
     </section>
     <section id="directives">
@@ -126,8 +159,9 @@
           <div class="panel panel-default">
             <div class="panel-heading">Line Chart</div>
             <div class="panel-body">
-              <canvas id="line" class="chart chart-line" chart-data="data" chart-labels="labels" chart-legend="true"
-                      chart-click="onClick" chart-hover="onHover" chart-series="series"></canvas>
+              <canvas id="line" class="chart chart-line" chart-data="data" chart-labels="labels"
+                      chart-click="onClick" chart-hover="onHover" chart-series="series" chart-options="options"
+                      chart-dataset-override="datasetOverride"></canvas>
             </div>
           </div>
         </div>
@@ -139,19 +173,19 @@
                 <ul>
                   <li><code>chart-data</code>: series data</li>
                   <li><code>chart-labels</code>: x axis labels</li>
-                  <li><code>chart-legend</code> (default: <code>false</code>): show legend below the chart</li>
                   <li><code>chart-options</code> (default: <code>{}</code>): Chart.js options</li>
                   <li><code>chart-series</code> (default: <code>[]</code>): series labels</li>
                   <li><code>chart-click</code> (optional): onclick event handler</li>
                   <li><code>chart-hover</code> (optional): onmousemove event handler</li>
-                  <li><code>chart-colours</code> (default to global colours): colours for the chart</li>
+                  <li><code>chart-colors</code> (default to global colors): colors for the chart</li>
+                  <li><code>chart-dataset-override</code> (optional): override datasets individually</li>
                 </ul>
               </div>
             </tab>
             <tab heading="Markup">
-              <pre><code data-language="html">&lt;canvas id=&quot;line&quot; class=&quot;chart chart-line&quot; chart-data=&quot;data&quot;
-  chart-labels=&quot;labels&quot; chart-legend=&quot;true&quot; chart-series=&quot;series&quot;
-  chart-click=&quot;onClick&quot; &gt;
+            <pre><code data-language="html">&lt;canvas id=&quot;line&quot; class=&quot;chart chart-line&quot; chart-data=&quot;data&quot;
+chart-labels=&quot;labels&quot; chart-series=&quot;series&quot; chart-options=&quot;options&quot;
+chart-dataset-override=&quot;datasetOverride&quot; chart-click=&quot;onClick&quot;
 &lt;/canvas&gt; </code></pre>
             </tab>
             <tab heading="Javascript">
@@ -165,6 +199,25 @@
   ];
   $scope.onClick = function (points, evt) {
     console.log(points, evt);
+  };
+  $scope.datasetOverride = [{ yAxisID: 'y-axis-1' }, { yAxisID: 'y-axis-2' }];
+  $scope.options = {
+    scales: {
+      yAxes: [
+        {
+          id: 'y-axis-1',
+          type: 'linear',
+          display: true,
+          position: 'left'
+        },
+        {
+          id: 'y-axis-2',
+          type: 'linear',
+          display: true,
+          position: 'right'
+        }
+      ]
+    }
   };
 });
               </code></pre>
@@ -181,12 +234,12 @@
                 <ul>
                   <li><code>chart-data</code>: series data</li>
                   <li><code>chart-labels</code>: x axis labels</li>
-                  <li><code>chart-legend</code> (default: <code>false</code>): show legend below the chart</li>
                   <li><code>chart-options</code> (default: <code>{}</code>): Chart.js options</li>
                   <li><code>chart-series</code> (default: <code>[]</code>): series labels</li>
                   <li><code>chart-click</code> (optional): onclick event handler</li>
                   <li><code>chart-hover</code> (optional): onmousemove event handler</li>
-                  <li><code>chart-colours</code> (default to global colours): colours for the chart</li>
+                  <li><code>chart-colors</code> (default to global colors): colors for the chart</li>
+                  <li><code>chart-dataset-override</code> (optional): override datasets individually</li>
                 </ul>
               </div>
             </tab>
@@ -225,7 +278,7 @@
             <div class="panel-heading">Doughnut Chart</div>
             <div class="panel-body">
               <canvas id="doughnut" class="chart chart-doughnut chart-xs" chart-data="data"
-                      chart-labels="labels" chart-legend="false"></canvas>
+                      chart-labels="labels"></canvas>
             </div>
           </div>
         </div>
@@ -237,11 +290,11 @@
                 <ul>
                   <li><code>chart-data</code>: series data</li>
                   <li><code>chart-labels</code>: series labels</li>
-                  <li><code>chart-legend</code> (default: <code>false</code>): show legend below the chart</li>
                   <li><code>chart-options</code> (default: <code>{}</code>): Chart.js options</li>
                   <li><code>chart-click</code> (optional): onclick event handler</li>
                   <li><code>chart-hover</code> (optional): onmousemove event handler</li>
-                  <li><code>chart-colours</code> (default to global colours): colours for the chart</li>
+                  <li><code>chart-colors</code> (default to global colors): colors for the chart</li>
+                  <li><code>chart-dataset-override</code> (optional): override datasets individually</li>
                 </ul>
               </div>
             </tab>
@@ -269,18 +322,18 @@
                 <ul>
                   <li><code>chart-data</code>: series data</li>
                   <li><code>chart-labels</code>: series labels</li>
-                  <li><code>chart-legend</code> (default: <code>false</code>): show legend below the chart</li>
                   <li><code>chart-options</code> (default: <code>{}</code>): Chart.js options</li>
                   <li><code>chart-series</code> (default: <code>[]</code>): series labels</li>
                   <li><code>chart-click</code> (optional): onclick event handler</li>
                   <li><code>chart-hover</code> (optional): onmousemove event handler</li>
-                  <li><code>chart-colours</code> (default to global colours): colours for the chart</li>
+                  <li><code>chart-colors</code> (default to global colors): colors for the chart</li>
+                  <li><code>chart-dataset-override</code> (optional): override datasets individually</li>
                 </ul>
               </div>
             </tab>
             <tab heading="Markup">
               <pre><code data-language="html">&lt;canvas id=&quot;radar&quot; class=&quot;chart chart-radar&quot;
-  chart-data=&quot;data&quot; chart-labels=&quot;labels&quot;&gt;
+  chart-data=&quot;data&quot; chart-options=&quot;options&quot; chart-labels=&quot;labels&quot;&gt;
 &lt;/canvas&gt; </code></pre>
             </tab>
             <tab heading="Javascript">
@@ -301,7 +354,7 @@
             <div class="panel-heading">Radar Chart</div>
             <div class="panel-body">
               <canvas id="area" class="chart chart-radar" chart-data="data"
-                      chart-labels="labels" chart-click="onClick"></canvas>
+                      chart-labels="labels" chart-options="options" chart-click="onClick"></canvas>
             </div>
           </div>
         </div>
@@ -311,7 +364,8 @@
           <div class="panel panel-default">
             <div class="panel-heading">Pie Chart</div>
             <div class="panel-body">
-              <canvas id="pie" class="chart chart-pie chart-xs" chart-data="data" chart-labels="labels"></canvas>
+              <canvas id="pie" class="chart chart-pie chart-xs" chart-data="data"
+                      chart-labels="labels" chart-options="options"></canvas>
             </div>
           </div>
         </div>
@@ -323,17 +377,17 @@
                 <ul>
                   <li><code>chart-data</code>: series data</li>
                   <li><code>chart-labels</code>: series labels</li>
-                  <li><code>chart-legend</code> (default: <code>false</code>): show legend below the chart</li>
                   <li><code>chart-options</code> (default: <code>{}</code>): Chart.js options</li>
                   <li><code>chart-click</code> (optional): onclick event handler</li>
                   <li><code>chart-hover</code> (optional): onmousemove event handler</li>
-                  <li><code>chart-colours</code> (default to global colours): colours for the chart</li>
+                  <li><code>chart-colors</code> (default to global colors): colors for the chart</li>
+                  <li><code>chart-dataset-override</code> (optional): override datasets individually</li>
                 </ul>
               </div>
             </tab>
             <tab heading="Markup">
               <pre><code data-language="html">&lt;canvas id=&quot;pie&quot; class=&quot;chart chart-pie&quot;
-  chart-data=&quot;data&quot; chart-labels=&quot;labels&quot;&gt;
+  chart-data=&quot;data&quot; chart-labels=&quot;labels&quot; chart-options=&quot;options&quot;&gt;
 &lt;/canvas&gt; </code></pre>
             </tab>
             <tab heading="Javascript">
@@ -355,17 +409,17 @@
                 <ul>
                   <li><code>chart-data</code>: series data</li>
                   <li><code>chart-labels</code>: series labels</li>
-                  <li><code>chart-legend</code> (default: <code>false</code>): show legend below the chart</li>
                   <li><code>chart-options</code> (default: <code>{}</code>): Chart.js options</li>
                   <li><code>chart-click</code> (optional): onclick event handler</li>
                   <li><code>chart-hover</code> (optional): onmousemove event handler</li>
-                  <li><code>chart-colours</code> (default to global colours): colours for the chart</li>
+                  <li><code>chart-colors</code> (default to global colors): colors for the chart</li>
+                  <li><code>chart-dataset-override</code> (optional): override datasets individually</li>
                 </ul>
               </div>
             </tab>
             <tab heading="Markup">
               <pre><code data-language="html">&lt;canvas id=&quot;polar-area&quot; class=&quot;chart chart-polar-area&quot;
-  chart-data=&quot;data&quot; chart-labels=&quot;labels&quot;&gt;
+  chart-data=&quot;data&quot; chart-labels=&quot;labels&quot; chart-options=&quot;options&quot;&gt;
 &lt;/canvas&gt; </code></pre>
             </tab>
             <tab heading="Javascript">
@@ -381,7 +435,112 @@
           <div class="panel panel-default">
             <div class="panel-heading">Polar Area Chart</div>
             <div class="panel-body">
-              <canvas id="polar" class="chart chart-polar-area" chart-data="data" chart-labels="labels"></canvas>
+              <canvas id="polar" class="chart chart-polar-area" chart-data="data"
+                      chart-labels="labels" chart-options="options"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-6 col-sm-12" id="horizontal bar-chart" ng-controller="BarCtrl">
+          <div class="panel panel-default">
+            <div class="panel-heading">Horizontal Bar Chart</div>
+            <div class="panel-body">
+              <canvas id="horizontal" class="chart chart-horizontal-bar" chart-data="data"
+                      chart-labels="labels"></canvas>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6 col-sm-12 code">
+          <tabset>
+            <tab heading="Settings" class="settings">
+              <div class="settings">
+                <code>.chart-horizontal-bar</code>
+                <ul>
+                  <li><code>chart-data</code>: series data</li>
+                  <li><code>chart-labels</code>: x axis labels</li>
+                  <li><code>chart-options</code> (default: <code>{}</code>): Chart.js options</li>
+                  <li><code>chart-series</code> (default: <code>[]</code>): series labels</li>
+                  <li><code>chart-click</code> (optional): onclick event handler</li>
+                  <li><code>chart-hover</code> (optional): onmousemove event handler</li>
+                  <li><code>chart-colors</code> (default to global colors): colors for the chart</li>
+                  <li><code>chart-dataset-override</code> (optional): override datasets individually</li>
+                </ul>
+              </div>
+            </tab>
+            <tab heading="Markup">
+              <pre><code data-language="html">&lt;canvas id=&quot;base&quot; class=&quot;chart-horizontal-bar&quot;
+  chart-data=&quot;data&quot; chart-labels=&quot;labels&quot; &gt;
+&lt;/canvas&gt; </code></pre>
+            </tab>
+            <tab heading="Javascript">
+              <pre><code data-language="javascript">angular.module("app", ["chart.js"]).controller("BarCtrl",
+  function ($scope) {
+    $scope.labels = ['2006', '2007', '2008', '2009', '2010', '2011', '2012'];
+    $scope.series = ['Series A', 'Series B'];
+
+    $scope.data = [
+      [65, 59, 80, 81, 56, 55, 40],
+      [28, 48, 40, 19, 86, 27, 90]
+    ];
+});
+              </code></pre>
+            </tab>
+          </tabset>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-6 col-sm-12 code">
+          <tabset>
+            <tab heading="Settings" class="settings">
+              <div class="settings">
+                <code>.chart-bubble</code>
+                <ul>
+                  <li><code>chart-data</code>: series data</li>
+                  <li><code>chart-labels</code>: x axis labels</li>
+                  <li><code>chart-options</code> (default: <code>{}</code>): Chart.js options</li>
+                  <li><code>chart-series</code> (default: <code>[]</code>): series labels</li>
+                  <li><code>chart-click</code> (optional): onclick event handler</li>
+                  <li><code>chart-hover</code> (optional): onmousemove event handler</li>
+                  <li><code>chart-colors</code> (default to global colors): colors for the chart</li>
+                  <li><code>chart-dataset-override</code> (optional): override datasets individually</li>
+                </ul>
+              </div>
+            </tab>
+            <tab heading="Markup">
+              <pre><code data-language="html"><!--see examples/bubble.html for random bubbles source code-->
+&lt;canvas id=&quot;base&quot; class=&quot;chart-bubble&quot; chart-data=&quot;data&quot;
+  chart-series=&quot;series&quot; &gt;
+&lt;/canvas&gt; </code></pre>
+            </tab>
+            <tab heading="Javascript">
+              <pre><code data-language="javascript">angular.module("app", ["chart.js"]).controller("BubbleCtrl",
+  function ($scope) {
+    // see examples/bubble.js for random bubbles source code
+    $scope.series = ['Series A', 'Series B'];
+
+    $scope.data = [
+      [{
+        x: 40,
+        y: 10,
+        r: 20
+      }],
+      [{
+        x: 10,
+        y: 40,
+        r: 50
+      }]
+    ];
+});
+              </code></pre>
+            </tab>
+          </tabset>
+        </div>
+        <div class="col-lg-6 col-sm-12" id="bubble-chart" ng-controller="BubbleCtrl">
+          <div class="panel panel-default">
+            <div class="panel-heading">Bubble Chart</div>
+            <div class="panel-body">
+              <canvas id="bubble" class="chart chart-bubble" chart-data="data" chart-options="options"></canvas>
             </div>
           </div>
         </div>
@@ -392,7 +551,7 @@
             <div class="panel-heading">Dynamic Chart</div>
             <div class="panel-body">
               <canvas id="base" class="chart chart-base" chart-type="type" chart-data="data"
-                      chart-labels="labels" chart-legend="true"></canvas>
+                      chart-labels="labels"></canvas>
             </div>
           </div>
           <button type="button" class="btn btn-primary pull-right" ng-click="toggle()">Toggle</button>
@@ -410,7 +569,7 @@
             </tab>
             <tab heading="Markup">
               <pre><code data-language="html">&lt;canvas id=&quot;base&quot; class=&quot;chart-base&quot; chart-type=&quot;type&quot;
-  chart-data=&quot;data&quot; chart-labels=&quot;labels&quot; chart-legend=&quot;true&quot;&gt;
+  chart-data=&quot;data&quot; chart-labels=&quot;labels&quot; &gt;
 &lt;/canvas&gt; </code></pre>
             </tab>
             <tab heading="Javascript">
@@ -439,6 +598,15 @@
       <div class="row" ng-controller="DataTablesCtrl">
         <div class="col-lg-6 col-sm-12">
           <div class="panel panel-default">
+            <div class="panel-heading">Reactive Chart</div>
+            <div class="panel-body">
+              <canvas id="tables" class="chart chart-line" chart-data="data" chart-options="options"
+                      chart-labels="labels" chart-colors="colors"></canvas>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6 col-sm-12">
+          <div class="panel panel-default">
             <div class="panel-heading">Chart Data</div>
             <div class="panel-body">
               <table class="table table-responsive table-condensed table-striped">
@@ -453,12 +621,57 @@
             </div>
           </div>
         </div>
+      </div>
+    </section>
+    <section id="mixed">
+      <div class="page-header">
+        <h1>Mixed type charts</h1>
+        <p>It is possible to combine multiple types of charts on the same canvas e.g. bar and line.</p>
+      </div>
+      <div class="row" ng-controller="MixedChartCtrl">
+        <div class="col-lg-6 col-sm-12 code">
+          <tabset>
+            <tab heading="Markup">
+              <pre><code data-language="html">&lt;canvas id=&quot;base&quot; class=&quot;chart-bar&quot;
+  chart-data=&quot;data&quot; chart-labels=&quot;labels&quot; chart-colors=&quot;colors&quot;
+  chart-dataset-override=&quot;datasetOverride&quot; &gt;
+&lt;/canvas&gt; </code></pre>
+            </tab>
+            <tab heading="Javascript">
+              <pre><code data-language="javascript">angular.module("app", ["chart.js"]).controller("MixedChartCtrl",
+  function ($scope) {
+    $scope.colors = ['#45b7cd', '#ff6384', '#ff8e72'];
+
+    $scope.labels = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+    $scope.data = [
+      [65, -59, 80, 81, -56, 55, -40],
+      [28, 48, -40, 19, 86, 27, 90]
+    ];
+    $scope.datasetOverride = [
+      {
+        label: "Bar chart",
+        borderWidth: 1,
+        type: 'bar'
+      },
+      {
+        label: "Line chart",
+        borderWidth: 3,
+        hoverBackgroundColor: "rgba(255,99,132,0.4)",
+        hoverBorderColor: "rgba(255,99,132,1)",
+        type: 'line'
+      }
+    ];
+});
+              </code></pre>
+            </tab>
+          </tabset>
+        </div>
         <div class="col-lg-6 col-sm-12">
           <div class="panel panel-default">
-            <div class="panel-heading">Reactive Chart</div>
+            <div class="panel-heading">Bar line Chart</div>
             <div class="panel-body">
-              <canvas id="tables" class="chart chart-line" chart-data="data"
-                      chart-labels="labels" chart-colours="colours"></canvas>
+              <canvas class="chart chart-bar" chart-data="data" chart-labels="labels"
+                      chart-colors="colors" chart-dataset-override="datasetOverride"></canvas>
             </div>
           </div>
         </div>
@@ -474,13 +687,13 @@
     </div>
   </footer>
 
-  <script src="../bower_components/angular/angular.min.js"></script>
-  <script src="../bower_components/Chart.js/Chart.js"></script>
-  <script src="../bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
-  <script src="../bower_components/rainbow/js/rainbow.min.js"></script>
-  <script src="../bower_components/rainbow/js/language/generic.js"></script>
-  <script src="../bower_components/rainbow/js/language/html.js"></script>
-  <script src="../bower_components/rainbow/js/language/javascript.js"></script>
+  <script src="../node_modules/angular/angular.min.js"></script>
+  <script src="../node_modules/chart.js/dist/Chart.min.js"></script>
+  <script src="../node_modules/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+  <script src="../node_modules/Rainbow/js/rainbow.min.js"></script>
+  <script src="../node_modules/Rainbow/js/language/generic.js"></script>
+  <script src="../node_modules/Rainbow/js/language/html.js"></script>
+  <script src="../node_modules/Rainbow/js/language/javascript.js"></script>
   <script src="../angular-chart.js"></script>
   <script src="smoothscroll.min.js"></script>
   <script src="app.js"></script>

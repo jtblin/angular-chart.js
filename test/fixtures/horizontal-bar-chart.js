@@ -1,12 +1,12 @@
 (function () {
   'use strict';
 
-  var app = angular.module('examples', ['chart.js', 'ui.bootstrap']);
+  var app = angular.module('horizontal', ['chart.js']);
   Chart.defaults.global.legend = {
     display: false
   };
 
-  app.controller('TabsCtrl', function ($scope) {
+  app.controller('HorizontalBarCtrl', function ($scope) {
     $scope.labels = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
     $scope.active = true;
     $scope.data = [

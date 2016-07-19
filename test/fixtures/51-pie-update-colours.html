@@ -2,8 +2,7 @@
 <html>
 <head lang="en">
   <meta charset="UTF-8">
-  <title>Pie update colours</title>
-  <link rel="stylesheet" href="../../dist/angular-chart.css">
+  <title>Pie update colors</title>
   <link href="../../examples/bootstrap.css" rel="stylesheet">
 </head>
 <body ng-app="pie" id="top">
@@ -17,7 +16,7 @@
           <div class="panel panel-default">
             <div class="panel-heading">Pie Chart</div>
             <div class="panel-body">
-              <canvas class="chart chart-pie" data="data" labels="labels" colours="colours"></canvas>
+              <canvas class="chart chart-pie" chart-data="data" chart-labels="labels" chart-colors="colors"></canvas>
             </div>
             <p align="center"><a href="https://github.com/jtblin/angular-chart.js/issues/51">
               https://github.com/jtblin/angular-chart.js/issues/51
@@ -28,8 +27,8 @@
     </section>
   </div>
 
-  <script src="../../bower_components/angular/angular.min.js"></script>
-  <script src="../../bower_components/Chart.js/Chart.js"></script>
+  <script src="../../node_modules/angular/angular.min.js"></script>
+  <script src="../../node_modules/chart.js/dist/Chart.min.js"></script>
   <script src="../../angular-chart.js"></script>
   <script src="51-pie-update-colours.js"></script>
 </body>

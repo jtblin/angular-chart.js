@@ -3,7 +3,6 @@
 /*global inject:true*/
 /*global expect:true*/
 /*global sinon:true*/
-Chart.defaults.global.responsive = false;
 
 describe('Unit testing', function () {
   'use strict';
@@ -12,7 +11,7 @@ describe('Unit testing', function () {
 
   beforeEach(module('chart.js', function (_ChartJsProvider_) {
     ChartJsProvider = _ChartJsProvider_;
-    ChartJsProvider.setOptions({ env: 'test' });
+    ChartJsProvider.setOptions({ env: 'test', responsive: false });
   }));
 
   beforeEach(inject(function (_$compile_, _$rootScope_, _ChartJs_) {
@@ -28,95 +27,145 @@ describe('Unit testing', function () {
   });
 
   describe('base', function () {
-    it('replaces the element with the appropriate content', function () {
-      var markup = '<div style="width: 250px; height:120px">' +
-        '<canvas class="chart chart-line" data="data" labels="labels"></canvas></div>';
-
-      scope.labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
-      scope.data = [
-        [65, 59, 80, 81, 56, 55, 40],
-        [28, 48, 40, 19, 86, 27, 90]
-      ];
-
-      var element = $compile(markup)(scope);
-      scope.$digest();
-
-      expect(element.html()).to.startWith('<div class="chart-container"><canvas ');
-    });
-
     describe('chart types', function () {
-      ['Line', 'Bar', 'Radar', 'Pie', 'Doughnut', 'PolarArea'].forEach(function (type) {
+      ['line', 'bar', 'horizontalBar', 'radar', 'pie', 'doughnut', 'polarArea', 'bubble'].forEach(function (type) {
         it('creates a ' + type + ' chart using the directive', function () {
-          var markup = '<div style="width: 250px; height:120px"><canvas class="chart chart-' +
-            (type === 'PolarArea' ? 'polar-area' : type.toLowerCase()) +
-              '" data="data" labels="labels"></canvas></div>';
+          var markup = '<canvas class="chart chart-' +
+            (type === 'polarArea' ? 'polar-area' : type === 'horizontalBar' ? 'horizontal-bar' : type) +
+              '" chart-data="data" chart-labels="labels"></canvas>';
 
-          scope.labels = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-
-          if (['Line', 'Bar', 'Radar'].indexOf(type) > - 1)
+          if (['line', 'bar', 'horizontalBar', 'radar'].indexOf(type) > - 1) {
+            scope.labels = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
             scope.data = [
               [65, 59, 80, 81, 56, 55, 40],
               [28, 48, 40, 19, 86, 27, 90]
             ];
-          else
+          } else {
+            scope.labels = ['Downloads', 'In store', 'Mail orders'];
             scope.data = [300, 500, 100];
+          }
 
-          var mock = sandbox.mock(Chart.prototype);
-          mock.expects(type);
+          var spyChart = sandbox.spy(ChartJs, 'Chart');
+
+          scope.$on('chart-create', function (evt, chart) {
+            expect(chart).to.be.an.instanceOf(Chart.Controller);
+          });
 
           $compile(markup)(scope);
           scope.$digest();
 
-          mock.verify();
+          expect(spyChart).to.have.been.calledWithNew;
+          expect(spyChart).to.have.been.calledWithExactly(
+            sinon.match.any,
+            sinon.match({ type: type, data: sinon.match.object, options: sinon.match.object })
+          );
         });
 
-        it('creates a ' + type + ' chart using the "chart-type" attribute"', function () {
+        it('creates a ' + type + ' chart using the "chart-type" attribute', function () {
           var markup = '<div style="width: 250px; height:120px">' +
-            '<canvas class="chart chart-base" data="data" labels="labels" chart-type="type"></canvas></div>';
+            '<canvas class="chart chart-base" chart-data="data" chart-labels="labels" ' +
+            'chart-type="type"></canvas></div>';
 
-          scope.labels = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
           scope.type = type;
 
-          if (['Line', 'Bar', 'Radar'].indexOf(type) > - 1)
+          if (['line', 'bar', 'horizontalBar', 'radar'].indexOf(type) > - 1) {
+            scope.labels = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
             scope.data = [
               [65, 59, 80, 81, 56, 55, 40],
               [28, 48, 40, 19, 86, 27, 90]
             ];
-          else
+          } else {
+            scope.labels = ['Downloads', 'In store', 'Mail orders'];
             scope.data = [300, 500, 100];
+          }
 
-          var mock = sandbox.mock(Chart.prototype);
-          mock.expects(type);
+          var spyChart = sandbox.spy(ChartJs, 'Chart');
+
+          scope.$on('chart-create', function (evt, chart) {
+            expect(chart).to.be.an.instanceOf(Chart.Controller);
+          });
 
           $compile(markup)(scope);
           scope.$digest();
 
-          mock.verify();
+          expect(spyChart).to.have.been.calledWithNew;
+          expect(spyChart).to.have.been.calledWithExactly(
+            sinon.match.any,
+            sinon.match({ type: type, data: sinon.match.object, options: sinon.match.object })
+          );
         });
       });
     });
 
-    it('generates the legend', function () {
-      var markup = '<div style="width: 250px; height:120px">' +
-        '<canvas class="chart chart-line" data="data" labels="labels" legend="true"></canvas></div>';
+    describe('dataset override', function () {
+      it('overrides the datasets for complex charts', function () {
+        var datasets;
+        var markup = '<canvas class="chart chart-bar" chart-data="data" chart-labels="labels" ' +
+          'chart-dataset-override="datasetOverride"></canvas>';
 
-      scope.labels = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-      scope.data = [
-        [65, 59, 80, 81, 56, 55, 40],
-        [28, 48, 40, 19, 86, 27, 90]
-      ];
+        scope.labels = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+        scope.data = [
+          [65, -59, 80, 81, -56, 55, -40],
+          [28, 48, -40, 19, 86, 27, 90]
+        ];
+        scope.datasetOverride = [
+          {
+            label: 'Bar chart',
+            borderWidth: 1,
+            type: 'bar'
+          },
+          {
+            label: 'Line chart',
+            borderWidth: 3,
+            type: 'line'
+          }
+        ];
 
-      var element = $compile(markup)(scope);
-      scope.$digest();
+        scope.$on('chart-create', function (evt, chart) {
+          datasets = chart.chart.config.data.datasets;
+        });
 
-      expect(element.html()).to.have.string('<chart-legend>');
+        $compile(markup)(scope);
+        scope.$digest();
+
+        expect(datasets[0].label).to.equal('Bar chart');
+        expect(datasets[1].label).to.equal('Line chart');
+        expect(datasets[0].borderWidth).to.equal(1);
+        expect(datasets[1].borderWidth).to.equal(3);
+        expect(datasets[0].type).to.equal('bar');
+        expect(datasets[1].type).to.equal('line');
+      });
+
+      it('overrides the dataset for simple charts', function () {
+        var datasets;
+        var markup = '<canvas class="chart chart-doughnut" chart-data="data" chart-labels="labels" ' +
+          'chart-colors="colors" chart-dataset-override="datasetOverride"></canvas>';
+
+        scope.colors = ['#45b7cd', '#ff6384', '#ff8e72'];
+        scope.labels = ['Download Sales', 'In-Store Sales', 'Mail-Order Sales'];
+        scope.data = [350, 450, 100];
+        scope.datasetOverride = {
+          hoverBackgroundColor: ['#45b7cd', '#ff6384', '#ff8e72'],
+          hoverBorderColor: ['#45b7cd', '#ff6384', '#ff8e72']
+        };
+
+        scope.$on('chart-create', function (evt, chart) {
+          datasets = chart.chart.config.data.datasets;
+        });
+
+        $compile(markup)(scope);
+        scope.$digest();
+
+        expect(datasets[0].hoverBackgroundColor).to.deep.equal(['#45b7cd', '#ff6384', '#ff8e72']);
+        expect(datasets[0].hoverBorderColor).to.deep.equal(['#45b7cd', '#ff6384', '#ff8e72']);
+      });
     });
   });
 
   describe('lifecycle', function () {
     it('watches the attributes of the chart', function () {
       var markup = '<div style="width: 250px; height:120px">' +
-        '<canvas class="chart chart-line" data="data" labels="labels" chart-type="type"></canvas></div>';
+        '<canvas class="chart chart-line" chart-data="data" chart-labels="labels" chart-type="type"></canvas></div>';
 
       scope.labels = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
       scope.data = [
@@ -129,14 +178,13 @@ describe('Unit testing', function () {
 
       // cannot get a hold of the child scope as it isn't created yet
       // so cannot be more precise on expectations
-      /* whummer: due to new attribute names (chart-*), only the attributes
-         which are actually present in the markup will be updated via $watch (3) */
       expect(spy.calledThrice).to.be.true;
     });
 
     it('creates the chart only once', function () {
       var markup = '<div style="width: 250px; height:120px">' +
-        '<canvas class="chart chart-line" data="data" labels="labels" series="series"></canvas></div>';
+        '<canvas class="chart chart-line" chart-data="data" chart-labels="labels" ' +
+        'chart-series="series"></canvas></div>';
       var count = 0;
 
       scope.labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
@@ -145,7 +193,7 @@ describe('Unit testing', function () {
         [65, 59, 80, 81, 56, 55, 40],
         [28, 48, 40, 19, 86, 27, 90]
       ];
-      scope.$on('create', function () {
+      scope.$on('chart-create', function () {
         count++;
       });
 
@@ -157,7 +205,8 @@ describe('Unit testing', function () {
 
     it('updates the chart', function () {
       var markup = '<div style="width: 250px; height:120px">' +
-        '<canvas class="chart chart-line" data="data" labels="labels" series="series"></canvas></div>';
+        '<canvas class="chart chart-line" chart-data="data" chart-labels="labels" ' +
+        'chart-series="series"></canvas></div>';
       var count = 0;
 
       scope.labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
@@ -167,7 +216,7 @@ describe('Unit testing', function () {
         [28, 48, 40, 19, 86, 27, 90]
       ];
 
-      scope.$on('update', function () {
+      scope.$on('chart-update', function () {
         count++;
       });
 
@@ -185,7 +234,7 @@ describe('Unit testing', function () {
 
     it('destroy the chart if all data is removed', function () {
       var markup = '<div style="width: 250px; height:120px">' +
-        '<canvas class="chart chart-line" data="data" labels="labels" series="series"></canvas></div>';
+        '<canvas class="chart chart-line" chart-data="data" chart-labels="labels"></canvas></div>';
       var countCreate = 0, countUpdate = 0, countDestroy = 0;
 
       scope.labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
@@ -194,15 +243,15 @@ describe('Unit testing', function () {
         [28, 48, 40, 19, 86, 27, 90]
       ];
 
-      scope.$on('create', function () {
+      scope.$on('chart-create', function () {
         countCreate++;
       });
 
-      scope.$on('update', function () {
+      scope.$on('chart-update', function () {
         countUpdate++;
       });
 
-      scope.$on('destroy', function() {
+      scope.$on('chart-destroy', function() {
         countDestroy++;
       });
 
@@ -219,7 +268,8 @@ describe('Unit testing', function () {
 
     it('re-create the chart if data added or removed', function () {
       var markup = '<div style="width: 250px; height:120px">' +
-        '<canvas class="chart chart-line" data="data" labels="labels" series="series"></canvas></div>';
+        '<canvas class="chart chart-line" chart-data="data" chart-labels="labels" ' +
+        'chart-series="series"></canvas></div>';
       var countCreate = 0, countUpdate = 0, countDestroy = 0;
 
       scope.labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
@@ -228,15 +278,15 @@ describe('Unit testing', function () {
         [28, 48, 40, 19, 86, 27, 90]
       ];
 
-      scope.$on('create', function () {
+      scope.$on('chart-create', function () {
         countCreate++;
       });
 
-      scope.$on('update', function () {
+      scope.$on('chart-update', function () {
         countUpdate++;
       });
 
-      scope.$on('destroy', function() {
+      scope.$on('chart-destroy', function() {
         countDestroy++;
       });
 
@@ -271,36 +321,22 @@ describe('Unit testing', function () {
       expect(ChartJs.getOptions('Line').responsive).to.equal(true);
     });
 
-    ['labels', 'colours', 'series', 'options'].forEach(function (attr) {
+    ['labels', 'colors', 'series', 'options'].forEach(function (attr) {
       it('re-creates the chart on ' + attr + ' changes', function () {
         var markup = '<div style="width: 250px; height:120px">' +
-          '<canvas class="chart chart-line" data="data" labels="labels" series="series" ' +
-            'colours="colours" options="options"></canvas></div>';
+          '<canvas class="chart chart-line" chart-data="data" chart-labels="labels" chart-series="series" ' +
+            'chart-colors="colors" chart-options="options"></canvas></div>';
         var count = 0;
 
         scope.options = { scaleShowVerticalLines: false };
         scope.labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
         scope.series = ['Series A', 'Series B'];
-        scope.colours = [{
-          fillColor: 'rgba(127,253,31,0.2)',
-          pointColor: 'rgba(127,253,31,1)',
-          pointHighlightFill: '#fff',
-          pointHighlightStroke: 'rgba(127,253,31,0.8)',
-          pointStrokeColor: '#fff',
-          strokeColor: 'rgba(127,253,31,1)'
-        }, {
-          fillColor: 'rgba(104,240,0,0.2)',
-          pointColor: 'rgba(104,240,0,1)',
-          pointHighlightFill: '#fff',
-          pointHighlightStroke: 'rgba(104,240,0,0.8)',
-          pointStrokeColor: '#fff',
-          strokeColor: 'rgba(104,240,0,1)'
-        }];
+        scope.colors = ['#45b7cd', '#ff6384'];
         scope.data = [
           [65, 59, 80, 81, 56, 55, 40],
           [28, 48, 40, 19, 86, 27, 90]
         ];
-        scope.$on('create', function () {
+        scope.$on('chart-create', function () {
           count++;
         });
 
@@ -311,22 +347,8 @@ describe('Unit testing', function () {
           case 'labels':
             scope.labels = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
             break;
-          case 'colours':
-            scope.colours = [{
-              fillColor: 'rgba(253,31,94,0.2)',
-              pointColor: 'rgba(253,31,94,1)',
-              pointHighlightFill: '#fff',
-              pointHighlightStroke: 'rgba(253,31,94,0.8)',
-              pointStrokeColor: '#fff',
-              strokeColor: 'rgba(253,31,94,1)'
-            }, {
-              fillColor: 'rgba(30,249,161,0.2)',
-              pointColor: 'rgba(30,249,161,1)',
-              pointHighlightFill: '#fff',
-              pointHighlightStroke: 'rgba(30,249,161,0.8)',
-              pointStrokeColor: '#fff',
-              strokeColor: 'rgba(30,249,161,1)'
-            }];
+          case 'colors':
+            scope.colors = ['#ff6384', '#ff8e72'];
             break;
           case 'series':
             scope.series = ['Series C', 'Series D'];
@@ -341,36 +363,22 @@ describe('Unit testing', function () {
       });
     });
 
-    ['labels', 'colours', 'series', 'options'].forEach(function (attr) {
+    ['labels', 'colors', 'series', 'options'].forEach(function (attr) {
       it('does not re-create the chart on ' + attr + ' not changed', function () {
         var markup = '<div style="width: 250px; height:120px">' +
-          '<canvas class="chart chart-line" data="data" labels="labels" series="series" ' +
-            'colours="colours" options="options"></canvas></div>';
+          '<canvas class="chart chart-line" chart-data="data" chart-labels="labels" chart-series="series" ' +
+            'chart-colors="colors" chart-options="options"></canvas></div>';
         var count = 0;
 
         scope.options = { scaleShowVerticalLines: false };
         scope.labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
         scope.series = ['Series A', 'Series B'];
-        scope.colours = [{
-          fillColor: 'rgba(127,253,31,0.2)',
-          pointColor: 'rgba(127,253,31,1)',
-          pointHighlightFill: '#fff',
-          pointHighlightStroke: 'rgba(127,253,31,0.8)',
-          pointStrokeColor: '#fff',
-          strokeColor: 'rgba(127,253,31,1)'
-        }, {
-          fillColor: 'rgba(104,240,0,0.2)',
-          pointColor: 'rgba(104,240,0,1)',
-          pointHighlightFill: '#fff',
-          pointHighlightStroke: 'rgba(104,240,0,0.8)',
-          pointStrokeColor: '#fff',
-          strokeColor: 'rgba(104,240,0,1)'
-        }];
+        scope.colors = ['#45b7cd', '#ff6384'];
         scope.data = [
           [65, 59, 80, 81, 56, 55, 40],
           [28, 48, 40, 19, 86, 27, 90]
         ];
-        scope.$on('create', function () {
+        scope.$on('chart-create', function () {
           count++;
         });
 
@@ -381,22 +389,8 @@ describe('Unit testing', function () {
           case 'labels':
             scope.labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
             break;
-          case 'colours':
-            scope.colours = [{
-              fillColor: 'rgba(127,253,31,0.2)',
-              pointColor: 'rgba(127,253,31,1)',
-              pointHighlightFill: '#fff',
-              pointHighlightStroke: 'rgba(127,253,31,0.8)',
-              pointStrokeColor: '#fff',
-              strokeColor: 'rgba(127,253,31,1)'
-            }, {
-              fillColor: 'rgba(104,240,0,0.2)',
-              pointColor: 'rgba(104,240,0,1)',
-              pointHighlightFill: '#fff',
-              pointHighlightStroke: 'rgba(104,240,0,0.8)',
-              pointStrokeColor: '#fff',
-              strokeColor: 'rgba(104,240,0,1)'
-            }];
+          case 'colors':
+            scope.colors = ['#45b7cd', '#ff6384'];
             break;
           case 'series':
             scope.series = ['Series A', 'Series B'];

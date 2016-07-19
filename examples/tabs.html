@@ -3,7 +3,6 @@
 <head lang="en">
   <meta charset="UTF-8">
   <title>Charts in tabs</title>
-  <link rel="stylesheet" href="../dist/angular-chart.css">
   <link href="bootstrap.css" rel="stylesheet">
 </head>
 <body ng-app="examples">
@@ -13,21 +12,21 @@
     <tabset>
       <tab heading="First tab" active="active">
         <div class="panel-body">
-          <canvas class="chart chart-line" data="data" labels="labels"></canvas>
+          <canvas class="chart chart-line" chart-data="data" chart-labels="labels"></canvas>
         </div>
       </tab>
       <tab heading="Second tab">
         <div class="panel-body">
-          <canvas class="chart chart-bar" data="data" labels="labels"></canvas>
+          <canvas class="chart chart-bar" chart-data="data" chart-labels="labels"></canvas>
         </div>
       </tab>
     </tabset>
   </div>
 </div>
 
-<script src="../bower_components/angular/angular.js"></script>
-<script src="../bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
-<script src="../bower_components/Chart.js/Chart.js"></script>
+<script src="../node_modules/angular/angular.js"></script>
+<script src="../node_modules/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+<script src="../node_modules/chart.js/dist/Chart.min.js"></script>
 <script src="../angular-chart.js"></script>
 <script src="app.js"></script>
 </body>

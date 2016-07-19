@@ -71,11 +71,11 @@
   "disallowKeywords": [ "with" ],
 
   "excludeFiles": [
-    "bower_components/**",
     "node_modules/**",
     "dist/**",
     "coverage/**",
     "examples/bundle.js",
+    "examples/commonjs.bundle.js",
     "examples/smoothscroll.min.js",
     "test/fixtures/coverage.js"
   ]
