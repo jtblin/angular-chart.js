@@ -38,6 +38,19 @@ but must be set via standard options e.g. `ChartJsProvider.setOptions({ responsi
 
 ### bower
 
+Bower support has been dropped in Chart.js since version 2.2.0 but you can still use it with Bower thanks to bower-npm-resolver.
+
+First, add the resolver in your .bowerrc file:
+
+    {
+      "resolvers": [
+        "bower-npm-resolver"
+      ]
+    }
+
+Then:
+
+    npm install -g bower-npm-resolver
     bower install --save angular-chart.js
 
 ### manually
