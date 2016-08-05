@@ -1,8 +1,14 @@
 <!--
 Thanks for wanting to report an issue you've found in angular-chart.js. 
 
+Please use the template below to create your issue. Issues not following the template risk being closed 
+immediately!
+
 Plese note that issues or feature requests for Chart.js (e.g. new chart type, new axis, etc.) 
 need to be opened on Chart.js issues tracker: https://github.com/nnnick/Chart.js/issues.
+
+For questions about options, make sure you search in the Chart.js docs as all Chart.js options
+are supported via chart-options: http://www.chartjs.org/docs/
 
 For general questions about usage, please use [http://stackoverflow.com/](http://stackoverflow.com/)
 as you will be more likely to get an appropriate answer.
@@ -20,7 +26,7 @@ Describe the issue. What is the issue and what did you expect?
 Please make sure to review and check all of these items:
 
 - [ ] Use latest version of the library
-- [ ] Make sure you've included all the dependencies e.g Chart.js, angular, css file
+- [ ] Make sure you've included all the dependencies e.g Chart.js, angular, etc.
 - [ ] Include a repro case, see below.
 
 
