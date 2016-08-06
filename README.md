@@ -38,7 +38,7 @@ but must be set via standard options e.g. `ChartJsProvider.setOptions({ responsi
 
 ### bower
 
-Bower support has been dropped in Chart.js since version 2.2.0 but you can still use it with Bower thanks to bower-npm-resolver.
+Bower support has been dropped in Chart.js since version 2.2.0 but you can still use it with Bower thanks to bower-npm-resolver if needed but using npm is preferred.
 
 First, add the resolver in your .bowerrc file:
 
