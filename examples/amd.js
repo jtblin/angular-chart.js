@@ -10,6 +10,9 @@
     shim: {
       angular: {
         exports: 'angular'
+      },
+      chart: {
+        exports: 'Chart'
       }
     }
   });
