@@ -4,12 +4,15 @@
   require.config({
     paths: {
       angular: '../node_modules/angular/angular.min',
-      chart: '../node_modules/chart.js/dist/Chart',
+      chart: '../node_modules/chart.js/dist/Chart.min',
       'angular-chart': '../angular-chart'
     },
     shim: {
       angular: {
         exports: 'angular'
+      },
+      'chart.js': {
+        deps: ['angular', 'chart']
       }
     }
   });
