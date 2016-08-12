@@ -10,7 +10,7 @@
     $scope.labels = ['Series A', 'Series B'];
     $scope.data = [65, 59];
     $scope.colors = [{ // red
-      backgroundColor: 'rgba(247,70,74,0.2)',
+      backgroundColor: 'rgba(247,70,74,1)',
       borderColor: 'rgba(247,70,74,1)',
       pointBackgroundColor: 'rgba(247,70,74,1)',
       pointBorderColor: '#fff',
@@ -18,7 +18,7 @@
       pointHoverBorderColor: 'rgba(247,70,74,0.8)'
     },
       { // green
-        backgroundColor: 'rgba(70,191,189,0.2)',
+        backgroundColor: 'rgba(70,191,189,1)',
         borderColor: 'rgba(70,191,189,1)',
         pointBackgroundColor: 'rgba(70,191,189,1)',
         pointBorderColor: '#fff',
