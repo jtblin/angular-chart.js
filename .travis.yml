@@ -17,4 +17,3 @@ env:
     - CI=1
     - REPORTER=list
     - TOLERANCE=0.001
-    - IMGUR_ID=cc0036566c55a7f
