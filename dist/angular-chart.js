@@ -311,15 +311,18 @@
       var dataset = {
         labels: labels,
         datasets: [{
-          data: data,
-          backgroundColor: colors.map(function (color) {
-            return color.pointBackgroundColor;
-          }),
-          hoverBackgroundColor: colors.map(function (color) {
-            return color.backgroundColor;
-          })
+          data: data
         }]
       };
+      colors.map(function (color) {
+        Object.keys(color).forEach(function (key) {
+          var d = dataset.datasets[0][key];
+          if (d === undefined) {
+            d = dataset.datasets[0][key] = []
+          }
+          d.push(color[key])
+        });
+      });
       if (datasetOverride) {
         angular.merge(dataset.datasets[0], datasetOverride);
       }
