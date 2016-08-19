@@ -1,7 +1,7 @@
 /*!
  * angular-chart.js - An angular.js wrapper for Chart.js
  * http://jtblin.github.io/angular-chart.js/
- * Version: 1.0.1
+ * Version: 1.0.2
  *
  * Copyright 2016 Jerome Touffe-Blin
  * Released under the BSD-2-Clause license
@@ -20,7 +20,7 @@
   } else {
     // Browser globals
     if (typeof angular === 'undefined' || typeof Chart === 'undefined')
-      throw new Error('Chart.js library needs to included, see http://jtblin.github.io/angular-chart.js/');
+      throw new Error('Chart.js library needs to be included, see http://jtblin.github.io/angular-chart.js/');
     factory(angular, Chart);
   }
 }(function (angular, Chart) {
