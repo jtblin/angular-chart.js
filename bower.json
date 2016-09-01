@@ -39,7 +39,7 @@
   ],
   "dependencies": {
     "angular": "1.x",
-    "chart.js": "npm:chart.js#2.x"
+    "Chart.js": "^2.1.3"
   },
   "overrides" : {
     "chart.js": {
