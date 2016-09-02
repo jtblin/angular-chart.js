@@ -39,10 +39,10 @@
   ],
   "dependencies": {
     "angular": "1.x",
-    "chart.js": "npm:chart.js#2.x"
+    "Chart.js": "~2.1.6"
   },
   "overrides" : {
-    "chart.js": {
+    "Chart.js": {
       "main": [
         "dist/Chart.bundle.min.js"
       ]
