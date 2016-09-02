@@ -191,6 +191,32 @@ via a function through the `getColor` attribute.
 Hex colors are converted to Chart.js colors automatically, 
 including different shades for highlight, fill, stroke, etc.
 
+RGB colors may be input by using an array in the format: [r, g, b]
+
+## Example - RGB Colors
+
+```
+angular.module('app',['chart.js'])
+        .controller('MainController', function($scope){ 
+          $scope.colors = [[159,204,0],[250,109,33],[154,154,154],[233,177,69],[98,160,115],[250,96,93]];
+          $scope.labels = ["Green", "Orange", "Grey"];
+          $scope.data = [300, 500, 100];
+        });
+```
+
+RGBA colors may also be input by using an array in the format: [r, g, b, a]
+They may be used alongside of RGB colors and/or Hex colors.
+
+## Example - RGBA Colors
+```
+angular.module('app',['chart.js'])
+        .controller('MainController', function($scope){ 
+          $scope.colors = [[159,204,0,0.5],[250,109,33,0.7],[154,154,154,0.5],[233,177,69,0.5],[98,160,115],[250,96,93]];
+          $scope.labels = ["Green", "Orange", "Grey"];
+          $scope.data = [300, 500, 100];
+        });
+```
+
 ## Browser compatibility
 
 For IE8 and older browsers, you will need 
