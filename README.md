@@ -198,7 +198,7 @@ RGB colors may be input by using an array in the format: [r, g, b]
 ```
 angular.module('app',['chart.js'])
         .controller('MainController', function($scope){ 
-          $scope.colors = [[159,204,0],[250,109,33],[154,154,154],[233,177,69],[98,160,115],[250,96,93]];
+          $scope.colors = [[159,204,0],[250,109,33],[154,154,154]];
           $scope.labels = ["Green", "Orange", "Grey"];
           $scope.data = [300, 500, 100];
         });
@@ -211,9 +211,31 @@ They may be used alongside of RGB colors and/or Hex colors.
 ```
 angular.module('app',['chart.js'])
         .controller('MainController', function($scope){ 
-          $scope.colors = [[159,204,0,0.5],[250,109,33,0.7],[154,154,154,0.5],[233,177,69,0.5],[98,160,115],[250,96,93]];
+          $scope.colors = [[159,204,0,0.5],[250,109,33,0.7],[154,154,154,0.5]];
           $scope.labels = ["Green", "Orange", "Grey"];
           $scope.data = [300, 500, 100];
+        });
+```
+
+Colors may also be input as an object by using the format in the example below.
+Colors input as objects, Hex colors, RGB, and RGBA colors may be mixed and matched.
+
+## Example - input color as an object
+```
+angular.module('app',['chart.js'])
+        .controller('MainController', function($scope){ 
+          $scope.colors = [{
+            backgroundColor: "rgba(159,204,0, 0.2)",
+            pointBackgroundColor: "rgba(159,204,0, 1)",
+            pointHoverBackgroundColor: "rgba(159,204,0, 0.8)",
+            borderColor: "rgba(159,204,0, 1)",
+            pointBorderColor: '#fff',
+            pointHoverBorderColor: "rgba(159,204,0, 1)"
+          },
+          [250,109,33,0.5],"#9a9a9a",[233,177,69]
+      ];
+          $scope.labels = ["Green", "Peach", "Grey", "Orange"];
+          $scope.data = [300, 500, 100, 150];
         });
 ```
 
