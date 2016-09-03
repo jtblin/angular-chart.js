@@ -234,6 +234,8 @@
       if (typeof color === 'object' && color !== null && color.length === 4) return getRGBAColor(color);
       // Allows hex colors to be input as a string.
       if (typeof color === 'string' && color[0] === '#') return getColor(hexToRgb(color.substr(1)));
+      // Allows colors to be input as an object, bypassing getColor() entirely
+      if (typeof color === 'object' && color !==null) return color;
       return getRandomColor();
     }
 
