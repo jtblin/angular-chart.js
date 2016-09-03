@@ -7,7 +7,7 @@
 describe('Unit testing', function () {
   'use strict';
 
-  var $compile, scope, sandbox, ChartJs, ChartJsProvider, ChartJSFactory;
+  var $compile, scope, sandbox, ChartJs, ChartJsProvider;
 
   beforeEach(module('chart.js', function (_ChartJsProvider_) {
     ChartJsProvider = _ChartJsProvider_;
@@ -103,15 +103,15 @@ describe('Unit testing', function () {
         var markup = '<canvas class="chart chart-pie" chart-data="data" chart-labels="labels" chart-colors="colors"></canvas>';
           scope.colors = [
             {
-              backgroundColor: "rgba(159,204,0,0.2)",
-              pointBackgroundColor: "rgba(159,204,0,1)",
-              pointHoverBackgroundColor: "rgba(159,204,0,0.8)",
-              borderColor: "rgba(159,204,0,1)",
+              backgroundColor: 'rgba(159,204,0,0.2)',
+              pointBackgroundColor: 'rgba(159,204,0,1)',
+              pointHoverBackgroundColor: 'rgba(159,204,0,0.8)',
+              borderColor: 'rgba(159,204,0,1)',
               pointBorderColor: '#fff',
-              pointHoverBorderColor: "rgba(159,204,0,1)"
-            },[250,109,33,0.5],"#9a9a9a",[233,177,69]
+              pointHoverBorderColor: 'rgba(159,204,0,1)'
+            },[250,109,33,0.5],'#9a9a9a',[233,177,69]
           ];
-          scope.labels = ["Green", "Peach", "Grey", "Orange"];
+          scope.labels = ['Green', 'Peach', 'Grey', 'Orange'];
           scope.data = [300, 500, 100, 150];
         scope.$on('chart-create', function (evt, chart) {         
           datasets = chart.chart.config.data.datasets;
@@ -121,10 +121,10 @@ describe('Unit testing', function () {
         console.log(datasets[0]);
         //Issue: Hex colors are converted into RGBA colors appropriately, and objects pass through fine, but RGB
         //and RGBA colors are converted into 'undefined'.
-        expect(datasets[0].backgroundColor[0]).to.equal("rgba(159,204,0,1)");
-        expect(datasets[0].backgroundColor[1]).to.equal("rgba(250,109,33,0.5");
-        expect(datasets[0].backgroundColor[2]).to.equal("rgba(154,154,154,1");
-        expect(datasets[0].backgroundColor[3]).to.equal("rgba(233,177,69,1");
+        expect(datasets[0].backgroundColor[0]).to.equal('rgba(159,204,0,1)');
+        expect(datasets[0].backgroundColor[1]).to.equal('rgba(250,109,33,0.5)');
+        expect(datasets[0].backgroundColor[2]).to.equal('rgba(154,154,154,1)');
+        expect(datasets[0].backgroundColor[3]).to.equal('rgba(233,177,69,1)');
       });
     });
 
