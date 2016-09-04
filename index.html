@@ -95,7 +95,7 @@
         <p>
           <a class="btn btn-default btn-lg" href="https://github.com/jtblin/angular-chart"><i class="icon-github"></i>Code on Github</a>
           <a class="btn btn-success btn-lg" href="dist/angular-chart.js.tar.gz" download="angular-chart.js.tar.gz">
-            <i class="fa fa-download"></i> Download <small>(1.0.0)</small>
+            <i class="fa fa-download"></i> Download <small>(1.0.2)</small>
           </a>
           <span class="bower">
             <iframe src="https://benschwarz.github.io/bower-badges/embed.html?pkgname=angular-chart.js" width="160" height="32" allowtransparency="true" frameborder="0" scrolling="0"></iframe>
@@ -142,7 +142,7 @@
       <p>
         The easiest is to download with <strong>npm</strong>:
         <pre>npm install angular-chart.js --save</pre>
-        Alternatively files can be <a href="https://github.com/jtblin/angular-chart.js">downloaded from Github</a> or via bower.
+        Alternatively files can be <a href="https://github.com/jtblin/angular-chart.js">downloaded from Github</a> or via PolarArea.
         See <a href="https://github.com/jtblin/angular-chart.js">readme</a> for more information.
       </p>
       <p>Whichever method you choose the good news is that the overall size is very small:
@@ -586,7 +586,7 @@ chart-dataset-override=&quot;datasetOverride&quot; chart-click=&quot;onClick&quo
               <div class="settings">
                 <code>.chart-base</code>
                 <ul>
-                  <li><code>chart-type</code>: chart type e.g. Bar, PolarArea, etc. or other plugins</li>
+                  <li><code>chart-type</code>: chart type e.g. bar, polarArea, etc. or other plugins</li>
                   <li>other options according to chart type</li>
                 </ul>
               </div>
@@ -601,11 +601,11 @@ chart-dataset-override=&quot;datasetOverride&quot; chart-click=&quot;onClick&quo
   function ($scope) {
     $scope.labels = ["Download Sales", "In-Store Sales", "Mail-Order Sales", "Tele Sales", "Corporate Sales"];
     $scope.data = [300, 500, 100, 40, 120];
-    $scope.type = 'PolarArea';
+    $scope.type = 'polarArea';
 
     $scope.toggle = function () {
-      $scope.type = $scope.type === 'PolarArea' ?
-        'Pie' : 'PolarArea';
+      $scope.type = $scope.type === 'polarArea' ?
+        'pie' : 'polarArea';
     };
 });
               </code></pre>
