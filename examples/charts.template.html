@@ -118,7 +118,7 @@
       <p>
         The easiest is to download with <strong>npm</strong>:
         <pre>npm install angular-chart.js --save</pre>
-        Alternatively files can be <a href="https://github.com/jtblin/angular-chart.js">downloaded from Github</a> or via bower.
+        Alternatively files can be <a href="https://github.com/jtblin/angular-chart.js">downloaded from Github</a> or via PolarArea.
         See <a href="https://github.com/jtblin/angular-chart.js">readme</a> for more information.
       </p>
       <p>Whichever method you choose the good news is that the overall size is very small:
@@ -577,11 +577,11 @@ chart-dataset-override=&quot;datasetOverride&quot; chart-click=&quot;onClick&quo
   function ($scope) {
     $scope.labels = ["Download Sales", "In-Store Sales", "Mail-Order Sales", "Tele Sales", "Corporate Sales"];
     $scope.data = [300, 500, 100, 40, 120];
-    $scope.type = 'PolarArea';
+    $scope.type = 'polarArea';
 
     $scope.toggle = function () {
-      $scope.type = $scope.type === 'PolarArea' ?
-        'Pie' : 'PolarArea';
+      $scope.type = $scope.type === 'polarArea' ?
+        'pie' : 'polarArea';
     };
 });
               </code></pre>
