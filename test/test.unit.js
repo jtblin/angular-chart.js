@@ -309,9 +309,11 @@ describe('Unit testing', function () {
       ChartJsProvider.setOptions({responsive: false});
       expect(ChartJs.getOptions().responsive).to.equal(false);
       expect(ChartJs.getOptions('Line').responsive).to.equal(false);
+      expect(ChartJsProvider.$get().Chart.defaults.responsive).to.equal(false);
       ChartJsProvider.setOptions({responsive: true});
       expect(ChartJs.getOptions().responsive).to.equal(true);
       expect(ChartJs.getOptions('Line').responsive).to.equal(true);
+      expect(ChartJsProvider.$get().Chart.defaults.responsive).to.equal(true);
     });
 
     it('should allow to set a configuration for a chart type', function () {
@@ -319,6 +321,8 @@ describe('Unit testing', function () {
       expect(ChartJs.getOptions('Line').responsive).to.equal(false);
       ChartJsProvider.setOptions('Line', {responsive: true});
       expect(ChartJs.getOptions('Line').responsive).to.equal(true);
+      ChartJsProvider.setOptions('Line', {responsive: true});
+      expect(ChartJsProvider.$get().Chart.defaults.Line.responsive).to.equal(true);
     });
 
     ['labels', 'colors', 'series', 'options'].forEach(function (attr) {

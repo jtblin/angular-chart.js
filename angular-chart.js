@@ -79,7 +79,7 @@
       if (! customOptions) {
         customOptions = type;
         options = angular.merge(options, customOptions);
-      }else{
+      } else {
         // Set options for the specific chart
         options[type] = angular.merge(options[type] || {}, customOptions);
       }
