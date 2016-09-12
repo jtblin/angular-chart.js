@@ -109,7 +109,7 @@ describe('Unit testing', function () {
               borderColor: 'rgba(159,204,0,1)',
               pointBorderColor: '#fff',
               pointHoverBorderColor: 'rgba(159,204,0,1)'
-            },[250,109,33,0.5],'#9a9a9a',[233,177,69]
+            },"rgba(250,109,33,0.5)",'#9a9a9a',"rgb(233,177,69)"
           ];
           scope.labels = ['Green', 'Peach', 'Grey', 'Orange'];
           scope.data = [300, 500, 100, 150];
@@ -118,9 +118,6 @@ describe('Unit testing', function () {
         });
         $compile(markup)(scope);
         scope.$digest();
-        console.log(datasets[0]);
-        //Issue: Hex colors are converted into RGBA colors appropriately, and objects pass through fine, but RGB
-        //and RGBA colors are converted into 'undefined'.
         expect(datasets[0].backgroundColor[0]).to.equal('rgba(159,204,0,1)');
         expect(datasets[0].backgroundColor[1]).to.equal('rgba(250,109,33,0.5)');
         expect(datasets[0].backgroundColor[2]).to.equal('rgba(154,154,154,1)');

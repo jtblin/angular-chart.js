@@ -191,27 +191,27 @@ via a function through the `getColor` attribute.
 Hex colors are converted to Chart.js colors automatically, 
 including different shades for highlight, fill, stroke, etc.
 
-RGB colors may be input by using an array in the format: [r, g, b]
+RGB colors may be input by using a string in the format "rgb(r,g,b)".
 
 ## Example - RGB Colors
 
 ```
 angular.module('app',['chart.js'])
         .controller('MainController', function($scope){ 
-          $scope.colors = [[159,204,0],[250,109,33],[154,154,154]];
+          $scope.colors = ["rgb(159,204,0)","rgb(250,109,33)","rgb(154,154,154)"];
           $scope.labels = ["Green", "Orange", "Grey"];
           $scope.data = [300, 500, 100];
         });
 ```
 
-RGBA colors may also be input by using an array in the format: [r, g, b, a]
-They may be used alongside of RGB colors and/or Hex colors.
+RGBA colors may also be input by using an array in the format "rgb(r,g,b,a)".
+They may be used alongside RGB colors and/or Hex colors.
 
 ## Example - RGBA Colors
 ```
 angular.module('app',['chart.js'])
         .controller('MainController', function($scope){ 
-          $scope.colors = [[159,204,0,0.5],[250,109,33,0.7],[154,154,154,0.5]];
+          $scope.colors = ["rgba(159,204,0,0.5)","rgba(250,109,33,0.7)","rgba(154,154,154,0.5)"];
           $scope.labels = ["Green", "Orange", "Grey"];
           $scope.data = [300, 500, 100];
         });
@@ -224,16 +224,16 @@ Colors input as objects, Hex colors, RGB, and RGBA colors may be mixed and match
 ```
 angular.module('app',['chart.js'])
         .controller('MainController', function($scope){ 
-          $scope.colors = [{
-            backgroundColor: "rgba(159,204,0, 0.2)",
-            pointBackgroundColor: "rgba(159,204,0, 1)",
-            pointHoverBackgroundColor: "rgba(159,204,0, 0.8)",
-            borderColor: "rgba(159,204,0, 1)",
-            pointBorderColor: '#fff',
-            pointHoverBorderColor: "rgba(159,204,0, 1)"
-          },
-          [250,109,33,0.5],"#9a9a9a",[233,177,69]
-      ];
+          $scope.colors = [
+            {
+              backgroundColor: "rgba(159,204,0, 0.2)",
+              pointBackgroundColor: "rgba(159,204,0, 1)",
+              pointHoverBackgroundColor: "rgba(159,204,0, 0.8)",
+              borderColor: "rgba(159,204,0, 1)",
+              pointBorderColor: '#fff',
+              pointHoverBorderColor: "rgba(159,204,0, 1)"
+            },"rgba(250,109,33,0.5)","#9a9a9a","rgb(233,177,69)"
+          ];
           $scope.labels = ["Green", "Peach", "Grey", "Orange"];
           $scope.data = [300, 500, 100, 150];
         });
