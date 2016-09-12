@@ -169,7 +169,6 @@
 
       scope.chartGetColor = getChartColorFn(scope);
       var data = getChartData(type, scope);
-      console.log(data);
       // Destroy old chart if it exists to avoid ghost charts issue
       // https://github.com/jtblin/angular-chart.js/issues/187
       destroyChart(scope);
@@ -235,7 +234,7 @@
       // Allows hex colors to be input as a string.
       if (typeof color === 'string' && color[0] === '#') return getColor(hexToRgb(color.substr(1)));
       // Allows colors to be input as an object, bypassing getColor() entirely
-      if (typeof color === 'object' && color !==null) return color;
+      if (typeof color === 'object' && color !== null) return color;
       return getRandomColor();
     }
 
@@ -295,7 +294,6 @@
 
     function getChartData (type, scope) {
       var colors = getColors(type, scope);
-      console.log(colors);
       return Array.isArray(scope.chartData[0]) ?
         getDataSets(scope.chartLabels, scope.chartData, scope.chartSeries || [], colors, scope.chartDatasetOverride) :
         getData(scope.chartLabels, scope.chartData, colors, scope.chartDatasetOverride);
