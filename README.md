@@ -204,7 +204,7 @@ angular.module('app',['chart.js'])
         });
 ```
 
-RGBA colors may also be input by using an array in the format "rgba(r,g,b,a)".
+RGBA colors may also be input by using a string in the format "rgba(r,g,b,a)".
 They may be used alongside RGB colors and/or Hex colors.
 
 ## Example - RGBA Colors
