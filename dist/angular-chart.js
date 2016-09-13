@@ -316,7 +316,7 @@
             return color.pointBackgroundColor;
           }),
           hoverBackgroundColor: colors.map(function (color) {
-            return color.backgroundColor;
+            return color.pointHoverBackgroundColor;
           })
         }]
       };
