@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+  <meta charset="UTF-8">
+  <title>Charts</title>
+  <link href="../../examples/bootstrap.css" rel="stylesheet">
+</head>
+<body ng-app="charts" id="top">
+  <div class="container">
+    <section id="charts">
+      <div class="page-header">
+        <h1>Charts</h1>
+      </div>
+      <div class="row">
+        <div class="col-lg-4 col-sm-12" id="line-chart" ng-controller="LineCtrl">
+          <div class="panel panel-default">
+            <div class="panel-heading">Line Chart</div>
+            <div class="panel-body">
+              <canvas id="line" class="chart chart-line" chart-data="data" chart-labels="labels" chart-series="series"></canvas>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-sm-12" id="bar-chart" ng-controller="BarCtrl">
+          <div class="panel panel-default">
+            <div class="panel-heading">Bar Chart</div>
+            <div class="panel-body">
+              <canvas id="bar" class="chart chart-bar" chart-data="data" chart-labels="labels"
+                      chart-series="series" chart-options="options"></canvas>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-sm-12" id="doughnut-chart" ng-controller="DoughnutCtrl">
+          <div class="panel panel-default">
+            <div class="panel-heading">Doughnut Chart</div>
+            <div class="panel-body">
+              <canvas id="doughnut" class="chart chart-doughnut" chart-data="data" chart-labels="labels"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-4 col-sm-12" id="radar-chart" ng-controller="RadarCtrl">
+          <div class="panel panel-default">
+            <div class="panel-heading">Radar Chart</div>
+            <div class="panel-body">
+              <canvas id="area" class="chart chart-radar" chart-data="data" chart-labels="labels"></canvas>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-sm-12" id="pie-chart" ng-controller="PieCtrl">
+          <div class="panel panel-default">
+            <div class="panel-heading">Pie Chart</div>
+            <div class="panel-body">
+              <canvas id="pie" class="chart chart-pie" chart-data="data" chart-labels="labels"></canvas>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-sm-12" id="polar area-chart" ng-controller="PolarAreaCtrl">
+          <div class="panel panel-default">
+            <div class="panel-heading">Polar Area Chart</div>
+            <div class="panel-body">
+              <canvas id="polar" class="chart chart-polar-area" chart-data="data" chart-labels="labels"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+      </div>
+    </section>
+  </div>
+
+  <script src="../../node_modules/angular/angular.min.js"></script>
+  <script src="../../node_modules/chart.js/dist/Chart.min.js"></script>
+  <script src="../../angular-chart.js"></script>
+  <script src="options-override.js"></script>
+</body>
+</html>
