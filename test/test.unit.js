@@ -109,7 +109,7 @@ describe('Unit testing', function () {
               borderColor: 'rgba(159,204,0,1)',
               pointBorderColor: '#fff',
               pointHoverBorderColor: 'rgba(159,204,0,1)'
-            },"rgba(250,109,33,0.5)",'#9a9a9a',"rgb(233,177,69)"
+            },'rgba(250,109,33,0.5)','#9a9a9a','rgb(233,177,69)'
           ];
           scope.labels = ['Green', 'Peach', 'Grey', 'Orange'];
           scope.data = [300, 500, 100, 150];
