@@ -227,7 +227,7 @@
 
     function convertColor (color) {
       // Allows RGB and RGBA colors to be input as a string: e.g.: "rgb(159,204,0)", "rgba(159,204,0, 0.5)"
-      if (typeof color === 'string' && color[0] === 'r') return getColor(color);
+      if (typeof color === 'string' && color[0] === 'r') return getColor(rgbStringToRgb(color));
       // Allows hex colors to be input as a string.
       if (typeof color === 'string' && color[0] === '#') return getColor(hexToRgb(color.substr(1)));
       // Allows colors to be input as an object, bypassing getColor() entirely
@@ -241,51 +241,15 @@
     }
 
     function getColor (color) {
-      function colorSetter(colorArray, aVal){
-        return {
-          backgroundColor: rgba(colorArray, 0.2),
-          pointBackgroundColor: rgba(colorArray, aVal),
-          pointHoverBackgroundColor: rgba(colorArray, 0.8),
-          borderColor: rgba(colorArray, aVal),
-          pointBorderColor: '#fff',
-          pointHoverBorderColor: rgba(colorArray, aVal)
-        };
-      };
-      // If the color is a Hex color, this processes the array that hexToRgb() returns.
-      if (typeof color === 'object'){
-        return colorSetter(color, 1);
-      }
-      if (typeof color === 'string'){
-        // If the color is an RGB/RGBA color, this finds the indexes of all commas in the string, then converts
-        // the RGBA or RGB string into an array for processing by the rgba() function when it tests the browser for RGBA color support.
-        var rgbaArray=[];
-        var commaIndexes = [];
-        var position = color.indexOf(',');
-        while (position !== -1) {
-          commaIndexes.push(position);
-          position = color.indexOf(',', position + 1);
-        };
-        // Converts the first RGB/RGBA number in the string into a number and pushes it into the array.
-        if (commaIndexes.length === 2) {
-          rgbaArray.push(color.substring(4, commaIndexes[0]));
-        } else {
-          rgbaArray.push(color.substring(5, commaIndexes[0]));
-        };
-        // Converts the second RGB/RGBA numbers in the string into numbers and pushes them into the array
-        rgbaArray.push(color.substring(commaIndexes[0]+1, commaIndexes[1]));
-        // Converts the third RGB/RGBA number in the string into a number and pushes it into the array.          
-        if (commaIndexes.length === 2){
-          rgbaArray.push(color.substring(commaIndexes[1]+1, color.length-1)); 
-        // Sets the A value for an RGB color to 1.
-          rgbaArray.push(1);        
-        } else {
-          rgbaArray.push(color.substring(commaIndexes[1]+1, commaIndexes[2]));
-        // If RGBA number is used, converts the fourth RGBA number in the string into a number and pushes it into the array.                      
-          rgbaArray.push(color.substring(commaIndexes[2]+1, color.length-1));  
-        };         
-        color = rgbaArray.slice(0,3);
-        var aVal = rgbaArray[3];
-        return colorSetter(color, aVal); 
+      var alpha = color[3] || 1;
+      color = color.slice(0, 3);      
+      return {
+        backgroundColor: rgba(color, 0.2),
+        pointBackgroundColor: rgba(color, alpha),
+        pointHoverBackgroundColor: rgba(color, 0.8),
+        borderColor: rgba(color, alpha),
+        pointBorderColor: '#fff',
+        pointHoverBorderColor: rgba(color, alpha)
       };
     };
 
@@ -307,6 +271,23 @@
 
       return [r, g, b];
     }
+
+    function rgbStringToRgb (color) {
+      // These if statements remove 'rgb(' or 'rgba(' from the front of the string and the ')' from the end of the string.
+      if (color.substring(3,4) === '(') {
+        var lastRgbIndex = color.length - 1;
+        color = color.substring(4, lastRgbIndex);
+      };
+      if (color.substring(3,4) === 'a') {
+        var lastRgbaIndex = color.length - 1;
+        color = color.substring(5, lastRgbaIndex);
+      };
+      color = color.split(',');
+      // This .map() returns a color array to getColor() that contains number elements rather than string elements.
+      return color.map(function (item){
+        return item = +item;
+      });
+    };
 
     function hasData (scope) {
       return scope.chartData && scope.chartData.length;
