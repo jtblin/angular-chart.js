@@ -1,6 +1,6 @@
 {
   "name": "angular-chart.js",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "main": [
     "./dist/angular-chart.js"
   ],
@@ -39,13 +39,6 @@
   ],
   "dependencies": {
     "angular": "1.x",
-    "chart.js": "npm:chart.js#2.x"
-  },
-  "overrides" : {
-    "chart.js": {
-      "main": [
-        "dist/Chart.bundle.min.js"
-      ]
-    }
+    "chart.js": "2.x"
   }
 }

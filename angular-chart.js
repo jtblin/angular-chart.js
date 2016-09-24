@@ -78,11 +78,13 @@
       // If no type was specified set option for the global object
       if (! customOptions) {
         customOptions = type;
-        options = angular.extend(options, customOptions);
-        return;
+        options = angular.merge(options, customOptions);
+      } else {
+        // Set options for the specific chart
+        options[type] = angular.merge(options[type] || {}, customOptions);
       }
-      // Set options for the specific chart
-      options[type] = angular.extend(options[type] || {}, customOptions);
+
+      angular.merge(ChartJs.Chart.defaults, options);
     };
 
     this.$get = function () {

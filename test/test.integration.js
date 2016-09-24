@@ -33,6 +33,7 @@ describe('integration', function () {
 
   [
     'bubble',
+    'scatter',
     'dataset-override',
     'horizontal-bar-chart',
     '29-tabs',
