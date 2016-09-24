@@ -24,6 +24,7 @@
     "Rainbow": "git+https://github.com/ccampbell/rainbow.git",
     "angular-bootstrap": "^0.12.2",
     "angular-mocks": "^1.5.7",
+    "bootstrap": "^3.3.7",
     "chai": "^3.4.1",
     "chai-string": "^1.2.0",
     "codeclimate-test-reporter": "^0.3.1",
