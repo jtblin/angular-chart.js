@@ -251,7 +251,7 @@
         pointBorderColor: '#fff',
         pointHoverBorderColor: rgba(color, alpha)
       };
-    };
+    }
 
     function getRandomInt (min, max) {
       return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -273,21 +273,11 @@
     }
 
     function rgbStringToRgb (color) {
-      // These if statements remove 'rgb(' or 'rgba(' from the front of the string and the ')' from the end of the string.
-      if (color.substring(3,4) === '(') {
-        var lastRgbIndex = color.length - 1;
-        color = color.substring(4, lastRgbIndex);
-      };
-      if (color.substring(3,4) === 'a') {
-        var lastRgbaIndex = color.length - 1;
-        color = color.substring(5, lastRgbaIndex);
-      };
-      color = color.split(',');
-      // This .map() returns a color array to getColor() that contains number elements rather than string elements.
-      return color.map(function (item){
-        return item = +item;
-      });
-    };
+      var match = color.match(/^rgba?\(([\d,.]+)\)$/);
+      if (! match) throw new Error('Cannot parse rgb value');
+      color = match[1].split(','); 
+      return color.map(Number);
+    }
 
     function hasData (scope) {
       return scope.chartData && scope.chartData.length;
