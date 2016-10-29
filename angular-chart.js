@@ -10,8 +10,11 @@
     define(['angular', 'chart'], factory);
   } else {
     // Browser globals
-    if (typeof angular === 'undefined' || typeof Chart === 'undefined')
+    if (typeof angular === 'undefined') {
+        throw new Error('AngularJS framework needs to be included, see https://angularjs.org/');
+    } else if (typeof Chart === 'undefined') {
       throw new Error('Chart.js library needs to be included, see http://jtblin.github.io/angular-chart.js/');
+    }
     factory(angular, Chart);
   }
 }(function (angular, Chart) {
