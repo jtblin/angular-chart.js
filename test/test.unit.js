@@ -97,6 +97,34 @@ describe('Unit testing', function () {
       });
     });
 
+    describe('colors', function(){
+      it('sets the chart colors when Hex colors, RGB colors, RGBA colors, or objects are used', function (){
+        var datasets;
+        var markup = '<canvas class="chart chart-pie" chart-data="data" chart-labels="labels" chart-colors="colors"></canvas>';
+          scope.colors = [
+            {
+              backgroundColor: 'rgba(159,204,0,0.2)',
+              pointBackgroundColor: 'rgba(159,204,0,1)',
+              pointHoverBackgroundColor: 'rgba(159,204,0,0.8)',
+              borderColor: 'rgba(159,204,0,1)',
+              pointBorderColor: '#fff',
+              pointHoverBorderColor: 'rgba(159,204,0,1)'
+            },'rgba(250,109,33,0.5)','#9a9a9a','rgb(233,177,69)'
+          ];
+          scope.labels = ['Green', 'Peach', 'Grey', 'Orange'];
+          scope.data = [300, 500, 100, 150];
+        scope.$on('chart-create', function (evt, chart) {         
+          datasets = chart.chart.config.data.datasets;
+        });
+        $compile(markup)(scope);
+        scope.$digest();
+        expect(datasets[0].backgroundColor[0]).to.equal('rgba(159,204,0,1)');
+        expect(datasets[0].backgroundColor[1]).to.equal('rgba(250,109,33,0.5)');
+        expect(datasets[0].backgroundColor[2]).to.equal('rgba(154,154,154,1)');
+        expect(datasets[0].backgroundColor[3]).to.equal('rgba(233,177,69,1)');
+      });
+    });
+
     describe('dataset override', function () {
       it('overrides the datasets for complex charts', function () {
         var datasets;
