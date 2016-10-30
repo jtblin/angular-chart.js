@@ -201,12 +201,23 @@
     function getEventHandler (scope, action, triggerOnlyOnChange) {
       var lastState = null;
       return function (evt) {
-        var atEvent = scope.chart.getElementsAtEvent || scope.chart.getPointsAtEvent;
-        if (atEvent) {
-          var activePoints = atEvent.call(scope.chart, evt);
-          if (triggerOnlyOnChange === false || angular.equals(lastState, activePoints) === false) {
-            lastState = activePoints;
-            scope[action](activePoints, evt);
+        var atEvent = scope.chart.getElementAtEvent || scope.chart.getPointAtEvent;
+        var atEvents = scope.chart.getElementsAtEvent || scope.chart.getPointsAtEvent;
+        if (atEvents) {
+          // get all point
+          var points = atEvents.call(scope.chart, evt);
+          var activePoint;
+          // get active point
+          if (atEvent) {
+            var arrayActivePoint = atEvent.call(scope.chart, evt);  // return array of 0 or 1 point
+            if (arrayActivePoint.length) {
+              activePoint = arrayActivePoint[0];
+            }
+          }
+
+          if (triggerOnlyOnChange === false || angular.equals(lastState, points) === false) {
+            lastState = points;
+            scope[action](points, evt, activePoint);
           }
         }
       };
