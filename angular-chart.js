@@ -199,25 +199,23 @@
     }
 
     function getEventHandler (scope, action, triggerOnlyOnChange) {
-      var lastState = null;
+      var lastState = {
+        point: void 0,
+        points: void 0
+      };
       return function (evt) {
         var atEvent = scope.chart.getElementAtEvent || scope.chart.getPointAtEvent;
         var atEvents = scope.chart.getElementsAtEvent || scope.chart.getPointsAtEvent;
         if (atEvents) {
-          // get all point
           var points = atEvents.call(scope.chart, evt);
-          var activePoint;
-          // get active point
-          if (atEvent) {
-            var arrayActivePoint = atEvent.call(scope.chart, evt);  // return array of 0 or 1 point
-            if (arrayActivePoint.length) {
-              activePoint = arrayActivePoint[0];
-            }
-          }
+          var point = atEvent ? atEvent.call(scope.chart, evt)[0] : void 0;
 
-          if (triggerOnlyOnChange === false || angular.equals(lastState, points) === false) {
-            lastState = points;
-            scope[action](points, evt, activePoint);
+          if (triggerOnlyOnChange === false ||
+            (! angular.equals(lastState.points, points) && ! angular.equals(lastState.point, point))
+          ) {
+            lastState.point = point;
+            lastState.points = points;
+            scope[action](points, evt, point);
           }
         }
       };
@@ -255,7 +253,7 @@
 
     function getColor (color) {
       var alpha = color[3] || 1;
-      color = color.slice(0, 3);      
+      color = color.slice(0, 3);
       return {
         backgroundColor: rgba(color, 0.2),
         pointBackgroundColor: rgba(color, alpha),
@@ -288,7 +286,7 @@
     function rgbStringToRgb (color) {
       var match = color.match(/^rgba?\(([\d,.]+)\)$/);
       if (! match) throw new Error('Cannot parse rgb value');
-      color = match[1].split(','); 
+      color = match[1].split(',');
       return color.map(Number);
     }
 
