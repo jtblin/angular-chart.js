@@ -1,9 +1,9 @@
 (function () {
   'use strict';
 
-  var app = angular.module("app", ["chart.js"]);
+  var app = angular.module('app', ['chart.js']);
 
-  app.controller("ScatterCtrl", ['$scope', function ($scope) {
+  app.controller('ScatterCtrl', ['$scope', function ($scope) {
     $scope.data = [[{
       x: -10,
       y: -5
