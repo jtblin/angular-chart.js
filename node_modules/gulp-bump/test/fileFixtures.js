@@ -55,8 +55,8 @@ describe('gulp-bump: JSON File fixtures', function() {
     var fakeFile = new File({
       base: 'test/',
       cwd: 'test/',
-      path: 'test/fixtures/package.json',
-      contents: fixtureFile
+      path: 'test/fixtures/minor.yml',
+      contents: fs.readFileSync('test/fixtures/minor.yml')
     });
 
     var bumpS = bump({type: 'minor'});
@@ -65,7 +65,7 @@ describe('gulp-bump: JSON File fixtures', function() {
       should.exist(newFile);
       should.exist(newFile.path);
       should.exist(newFile.contents);
-      String(newFile.contents).should.equal(fs.readFileSync('test/expected/minor.json', 'utf8'));
+      String(newFile.contents).should.equal(fs.readFileSync('test/expected/minor.yml', 'utf8'));
       done();
     });
     bumpS.write(fakeFile);

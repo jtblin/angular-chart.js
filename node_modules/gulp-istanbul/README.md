@@ -57,8 +57,6 @@ gulp.task('pre-test', function () {
   return gulp.src(['lib/**/*.js'])
     // Covering files
     .pipe(istanbul())
-    // Force `require` to return covered files
-    .pipe(istanbul.hookRequire())
     // Write the covered files to a temporary directory
     .pipe(gulp.dest('test-tmp/'));
 });
@@ -70,6 +68,23 @@ gulp.task('test', ['pre-test'], function () {
     .pipe(testFramework())
     // Creating the reports after tests ran
     .pipe(istanbul.writeReports());
+});
+```
+
+#### Source Maps
+gulp-istanbul supports [gulp-sourcemaps][gulp-sourcemaps] when instrumenting:
+
+
+```javascript
+gulp.task('pre-test', function () {
+  return gulp.src(['lib/**/*.js'])
+    // optionally load existing source maps
+    .pipe(sourcemaps.init())
+    // Covering files
+    .pipe(istanbul())
+    .pipe(sourcemaps.write('.'))
+    // Write the covered files to a temporary directory
+    .pipe(gulp.dest('test-tmp/'));
 });
 ```
 
@@ -120,6 +135,7 @@ var istanbul = require('gulp-istanbul');
 
 gulp.src('lib/**.js')
   .pipe(istanbul({
+    // supports es6
     instrumenter: isparta.Instrumenter
   }));
 ```
@@ -307,6 +323,7 @@ License
 
 [istanbul]: http://gotwarlost.github.io/istanbul/
 [gulp]: https://github.com/gulpjs/gulp
+[gulp-sourcemaps]: https://github.com/floridoo/gulp-sourcemaps
 
 [npm-url]: https://npmjs.org/package/gulp-istanbul
 [npm-image]: https://badge.fury.io/js/gulp-istanbul.svg

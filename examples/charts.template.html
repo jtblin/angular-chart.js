@@ -111,8 +111,8 @@
         This repository contains a set of <strong>native AngularJS directives</strong> for Chart.js. The <strong>only required dependencies</strong> are:
       </p>
       <ul>
-        <li><a href="http://angularjs.org" target="_blank">AngularJS</a> (tested with 1.2.x, 1.3.x, 1.4.x and 1.5.x although it probably works with older versions)</li>
-        <li><a href="http://chartjs.org" target="_blank">Chart.js</a> (requires Chart.js 2.0.x).</li>
+        <li><a href="http://angularjs.org" target="_blank">AngularJS</a> (requires at least 1.4.x)</li>
+        <li><a href="http://chartjs.org" target="_blank">Chart.js</a> (requires Chart.js 2.x).</li>
       </ul>
       <h3>Files to download</h3>
       <p>
@@ -185,8 +185,8 @@
             <tab heading="Markup">
             <pre><code data-language="html">&lt;canvas id=&quot;line&quot; class=&quot;chart chart-line&quot; chart-data=&quot;data&quot;
 chart-labels=&quot;labels&quot; chart-series=&quot;series&quot; chart-options=&quot;options&quot;
-chart-dataset-override=&quot;datasetOverride&quot; chart-click=&quot;onClick&quot;
-&lt;/canvas&gt; </code></pre>
+chart-dataset-override=&quot;datasetOverride&quot; chart-click=&quot;onClick&quot;&gt;
+&lt;/canvas&gt;</code></pre>
             </tab>
             <tab heading="Javascript">
               <pre><code data-language="javascript">angular.module("app", ["chart.js"]).controller("LineCtrl", function ($scope) {

@@ -7,12 +7,12 @@
   "author": "Steve Lacy me@slacy.me (slacy.me)",
   "main": "./index.js",
   "dependencies": {
-    "semver":"*"
+    "semver": "*"
   },
   "devDependencies": {
     "mocha": "*",
     "should": "*",
-    "gulp-util":"*"
+    "gulp-util": "*"
   },
   "scripts": {
     "test": "mocha"
