@@ -1,6 +1,6 @@
 {
   "name": "angular-chart.js",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "An angular.js wrapper for Chart.js",
   "homepage": "http://jtblin.github.io/angular-chart.js/",
   "main": "dist/angular-chart.js",
