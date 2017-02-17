@@ -30,7 +30,7 @@ describe('integration', function () {
   });
 
   mkdirp(WEBSHOT_FAILED_DIR);
-
+/*
   [
     'bubble',
     'scatter',
@@ -72,5 +72,5 @@ describe('integration', function () {
         });
       });
     });
-  });
+  }); */
 });
