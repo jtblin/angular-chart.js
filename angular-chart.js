@@ -111,17 +111,17 @@
           chartHover: '=?',
           chartDatasetOverride: '=?'
         },
-        link: function (scope, elem/*, attrs */) {
+        link: function (scope, elem, attrs) {
           if (useExcanvas) window.G_vmlCanvasManager.initElement(elem[0]);
 
           // Order of setting "watch" matter
-          scope.$watch('chartData', watchData, true);
-          scope.$watch('chartSeries', watchOther, true);
-          scope.$watch('chartLabels', watchOther, true);
-          scope.$watch('chartOptions', watchOther, true);
-          scope.$watch('chartColors', watchOther, true);
-          scope.$watch('chartDatasetOverride', watchOther, true);
-          scope.$watch('chartType', watchType, false);
+          watch('chart-data', watchData, true);
+          watch('chart-series', watchOther, true);
+          watch('chart-labels', watchOther, true);
+          watch('chart-options', watchOther, true);
+          watch('chart-colors', watchOther, true);
+          watch('chart-dataset-override', watchOther, true);
+          watch('chart-type', watchType, false);
 
           scope.$on('$destroy', function () {
             destroyChart(scope);
@@ -130,6 +130,16 @@
           scope.$on('$resize', function () {
             if (scope.chart) scope.chart.resize();
           });
+
+          function watch(attribute, fn, checkEquality) {
+            var attributeValue = angular.element(elem).attr(attribute);
+            var onetime = attributeValue && attributeValue.indexOf('::') === 0;
+            if(onetime && fn != watchData) {
+              checkEquality = false;
+            }
+            var scopeValue = attrs.$normalize(attribute);
+            scope.$watch(scopeValue, fn, checkEquality);
+          }
 
           function watchData (newVal, oldVal) {
             if (! newVal || ! newVal.length || (Array.isArray(newVal[0]) && ! newVal[0].length)) {
