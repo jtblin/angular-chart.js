@@ -55,7 +55,7 @@ adding the dependencies for Angular and Chart.js first:
   ...
 </body>
   <script src="node_modules/angular/angular.min.js"></script>
-  <script src="node_modules/chart.js/Chart.min.js"></script>
+  <script src="node_modules/chart.js/dist/Chart.min.js"></script>
   <script src="node_modules/angular-chart.js/dist/angular-chart.min.js"></script>
 ```
 
