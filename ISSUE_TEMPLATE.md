@@ -34,6 +34,6 @@ Please make sure to review and check all of these items:
 
 **Ensure you add a link to a plunker, jsbin, or equivalent. Issues without repro steps may be closed immediately.** 
 
-Here is a [jsbin template for 0.x version](http://jsbin.com/cucoqe/1/edit?html,js,output) and [one for 1.x](http://jsbin.com/rodunob/edit?html,js,output) for convenience.
+Here is a [jsbin template](https://jsbin.com/rukiyis/edit?html,js,output) for convenience.
 
 
