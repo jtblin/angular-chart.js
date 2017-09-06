@@ -34,7 +34,7 @@ but must be set via standard options e.g. `ChartJsProvider.setOptions({ responsi
 
 ### cdn
 
-    //cdn.jsdelivr.net/angular.chartjs/latest/angular-chart.min.js
+    https://cdn.jsdelivr.net/npm/angular-chart.js@latest/dist/angular-chart.min.js
 
 ### bower
 
