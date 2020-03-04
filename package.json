@@ -64,7 +64,7 @@
     "webshot": "^0.18.0"
   },
   "dependencies": {
-    "angular": "1.x",
+    "angular": "1.7.9",
     "chart.js": "2.3.x"
   }
 }
