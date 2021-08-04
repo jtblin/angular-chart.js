@@ -110,7 +110,8 @@
           chartClick: '=?',
           chartHover: '=?',
           chartDatasetOverride: '=?',
-          chartForceUpdate: '=?'
+          chartForceUpdate: '=?',
+          chartDisplayWhenNoData: '=?'
         },
         link: function (scope, elem/*, attrs */) {
           if (useExcanvas) window.G_vmlCanvasManager.initElement(elem[0]);
@@ -133,7 +134,7 @@
           });
 
           function watchData (newVal, oldVal) {
-            if (! newVal || ! newVal.length || (Array.isArray(newVal[0]) && ! newVal[0].length)) {
+            if (!scope.chartDisplayWhenNoData && (! newVal || ! newVal.length || (Array.isArray(newVal[0]) && ! newVal[0].length))) {
               destroyChart(scope);
               return;
             }
@@ -174,7 +175,7 @@
 
     function createChart (type, scope, elem) {
       var options = getChartOptions(type, scope);
-      if (! hasData(scope) || ! canDisplay(type, scope, elem, options)) return;
+      if (!scope.chartDisplayWhenNoData && (! hasData(scope) || ! canDisplay(type, scope, elem, options))) return;
 
       var cvs = elem[0];
       var ctx = cvs.getContext('2d');
