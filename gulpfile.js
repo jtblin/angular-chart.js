@@ -166,5 +166,5 @@
   gulp.task('deploy-patch', sequence('docker-test', 'bump-patch', 'assets', 'update', 'git-commit', 'git-push', 'npm'));
   gulp.task('deploy-minor', sequence('docker-test', 'bump-minor', 'assets', 'update', 'git-commit', 'git-push', 'npm'));
   gulp.task('deploy-major', sequence('docker-test', 'bump-patch', 'assets', 'update', 'git-commit', 'git-push', 'npm'));
-
+  
 })();
