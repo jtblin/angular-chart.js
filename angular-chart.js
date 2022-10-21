@@ -109,7 +109,8 @@
           chartColors: '=?',
           chartClick: '=?',
           chartHover: '=?',
-          chartDatasetOverride: '=?'
+          chartDatasetOverride: '=?',
+          chartShowWeekends: '@?'
         },
         link: function (scope, elem/*, attrs */) {
           if (useExcanvas) window.G_vmlCanvasManager.initElement(elem[0]);
@@ -177,6 +178,45 @@
       // Destroy old chart if it exists to avoid ghost charts issue
       // https://github.com/jtblin/angular-chart.js/issues/187
       destroyChart(scope);
+
+      // Create annotation boxes for each weekends
+      // making weekends visible on the chart background.
+      // Requires time on x axis and annotation plugin.
+      // https://github.com/chartjs/chartjs-plugin-annotation
+      if (scope.chartShowWeekends) {
+        var annotationsArray = [];
+        var begin, end;
+
+        angular.forEach(data.labels, function(textDate) {
+          var dow = (new Date(textDate)).getDay();
+
+          if (dow === 5) {	// saturday midnight
+            begin = textDate;
+          };
+
+          if (dow === 0) { 	// monday midnight
+            end = textDate;
+
+            annotationsArray.push({
+              type: 'box',
+              xScaleID: 'x-axis-0',
+              xMin: begin,
+              xMax: end,
+              backgroundColor: 'rgba(150, 150, 200, 0.1)',
+            });
+
+            begin = null;
+            end = null;
+          };
+        });
+
+        angular.extend(options, {
+          annotation: {
+            drawTime: "beforeDatasetsDraw",
+            annotations: annotationsArray,
+          }
+        });
+      };
 
       scope.chart = new ChartJs.Chart(ctx, {
         type: type,
