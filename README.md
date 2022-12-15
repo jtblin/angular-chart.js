@@ -171,7 +171,12 @@ angular-chart.js listens to the scope `$destroy` event and destroys the chart wh
 
 # Colors
 
-There are a set of 7 default colors. Colors can be replaced using the `colors` attribute.
+There are a set of 7 default colors. Colors can be replaced using the `chart-colors` attribute:
+
+```
+<canvas ... chart-colors="['#ff0000', '#00ff00', '#0000ff']">
+```
+
 If there is more data than colors, colors are generated randomly or can be provided 
 via a function through the `getColor` attribute.
 
