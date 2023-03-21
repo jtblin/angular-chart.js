@@ -1,12 +1,3 @@
-/*!
- * angular-chart.js - An angular.js wrapper for Chart.js
- * http://jtblin.github.io/angular-chart.js/
- * Version: 1.1.1
- *
- * Copyright 2016 Jerome Touffe-Blin
- * Released under the BSD-2-Clause license
- * https://github.com/jtblin/angular-chart.js/blob/master/LICENSE
- */
 (function (factory) {
   'use strict';
   if (typeof exports === 'object') {
@@ -118,7 +109,9 @@
           chartColors: '=?',
           chartClick: '=?',
           chartHover: '=?',
-          chartDatasetOverride: '=?'
+          chartDatasetOverride: '=?',
+          chartForceUpdate: '=?',
+          chartDisplayWhenNoData: '=?'
         },
         link: function (scope, elem/*, attrs */) {
           if (useExcanvas) window.G_vmlCanvasManager.initElement(elem[0]);
@@ -127,7 +120,7 @@
           scope.$watch('chartData', watchData, true);
           scope.$watch('chartSeries', watchOther, true);
           scope.$watch('chartLabels', watchOther, true);
-          scope.$watch('chartOptions', watchOther, true);
+          scope.$watch('chartOptions', watchOptions, true);
           scope.$watch('chartColors', watchOther, true);
           scope.$watch('chartDatasetOverride', watchOther, true);
           scope.$watch('chartType', watchType, false);
@@ -141,14 +134,14 @@
           });
 
           function watchData (newVal, oldVal) {
-            if (! newVal || ! newVal.length || (Array.isArray(newVal[0]) && ! newVal[0].length)) {
+            if (!scope.chartDisplayWhenNoData && (! newVal || ! newVal.length || (Array.isArray(newVal[0]) && ! newVal[0].length))) {
               destroyChart(scope);
               return;
             }
             var chartType = type || scope.chartType;
             if (! chartType) return;
 
-            if (scope.chart && canUpdateChart(newVal, oldVal))
+            if (scope.chart && (canUpdateChart(newVal, oldVal) || scope.chartForceUpdate))
               return updateChart(newVal, scope);
 
             createChart(chartType, scope, elem);
@@ -165,6 +158,12 @@
             createChart(chartType, scope, elem);
           }
 
+          function watchOptions (newVal, oldVal) {
+            if (isEmpty(newVal)) return;
+            if (angular.equals(newVal, oldVal)) return;
+            updateChartOption(newVal, scope)
+          }
+
           function watchType (newVal, oldVal) {
             if (isEmpty(newVal)) return;
             if (angular.equals(newVal, oldVal)) return;
@@ -176,7 +175,7 @@
 
     function createChart (type, scope, elem) {
       var options = getChartOptions(type, scope);
-      if (! hasData(scope) || ! canDisplay(type, scope, elem, options)) return;
+      if (!scope.chartDisplayWhenNoData && (! hasData(scope) || ! canDisplay(type, scope, elem, options))) return;
 
       var cvs = elem[0];
       var ctx = cvs.getContext('2d');
@@ -359,6 +358,18 @@
     function bindEvents (cvs, scope) {
       cvs.onclick = scope.chartClick ? getEventHandler(scope, 'chartClick', false) : angular.noop;
       cvs.onmousemove = scope.chartHover ? getEventHandler(scope, 'chartHover', true) : angular.noop;
+    }
+
+    function updateChartOption(values,scope) {
+      if (values) {
+        Object.keys(values).forEach((key) => {
+          if (scope.chart.options[key]) {
+            scope.chart.options[key] = values[key]
+          }
+        })
+        scope.chart.update('quiet');
+        scope.$emit('chart-update', scope.chart);
+      }
     }
 
     function updateChart (values, scope) {
