@@ -1,7 +1,7 @@
 /*!
  * angular-chart.js - An angular.js wrapper for Chart.js
  * http://jtblin.github.io/angular-chart.js/
- * Version: 1.1.1
+ * Version: 2.0.0
  *
  * Copyright 2016 Jerome Touffe-Blin
  * Released under the BSD-2-Clause license
@@ -14,13 +14,13 @@
     module.exports = factory(
       typeof angular !== 'undefined' ? angular : require('angular'),
       typeof Chart !== 'undefined' ? Chart : require('chart.js'));
-  }  else if (typeof define === 'function' && define.amd) {
+  } else if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
     define(['angular', 'chart'], factory);
   } else {
     // Browser globals
     if (typeof angular === 'undefined') {
-        throw new Error('AngularJS framework needs to be included, see https://angularjs.org/');
+      throw new Error('AngularJS framework needs to be included, see https://angularjs.org/');
     } else if (typeof Chart === 'undefined') {
       throw new Error('Chart.js library needs to be included, see http://jtblin.github.io/angular-chart.js/');
     }
@@ -44,7 +44,7 @@
     '#4D5360'  // dark grey
   ];
 
-  var useExcanvas = typeof window.G_vmlCanvasManager === 'object' &&
+  const useExcanvas = typeof window.G_vmlCanvasManager === 'object' &&
     window.G_vmlCanvasManager !== null &&
     typeof window.G_vmlCanvasManager.initElement === 'function';
 
@@ -53,15 +53,15 @@
   return angular.module('chart.js', [])
     .provider('ChartJs', ChartJsProvider)
     .factory('ChartJsFactory', ['ChartJs', '$timeout', ChartJsFactory])
-    .directive('chartBase', ['ChartJsFactory', function (ChartJsFactory) { return new ChartJsFactory(); }])
-    .directive('chartLine', ['ChartJsFactory', function (ChartJsFactory) { return new ChartJsFactory('line'); }])
-    .directive('chartBar', ['ChartJsFactory', function (ChartJsFactory) { return new ChartJsFactory('bar'); }])
-    .directive('chartHorizontalBar', ['ChartJsFactory', function (ChartJsFactory) { return new ChartJsFactory('horizontalBar'); }])
-    .directive('chartRadar', ['ChartJsFactory', function (ChartJsFactory) { return new ChartJsFactory('radar'); }])
-    .directive('chartDoughnut', ['ChartJsFactory', function (ChartJsFactory) { return new ChartJsFactory('doughnut'); }])
-    .directive('chartPie', ['ChartJsFactory', function (ChartJsFactory) { return new ChartJsFactory('pie'); }])
-    .directive('chartPolarArea', ['ChartJsFactory', function (ChartJsFactory) { return new ChartJsFactory('polarArea'); }])
-    .directive('chartBubble', ['ChartJsFactory', function (ChartJsFactory) { return new ChartJsFactory('bubble'); }])
+    .directive('chartBase', ['ChartJsFactory', (ChartJsFactory) => new ChartJsFactory()])
+    .directive('chartLine', ['ChartJsFactory', (ChartJsFactory) => new ChartJsFactory('line')])
+    .directive('chartBar', ['ChartJsFactory', (ChartJsFactory) => new ChartJsFactory('bar')])
+    .directive('chartHorizontalBar', ['ChartJsFactory', (ChartJsFactory) => new ChartJsFactory('horizontalBar')])
+    .directive('chartRadar', ['ChartJsFactory', (ChartJsFactory) => new ChartJsFactory('radar')])
+    .directive('chartDoughnut', ['ChartJsFactory', (ChartJsFactory) => new ChartJsFactory('doughnut')])
+    .directive('chartPie', ['ChartJsFactory', (ChartJsFactory) => new ChartJsFactory('pie')])
+    .directive('chartPolarArea', ['ChartJsFactory', (ChartJsFactory) => new ChartJsFactory('polarArea')])
+    .directive('chartBubble', ['ChartJsFactory', (ChartJsFactory) => new ChartJsFactory('bubble')])
     .name;
 
   /**
@@ -74,11 +74,11 @@
    * })))
    */
   function ChartJsProvider () {
-    var options = { responsive: true };
-    var ChartJs = {
+    let options = { responsive: true };
+    const ChartJs = {
       Chart: Chart,
-      getOptions: function (type) {
-        var typeOptions = type && options[type] || {};
+      getOptions: (type) => {
+        const typeOptions = type && options[type] || {};
         return angular.extend({}, options, typeOptions);
       }
     };
@@ -99,9 +99,7 @@
       angular.merge(ChartJs.Chart.defaults, options);
     };
 
-    this.$get = function () {
-      return ChartJs;
-    };
+    this.$get = () => ChartJs;
   }
 
   function ChartJsFactory (ChartJs, $timeout) {
@@ -132,11 +130,9 @@
           scope.$watch('chartDatasetOverride', watchOther, true);
           scope.$watch('chartType', watchType, false);
 
-          scope.$on('$destroy', function () {
-            destroyChart(scope);
-          });
+          scope.$on('$destroy', () => destroyChart(scope));
 
-          scope.$on('$resize', function () {
+          scope.$on('$resize', () => {
             if (scope.chart) scope.chart.resize();
           });
 
@@ -145,7 +141,7 @@
               destroyChart(scope);
               return;
             }
-            var chartType = type || scope.chartType;
+            const chartType = type || scope.chartType;
             if (! chartType) return;
 
             if (scope.chart && canUpdateChart(newVal, oldVal))
@@ -157,7 +153,7 @@
           function watchOther (newVal, oldVal) {
             if (isEmpty(newVal)) return;
             if (angular.equals(newVal, oldVal)) return;
-            var chartType = type || scope.chartType;
+            const chartType = type || scope.chartType;
             if (! chartType) return;
 
             // chart.update() doesn't work for series and labels
@@ -175,14 +171,14 @@
     };
 
     function createChart (type, scope, elem) {
-      var options = getChartOptions(type, scope);
+      const options = getChartOptions(type, scope);
       if (! hasData(scope) || ! canDisplay(type, scope, elem, options)) return;
 
-      var cvs = elem[0];
-      var ctx = cvs.getContext('2d');
+      const cvs = elem[0];
+      const ctx = cvs.getContext('2d');
 
       scope.chartGetColor = getChartColorFn(scope);
-      var data = getChartData(type, scope);
+      const data = getChartData(type, scope);
       // Destroy old chart if it exists to avoid ghost charts issue
       // https://github.com/jtblin/angular-chart.js/issues/187
       destroyChart(scope);
@@ -199,8 +195,7 @@
     function canUpdateChart (newVal, oldVal) {
       if (newVal && oldVal && newVal.length && oldVal.length) {
         return Array.isArray(newVal[0]) ?
-        newVal.length === oldVal.length && newVal.every(function (element, index) {
-          return element.length === oldVal[index].length; }) :
+          newVal.length === oldVal.length && newVal.every((element, index) => element.length === oldVal[index].length) :
           oldVal.reduce(sum, 0) > 0 ? newVal.length === oldVal.length : false;
       }
       return false;
@@ -211,16 +206,16 @@
     }
 
     function getEventHandler (scope, action, triggerOnlyOnChange) {
-      var lastState = {
-        point: void 0,
-        points: void 0
+      const lastState = {
+        point: undefined,
+        points: undefined
       };
       return function (evt) {
-        var atEvent = scope.chart.getElementAtEvent || scope.chart.getPointAtEvent;
-        var atEvents = scope.chart.getElementsAtEvent || scope.chart.getPointsAtEvent;
+        const atEvent = scope.chart.getElementAtEvent || scope.chart.getPointAtEvent;
+        const atEvents = scope.chart.getElementsAtEvent || scope.chart.getPointsAtEvent;
         if (atEvents) {
-          var points = atEvents.call(scope.chart, evt);
-          var point = atEvent ? atEvent.call(scope.chart, evt)[0] : void 0;
+          const points = atEvents.call(scope.chart, evt);
+          const point = atEvent ? atEvent.call(scope.chart, evt)[0] : undefined;
 
           if (triggerOnlyOnChange === false ||
             (! angular.equals(lastState.points, points) && ! angular.equals(lastState.point, point))
@@ -234,11 +229,11 @@
     }
 
     function getColors (type, scope) {
-      var colors = angular.copy(scope.chartColors ||
+      const colors = angular.copy(scope.chartColors ||
         ChartJs.getOptions(type).chartColors ||
         Chart.defaults.global.colors
       );
-      var notEnoughColors = colors.length < scope.chartData.length;
+      const notEnoughColors = colors.length < scope.chartData.length;
       while (colors.length < scope.chartData.length) {
         colors.push(scope.chartGetColor());
       }
@@ -259,12 +254,12 @@
     }
 
     function getRandomColor () {
-      var color = [getRandomInt(0, 255), getRandomInt(0, 255), getRandomInt(0, 255)];
+      const color = [getRandomInt(0, 255), getRandomInt(0, 255), getRandomInt(0, 255)];
       return getColor(color);
     }
 
     function getColor (color) {
-      var alpha = color[3] || 1;
+      const alpha = color[3] || 1;
       color = color.slice(0, 3);
       return {
         backgroundColor: rgba(color, 0.2),
@@ -282,21 +277,21 @@
 
     function rgba (color, alpha) {
       // rgba not supported by IE8
-      return useExcanvas ? 'rgb(' + color.join(',') + ')' : 'rgba(' + color.concat(alpha).join(',') + ')';
+      return useExcanvas ? `rgb(${color.join(',')})` : `rgba(${color.concat(alpha).join(',')})`;
     }
 
     // Credit: http://stackoverflow.com/a/11508164/1190235
     function hexToRgb (hex) {
-      var bigint = parseInt(hex, 16),
-        r = (bigint >> 16) & 255,
-        g = (bigint >> 8) & 255,
-        b = bigint & 255;
+      const bigint = parseInt(hex, 16);
+      const r = (bigint >> 16) & 255;
+      const g = (bigint >> 8) & 255;
+      const b = bigint & 255;
 
       return [r, g, b];
     }
 
     function rgbStringToRgb (color) {
-      var match = color.match(/^rgba?\(([\d,.]+)\)$/);
+      const match = color.match(/^rgba?\(([\d,.]+)\)$/);
       if (! match) throw new Error('Cannot parse rgb value');
       color = match[1].split(',');
       return color.map(Number);
@@ -311,7 +306,7 @@
     }
 
     function getChartData (type, scope) {
-      var colors = getColors(type, scope);
+      const colors = getColors(type, scope);
       return Array.isArray(scope.chartData[0]) ?
         getDataSets(scope.chartLabels, scope.chartData, scope.chartSeries || [], colors, scope.chartDatasetOverride) :
         getData(scope.chartLabels, scope.chartData, colors, scope.chartDatasetOverride);
@@ -320,8 +315,8 @@
     function getDataSets (labels, data, series, colors, datasetOverride) {
       return {
         labels: labels,
-        datasets: data.map(function (item, i) {
-          var dataset = angular.extend({}, colors[i], {
+        datasets: data.map((item, i) => {
+          const dataset = angular.extend({}, colors[i], {
             label: series[i],
             data: item
           });
@@ -334,16 +329,12 @@
     }
 
     function getData (labels, data, colors, datasetOverride) {
-      var dataset = {
+      const dataset = {
         labels: labels,
         datasets: [{
           data: data,
-          backgroundColor: colors.map(function (color) {
-            return color.pointBackgroundColor;
-          }),
-          hoverBackgroundColor: colors.map(function (color) {
-            return color.backgroundColor;
-          })
+          backgroundColor: colors.map((color) => color.pointBackgroundColor),
+          hoverBackgroundColor: colors.map((color) => color.backgroundColor)
         }]
       };
       if (datasetOverride) {
@@ -363,7 +354,7 @@
 
     function updateChart (values, scope) {
       if (Array.isArray(scope.chartData[0])) {
-        scope.chart.data.datasets.forEach(function (dataset, i) {
+        scope.chart.data.datasets.forEach((dataset, i) => {
           dataset.data = values[i];
         });
       } else {
@@ -383,7 +374,7 @@
     function canDisplay (type, scope, elem, options) {
       // TODO: check parent?
       if (options.responsive && elem[0].clientHeight === 0) {
-        $timeout(function () {
+        $timeout(() => {
           createChart(type, scope, elem);
         }, 50, false);
         return false;

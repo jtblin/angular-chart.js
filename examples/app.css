@@ -22,22 +22,12 @@ body { padding-top: 50px; }
 }
 
 .header {
-  z-index: 500;
   position: absolute;
   left: 0;
   width: 100%;
   top: 50%;
   font-size: larger;
   z-index: 500;
-}
-
-.social-buttons {
-  margin-top: 20px;
-  list-style-type: none;
-}
-
-.social-buttons > li {
-  display: inline;
 }
 
 .panel-heading {
@@ -79,10 +69,6 @@ div.settings {
 
 div.settings > code {
   border-top: 1px solid #eaeaea;
-}
-
-.bower > iframe {
-  vertical-align: middle;
 }
 
 .footer {

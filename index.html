@@ -2,11 +2,11 @@
 <html>
 <head lang="en">
   <meta charset="UTF-8">
-  <title>angular-chart.js - beautiful, reactive, responsive charts for Angular.JS using Chart.js</title>
+  <title>Charts</title>
   <link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.min.css">
   <link rel="stylesheet" href="node_modules/rainbow-code/themes/css/github.css">
   <link href="node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="examples/app.css" rel="stylesheet">
+  <link href="app.css" rel="stylesheet">
   <style>
     .chart-legend {
       list-style-type: none;
@@ -94,34 +94,10 @@
 
         <p>
           <a class="btn btn-default btn-lg" href="https://github.com/jtblin/angular-chart"><i class="icon-github"></i>Code on Github</a>
-          <a class="btn btn-success btn-lg" href="dist/angular-chart.js.tar.gz" download="angular-chart.js.tar.gz">
-            <i class="fa fa-download"></i> Download <small>(1.1.1)</small>
+          <a class="btn btn-success btn-lg" href="../didist/angular-chart.js.tar.gz" download="angular-chart.js.tar.gz">
+            <i class="fa fa-download"></i> Download <small>(2.0.0)</small>
           </a>
-          <span class="bower">
-            <iframe src="https://benschwarz.github.io/bower-badges/embed.html?pkgname=angular-chart.js" width="160" height="32" allowtransparency="true" frameborder="0" scrolling="0"></iframe>
-          </span>
         </p>
-        <ul class="social-buttons">
-          <li>
-            <iframe src="http://ghbtns.com/github-btn.html?user=jtblin&repo=angular-chart.js&type=star&count=true" allowtransparency="true" frameborder="0" scrolling="0" width="110" height="20"></iframe>
-          </li>
-          <li>
-            <iframe src="https://ghbtns.com/github-btn.html?user=jtblin&repo=angular-chart.js&type=watch&count=true&v=2" frameborder="0" scrolling="0" width="110" height="20"></iframe>
-          </li>
-          <li>
-            <iframe src="https://ghbtns.com/github-btn.html?user=jtblin&repo=angular-chart.js&type=fork&count=true&v=2" frameborder="0" scrolling="0" width="110" height="20"></iframe>
-          </li>
-          <li>
-            <iframe src="https://ghbtns.com/github-btn.html?user=jtblin&type=follow&count=true&v=2" frameborder="0" scrolling="0" width="150" height="20"></iframe>
-          </li>
-          <li>
-
-          </li>
-          <li>
-            <a href="https://twitter.com/share" class="twitter-share-button" data-via="jtblin" data-hashtags="angularjs,chartjs" data-text="angular-chart.js - beautiful, reactive, responsive charts: http://jtblin.github.io/angular-chart.js/">Tweet</a>
-            <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
-          </li>
-        </ul>
       </div>
     </div>
   </div>
@@ -135,22 +111,22 @@
         This repository contains a set of <strong>native AngularJS directives</strong> for Chart.js. The <strong>only required dependencies</strong> are:
       </p>
       <ul>
-        <li><a href="http://angularjs.org" target="_blank">AngularJS</a> (requires at least 1.4.x)</li>
+        <li><a href="http://angularjs.org" target="_blank">AngularJS</a> (requires at least 1.8.x)</li>
         <li><a href="http://chartjs.org" target="_blank">Chart.js</a> (requires Chart.js 2.x).</li>
       </ul>
       <h3>Files to download</h3>
       <p>
         The easiest is to download with <strong>npm</strong>:
         <pre>npm install angular-chart.js --save</pre>
-        Alternatively files can be <a href="https://github.com/jtblin/angular-chart.js">downloaded from Github</a> or via PolarArea.
-        See <a href="https://github.com/jtblin/angular-chart.js">readme</a> for more information.
+        Alternatively files can be <a href="https://github.com/jtbldist/angular-chart.js">downloaded from Github</a> or via PolarArea.
+        See <a href="https://github.com/jtbldist/angular-chart.js">readme</a> for more information.
       </p>
       <p>Whichever method you choose the good news is that the overall size is very small:
         &lt;5kb for all directives (~1kb with gzip compression!)</p>
       <h3>Installation</h3>
       <p>You need to include the dependencies in your page:</p>
-      <pre><code>&lt;script src="node_modules/chart.js/Chart.min.js">&lt;/script&gt;
-&lt;script src="node_modules/angular-chart.js/dist/angular-chart.min.js">&lt;/script&gt;</code></pre>
+      <pre><code>&lt;script src="node_modules/chart.js/dist/Chart.min.js">&lt;/script&gt;
+&lt;script src="node_moduldist/angular-chart.js/dist/angular-chart.min.js">&lt;/script&gt;</code></pre>
       <p>As soon as you've got all the files downloaded and included in your page you just need to declare
         a dependency on the <code>chart.js</code> <a href="http://docs.angularjs.org/guide/module">module</a>:<br>
       </p><pre><code>angular.module('myModule', ['chart.js']);</code></pre>
@@ -170,9 +146,9 @@
         <li><span style="background-color: rgba(77,83,96,1)"></span>Dark Grey</li>
       </ol>
       <p>You can also use the provider : <code>ChartJsProvider</code> in a <code>.config()</code></p>
-      <p><pre><code>(function (ChartJsProvider) {
+      <p><pre><code>(ChartJsProvider) => {
   ChartJsProvider.setOptions({ colors : [ '#803690', '#00ADF9', '#DCDCDC', '#46BFBD', '#FDB45C', '#949FB1', '#4D5360'] });
-}); </code></pre></p>
+}</code></pre></p>
     </section>
     <section id="directives">
       <div class="page-header">
@@ -213,7 +189,7 @@ chart-dataset-override=&quot;datasetOverride&quot; chart-click=&quot;onClick&quo
 &lt;/canvas&gt;</code></pre>
             </tab>
             <tab heading="Javascript">
-              <pre><code data-language="javascript">angular.module("app", ["chart.js"]).controller("LineCtrl", function ($scope) {
+              <pre><code data-language="javascript">angular.module("app", ["chart.js"]).controller("LineCtrl", ($scope) => {
 
   $scope.labels = ["January", "February", "March", "April", "May", "June", "July"];
   $scope.series = ['Series A', 'Series B'];
@@ -273,7 +249,7 @@ chart-dataset-override=&quot;datasetOverride&quot; chart-click=&quot;onClick&quo
 &lt;/canvas&gt;</code></pre>
             </tab>
             <tab heading="Javascript">
-              <pre><code data-language="javascript">angular.module("app", ["chart.js"]).controller("BarCtrl", function ($scope) {
+              <pre><code data-language="javascript">angular.module("app", ["chart.js"]).controller("BarCtrl", ($scope) => {
   $scope.labels = ['2006', '2007', '2008', '2009', '2010', '2011', '2012'];
   $scope.series = ['Series A', 'Series B'];
 
@@ -328,7 +304,7 @@ chart-dataset-override=&quot;datasetOverride&quot; chart-click=&quot;onClick&quo
 &lt;/canvas&gt; </code></pre>
             </tab>
             <tab heading="Javascript">
-              <pre><code data-language="javascript">angular.module("app", ["chart.js"]).controller("DoughnutCtrl", function ($scope) {
+              <pre><code data-language="javascript">angular.module("app", ["chart.js"]).controller("DoughnutCtrl", ($scope) => {
   $scope.labels = ["Download Sales", "In-Store Sales", "Mail-Order Sales"];
   $scope.data = [300, 500, 100];
 });
@@ -361,7 +337,7 @@ chart-dataset-override=&quot;datasetOverride&quot; chart-click=&quot;onClick&quo
 &lt;/canvas&gt; </code></pre>
             </tab>
             <tab heading="Javascript">
-              <pre><code data-language="javascript">angular.module("app", ["chart.js"]).controller("RadarCtrl", function ($scope) {
+              <pre><code data-language="javascript">angular.module("app", ["chart.js"]).controller("RadarCtrl", ($scope) => {
   $scope.labels =["Eating", "Drinking", "Sleeping", "Designing", "Coding", "Cycling", "Running"];
 
   $scope.data = [
@@ -415,7 +391,7 @@ chart-dataset-override=&quot;datasetOverride&quot; chart-click=&quot;onClick&quo
 &lt;/canvas&gt; </code></pre>
             </tab>
             <tab heading="Javascript">
-              <pre><code data-language="javascript">angular.module("app", ["chart.js"]).controller("PieCtrl", function ($scope) {
+              <pre><code data-language="javascript">angular.module("app", ["chart.js"]).controller("PieCtrl", ($scope) => {
   $scope.labels = ["Download Sales", "In-Store Sales", "Mail-Order Sales"];
   $scope.data = [300, 500, 100];
 });
@@ -447,7 +423,7 @@ chart-dataset-override=&quot;datasetOverride&quot; chart-click=&quot;onClick&quo
 &lt;/canvas&gt; </code></pre>
             </tab>
             <tab heading="Javascript">
-              <pre><code data-language="javascript">angular.module("app", ["chart.js"]).controller("PolarAreaCtrl", function ($scope) {
+              <pre><code data-language="javascript">angular.module("app", ["chart.js"]).controller("PolarAreaCtrl", ($scope) => {
   $scope.labels = ["Download Sales", "In-Store Sales", "Mail-Order Sales", "Tele Sales", "Corporate Sales"];
   $scope.data = [300, 500, 100, 40, 120];
 });
@@ -499,7 +475,7 @@ chart-dataset-override=&quot;datasetOverride&quot; chart-click=&quot;onClick&quo
             </tab>
             <tab heading="Javascript">
               <pre><code data-language="javascript">angular.module("app", ["chart.js"]).controller("BarCtrl",
-  function ($scope) {
+  ($scope) => {
     $scope.labels = ['2006', '2007', '2008', '2009', '2010', '2011', '2012'];
     $scope.series = ['Series A', 'Series B'];
 
@@ -539,7 +515,7 @@ chart-dataset-override=&quot;datasetOverride&quot; chart-click=&quot;onClick&quo
             </tab>
             <tab heading="Javascript">
               <pre><code data-language="javascript">angular.module("app", ["chart.js"]).controller("BubbleCtrl",
-  function ($scope) {
+  ($scope) => {
     // see examples/bubble.js for random bubbles source code
     $scope.series = ['Series A', 'Series B'];
 
@@ -598,7 +574,7 @@ chart-dataset-override=&quot;datasetOverride&quot; chart-click=&quot;onClick&quo
             </tab>
             <tab heading="Javascript">
               <pre><code data-language="javascript">angular.module("app", ["chart.js"]).controller("BaseCtrl",
-  function ($scope) {
+  ($scope) => {
     $scope.labels = ["Download Sales", "In-Store Sales", "Mail-Order Sales", "Tele Sales", "Corporate Sales"];
     $scope.data = [300, 500, 100, 40, 120];
     $scope.type = 'polarArea';
@@ -663,7 +639,7 @@ chart-dataset-override=&quot;datasetOverride&quot; chart-click=&quot;onClick&quo
             </tab>
             <tab heading="Javascript">
               <pre><code data-language="javascript">angular.module("app", ["chart.js"]).controller("MixedChartCtrl",
-  function ($scope) {
+  ($scope) => {
     $scope.colors = ['#45b7cd', '#ff6384', '#ff8e72'];
 
     $scope.labels = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
@@ -705,8 +681,8 @@ chart-dataset-override=&quot;datasetOverride&quot; chart-click=&quot;onClick&quo
   <footer class="footer">
     <div class="container">
       <p>Designed and built by <a href="https://github.com/jtblin" target="_blank">Jerome Touffe-Blin</a></p>
-      <p>Code licensed under <a href="https://github.com/jtblin/angular-chart.js/blob/master/LICENSE">BSD License</a>.</p>
-      <p><a href="https://github.com/jtblin/angular-chart.js/issues?state=open">Issues</a></p>
+      <p>Code licensed under <a href="https://github.com/jtbldist/angular-chart.js/blob/master/LICENSE">BSD License</a>.</p>
+      <p><a href="https://github.com/jtbldist/angular-chart.js/issues?state=open">Issues</a></p>
       <p><strong>Credits</strong>: <a href="http://www.chartjs.org/">Chart.js</a> and <a href="https://angularjs.org/">AngularJS</a></p>
     </div>
   </footer>
@@ -719,8 +695,8 @@ chart-dataset-override=&quot;datasetOverride&quot; chart-click=&quot;onClick&quo
   <script src="node_modules/rainbow-code/src/language/html.js"></script>
   <script src="node_modules/rainbow-code/src/language/javascript.js"></script>
   <script src="dist/angular-chart.js"></script>
-  <script src="examples/smoothscroll.min.js"></script>
-  <script src="examples/app.js"></script>
+  <script src="smoothscroll.min.js"></script>
+  <script src="app.js"></script>
   <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
         (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -729,7 +705,6 @@ chart-dataset-override=&quot;datasetOverride&quot; chart-click=&quot;onClick&quo
 
     ga('create', 'UA-53037324-1', 'auto');
     ga('send', 'pageview');
-
   </script>
 </body>
 </html>
