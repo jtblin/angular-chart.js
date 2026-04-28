@@ -1,4 +1,4 @@
-/*jshint mocha:true*/
+/*jshint mocha:true */
 /*global module:true*/
 /*global inject:true*/
 /*global expect:true*/
@@ -6,6 +6,8 @@
 
 describe('Unit testing', function () {
   'use strict';
+
+  /* jshint expr: true */
 
   var $compile, scope, sandbox, ChartJs, ChartJsProvider;
 
@@ -19,7 +21,7 @@ describe('Unit testing', function () {
     $compile = _$compile_;
     scope = _$rootScope_;
     ChartJs = _ChartJs_;
-    sandbox = sinon.sandbox.create();
+    sandbox = sinon.createSandbox();
   }));
 
   afterEach(function () {

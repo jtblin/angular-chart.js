@@ -14,8 +14,12 @@ script and options.
 
 # Installation
 
-This is the `1.x` branch which requires Chart.js 2.x version. Following semantic versioning,
-there are numerous **breaking changes** since 0.x, notably:
+This is the `2.x` branch which requires Chart.js 2.x version and AngularJS 1.8.x.
+This version drops support for legacy browsers (IE11 and below) and uses ES6 syntax.
+Following semantic versioning, there are numerous **breaking changes** since 1.x, notably:
+
+* **ES6 Baseline**: The library and examples now use ES6 features (arrow functions, `const`/`let`, etc.).
+* **Dropped IE Support**: Support for IE11 and below has been removed.
 
 * all options now need to use the `chart-` prefix
 * `chart-colours` is now `chart-colors` and `chart-get-colour` is now `chart-get-color`
@@ -98,7 +102,7 @@ See also [stacked bar example](http://jtblin.github.io/angular-chart.js/examples
 ```javascript
 angular.module("app", ["chart.js"])
   // Optional configuration
-  .config(['ChartJsProvider', function (ChartJsProvider) {
+  .config(['ChartJsProvider', (ChartJsProvider) => {
     // Configure all charts
     ChartJsProvider.setOptions({
       chartColors: ['#FF5252', '#FF8A80'],
@@ -109,7 +113,7 @@ angular.module("app", ["chart.js"])
       showLines: false
     });
   }])
-  .controller("LineCtrl", ['$scope', '$timeout', function ($scope, $timeout) {
+  .controller("LineCtrl", ['$scope', '$timeout', ($scope, $timeout) => {
 
   $scope.labels = ["January", "February", "March", "April", "May", "June", "July"];
   $scope.series = ['Series A', 'Series B'];
@@ -117,12 +121,12 @@ angular.module("app", ["chart.js"])
     [65, 59, 80, 81, 56, 55, 40],
     [28, 48, 40, 19, 86, 27, 90]
   ];
-  $scope.onClick = function (points, evt) {
+  $scope.onClick = (points, evt) => {
     console.log(points, evt);
   };
   
   // Simulate async data update
-  $timeout(function () {
+  $timeout(() => {
     $scope.data = [
       [28, 48, 40, 19, 86, 27, 90],
       [65, 59, 80, 81, 56, 55, 40]
@@ -197,7 +201,7 @@ They may be used alongside RGB colors and/or Hex colors.
 ## Example - RGBA Colors
 ```
 angular.module('app',['chart.js'])
-        .controller('MainController', function($scope){ 
+        .controller('MainController', ($scope) => { 
           $scope.colors = ["rgba(159,204,0,0.5)","rgba(250,109,33,0.7)","rgba(154,154,154,0.5)"];
           $scope.labels = ["Green", "Orange", "Grey"];
           $scope.data = [300, 500, 100];
@@ -226,26 +230,6 @@ angular.module('app',['chart.js'])
         });
 ```
 
-## Browser compatibility
-
-For IE8 and older browsers, you will need 
-to include [excanvas](https://code.google.com/p/explorercanvas/wiki/Instructions). 
-You will also need a [shim](https://github.com/es-shims/es5-shim) for ES5 functions.
-
-You also need to have  ```height``` and ```width``` attributes for the ```<canvas>``` tag of your chart 
-if using IE8 and older browsers. If you *do not* have these attributes, you will need a 
-[getComputedStyle shim](https://github.com/Financial-Times/polyfill-service/blob/master/polyfills/getComputedStyle/polyfill.js) 
-and the line ```document.defaultView = window;```, but there still may be errors (due to code in Chart.js).
-
-```html
-<head>
-<!--[if lt IE 9]>
-  <script src="excanvas.js"></script>
-  <script src="es5-shim.js"></script>
-<![endif]-->
-</head>
-```
-
 # Issues
 
 **Issues or feature requests for Chart.js (e.g. new chart type, new axis, etc.) need to be opened on 
@@ -257,12 +241,6 @@ Please check if issue exists first, otherwise open issue in [github](https://git
 **Ensure you add a link to a plunker, jsbin, or equivalent.** 
 
 Here is a [jsbin template](http://jsbin.com/rodunob/edit?html,js,output) for convenience.
-
-# v0.x - Chart.js v1.x - deprecated
-
-This is the deprecated version of angular-chart.js that uses the v1.x version of Chart.js.
-If you want to use this version, please checkout the 
-[chartjs-1.x branch](https://github.com/jtblin/angular-chart.js/tree/chartjs-1.x)
 
 # Contributing
  

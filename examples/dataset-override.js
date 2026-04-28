@@ -1,4 +1,4 @@
-angular.module('app', ['chart.js']).controller('OverrideCtrl', ['$scope', function ($scope) {
+angular.module('app', ['chart.js']).controller('OverrideCtrl', ['$scope', ($scope) => {
   'use strict';
 
   $scope.colors = ['#45b7cd', '#ff6384', '#ff8e72'];

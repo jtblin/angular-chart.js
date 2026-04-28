@@ -1,5 +1,6 @@
 {
-  "strict"        : true,     // true: Requires all functions run in ES5 Strict Mode
+  "esversion"     : 11,
+  "strict"        : true,
   "undef"         : true,     // true: Require all non-global variables to be declared (prevents global leaks)
   "unused"        : true,     // true: Require all defined variables be used
   "noempty"       : true,     // Prohibit use of empty blocks

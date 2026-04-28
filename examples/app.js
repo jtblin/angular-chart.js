@@ -1,9 +1,9 @@
-(function () {
+(() => {
   'use strict';
 
-  var app = angular.module('examples', ['chart.js', 'ui.bootstrap']);
+  const app = angular.module('examples', ['chart.js', 'ui.bootstrap']);
 
-  app.config(function (ChartJsProvider) {
+  app.config((ChartJsProvider) => {
     // Configure all charts
     ChartJsProvider.setOptions({
       colors: ['#97BBCD', '#DCDCDC', '#F7464A', '#46BFBD', '#FDB45C', '#949FB1', '#4D5360']
@@ -17,22 +17,22 @@
     });
   });
 
-  app.controller('MenuCtrl', ['$scope', function ($scope) {
+  app.controller('MenuCtrl', ['$scope', ($scope) => {
     $scope.isCollapsed = true;
     $scope.charts = ['Line', 'Bar', 'Doughnut', 'Pie', 'Polar Area', 'Radar', 'Horizontal Bar', 'Bubble', 'Base'];
   }]);
 
-  app.controller('LineCtrl', ['$scope', function ($scope) {
+  app.controller('LineCtrl', ['$scope', ($scope) => {
     $scope.labels = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
     $scope.series = ['Series A', 'Series B'];
     $scope.data = [
       [65, 59, 80, 81, 56, 55, 40],
       [28, 48, 40, 19, 86, 27, 90]
     ];
-    $scope.onClick = function (points, evt) {
+    $scope.onClick = (points, evt) => {
       console.log(points, evt);
     };
-    $scope.onHover = function (points) {
+    $scope.onHover = (points) => {
       if (points.length > 0) {
         console.log('Point', points[0].value);
       } else {
@@ -61,7 +61,7 @@
     };
   }]);
 
-  app.controller('BarCtrl', ['$scope', function ($scope) {
+  app.controller('BarCtrl', ['$scope', ($scope) => {
     $scope.options = { legend: { display: true } };
     $scope.labels = ['2006', '2007', '2008', '2009', '2010', '2011', '2012'];
     $scope.series = ['Series A', 'Series B'];
@@ -71,38 +71,38 @@
     ];
   }]);
 
-  app.controller('DoughnutCtrl', ['$scope', '$timeout', function ($scope, $timeout) {
+  app.controller('DoughnutCtrl', ['$scope', '$timeout', ($scope, $timeout) => {
     $scope.labels = ['Download Sales', 'In-Store Sales', 'Mail-Order Sales'];
     $scope.data = [0, 0, 0];
 
-    $timeout(function () {
+    $timeout(() => {
       $scope.data = [350, 450, 100];
     }, 500);
   }]);
 
-  app.controller('PieCtrl', ['$scope', function ($scope) {
+  app.controller('PieCtrl', ['$scope', ($scope) => {
     $scope.labels = ['Download Sales', 'In-Store Sales', 'Mail Sales'];
     $scope.data = [300, 500, 100];
     $scope.options = { legend: { display: false } };
   }]);
 
-  app.controller('PolarAreaCtrl', ['$scope', function ($scope) {
+  app.controller('PolarAreaCtrl', ['$scope', ($scope) => {
     $scope.labels = ['Download Sales', 'In-Store Sales', 'Mail Sales', 'Telesales', 'Corporate Sales'];
     $scope.data = [300, 500, 100, 40, 120];
     $scope.options = { legend: { display: false } };
   }]);
 
-  app.controller('BaseCtrl', ['$scope', function ($scope) {
+  app.controller('BaseCtrl', ['$scope', ($scope) => {
     $scope.labels = ['Download Sales', 'Store Sales', 'Mail Sales', 'Telesales', 'Corporate Sales'];
     $scope.data = [300, 500, 100, 40, 120];
     $scope.type = 'polarArea';
 
-    $scope.toggle = function () {
+    $scope.toggle = () => {
       $scope.type = $scope.type === 'polarArea' ?  'pie' : 'polarArea';
     };
   }]);
 
-  app.controller('RadarCtrl', ['$scope', function ($scope) {
+  app.controller('RadarCtrl', ['$scope', ($scope) => {
     $scope.labels = ['Eating', 'Drinking', 'Sleeping', 'Designing', 'Coding', 'Cycling', 'Running'];
     $scope.options = { legend: { display: false } };
 
@@ -111,12 +111,12 @@
       [28, 48, 40, 19, 96, 27, 100]
     ];
 
-    $scope.onClick = function (points, evt) {
+    $scope.onClick = (points, evt) => {
       console.log(points, evt);
     };
   }]);
 
-  app.controller('StackedBarCtrl', ['$scope', function ($scope) {
+  app.controller('StackedBarCtrl', ['$scope', ($scope) => {
     $scope.labels = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
     $scope.type = 'StackedBar';
     $scope.series = ['2015', '2016'];
@@ -137,7 +137,7 @@
     ];
   }]);
 
-  app.controller('TabsCtrl', ['$scope', function ($scope) {
+  app.controller('TabsCtrl', ['$scope', ($scope) => {
     $scope.labels = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
     $scope.active = true;
     $scope.data = [
@@ -146,7 +146,7 @@
     ];
   }]);
 
-  app.controller('MixedChartCtrl', ['$scope', function ($scope) {
+  app.controller('MixedChartCtrl', ['$scope', ($scope) => {
     $scope.colors = ['#45b7cd', '#ff6384', '#ff8e72'];
 
     $scope.labels = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
@@ -170,7 +170,7 @@
     ];
   }]);
 
-  app.controller('DataTablesCtrl', ['$scope', function ($scope) {
+  app.controller('DataTablesCtrl', ['$scope', ($scope) => {
     $scope.labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
     $scope.data = [
       [65, 59, 80, 81, 56, 55, 40],
@@ -195,9 +195,9 @@
       }
     ];
     $scope.options = { legend: { display: false } };
-    $scope.randomize = function () {
-      $scope.data = $scope.data.map(function (data) {
-        return data.map(function (y) {
+    $scope.randomize = () => {
+      $scope.data = $scope.data.map((data) => {
+        return data.map((y) => {
           y = y + Math.random() * 10 - 5;
           return parseInt(y < 0 ? 0 : y > 100 ? 100 : y);
         });
@@ -205,7 +205,7 @@
     };
   }]);
 
-  app.controller('BubbleCtrl', ['$scope', '$interval', function ($scope, $interval) {
+  app.controller('BubbleCtrl', ['$scope', '$interval', ($scope, $interval) => {
     $scope.options = {
       scales: {
         xAxes: [{
@@ -232,7 +232,7 @@
 
     function createChart () {
       $scope.data = [];
-      for (var i = 0; i < 50; i++) {
+      for (let i = 0; i < 50; i++) {
         $scope.data.push([{
           x: randomScalingFactor(),
           y: randomScalingFactor(),
@@ -250,8 +250,8 @@
     }
   }]);
 
-  app.controller('TicksCtrl', ['$scope', '$interval', function ($scope, $interval) {
-    var maximum = document.getElementById('container').clientWidth / 2 || 300;
+  app.controller('TicksCtrl', ['$scope', '$interval', ($scope, $interval) => {
+    const maximum = document.getElementById('container').clientWidth / 2 || 300;
     $scope.data = [[]];
     $scope.labels = [];
     $scope.options = {
@@ -286,7 +286,7 @@
     };
 
     // Update the dataset at 25FPS for a smoothly-animating chart
-    $interval(function () {
+    $interval(() => {
       getLiveChartData();
     }, 40);
 
@@ -304,8 +304,9 @@
   }]);
 
   function getRandomValue (data) {
-    var l = data.length, previous = l ? data[l - 1] : 50;
-    var y = previous + Math.random() * 10 - 5;
+    const l = data.length;
+    const previous = l ? data[l - 1] : 50;
+    const y = previous + Math.random() * 10 - 5;
     return y < 0 ? 0 : y > 100 ? 100 : y;
   }
 })();

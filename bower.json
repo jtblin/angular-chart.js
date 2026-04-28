@@ -1,6 +1,6 @@
 {
   "name": "angular-chart.js",
-  "version": "1.1.1",
+  "version": "2.0.0",
   "main": [
     "./dist/angular-chart.js"
   ],
@@ -38,7 +38,7 @@
     "tests"
   ],
   "dependencies": {
-    "angular": "1.x",
-    "chart.js": "2.x"
+    "angular": "^1.8.0",
+    "chart.js": "^2.9.4"
   }
 }

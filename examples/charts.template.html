@@ -111,7 +111,7 @@
         This repository contains a set of <strong>native AngularJS directives</strong> for Chart.js. The <strong>only required dependencies</strong> are:
       </p>
       <ul>
-        <li><a href="http://angularjs.org" target="_blank">AngularJS</a> (requires at least 1.4.x)</li>
+        <li><a href="http://angularjs.org" target="_blank">AngularJS</a> (requires at least 1.8.x)</li>
         <li><a href="http://chartjs.org" target="_blank">Chart.js</a> (requires Chart.js 2.x).</li>
       </ul>
       <h3>Files to download</h3>
@@ -146,9 +146,9 @@
         <li><span style="background-color: rgba(77,83,96,1)"></span>Dark Grey</li>
       </ol>
       <p>You can also use the provider : <code>ChartJsProvider</code> in a <code>.config()</code></p>
-      <p><pre><code>(function (ChartJsProvider) {
+      <p><pre><code>(ChartJsProvider) => {
   ChartJsProvider.setOptions({ colors : [ '#803690', '#00ADF9', '#DCDCDC', '#46BFBD', '#FDB45C', '#949FB1', '#4D5360'] });
-}); </code></pre></p>
+}</code></pre></p>
     </section>
     <section id="directives">
       <div class="page-header">
@@ -189,7 +189,7 @@ chart-dataset-override=&quot;datasetOverride&quot; chart-click=&quot;onClick&quo
 &lt;/canvas&gt;</code></pre>
             </tab>
             <tab heading="Javascript">
-              <pre><code data-language="javascript">angular.module("app", ["chart.js"]).controller("LineCtrl", function ($scope) {
+              <pre><code data-language="javascript">angular.module("app", ["chart.js"]).controller("LineCtrl", ($scope) => {
 
   $scope.labels = ["January", "February", "March", "April", "May", "June", "July"];
   $scope.series = ['Series A', 'Series B'];
@@ -249,7 +249,7 @@ chart-dataset-override=&quot;datasetOverride&quot; chart-click=&quot;onClick&quo
 &lt;/canvas&gt;</code></pre>
             </tab>
             <tab heading="Javascript">
-              <pre><code data-language="javascript">angular.module("app", ["chart.js"]).controller("BarCtrl", function ($scope) {
+              <pre><code data-language="javascript">angular.module("app", ["chart.js"]).controller("BarCtrl", ($scope) => {
   $scope.labels = ['2006', '2007', '2008', '2009', '2010', '2011', '2012'];
   $scope.series = ['Series A', 'Series B'];
 
@@ -304,7 +304,7 @@ chart-dataset-override=&quot;datasetOverride&quot; chart-click=&quot;onClick&quo
 &lt;/canvas&gt; </code></pre>
             </tab>
             <tab heading="Javascript">
-              <pre><code data-language="javascript">angular.module("app", ["chart.js"]).controller("DoughnutCtrl", function ($scope) {
+              <pre><code data-language="javascript">angular.module("app", ["chart.js"]).controller("DoughnutCtrl", ($scope) => {
   $scope.labels = ["Download Sales", "In-Store Sales", "Mail-Order Sales"];
   $scope.data = [300, 500, 100];
 });
@@ -337,7 +337,7 @@ chart-dataset-override=&quot;datasetOverride&quot; chart-click=&quot;onClick&quo
 &lt;/canvas&gt; </code></pre>
             </tab>
             <tab heading="Javascript">
-              <pre><code data-language="javascript">angular.module("app", ["chart.js"]).controller("RadarCtrl", function ($scope) {
+              <pre><code data-language="javascript">angular.module("app", ["chart.js"]).controller("RadarCtrl", ($scope) => {
   $scope.labels =["Eating", "Drinking", "Sleeping", "Designing", "Coding", "Cycling", "Running"];
 
   $scope.data = [
@@ -391,7 +391,7 @@ chart-dataset-override=&quot;datasetOverride&quot; chart-click=&quot;onClick&quo
 &lt;/canvas&gt; </code></pre>
             </tab>
             <tab heading="Javascript">
-              <pre><code data-language="javascript">angular.module("app", ["chart.js"]).controller("PieCtrl", function ($scope) {
+              <pre><code data-language="javascript">angular.module("app", ["chart.js"]).controller("PieCtrl", ($scope) => {
   $scope.labels = ["Download Sales", "In-Store Sales", "Mail-Order Sales"];
   $scope.data = [300, 500, 100];
 });
@@ -423,7 +423,7 @@ chart-dataset-override=&quot;datasetOverride&quot; chart-click=&quot;onClick&quo
 &lt;/canvas&gt; </code></pre>
             </tab>
             <tab heading="Javascript">
-              <pre><code data-language="javascript">angular.module("app", ["chart.js"]).controller("PolarAreaCtrl", function ($scope) {
+              <pre><code data-language="javascript">angular.module("app", ["chart.js"]).controller("PolarAreaCtrl", ($scope) => {
   $scope.labels = ["Download Sales", "In-Store Sales", "Mail-Order Sales", "Tele Sales", "Corporate Sales"];
   $scope.data = [300, 500, 100, 40, 120];
 });
@@ -475,7 +475,7 @@ chart-dataset-override=&quot;datasetOverride&quot; chart-click=&quot;onClick&quo
             </tab>
             <tab heading="Javascript">
               <pre><code data-language="javascript">angular.module("app", ["chart.js"]).controller("BarCtrl",
-  function ($scope) {
+  ($scope) => {
     $scope.labels = ['2006', '2007', '2008', '2009', '2010', '2011', '2012'];
     $scope.series = ['Series A', 'Series B'];
 
@@ -515,7 +515,7 @@ chart-dataset-override=&quot;datasetOverride&quot; chart-click=&quot;onClick&quo
             </tab>
             <tab heading="Javascript">
               <pre><code data-language="javascript">angular.module("app", ["chart.js"]).controller("BubbleCtrl",
-  function ($scope) {
+  ($scope) => {
     // see examples/bubble.js for random bubbles source code
     $scope.series = ['Series A', 'Series B'];
 
@@ -574,7 +574,7 @@ chart-dataset-override=&quot;datasetOverride&quot; chart-click=&quot;onClick&quo
             </tab>
             <tab heading="Javascript">
               <pre><code data-language="javascript">angular.module("app", ["chart.js"]).controller("BaseCtrl",
-  function ($scope) {
+  ($scope) => {
     $scope.labels = ["Download Sales", "In-Store Sales", "Mail-Order Sales", "Tele Sales", "Corporate Sales"];
     $scope.data = [300, 500, 100, 40, 120];
     $scope.type = 'polarArea';
@@ -639,7 +639,7 @@ chart-dataset-override=&quot;datasetOverride&quot; chart-click=&quot;onClick&quo
             </tab>
             <tab heading="Javascript">
               <pre><code data-language="javascript">angular.module("app", ["chart.js"]).controller("MixedChartCtrl",
-  function ($scope) {
+  ($scope) => {
     $scope.colors = ['#45b7cd', '#ff6384', '#ff8e72'];
 
     $scope.labels = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];

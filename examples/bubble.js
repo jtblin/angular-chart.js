@@ -1,11 +1,11 @@
 angular.module('app', ['chart.js'])
-  .config(['ChartJsProvider', function (ChartJsProvider) {
+  .config(['ChartJsProvider', (ChartJsProvider) => {
     'use strict';
     ChartJsProvider.setOptions({
       tooltips: { enabled: false }
     });
   }])
-  .controller('BubbleCtrl', ['$scope', '$interval', function ($scope, $interval) {
+  .controller('BubbleCtrl', ['$scope', '$interval', ($scope, $interval) => {
     'use strict';
 
     $scope.options = {
@@ -35,7 +35,7 @@ angular.module('app', ['chart.js'])
     function createChart () {
       $scope.series = [];
       $scope.data = [];
-      for (var i = 0; i < 50; i++) {
+      for (let i = 0; i < 50; i++) {
         $scope.series.push(`Series ${i}`);
         $scope.data.push([{
           x: randomScalingFactor(),
