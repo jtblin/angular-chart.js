@@ -35,7 +35,7 @@ jobs:
         run: npx playwright install --with-deps chromium
 
       - name: Run tests
-        run: npm run test -- --update-snapshots
+        run: npm run test
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5
