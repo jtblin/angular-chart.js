@@ -1,5 +1,5 @@
 node_modules/
-dist/angular-chart.js.tar.gz
+dist/
 test/fixtures/shots/
 coverage/
 playwright-report/

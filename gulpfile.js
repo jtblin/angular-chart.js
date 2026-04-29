@@ -49,6 +49,11 @@
   }
 
 
+  function rollupTask() {
+    return gulp.src('.', {read: false})
+      .pipe(shell(['npx rollup -c']));
+  }
+
   // js() task removed in favor of Rollup
 
   function build() {
@@ -70,11 +75,7 @@
 
   function gitCommit() {
     const v = version();
-    return gulp.src([
-      './dist/*',
-      './package.json',
-      './examples/charts.html',
-    ])
+    return gulp.src('.')
       .pipe(git.add())
       .pipe(git.commit(v));
   }
@@ -123,7 +124,7 @@
   gulp.task('bump-minor', bump('minor'));
   gulp.task('bump-major', bump('major'));
 
-  gulp.task('assets', gulp.series(clean, build));
+  gulp.task('assets', gulp.series(clean, rollupTask, build));
   gulp.task('test', gulp.series(unit, integration));
   gulp.task('check', gulp.series(lint, 'test'));
 
