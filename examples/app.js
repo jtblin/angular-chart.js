@@ -22,7 +22,9 @@
 
   app.filter('slug', () => {
     return (input) => {
-      if (!input) return '';
+      if (!input) {
+        return '';
+      }
       return input.toLowerCase().replace(/ /g, '-');
     };
   });
