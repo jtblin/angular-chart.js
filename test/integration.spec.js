@@ -1,4 +1,5 @@
-
+/* jshint node: true, esversion: 11 */
+'use strict';
 
 const { test, expect } = require('@playwright/test');
 

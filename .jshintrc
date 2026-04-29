@@ -1,7 +1,6 @@
 {
   "esversion"     : 11,
   "node"          : true,
-  "mocha"         : true,
   "strict"        : true,
   "undef"         : true,     // true: Require all non-global variables to be declared (prevents global leaks)
   "unused"        : true,     // true: Require all defined variables be used

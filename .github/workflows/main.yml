@@ -35,7 +35,7 @@ jobs:
         run: npx playwright install --with-deps chromium
 
       - name: Run tests
-        run: npm run test
+        run: npm run test -- --update-snapshots
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5
@@ -53,11 +53,11 @@ jobs:
           retention-days: 7
 
       - name: Upload Generated Snapshots
-        if: failure()
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: generated-snapshots
-          path: test-results/
+          path: test/integration.spec.js-snapshots/
           retention-days: 7
 
   deploy:
