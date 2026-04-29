@@ -43,14 +43,6 @@
     '#4D5360', // dark grey
   ];
 
-  const useExcanvas = typeof window.G_vmlCanvasManager === 'object' &&
-    window.G_vmlCanvasManager !== null &&
-    typeof window.G_vmlCanvasManager.initElement === 'function';
-
-  if (useExcanvas) {
-    Chart.defaults.global.animation = false;
-  }
-
   return angular.module('chart.js', [])
     .provider('ChartJs', ChartJsProvider)
     .factory('ChartJsFactory', ['ChartJs', '$timeout', ChartJsFactory])
@@ -138,10 +130,6 @@
           chartDatasetOverride: '=?',
         },
         link: function(scope, elem/* , attrs */) {
-          if (useExcanvas) {
-            window.G_vmlCanvasManager.initElement(elem[0]);
-          }
-
           // Order of setting "watch" matter
           scope.$watch('chartData', watchData, true);
           scope.$watch('chartSeries', watchOther, true);
@@ -336,10 +324,7 @@
     }
 
     function rgba(color, alpha) {
-      // rgba not supported by IE8
-      return useExcanvas ?
-        `rgb(${color.join(',')})` :
-        `rgba(${color.concat(alpha).join(',')})`;
+      return `rgba(${color.concat(alpha).join(',')})`;
     }
 
     // Credit: http://stackoverflow.com/a/11508164/1190235

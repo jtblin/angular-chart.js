@@ -284,5 +284,5 @@ Jerome Touffe-Blin, [@jtblin](https://twitter.com/jtblin), [About me](http://abo
 
 # License
 
-angular-chart.js is copyright 2016 Jerome Touffe-Blin and contributors. 
+angular-chart.js is copyright 2016-2026 Jerome Touffe-Blin and contributors. 
 It is licensed under the BSD license. See the include LICENSE file for details.

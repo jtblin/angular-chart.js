@@ -24,7 +24,7 @@
     ' * <%= pkg.homepage %>',
     ' * Version: <%= version %>',
     ' *',
-    ' * Copyright 2016 Jerome Touffe-Blin',
+    ' * Copyright 2016-2026 Jerome Touffe-Blin',
     ' * Released under the <%= pkg.license %> license',
     ' * https://github.com/jtblin/angular-chart.js/blob/main/LICENSE',
     ' */',
