@@ -2,11 +2,11 @@
 module.exports = {
   entry: './amd.js',
   output: {
-    filename: './bundle.js'
+    filename: './bundle.js',
   },
   resolve: {
     alias: {
-      'angular-chart': '../angular-chart.js' // should not be required if you installed with npm
-    }
-  }
+      'angular-chart': '../angular-chart.js', // should not be required if you installed with npm
+    },
+  },
 };

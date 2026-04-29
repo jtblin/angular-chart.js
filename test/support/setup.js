@@ -1,11 +1,7 @@
-/*jshint node:true*/
-(function () {
-  'use strict';
+'use strict';
 
-  var chai = require('chai');
-  global.chai = chai;
-  global.should = chai.should();
-  global.expect = chai.expect;
-  global.assert = chai.assert;
-
-})();
+const chai = require('chai');
+global.chai = chai;
+global.should = chai.should();
+global.expect = chai.expect;
+global.assert = chai.assert;

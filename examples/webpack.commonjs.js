@@ -1,4 +1,4 @@
-(function () {
+(function() {
   'use strict';
 
   // install with npm: npm i --save angular-chart.js
@@ -6,13 +6,12 @@
   module.exports = {
     entry: './examples/commonjs.js',
     output: {
-      filename: './examples/commonjs.bundle.js'
+      filename: './examples/commonjs.bundle.js',
     },
     resolve: {
       alias: {
-        'angular-chart': '../angular-chart.js' // not required when you install with npm
-      }
-    }
+        'angular-chart': '../angular-chart.js', // not required when you install with npm
+      },
+    },
   };
-
 })();

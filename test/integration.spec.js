@@ -1,7 +1,7 @@
 /* jshint node: true, esversion: 11 */
 'use strict';
 
-const { test, expect } = require('@playwright/test');
+const {test, expect} = require('@playwright/test');
 
 const pages = [
   'bubble',
@@ -14,11 +14,11 @@ const pages = [
   '51-pie-update-colours',
   'configure-line-chart',
   'custom-directive',
-  'charts'
+  'charts',
 ];
 
 pages.forEach((name) => {
-  test(`compares screenshots for: ${name}`, async ({ page }) => {
+  test(`compares screenshots for: ${name}`, async ({page}) => {
     await page.goto(`/test/fixtures/${name}.html`);
     // Wait for animations to finish
     await page.waitForTimeout(2000);

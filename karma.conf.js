@@ -1,4 +1,4 @@
-module.exports = function (config) {
+module.exports = function(config) {
   'use strict';
   config.set({
     basePath: '',
@@ -9,16 +9,16 @@ module.exports = function (config) {
       'node_modules/angular-mocks/angular-mocks.js',
       'node_modules/chai-string/chai-string.js',
       'angular-chart.js',
-      'test/test.unit.js'
+      'test/test.unit.js',
     ],
     exclude: [],
     preprocessors: {
-      'angular-chart.js': ['coverage']
+      'angular-chart.js': ['coverage'],
     },
     reporters: ['progress', 'coverage'],
     coverageReporter: {
       type: 'lcov',
-      dir: 'coverage/'
+      dir: 'coverage/',
     },
     port: 9876,
     colors: true,
@@ -26,6 +26,6 @@ module.exports = function (config) {
     autoWatch: false,
     browsers: ['ChromeHeadless'],
     singleRun: true,
-    concurrency: Infinity
+    concurrency: Infinity,
   });
 };

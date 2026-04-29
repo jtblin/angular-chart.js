@@ -2,7 +2,7 @@ angular.module('app', ['chart.js'])
   .config(['ChartJsProvider', (ChartJsProvider) => {
     'use strict';
     ChartJsProvider.setOptions({
-      tooltips: { enabled: false }
+      tooltips: {enabled: false},
     });
   }])
   .controller('BubbleCtrl', ['$scope', '$interval', ($scope, $interval) => {
@@ -15,24 +15,24 @@ angular.module('app', ['chart.js'])
           ticks: {
             max: 125,
             min: -125,
-            stepSize: 10
-          }
+            stepSize: 10,
+          },
         }],
         yAxes: [{
           display: false,
           ticks: {
             max: 125,
             min: -125,
-            stepSize: 10
-          }
-        }]
-      }
+            stepSize: 10,
+          },
+        }],
+      },
     };
 
     createChart();
     $interval(createChart, 2000);
 
-    function createChart () {
+    function createChart() {
       $scope.series = [];
       $scope.data = [];
       for (let i = 0; i < 50; i++) {
@@ -40,16 +40,17 @@ angular.module('app', ['chart.js'])
         $scope.data.push([{
           x: randomScalingFactor(),
           y: randomScalingFactor(),
-          r: randomRadius()
+          r: randomRadius(),
         }]);
       }
     }
 
-    function randomScalingFactor () {
-      return (Math.random() > 0.5 ? 1.0 : -1.0) * Math.round(Math.random() * 100);
+    function randomScalingFactor() {
+      return (Math.random() > 0.5 ? 1.0 : -1.0) *
+        Math.round(Math.random() * 100);
     }
 
-    function randomRadius () {
+    function randomRadius() {
       return Math.abs(randomScalingFactor()) / 4;
     }
   }]);

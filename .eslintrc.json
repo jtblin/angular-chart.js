@@ -1,0 +1,75 @@
+{
+  "env": {
+    "browser": true,
+    "node": true,
+    "es2020": true,
+    "mocha": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "google"
+  ],
+  "parserOptions": {
+    "ecmaVersion": 2020,
+    "sourceType": "script"
+  },
+  "globals": {
+    "angular": "readonly",
+    "Chart": "readonly",
+    "G_vmlCanvasManager": "readonly",
+    "define": "readonly",
+    "module": "writable",
+    "require": "readonly"
+  },
+  "plugins": [
+    "angular"
+  ],
+  "rules": {
+    "strict": ["error", "function"],
+    "no-redeclare": "off",
+    "require-jsdoc": "off",
+    "valid-jsdoc": "off",
+    "no-undef": "error",
+    "no-unused-vars": ["error", { "args": "none" }],
+    "no-empty": "error",
+    "no-trailing-spaces": "error",
+    "indent": ["error", 2, { "SwitchCase": 1 }],
+    "complexity": ["error", 10],
+    "max-depth": ["error", 2],
+    "new-cap": "error",
+    "quotes": ["error", "single", { "avoidEscape": true }],
+    "curly": ["error", "all"],
+    "brace-style": ["error", "1tbs"],
+    "camelcase": ["error", { "properties": "never" }],
+    "max-len": ["error", { "code": 80, "ignoreComments": true, "ignoreRegExpLiterals": true }],
+    "keyword-spacing": ["error", { "before": true, "after": true }],
+    "space-infix-ops": "error",
+    "space-before-blocks": "error",
+    "array-bracket-spacing": ["error", "never"],
+    "space-in-parens": ["error", "never"],
+    "dot-notation": "error",
+    "no-multi-str": "error",
+    "eol-last": "error",
+    "no-mixed-spaces-and-tabs": "error",
+    "comma-dangle": ["error", "always-multiline"],
+    "semi": ["error", "always"],
+    "angular/di": "off",
+    "angular/component-limit": "off",
+    "angular/controller-as-vm": "off",
+    "angular/no-service-method": "off"
+  },
+  "overrides": [
+    {
+      "files": ["test/**/*.js"],
+      "globals": {
+        "sinon": "readonly",
+        "expect": "readonly",
+        "module": "readonly",
+        "inject": "readonly"
+      },
+      "rules": {
+        "strict": ["error", "global"]
+      }
+    }
+  ]
+}

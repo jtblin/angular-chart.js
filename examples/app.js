@@ -6,28 +6,37 @@
   app.config((ChartJsProvider) => {
     // Configure all charts
     ChartJsProvider.setOptions({
-      colors: ['#97BBCD', '#DCDCDC', '#F7464A', '#46BFBD', '#FDB45C', '#949FB1', '#4D5360']
+      colors: [
+        '#97BBCD', '#DCDCDC', '#F7464A', '#46BFBD', '#FDB45C', '#949FB1',
+        '#4D5360',
+      ],
     });
     // Configure all doughnut charts
     ChartJsProvider.setOptions('doughnut', {
-      cutoutPercentage: 60
+      cutoutPercentage: 60,
     });
     ChartJsProvider.setOptions('bubble', {
-      tooltips: { enabled: false }
+      tooltips: {enabled: false},
     });
   });
 
   app.controller('MenuCtrl', ['$scope', ($scope) => {
     $scope.isCollapsed = true;
-    $scope.charts = ['Line', 'Bar', 'Doughnut', 'Pie', 'Polar Area', 'Radar', 'Horizontal Bar', 'Bubble', 'Base'];
+    $scope.charts = [
+      'Line', 'Bar', 'Doughnut', 'Pie', 'Polar Area', 'Radar',
+      'Horizontal Bar', 'Bubble', 'Base',
+    ];
   }]);
 
   app.controller('LineCtrl', ['$scope', ($scope) => {
-    $scope.labels = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+    $scope.labels = [
+      'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday',
+      'Sunday',
+    ];
     $scope.series = ['Series A', 'Series B'];
     $scope.data = [
       [65, 59, 80, 81, 56, 55, 40],
-      [28, 48, 40, 19, 86, 27, 90]
+      [28, 48, 40, 19, 86, 27, 90],
     ];
     $scope.onClick = (points, evt) => {
       console.log(points, evt);
@@ -39,7 +48,7 @@
         console.log('No point');
       }
     };
-    $scope.datasetOverride = [{ yAxisID: 'y-axis-1' }, { yAxisID: 'y-axis-2' }];
+    $scope.datasetOverride = [{yAxisID: 'y-axis-1'}, {yAxisID: 'y-axis-2'}];
 
     $scope.options = {
       scales: {
@@ -48,26 +57,26 @@
             id: 'y-axis-1',
             type: 'linear',
             display: true,
-            position: 'left'
+            position: 'left',
           },
           {
             id: 'y-axis-2',
             type: 'linear',
             display: true,
-            position: 'right'
-          }
-        ]
-      }
+            position: 'right',
+          },
+        ],
+      },
     };
   }]);
 
   app.controller('BarCtrl', ['$scope', ($scope) => {
-    $scope.options = { legend: { display: true } };
+    $scope.options = {legend: {display: true}};
     $scope.labels = ['2006', '2007', '2008', '2009', '2010', '2011', '2012'];
     $scope.series = ['Series A', 'Series B'];
     $scope.data = [
       [65, 59, 80, 81, 56, 55, 40],
-      [28, 48, 40, 19, 86, 27, 90]
+      [28, 48, 40, 19, 86, 27, 90],
     ];
   }]);
 
@@ -83,32 +92,41 @@
   app.controller('PieCtrl', ['$scope', ($scope) => {
     $scope.labels = ['Download Sales', 'In-Store Sales', 'Mail Sales'];
     $scope.data = [300, 500, 100];
-    $scope.options = { legend: { display: false } };
+    $scope.options = {legend: {display: false}};
   }]);
 
   app.controller('PolarAreaCtrl', ['$scope', ($scope) => {
-    $scope.labels = ['Download Sales', 'In-Store Sales', 'Mail Sales', 'Telesales', 'Corporate Sales'];
+    $scope.labels = [
+      'Download Sales', 'In-Store Sales', 'Mail Sales', 'Telesales',
+      'Corporate Sales',
+    ];
     $scope.data = [300, 500, 100, 40, 120];
-    $scope.options = { legend: { display: false } };
+    $scope.options = {legend: {display: false}};
   }]);
 
   app.controller('BaseCtrl', ['$scope', ($scope) => {
-    $scope.labels = ['Download Sales', 'Store Sales', 'Mail Sales', 'Telesales', 'Corporate Sales'];
+    $scope.labels = [
+      'Download Sales', 'Store Sales', 'Mail Sales', 'Telesales',
+      'Corporate Sales',
+    ];
     $scope.data = [300, 500, 100, 40, 120];
     $scope.type = 'polarArea';
 
     $scope.toggle = () => {
-      $scope.type = $scope.type === 'polarArea' ?  'pie' : 'polarArea';
+      $scope.type = $scope.type === 'polarArea' ? 'pie' : 'polarArea';
     };
   }]);
 
   app.controller('RadarCtrl', ['$scope', ($scope) => {
-    $scope.labels = ['Eating', 'Drinking', 'Sleeping', 'Designing', 'Coding', 'Cycling', 'Running'];
-    $scope.options = { legend: { display: false } };
+    $scope.labels = [
+      'Eating', 'Drinking', 'Sleeping', 'Designing', 'Coding', 'Cycling',
+      'Running',
+    ];
+    $scope.options = {legend: {display: false}};
 
     $scope.data = [
       [65, 59, 90, 81, 56, 55, 40],
-      [28, 48, 40, 19, 96, 27, 100]
+      [28, 48, 40, 19, 96, 27, 100],
     ];
 
     $scope.onClick = (points, evt) => {
@@ -117,7 +135,10 @@
   }]);
 
   app.controller('StackedBarCtrl', ['$scope', ($scope) => {
-    $scope.labels = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+    $scope.labels = [
+      'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday',
+      'Sunday',
+    ];
     $scope.type = 'StackedBar';
     $scope.series = ['2015', '2016'];
     $scope.options = {
@@ -126,55 +147,63 @@
           stacked: true,
         }],
         yAxes: [{
-          stacked: true
-        }]
-      }
+          stacked: true,
+        }],
+      },
     };
 
     $scope.data = [
       [65, 59, 90, 81, 56, 55, 40],
-      [28, 48, 40, 19, 96, 27, 100]
+      [28, 48, 40, 19, 96, 27, 100],
     ];
   }]);
 
   app.controller('TabsCtrl', ['$scope', ($scope) => {
-    $scope.labels = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+    $scope.labels = [
+      'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday',
+      'Sunday',
+    ];
     $scope.active = true;
     $scope.data = [
       [65, 59, 90, 81, 56, 55, 40],
-      [28, 48, 40, 19, 96, 27, 100]
+      [28, 48, 40, 19, 96, 27, 100],
     ];
   }]);
 
   app.controller('MixedChartCtrl', ['$scope', ($scope) => {
     $scope.colors = ['#45b7cd', '#ff6384', '#ff8e72'];
 
-    $scope.labels = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+    $scope.labels = [
+      'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday',
+      'Sunday',
+    ];
     $scope.data = [
       [65, -59, 80, 81, -56, 55, -40],
-      [28, 48, -40, 19, 86, 27, 90]
+      [28, 48, -40, 19, 86, 27, 90],
     ];
     $scope.datasetOverride = [
       {
         label: 'Bar chart',
         borderWidth: 1,
-        type: 'bar'
+        type: 'bar',
       },
       {
         label: 'Line chart',
         borderWidth: 3,
         hoverBackgroundColor: 'rgba(255,99,132,0.4)',
         hoverBorderColor: 'rgba(255,99,132,1)',
-        type: 'line'
-      }
+        type: 'line',
+      },
     ];
   }]);
 
   app.controller('DataTablesCtrl', ['$scope', ($scope) => {
-    $scope.labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+    $scope.labels = [
+      'January', 'February', 'March', 'April', 'May', 'June', 'July',
+    ];
     $scope.data = [
       [65, 59, 80, 81, 56, 55, 40],
-      [28, 48, 40, 19, 86, 27, 90]
+      [28, 48, 40, 19, 86, 27, 90],
     ];
     $scope.colors = [
       { // grey
@@ -183,7 +212,7 @@
         pointHoverBackgroundColor: 'rgba(148,159,177,1)',
         borderColor: 'rgba(148,159,177,1)',
         pointBorderColor: '#fff',
-        pointHoverBorderColor: 'rgba(148,159,177,0.8)'
+        pointHoverBorderColor: 'rgba(148,159,177,0.8)',
       },
       { // dark grey
         backgroundColor: 'rgba(77,83,96,0.2)',
@@ -191,10 +220,10 @@
         pointHoverBackgroundColor: 'rgba(77,83,96,1)',
         borderColor: 'rgba(77,83,96,1)',
         pointBorderColor: '#fff',
-        pointHoverBorderColor: 'rgba(77,83,96,0.8)'
-      }
+        pointHoverBorderColor: 'rgba(77,83,96,0.8)',
+      },
     ];
-    $scope.options = { legend: { display: false } };
+    $scope.options = {legend: {display: false}};
     $scope.randomize = () => {
       $scope.data = $scope.data.map((data) => {
         return data.map((y) => {
@@ -213,39 +242,40 @@
           ticks: {
             max: 125,
             min: -125,
-            stepSize: 10
-          }
+            stepSize: 10,
+          },
         }],
         yAxes: [{
           display: false,
           ticks: {
             max: 125,
             min: -125,
-            stepSize: 10
-          }
-        }]
-      }
+            stepSize: 10,
+          },
+        }],
+      },
     };
 
     createChart();
     $interval(createChart, 2000);
 
-    function createChart () {
+    function createChart() {
       $scope.data = [];
       for (let i = 0; i < 50; i++) {
         $scope.data.push([{
           x: randomScalingFactor(),
           y: randomScalingFactor(),
-          r: randomRadius()
+          r: randomRadius(),
         }]);
       }
     }
 
-    function randomScalingFactor () {
-      return (Math.random() > 0.5 ? 1.0 : -1.0) * Math.round(Math.random() * 100);
+    function randomScalingFactor() {
+      return (Math.random() > 0.5 ? 1.0 : -1.0) *
+        Math.round(Math.random() * 100);
     }
 
-    function randomRadius () {
+    function randomRadius() {
       return Math.abs(randomScalingFactor()) / 4;
     }
   }]);
@@ -256,33 +286,33 @@
     $scope.labels = [];
     $scope.options = {
       animation: {
-        duration: 0
+        duration: 0,
       },
       elements: {
         line: {
-          borderWidth: 0.5
+          borderWidth: 0.5,
         },
         point: {
-          radius: 0
-        }
+          radius: 0,
+        },
       },
       legend: {
-        display: false
+        display: false,
       },
       scales: {
         xAxes: [{
-          display: false
+          display: false,
         }],
         yAxes: [{
-          display: false
+          display: false,
         }],
         gridLines: {
-          display: false
-        }
+          display: false,
+        },
       },
       tooltips: {
-        enabled: false
-      }
+        enabled: false,
+      },
     };
 
     // Update the dataset at 25FPS for a smoothly-animating chart
@@ -290,7 +320,7 @@
       getLiveChartData();
     }, 40);
 
-    function getLiveChartData () {
+    function getLiveChartData() {
       if ($scope.data[0].length) {
         $scope.labels = $scope.labels.slice(1);
         $scope.data[0] = $scope.data[0].slice(1);
@@ -303,7 +333,7 @@
     }
   }]);
 
-  function getRandomValue (data) {
+  function getRandomValue(data) {
     const l = data.length;
     const previous = l ? data[l - 1] : 50;
     const y = previous + Math.random() * 10 - 5;

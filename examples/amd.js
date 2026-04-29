@@ -1,32 +1,34 @@
-(function () {
+(function() {
   'use strict';
 
   require.config({
     paths: {
-      angular: '../node_modules/angular/angular.min',
-      chart: '../node_modules/chart.js/dist/Chart.min',
-      'angular-chart': '../angular-chart'
+      'angular': '../node_modules/angular/angular.min',
+      'chart': '../node_modules/chart.js/dist/Chart.min',
+      'angular-chart': '../angular-chart',
     },
     shim: {
-      angular: {
-        exports: 'angular'
+      'angular': {
+        exports: 'angular',
       },
       'chart.js': {
-        deps: ['angular', 'chart']
-      }
-    }
+        deps: ['angular', 'chart'],
+      },
+    },
   });
 
-  define(['angular', 'angular-chart'], function (angular/*, angularChart*/) {
-    var app = angular.module('examples', ['chart.js']);
-    app.controller('RequireCtrl', ['$scope', function ($scope) {
-      $scope.labels = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+  define(['angular', 'angular-chart'], function(angular/* , angularChart*/) {
+    const app = angular.module('examples', ['chart.js']);
+    app.controller('RequireCtrl', ['$scope', function($scope) {
+      $scope.labels = [
+        'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday',
+        'Sunday',
+      ];
       $scope.series = ['Series A', 'Series B'];
       $scope.data = [
         [65, 59, 80, 81, 56, 55, 40],
-        [28, 48, 40, 19, 86, 27, 90]
+        [28, 48, 40, 19, 86, 27, 90],
       ];
     }]);
   });
-
 })();

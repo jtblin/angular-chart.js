@@ -6,4 +6,3 @@ examples/commonjs.bundle.js
 examples/smoothscroll.min.js
 coverage/
 test/fixtures/coverage.js
-

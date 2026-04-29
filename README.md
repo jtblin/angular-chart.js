@@ -105,33 +105,34 @@ angular.module("app", ["chart.js"])
     // Configure all charts
     ChartJsProvider.setOptions({
       chartColors: ['#FF5252', '#FF8A80'],
-      responsive: false
+      responsive: false,
     });
     // Configure all line charts
     ChartJsProvider.setOptions('line', {
-      showLines: false
+      showLines: false,
     });
   }])
-  .controller("LineCtrl", ['$scope', '$timeout', ($scope, $timeout) => {
-
-  $scope.labels = ["January", "February", "March", "April", "May", "June", "July"];
-  $scope.series = ['Series A', 'Series B'];
-  $scope.data = [
-    [65, 59, 80, 81, 56, 55, 40],
-    [28, 48, 40, 19, 86, 27, 90]
-  ];
-  $scope.onClick = (points, evt) => {
-    console.log(points, evt);
-  };
-  
-  // Simulate async data update
-  $timeout(() => {
-    $scope.data = [
-      [28, 48, 40, 19, 86, 27, 90],
-      [65, 59, 80, 81, 56, 55, 40]
+  .controller('LineCtrl', ['$scope', '$timeout', ($scope, $timeout) => {
+    $scope.labels = [
+      'January', 'February', 'March', 'April', 'May', 'June', 'July',
     ];
-  }, 3000);
-}]);
+    $scope.series = ['Series A', 'Series B'];
+    $scope.data = [
+      [65, 59, 80, 81, 56, 55, 40],
+      [28, 48, 40, 19, 86, 27, 90],
+    ];
+    $scope.onClick = (points, evt) => {
+      console.log(points, evt);
+    };
+
+    // Simulate async data update
+    $timeout(() => {
+      $scope.data = [
+        [28, 48, 40, 19, 86, 27, 90],
+        [65, 59, 80, 81, 56, 55, 40],
+      ];
+    }, 3000);
+  }]);
 ```
 
 ## AMD RequireJS
@@ -186,12 +187,12 @@ RGB colors may be input by using a string in the format "rgb(r,g,b)".
 ## Example - RGB Colors
 
 ```
-angular.module('app',['chart.js'])
-        .controller('MainController', function($scope){ 
-          $scope.colors = ["rgb(159,204,0)","rgb(250,109,33)","rgb(154,154,154)"];
-          $scope.labels = ["Green", "Orange", "Grey"];
-          $scope.data = [300, 500, 100];
-        });
+angular.module('app', ['chart.js'])
+  .controller('MainController', ($scope) => {
+    $scope.colors = ['rgb(159,204,0)', 'rgb(250,109,33)', 'rgb(154,154,154)'];
+    $scope.labels = ['Green', 'Orange', 'Grey'];
+    $scope.data = [300, 500, 100];
+  });
 ```
 
 RGBA colors may also be input by using a string in the format "rgba(r,g,b,a)".
@@ -199,12 +200,14 @@ They may be used alongside RGB colors and/or Hex colors.
 
 ## Example - RGBA Colors
 ```
-angular.module('app',['chart.js'])
-        .controller('MainController', ($scope) => { 
-          $scope.colors = ["rgba(159,204,0,0.5)","rgba(250,109,33,0.7)","rgba(154,154,154,0.5)"];
-          $scope.labels = ["Green", "Orange", "Grey"];
-          $scope.data = [300, 500, 100];
-        });
+angular.module('app', ['chart.js'])
+  .controller('MainController', ($scope) => {
+    $scope.colors = [
+      'rgba(159,204,0,0.5)', 'rgba(250,109,33,0.7)', 'rgba(154,154,154,0.5)',
+    ];
+    $scope.labels = ['Green', 'Orange', 'Grey'];
+    $scope.data = [300, 500, 100];
+  });
 ```
 
 Colors may also be input as an object by using the format in the example below.
@@ -212,21 +215,24 @@ Colors input as objects, Hex colors, RGB, and RGBA colors may be mixed and match
 
 ## Example - input color as an object
 ```
-angular.module('app',['chart.js'])
-        .controller('MainController', function($scope){ 
-          $scope.colors = [
-            {
-              backgroundColor: "rgba(159,204,0, 0.2)",
-              pointBackgroundColor: "rgba(159,204,0, 1)",
-              pointHoverBackgroundColor: "rgba(159,204,0, 0.8)",
-              borderColor: "rgba(159,204,0, 1)",
-              pointBorderColor: '#fff',
-              pointHoverBorderColor: "rgba(159,204,0, 1)"
-            },"rgba(250,109,33,0.5)","#9a9a9a","rgb(233,177,69)"
-          ];
-          $scope.labels = ["Green", "Peach", "Grey", "Orange"];
-          $scope.data = [300, 500, 100, 150];
-        });
+angular.module('app', ['chart.js'])
+  .controller('MainController', ($scope) => {
+    $scope.colors = [
+      {
+        backgroundColor: 'rgba(159,204,0, 0.2)',
+        pointBackgroundColor: 'rgba(159,204,0, 1)',
+        pointHoverBackgroundColor: 'rgba(159,204,0, 0.8)',
+        borderColor: 'rgba(159,204,0, 1)',
+        pointBorderColor: '#fff',
+        pointHoverBorderColor: 'rgba(159,204,0, 1)',
+      },
+      'rgba(250,109,33,0.5)',
+      '#9a9a9a',
+      'rgb(233,177,69)',
+    ];
+    $scope.labels = ['Green', 'Peach', 'Grey', 'Orange'];
+    $scope.data = [300, 500, 100, 150];
+  });
 ```
 
 # Issues
@@ -246,6 +252,32 @@ Here is a [jsbin template](http://jsbin.com/rodunob/edit?html,js,output) for con
 Pull requests welcome!
 
 See [CONTRIBUTING.md](CONTRIBUTING.md).
+
+# Development
+
+This project uses [ESLint](https://eslint.org/) to enforce the [Google JavaScript Style Guide](https://google.github.io/styleguide/jsguide.html). 
+
+## Linting
+
+To run the linter:
+
+```bash
+npm run lint
+```
+
+To automatically fix some linting issues:
+
+```bash
+npm run lint -- --fix
+```
+
+## Testing
+
+To run the unit tests:
+
+```bash
+npm test
+```
 
 ## Contributors
 
