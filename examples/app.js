@@ -339,4 +339,41 @@
     const y = previous + Math.random() * 10 - 5;
     return y < 0 ? 0 : y > 100 ? 100 : y;
   }
+
+  app.controller('PluginsCtrl', ['$scope', ($scope) => {
+    $scope.labels = [
+      'January', 'February', 'March', 'April', 'May', 'June', 'July',
+    ];
+    $scope.data = [65, 59, 80, 81, 56, 55, 40];
+    $scope.plugins = [{
+      afterDatasetsDraw: (chart) => {
+        const ctx = chart.ctx;
+        ctx.save();
+        ctx.font = '900 40px "Helvetica Neue", Helvetica, Arial, sans-serif';
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.07)';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.translate(chart.width / 2, chart.height / 2);
+        ctx.rotate(-Math.PI / 4);
+        ctx.fillText('CONFIDENTIAL', 0, 0);
+        ctx.restore();
+      },
+    }];
+  }]);
+
+  app.controller('NoDataCtrl', ['$scope', ($scope) => {
+    $scope.labels = ['Sales', 'Support', 'Admin'];
+    $scope.data = [];
+    $scope.type = 'bar';
+    $scope.displayWhenNoData = true;
+    $scope.forceUpdate = false;
+
+    $scope.setData = () => {
+      $scope.data = [300, 500, 100];
+    };
+
+    $scope.clearData = () => {
+      $scope.data = [];
+    };
+  }]);
 })();

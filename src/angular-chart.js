@@ -115,6 +115,19 @@ function ChartJsFactory(ChartJs, $timeout) {
         scope.$watch('chartColors', watchOther, true);
         scope.$watch('chartDatasetOverride', watchOther, true);
         scope.$watch('chartType', watchType, false);
+        scope.$watch('chartPlugins', watchOther, true);
+        scope.$watch('chartDisplayWhenNoData', (newVal, oldVal) => {
+          if (newVal === oldVal) {
+            return;
+          }
+          watchData(scope.chartData);
+        }, false);
+        scope.$watch('chartForceUpdate', (newVal, oldVal) => {
+          if (newVal === oldVal) {
+            return;
+          }
+          watchData(scope.chartData);
+        }, false);
 
         scope.$on('$destroy', () => destroyChart(scope));
 

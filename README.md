@@ -83,6 +83,9 @@ Here are the options for all directives:
 - `chart-click`: onclick event handler
 - `chart-hover`: onmousemove event handler
 - `chart-dataset-override`: override individual datasets to allow per dataset configuration e.g. y-axis, mixed type chart
+- `chart-plugins`: (default: `[]`): array of [Chart.js plugins](http://www.chartjs.org/docs/latest/developers/plugins.html)
+- `chart-display-when-no-data`: (default: `false`): whether to create the chart even if data is empty or undefined
+- `chart-force-update`: (default: `false`): whether to force a chart update even if data references have not changed
 
 There is another directive `chart-base` that takes an extra attribute `chart-type` to define the type
 dynamically. 
@@ -152,7 +155,9 @@ Module should work with CommonJS out of the box e.g. [browserify](http://browser
 # Reactive
 
 angular-chart.js watch updates on data, series, labels, colors and options and will update, or destroy and recreate, 
-the chart on changes.
+the chart on changes. 
+
+**Note**: Updates to `chart-options` are now performed non-destructively using `chart.update()`, which provides smoother transitions when changing configuration dynamically.
 
 # Events
 
