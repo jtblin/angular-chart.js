@@ -95,7 +95,7 @@
         <p>
           <a class="btn btn-default btn-lg" href="https://github.com/jtblin/angular-chart"><i class="icon-github"></i>Code on Github</a>
           <a class="btn btn-success btn-lg" href="../dist/angular-chart.js.tar.gz" download="angular-chart.js.tar.gz">
-            <i class="fa fa-download"></i> Download <small>(2.0.2)</small>
+            <i class="fa fa-download"></i> Download <small>(2.1.1)</small>
           </a>
         </p>
       </div>
@@ -672,47 +672,6 @@ chart-dataset-override=&quot;datasetOverride&quot; chart-click=&quot;onClick&quo
             <div class="panel-body">
               <canvas class="chart chart-bar" chart-data="data" chart-labels="labels"
                       chart-colors="colors" chart-dataset-override="datasetOverride"></canvas>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <section id="advanced">
-      <div class="page-header">
-        <h1>Advanced Features</h1>
-        <p>Support for plugins and advanced lifecycle management.</p>
-      </div>
-      <div class="row" style="display: flex; flex-wrap: wrap;">
-        <div class="col-lg-6 col-sm-12" ng-controller="PluginsCtrl" style="display: flex;">
-          <div class="panel panel-default" style="display: flex; flex-direction: column; width: 100%;">
-            <div class="panel-heading">Plugins Support</div>
-            <div class="panel-body" style="flex: 1;">
-              <canvas class="chart chart-line" chart-data="data" chart-labels="labels"
-                      chart-plugins="plugins"></canvas>
-            </div>
-            <div class="panel-footer">
-              Using <code>chart-plugins</code> to draw a watermark.
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-6 col-sm-12" ng-controller="NoDataCtrl" style="display: flex;">
-          <div class="panel panel-default" style="display: flex; flex-direction: column; width: 100%;">
-            <div class="panel-heading">Lifecycle Management</div>
-            <div class="panel-body" style="flex: 1; min-height: 300px;">
-              <canvas class="chart chart-base" chart-type="type" chart-data="data" chart-labels="labels"
-                      chart-display-when-no-data="displayWhenNoData"
-                      chart-force-update="forceUpdate"
-                      style="border: 1px dashed #ccc;"></canvas>
-            </div>
-            <div class="panel-footer">
-              <button class="btn btn-sm btn-default" ng-click="setData()">Set Data</button>
-              <button class="btn btn-sm btn-default" ng-click="clearData()">Clear Data</button>
-              <label style="font-weight: normal;"><input type="checkbox" ng-model="displayWhenNoData"> Display when no data</label>
-              <select ng-model="type" class="form-control input-sm" style="display: inline-block; width: auto;">
-                <option value="bar">Bar</option>
-                <option value="line">Line</option>
-                <option value="pie">Pie</option>
-              </select>
             </div>
           </div>
         </div>
