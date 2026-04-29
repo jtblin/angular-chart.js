@@ -1,9 +1,7 @@
 'use strict';
 
 const app = angular.module('charts', ['chart.js']);
-Chart.defaults.global.legend = {
-  display: false,
-};
+Chart.defaults.global.legend.display = false;
 
 app.controller('LineCtrl', ['$scope', '$timeout', function($scope, $timeout) {
   $scope.labels = [

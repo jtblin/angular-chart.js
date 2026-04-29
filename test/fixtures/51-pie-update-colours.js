@@ -1,10 +1,7 @@
 'use strict';
 
 const app = angular.module('pie', ['chart.js']);
-Chart.defaults.global.legend = {
-  display: false,
-};
-
+Chart.defaults.global.legend.display = false;
 app.controller('PieCtrl', ['$scope', '$timeout', function($scope, $timeout) {
   $scope.labels = ['Series A', 'Series B'];
   $scope.data = [65, 59];

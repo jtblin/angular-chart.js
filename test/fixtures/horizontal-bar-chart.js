@@ -1,9 +1,7 @@
 'use strict';
 
 const app = angular.module('horizontal', ['chart.js']);
-Chart.defaults.global.legend = {
-  display: false,
-};
+Chart.defaults.global.legend.display = false;
 
 app.controller('HorizontalBarCtrl', function($scope) {
   $scope.labels = [

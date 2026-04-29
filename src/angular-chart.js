@@ -1,11 +1,16 @@
 import angular from 'angular';
 import Chart from 'chart.js';
 
-Chart.defaults.global.multiTooltipTemplate =
-  '<%if (datasetLabel){%><%=datasetLabel%>: <%}%><%= value %>';
-Chart.defaults.global.tooltips.mode = 'label';
+
+Chart.defaults.global.tooltips = Chart.defaults.global.tooltips || {};
+Chart.defaults.global.tooltips.mode = 'index';
+Chart.defaults.global.elements = Chart.defaults.global.elements || {};
+Chart.defaults.global.elements.line = Chart.defaults.global.elements.line || {};
 Chart.defaults.global.elements.line.borderWidth = 2;
+Chart.defaults.global.elements.rectangle =
+  Chart.defaults.global.elements.rectangle || {};
 Chart.defaults.global.elements.rectangle.borderWidth = 2;
+Chart.defaults.global.legend = Chart.defaults.global.legend || {};
 Chart.defaults.global.legend.display = false;
 Chart.defaults.global.colors = [
   '#97BBCD', // blue
