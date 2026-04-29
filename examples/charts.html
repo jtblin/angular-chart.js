@@ -60,12 +60,12 @@
               Angular Chart
             </a>
           </li>
-          <li class="dropdown">
-            <a role="button" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">
+          <li class="dropdown" dropdown>
+            <a role="button" class="dropdown-toggle" dropdown-toggle aria-haspopup="true" aria-expanded="false">
               Directives <b class="caret"></b>
             </a>
             <ul class="dropdown-menu">
-              <li ng-repeat="chart in charts"><a ng-href="#{{chart | lowercase }}-chart">{{chart}}</a></li>
+              <li ng-repeat="chart in charts"><a ng-href="#{{chart | slug }}-chart">{{chart}}</a></li>
             </ul>
           </li>
           <li><a href="#getting_started">Getting started</a></li>
@@ -431,7 +431,7 @@ chart-dataset-override=&quot;datasetOverride&quot; chart-click=&quot;onClick&quo
             </tab>
           </tabset>
         </div>
-        <div class="col-lg-6 col-sm-12" id="polar area-chart" ng-controller="PolarAreaCtrl">
+        <div class="col-lg-6 col-sm-12" id="polar-area-chart" ng-controller="PolarAreaCtrl">
           <div class="panel panel-default">
             <div class="panel-heading">Polar Area Chart</div>
             <div class="panel-body">
@@ -442,7 +442,7 @@ chart-dataset-override=&quot;datasetOverride&quot; chart-click=&quot;onClick&quo
         </div>
       </div>
       <div class="row">
-        <div class="col-lg-6 col-sm-12" id="horizontal bar-chart" ng-controller="BarCtrl">
+        <div class="col-lg-6 col-sm-12" id="horizontal-bar-chart" ng-controller="BarCtrl">
           <div class="panel panel-default">
             <div class="panel-heading">Horizontal Bar Chart</div>
             <div class="panel-body">

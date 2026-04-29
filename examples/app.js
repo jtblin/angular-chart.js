@@ -20,6 +20,13 @@
     });
   });
 
+  app.filter('slug', () => {
+    return (input) => {
+      if (!input) return '';
+      return input.toLowerCase().replace(/ /g, '-');
+    };
+  });
+
   app.controller('MenuCtrl', ['$scope', ($scope) => {
     $scope.isCollapsed = true;
     $scope.charts = [
