@@ -64,11 +64,12 @@
   }
 
   function update(cb) {
-    fs.readFile('./examples/charts.template.html', 'utf8', function(err, file) {
+    fs.readFile('./examples/charts.html', 'utf8', function(err, file) {
       if (err) {
         return cb(err);
       }
-      file = file.replace('<!-- version -->', version());
+      file = file.replace(/Download <small>\(.*\)<\/small>/,
+        'Download <small>(' + version() + ')</small>');
       fs.writeFile('./examples/charts.html', file, cb);
     });
   }
