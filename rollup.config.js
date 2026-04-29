@@ -77,6 +77,6 @@ export default {
       port: 8080,
       open: false,
     }),
-    isWatch && livereload('dist'),
+    isWatch && livereload(['dist', 'examples']),
   ],
 };
