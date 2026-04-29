@@ -86,7 +86,7 @@
       if (err) {
         return cb(err);
       }
-      git.tag(v, v, function(err) {
+      git.tag('v' + v, v, function(err) {
         if (err) {
           return cb(err);
         }
