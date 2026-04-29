@@ -1,10 +1,10 @@
 # angular-chart.js
 
-[![Bower version](https://badge.fury.io/bo/angular-chart.js.svg)](https://badge.fury.io/bo/angular-chart.js)
-[![npm version](https://badge.fury.io/js/angular-chart.js.svg)](https://badge.fury.io/js/angular-chart.js)
+[![bower package](https://badge.fury.io/bo/angular-chart.js.svg)](https://badge.fury.io/bo/angular-chart.js)
+[![npm package](https://badge.fury.io/js/angular-chart.js.svg)](https://badge.fury.io/js/angular-chart.js)
 [![CI](https://github.com/jtblin/angular-chart.js/actions/workflows/main.yml/badge.svg)](https://github.com/jtblin/angular-chart.js/actions/workflows/main.yml)
-[![codecov](https://codecov.io/gh/jtblin/angular-chart.js/branch/master/graph/badge.svg)](https://codecov.io/gh/jtblin/angular-chart.js)
-[![npm](https://img.shields.io/npm/dm/angular-chart.js.svg?maxAge=2592000)](https://www.npmjs.com/package/angular-chart.js)
+[![code coverage](https://codecov.io/gh/jtblin/angular-chart.js/branch/main/graph/badge.svg)](https://codecov.io/gh/jtblin/angular-chart.js)
+[![downloads](https://img.shields.io/npm/dm/angular-chart.js.svg?maxAge=2592000)](https://www.npmjs.com/package/angular-chart.js)
 
 Beautiful, reactive, responsive charts for Angular.JS using [Chart.js](http://www.chartjs.org/). 
 

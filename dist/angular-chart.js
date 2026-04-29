@@ -5,7 +5,7 @@
  *
  * Copyright 2016 Jerome Touffe-Blin
  * Released under the BSD-2-Clause license
- * https://github.com/jtblin/angular-chart.js/blob/master/LICENSE
+ * https://github.com/jtblin/angular-chart.js/blob/main/LICENSE
  */
 (function (factory) {
   'use strict';

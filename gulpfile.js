@@ -27,7 +27,7 @@
     ' *',
     ' * Copyright 2016 Jerome Touffe-Blin',
     ' * Released under the <%= pkg.license %> license',
-    ' * https://github.com/jtblin/angular-chart.js/blob/master/LICENSE',
+    ' * https://github.com/jtblin/angular-chart.js/blob/main/LICENSE',
     ' */',
     ''
   ].join('\n');
@@ -108,11 +108,11 @@
 
   function gitPush (cb) {
     var v = version();
-    git.push('origin', 'master', function (err) {
+    git.push('origin', 'main', function (err) {
       if (err) return cb(err);
       git.tag(v, v, function (err) {
         if (err) return cb(err);
-        git.push('origin', 'master', {args: '--tags' }, cb);
+        git.push('origin', 'main', {args: '--tags' }, cb);
       });
     });
   }
