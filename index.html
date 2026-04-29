@@ -5,8 +5,8 @@
   <title>Charts</title>
   <link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.min.css">
   <link rel="stylesheet" href="node_modules/rainbow-code/themes/css/github.css">
-  <link href="node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="app.css" rel="stylesheet">
+  <link href="node_modules/bootstrdist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="examples/app.css" rel="stylesheet">
   <style>
     .chart-legend {
       list-style-type: none;
@@ -94,7 +94,7 @@
 
         <p>
           <a class="btn btn-default btn-lg" href="https://github.com/jtblin/angular-chart"><i class="icon-github"></i>Code on Github</a>
-          <a class="btn btn-success btn-lg" href="../didist/angular-chart.js.tar.gz" download="angular-chart.js.tar.gz">
+          <a class="btn btn-success btn-lg" href="didist/angular-chart.js.tar.gz" download="angular-chart.js.tar.gz">
             <i class="fa fa-download"></i> Download <small>(2.0.0)</small>
           </a>
         </p>
@@ -125,8 +125,8 @@
         &lt;5kb for all directives (~1kb with gzip compression!)</p>
       <h3>Installation</h3>
       <p>You need to include the dependencies in your page:</p>
-      <pre><code>&lt;script src="node_modules/chart.js/dist/Chart.min.js">&lt;/script&gt;
-&lt;script src="node_moduldist/angular-chart.js/dist/angular-chart.min.js">&lt;/script&gt;</code></pre>
+      <pre><code>&lt;script src="node_modules/chart.dist/Chart.min.js">&lt;/script&gt;
+&lt;script src="node_modules/angular-chart.dist/angular-chart.min.js">&lt;/script&gt;</code></pre>
       <p>As soon as you've got all the files downloaded and included in your page you just need to declare
         a dependency on the <code>chart.js</code> <a href="http://docs.angularjs.org/guide/module">module</a>:<br>
       </p><pre><code>angular.module('myModule', ['chart.js']);</code></pre>
@@ -688,15 +688,15 @@ chart-dataset-override=&quot;datasetOverride&quot; chart-click=&quot;onClick&quo
   </footer>
 
   <script src="node_modules/angular/angular.min.js"></script>
-  <script src="node_modules/chart.js/dist/Chart.min.js"></script>
+  <script src="node_modules/chart.dist/Chart.min.js"></script>
   <script src="node_modules/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
-  <script src="node_modules/rainbow-code/dist/rainbow.min.js"></script>
+  <script src="node_modules/rainbow-codist/rainbow.min.js"></script>
   <script src="node_modules/rainbow-code/src/language/generic.js"></script>
   <script src="node_modules/rainbow-code/src/language/html.js"></script>
   <script src="node_modules/rainbow-code/src/language/javascript.js"></script>
   <script src="dist/angular-chart.js"></script>
-  <script src="smoothscroll.min.js"></script>
-  <script src="app.js"></script>
+  <script src="examples/smoothscroll.min.js"></script>
+  <script src="examples/app.js"></script>
   <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
         (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
