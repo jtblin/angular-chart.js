@@ -1,6 +1,5 @@
 # angular-chart.js
 
-[![bower package](https://badge.fury.io/bo/angular-chart.js.svg)](https://badge.fury.io/bo/angular-chart.js)
 [![npm package](https://badge.fury.io/js/angular-chart.js.svg)](https://badge.fury.io/js/angular-chart.js)
 [![CI](https://github.com/jtblin/angular-chart.js/actions/workflows/main.yml/badge.svg)](https://github.com/jtblin/angular-chart.js/actions/workflows/main.yml)
 [![code coverage](https://codecov.io/gh/jtblin/angular-chart.js/branch/main/graph/badge.svg)](https://codecov.io/gh/jtblin/angular-chart.js)
@@ -38,10 +37,6 @@ but must be set via standard options e.g. `ChartJsProvider.setOptions({ responsi
 ### cdn
 
     https://cdn.jsdelivr.net/npm/angular-chart.js@latest/dist/angular-chart.min.js
-
-### bower
-
-    bower install --save angular-chart.js
 
 ### manually
 

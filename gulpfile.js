@@ -57,17 +57,12 @@
 
   function bump(level) {
     return function() {
-      return gulp.src(['./package.json', './bower.json'])
+      return gulp.src(['./package.json'])
         .pipe(bumper({type: level}))
         .pipe(gulp.dest('./'));
     };
   }
 
-  function bower() {
-    return gulp.src('./angular-chart.js')
-      .pipe(header(banner, {pkg: pkg, version: version()}))
-      .pipe(gulp.dest('./dist'));
-  }
 
   function js() {
     return gulp.src('./angular-chart.js')
@@ -101,7 +96,6 @@
     return gulp.src([
       './dist/*',
       './package.json',
-      './bower.json',
       './examples/charts.html',
     ])
       .pipe(git.add())
@@ -144,8 +138,7 @@
   gulp.task('lint', lint);
   gulp.task('unit', unit);
   gulp.task('integration', integration);
-  gulp.task('bower', bower);
-  gulp.task('js', gulp.series(lint, bower, js));
+  gulp.task('js', gulp.series(lint, js));
   gulp.task('build', build);
   gulp.task('update', update);
   gulp.task('git-commit', gitCommit);
