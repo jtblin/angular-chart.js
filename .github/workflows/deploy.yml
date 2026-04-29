@@ -40,7 +40,13 @@ jobs:
           cp -r node_modules/font-awesome deploy/node_modules/
           cp -r node_modules/bootstrap deploy/node_modules/
           # Move charts.html to index.html and fix paths
-          sed 's|../node_modules/|node_modules/|g' examples/charts.html | sed 's|../angular-chart.js|dist/angular-chart.js|g' > deploy/index.html
+          sed -e 's|\.\./node_modules/|node_modules/|g' \
+              -e 's|\.\./dist/|dist/|g' \
+              -e 's|\.\./angular-chart.js|dist/angular-chart.js|g' \
+              -e 's|href="app.css"|href="examples/app.css"|g' \
+              -e 's|src="app.js"|src="examples/app.js"|g' \
+              -e 's|src="smoothscroll.min.js"|src="examples/smoothscroll.min.js"|g' \
+              examples/charts.html > deploy/index.html
 
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v4
