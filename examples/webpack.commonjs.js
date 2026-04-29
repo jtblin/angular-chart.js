@@ -10,7 +10,7 @@
     },
     resolve: {
       alias: {
-        'angular-chart': '../angular-chart.js', // not required when you install with npm
+        'angular-chart': '../src/angular-chart.js', // not required when you install with npm
       },
     },
   };

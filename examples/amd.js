@@ -5,7 +5,7 @@
     paths: {
       'angular': '../node_modules/angular/angular.min',
       'chart': '../node_modules/chart.js/dist/Chart.min',
-      'angular-chart': '../angular-chart',
+      'angular-chart': '../src/angular-chart',
     },
     shim: {
       'angular': {

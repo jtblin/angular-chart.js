@@ -8,12 +8,12 @@ module.exports = function(config) {
       'node_modules/chart.js/dist/Chart.min.js',
       'node_modules/angular-mocks/angular-mocks.js',
       'node_modules/chai-string/chai-string.js',
-      'angular-chart.js',
+      'src/angular-chart.js',
       'test/test.unit.js',
     ],
     exclude: [],
     preprocessors: {
-      'angular-chart.js': ['coverage'],
+      'src/angular-chart.js': ['coverage'],
     },
     reporters: ['progress', 'coverage'],
     coverageReporter: {

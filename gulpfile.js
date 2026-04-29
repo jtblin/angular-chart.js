@@ -65,7 +65,7 @@
 
 
   function js() {
-    return gulp.src('./angular-chart.js')
+    return gulp.src('./src/angular-chart.js')
       .pipe(header(banner, {pkg: pkg, version: version()}))
       .pipe(rename('angular-chart.min.js'))
       .pipe(sourcemaps.init())
