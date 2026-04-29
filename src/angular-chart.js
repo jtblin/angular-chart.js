@@ -102,13 +102,16 @@ function ChartJsFactory(ChartJs, $timeout) {
         chartClick: '=?',
         chartHover: '=?',
         chartDatasetOverride: '=?',
+        chartPlugins: '=?',
+        chartForceUpdate: '=?',
+        chartDisplayWhenNoData: '=?',
       },
       link: function(scope, elem/* , attrs */) {
         // Order of setting "watch" matter
         scope.$watch('chartData', watchData, true);
         scope.$watch('chartSeries', watchOther, true);
         scope.$watch('chartLabels', watchOther, true);
-        scope.$watch('chartOptions', watchOther, true);
+        scope.$watch('chartOptions', watchOptions, true);
         scope.$watch('chartColors', watchOther, true);
         scope.$watch('chartDatasetOverride', watchOther, true);
         scope.$watch('chartType', watchType, false);
@@ -122,8 +125,7 @@ function ChartJsFactory(ChartJs, $timeout) {
         });
 
         function watchData(newVal, oldVal) {
-          if (! newVal || ! newVal.length ||
-              (Array.isArray(newVal[0]) && ! newVal[0].length)) {
+          if (! scope.chartDisplayWhenNoData && isDataEmpty(newVal)) {
             destroyChart(scope);
             return;
           }
@@ -132,11 +134,27 @@ function ChartJsFactory(ChartJs, $timeout) {
             return;
           }
 
-          if (scope.chart && canUpdateChart(newVal, oldVal)) {
+          if (scope.chart &&
+              (canUpdateChart(newVal, oldVal) || scope.chartForceUpdate)) {
             return updateChart(newVal, scope);
           }
 
           createChart(chartType, scope, elem);
+        }
+
+        function isDataEmpty(data) {
+          return ! data || ! data.length ||
+              (Array.isArray(data[0]) && ! data[0].length);
+        }
+
+        function watchOptions(newVal, oldVal) {
+          if (isEmpty(newVal)) {
+            return;
+          }
+          if (angular.equals(newVal, oldVal)) {
+            return;
+          }
+          updateChartOptions(newVal, scope);
         }
 
         function watchOther(newVal, oldVal) {
@@ -171,7 +189,8 @@ function ChartJsFactory(ChartJs, $timeout) {
 
   function createChart(type, scope, elem) {
     const options = getChartOptions(type, scope);
-    if (! hasData(scope) || ! canDisplay(type, scope, elem, options)) {
+    if (! scope.chartDisplayWhenNoData &&
+        (! hasData(scope) || ! canDisplay(type, scope, elem, options))) {
       return;
     }
 
@@ -188,6 +207,7 @@ function ChartJsFactory(ChartJs, $timeout) {
       type: type,
       data: data,
       options: options,
+      plugins: scope.chartPlugins,
     });
     scope.$emit('chart-create', scope.chart);
     bindEvents(cvs, scope);
@@ -383,6 +403,16 @@ function ChartJsFactory(ChartJs, $timeout) {
 
   function getChartOptions(type, scope) {
     return angular.extend({}, ChartJs.getOptions(type), scope.chartOptions);
+  }
+
+  function updateChartOptions(values, scope) {
+    if (values && scope.chart) {
+      Object.keys(values).forEach((key) => {
+        scope.chart.options[key] = values[key];
+      });
+      scope.chart.update();
+      scope.$emit('chart-update', scope.chart);
+    }
   }
 
   function bindEvents(cvs, scope) {

@@ -405,7 +405,7 @@ describe('Unit testing', function() {
         .to.equal(true);
     });
 
-    ['labels', 'colors', 'series', 'options'].forEach(function(attr) {
+    ['labels', 'colors', 'series'].forEach(function(attr) {
       it('re-creates the chart on ' + attr + ' changes', function() {
         const markup = '<div style="width: 250px; height:120px">' +
           '<canvas class="chart chart-line" chart-data="data" ' +
@@ -443,14 +443,46 @@ describe('Unit testing', function() {
           case 'series':
             scope.series = ['Series C', 'Series D'];
             break;
-          case 'options':
-            scope.options = {scaleShowVerticalLines: true};
-            break;
         }
         scope.$digest();
 
         expect(count).to.equal(2);
       });
+    });
+
+    it('updates the chart on options changes', function() {
+      const markup = '<div style="width: 250px; height:120px">' +
+        '<canvas class="chart chart-line" chart-data="data" ' +
+        'chart-labels="labels" chart-series="series" ' +
+        'chart-colors="colors" chart-options="options"></canvas></div>';
+      let countCreate = 0;
+      let countUpdate = 0;
+
+      scope.options = {scaleShowVerticalLines: false};
+      scope.labels = [
+        'January', 'February', 'March', 'April', 'May', 'June', 'July',
+      ];
+      scope.series = ['Series A', 'Series B'];
+      scope.colors = ['#45b7cd', '#ff6384'];
+      scope.data = [
+        [65, 59, 80, 81, 56, 55, 40],
+        [28, 48, 40, 19, 86, 27, 90],
+      ];
+      scope.$on('chart-create', function() {
+        countCreate++;
+      });
+      scope.$on('chart-update', function() {
+        countUpdate++;
+      });
+
+      $compile(markup)(scope);
+      scope.$digest();
+
+      scope.options = {scaleShowVerticalLines: true};
+      scope.$digest();
+
+      expect(countCreate).to.equal(1);
+      expect(countUpdate).to.equal(1);
     });
 
     ['labels', 'colors', 'series', 'options'].forEach(function(attr) {
@@ -498,6 +530,95 @@ describe('Unit testing', function() {
         scope.$digest();
 
         expect(count).to.equal(1);
+      });
+    });
+
+    describe('PR Features testing', function() {
+      describe('chart-plugins (#643)', function() {
+        it('passes plugins to Chart constructor', function() {
+          const markup = '<canvas class="chart chart-line" chart-data="data" ' +
+            'chart-labels="labels" chart-plugins="plugins"></canvas>';
+          scope.labels = ['Monday'];
+          scope.data = [[1]];
+          scope.plugins = [{id: 'testPlugin'}];
+
+          const spyChart = sandbox.spy(ChartJs, 'Chart');
+
+          $compile(markup)(scope);
+          scope.$digest();
+
+          expect(spyChart).to.have.been.calledWithExactly(
+            sinon.match.any,
+            sinon.match({
+              plugins: scope.plugins,
+            }),
+          );
+        });
+      });
+
+      describe('chart-display-when-no-data (#724)', function() {
+        it('creates chart even if data is empty when ' +
+            'chart-display-when-no-data is true', function() {
+          const markup = '<canvas class="chart chart-line" chart-data="data" ' +
+            'chart-labels="labels" chart-display-when-no-data="true"></canvas>';
+          scope.labels = [];
+          scope.data = [];
+
+          let created = false;
+          scope.$on('chart-create', function() {
+            created = true;
+          });
+
+          $compile(markup)(scope);
+          scope.$digest();
+
+          expect(created).to.be.true;
+        });
+
+        it('destroys chart if data becomes empty and ' +
+            'chart-display-when-no-data is false (default)', function() {
+          const markup = '<canvas class="chart chart-line" chart-data="data" ' +
+            'chart-labels="labels"></canvas>';
+          scope.labels = ['Monday'];
+          scope.data = [[1]];
+
+          $compile(markup)(scope);
+          scope.$digest();
+
+          let destroyed = false;
+          scope.$on('chart-destroy', function() {
+            destroyed = true;
+          });
+
+          scope.data = [];
+          scope.$digest();
+
+          expect(destroyed).to.be.true;
+        });
+      });
+
+      describe('chart-force-update (#724)', function() {
+        it('updates chart even if data shape is same when ' +
+            'chart-force-update is true', function() {
+          const markup = '<canvas class="chart chart-line" chart-data="data" ' +
+            'chart-labels="labels" chart-force-update="true"></canvas>';
+          scope.labels = ['Monday'];
+          scope.data = [[1]];
+
+          $compile(markup)(scope);
+          scope.$digest();
+
+          let updated = false;
+          scope.$on('chart-update', function() {
+            updated = true;
+          });
+
+          // Same shape, normally wouldn't update/recreate
+          scope.data = [[2]];
+          scope.$digest();
+
+          expect(updated).to.be.true;
+        });
       });
     });
   });
