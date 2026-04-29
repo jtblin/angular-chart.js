@@ -106,7 +106,7 @@
 
   function serve() {
     return gulp.src('.', {read: false})
-      .pipe(shell(['npx http-server -c-1']));
+      .pipe(shell(['npx http-server -p 8080 -c-1']));
   }
 
   gulp.task('clean', clean);

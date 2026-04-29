@@ -74,7 +74,7 @@ export default {
     commonjs(),
     isWatch && serve({
       contentBase: '',
-      port: 8045,
+      port: 8080,
       open: false,
     }),
     isWatch && livereload('dist'),
