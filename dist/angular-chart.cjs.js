@@ -1,5 +1,17 @@
-import angular from 'angular';
-import Chart from 'chart.js';
+/*!
+ * angular-chart.js - An angular.js wrapper for Chart.js
+ * http://jtblin.github.io/angular-chart.js/
+ * Version: 2.0.1
+ *
+ * Copyright 2016-2026 Jerome Touffe-Blin
+ * Released under the BSD-2-Clause license
+ * https://github.com/jtblin/angular-chart.js/blob/main/LICENSE
+ */
+
+'use strict';
+
+var angular = require('angular');
+var Chart = require('chart.js');
 
 Chart.defaults.global.multiTooltipTemplate =
   '<%if (datasetLabel){%><%=datasetLabel%>: <%}%><%= value %>';
@@ -433,4 +445,6 @@ function ChartJsFactory(ChartJs, $timeout) {
     scope.$emit('chart-destroy', scope.chart);
   }
 }
-export default moduleName;
+
+module.exports = moduleName;
+//# sourceMappingURL=angular-chart.cjs.js.map

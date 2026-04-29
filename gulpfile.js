@@ -6,30 +6,15 @@
   const git = require('gulp-git');
   const gulp = require('gulp');
   const gzip = require('gulp-gzip');
-  const header = require('gulp-header');
   const eslint = require('gulp-eslint-new');
   const path = require('path');
-  const pkg = require('./package.json');
-  const rename = require('gulp-rename');
   const rimraf = require('gulp-rimraf');
   const shell = require('gulp-shell');
-  const sourcemaps = require('gulp-sourcemaps');
 
   const tar = require('gulp-tar');
-  const uglify = require('gulp-uglify');
   const karma = require('karma');
 
-  const banner = ['/*!',
-    ' * <%= pkg.name %> - <%= pkg.description %>',
-    ' * <%= pkg.homepage %>',
-    ' * Version: <%= version %>',
-    ' *',
-    ' * Copyright 2016-2026 Jerome Touffe-Blin',
-    ' * Released under the <%= pkg.license %> license',
-    ' * https://github.com/jtblin/angular-chart.js/blob/main/LICENSE',
-    ' */',
-    '',
-  ].join('\n');
+  // Banner is now handled by Rollup
 
   function clean() {
     return gulp.src('./dist/*', {read: false, allowEmpty: true})
@@ -64,15 +49,7 @@
   }
 
 
-  function js() {
-    return gulp.src('./src/angular-chart.js')
-      .pipe(header(banner, {pkg: pkg, version: version()}))
-      .pipe(rename('angular-chart.min.js'))
-      .pipe(sourcemaps.init())
-      .pipe(uglify({output: {comments: /^!/}}))
-      .pipe(sourcemaps.write('./'))
-      .pipe(gulp.dest('./dist'));
-  }
+  // js() task removed in favor of Rollup
 
   function build() {
     return gulp.src(['dist/*', '!./dist/*.tar.gz'])
@@ -121,9 +98,6 @@
     'npm publish',
   ]);
 
-  function watch() {
-    gulp.watch('./*.js', gulp.series(js));
-  }
 
   function version() {
     return JSON.parse(fs.readFileSync('package.json', 'utf8')).version;
@@ -138,20 +112,18 @@
   gulp.task('lint', lint);
   gulp.task('unit', unit);
   gulp.task('integration', integration);
-  gulp.task('js', gulp.series(lint, js));
   gulp.task('build', build);
   gulp.task('update', update);
   gulp.task('git-commit', gitCommit);
   gulp.task('git-push', gitPush);
   gulp.task('npm', npmPublish);
-  gulp.task('watch', watch);
   gulp.task('serve', serve);
 
   gulp.task('bump-patch', bump('patch'));
   gulp.task('bump-minor', bump('minor'));
   gulp.task('bump-major', bump('major'));
 
-  gulp.task('assets', gulp.series(clean, 'js', build));
+  gulp.task('assets', gulp.series(clean, build));
   gulp.task('test', gulp.series(unit, integration));
   gulp.task('check', gulp.series(lint, 'test'));
 

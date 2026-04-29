@@ -60,6 +60,15 @@
   },
   "overrides": [
     {
+      "files": ["src/**/*.js", "rollup.config.js"],
+      "parserOptions": {
+        "sourceType": "module"
+      },
+      "rules": {
+        "strict": "off"
+      }
+    },
+    {
       "files": ["test/**/*.js"],
       "globals": {
         "sinon": "readonly",

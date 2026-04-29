@@ -4,12 +4,21 @@
   "description": "An angular.js wrapper for Chart.js",
   "homepage": "http://jtblin.github.io/angular-chart.js/",
   "main": "dist/angular-chart.js",
+  "module": "dist/angular-chart.mjs",
+  "exports": {
+    ".": {
+      "import": "./dist/angular-chart.mjs",
+      "require": "./dist/angular-chart.js",
+      "default": "./dist/angular-chart.js"
+    }
+  },
   "directories": {
     "example": "examples"
   },
   "scripts": {
     "test": "gulp check",
-    "build": "gulp assets",
+    "build": "rollup -c && gulp build",
+    "dev": "rollup -c -w",
     "lint": "gulp lint",
     "serve": "http-server -c-1"
   },
@@ -21,6 +30,9 @@
   "license": "BSD-2-Clause",
   "devDependencies": {
     "@playwright/test": "^1.59.1",
+    "@rollup/plugin-commonjs": "^29.0.2",
+    "@rollup/plugin-node-resolve": "^16.0.3",
+    "@rollup/plugin-terser": "^1.0.0",
     "angular-bootstrap": "^0.12.2",
     "angular-mocks": "^1.8.3",
     "bootstrap": "^3.3.7",
@@ -56,6 +68,9 @@
     "mocha": "^10.2.0",
     "rainbow-code": "^2.1.7",
     "requirejs": "^2.3.6",
+    "rollup": "^4.60.2",
+    "rollup-plugin-livereload": "^2.0.5",
+    "rollup-plugin-serve": "^3.0.0",
     "sinon": "^15.0.1",
     "sinon-chai": "^3.7.0"
   },

@@ -34,9 +34,19 @@ but must be set via standard options e.g. `ChartJsProvider.setOptions({ responsi
 
     npm install --save angular-chart.js
 
-### cdn
-
     https://cdn.jsdelivr.net/npm/angular-chart.js@latest/dist/angular-chart.min.js
+
+### ESM / Modern Bundlers
+
+If you are using a modern bundler like Vite, Webpack 5, or Rollup:
+
+```javascript
+import angular from 'angular';
+import Chart from 'chart.js';
+import angularChart from 'angular-chart.js';
+
+angular.module('app', [angularChart]);
+```
 
 ### manually
 
@@ -250,7 +260,29 @@ See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 # Development
 
-This project uses [ESLint](https://eslint.org/) to enforce the [Google JavaScript Style Guide](https://google.github.io/styleguide/jsguide.html). 
+This project uses **Rollup** for bundling and **Gulp** for task automation.
+The source code is located in `src/` and uses native ES Modules.
+
+## Local Development Loop
+
+To start the development server with live reload:
+
+```bash
+npm run dev
+```
+
+This will:
+1. Start a local server at `http://localhost:8045`.
+2. Watch `src/` for changes and rebuild the `dist/` files instantly.
+3. Automatically reload the browser when changes are detected.
+
+## Building
+
+To generate the production bundles in `dist/`:
+
+```bash
+npm run build
+```
 
 ## Linting
 
