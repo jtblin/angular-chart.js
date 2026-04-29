@@ -8,8 +8,9 @@ on:
     branches: [ main ]
 
 permissions:
-  id-token: write
   contents: write
+  pages: write
+  id-token: write
 
 concurrency:
   group: "pages"
