@@ -1,7 +1,11 @@
-.idea/
-*.iml
 node_modules/
+dist/angular-chart.js.tar.gz
 test/fixtures/shots/
 coverage/
+playwright-report/
+test-results/
+blob-report/
 examples/bundle.js
 examples/commonjs.bundle.js
+.DS_Store
+.npm
