@@ -1,7 +1,10 @@
 {
   "name": "angular-chart.js",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "An angular.js wrapper for Chart.js",
+  "engines": {
+    "node": ">=24"
+  },
   "homepage": "http://jtblin.github.io/angular-chart.js/",
   "main": "dist/angular-chart.js",
   "module": "dist/angular-chart.mjs",
