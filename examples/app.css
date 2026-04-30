@@ -1,3 +1,4 @@
+html { scroll-padding-top: 60px; scroll-behavior: smooth; }
 body { padding-top: 50px; }
 
 .nav, .pagination, .carousel, .panel-title a { cursor: pointer; }

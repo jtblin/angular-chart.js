@@ -109,7 +109,6 @@ jobs:
               -e 's|\.\./angular-chart.js|dist/angular-chart.js|g' \
               -e 's|href="app.css"|href="examples/app.css"|g' \
               -e 's|src="app.js"|src="examples/app.js"|g' \
-              -e 's|src="smoothscroll.min.js"|src="examples/smoothscroll.min.js"|g' \
               examples/charts.html > deploy/index.html
 
       - name: Setup Pages
