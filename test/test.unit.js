@@ -58,7 +58,7 @@ describe('Unit testing', function() {
           const spyChart = sandbox.spy(ChartJs, 'Chart');
 
           scope.$on('chart-create', function(evt, chart) {
-            expect(chart).to.be.an.instanceOf(Chart.Controller);
+            expect(chart).to.be.an.instanceOf(ChartJs.Chart);
           });
 
           $compile(markup)(scope);
@@ -68,9 +68,14 @@ describe('Unit testing', function() {
           expect(spyChart).to.have.been.calledWithExactly(
             sinon.match.any,
             sinon.match({
-              type: type,
+              type: type === 'horizontalBar' ? 'bar' : type,
               data: sinon.match.object,
-              options: sinon.match.object,
+              options: sinon.match(function(opts) {
+                if (type === 'horizontalBar') {
+                  return opts.indexAxis === 'y';
+                }
+                return true;
+              }),
             }),
           );
         });
@@ -101,7 +106,7 @@ describe('Unit testing', function() {
           const spyChart = sandbox.spy(ChartJs, 'Chart');
 
           scope.$on('chart-create', function(evt, chart) {
-            expect(chart).to.be.an.instanceOf(Chart.Controller);
+            expect(chart).to.be.an.instanceOf(ChartJs.Chart);
           });
 
           $compile(markup)(scope);
@@ -111,9 +116,14 @@ describe('Unit testing', function() {
           expect(spyChart).to.have.been.calledWithExactly(
             sinon.match.any,
             sinon.match({
-              type: type,
+              type: type === 'horizontalBar' ? 'bar' : type,
               data: sinon.match.object,
-              options: sinon.match.object,
+              options: sinon.match(function(opts) {
+                if (type === 'horizontalBar') {
+                  return opts.indexAxis === 'y';
+                }
+                return true;
+              }),
             }),
           );
         });
@@ -139,7 +149,7 @@ describe('Unit testing', function() {
         scope.labels = ['Green', 'Peach', 'Grey', 'Orange'];
         scope.data = [300, 500, 100, 150];
         scope.$on('chart-create', function(evt, chart) {
-          datasets = chart.chart.config.data.datasets;
+          datasets = chart.data.datasets;
         });
         $compile(markup)(scope);
         scope.$digest();
@@ -179,7 +189,7 @@ describe('Unit testing', function() {
         ];
 
         scope.$on('chart-create', function(evt, chart) {
-          datasets = chart.chart.config.data.datasets;
+          datasets = chart.data.datasets;
         });
 
         $compile(markup)(scope);
@@ -211,7 +221,7 @@ describe('Unit testing', function() {
         };
 
         scope.$on('chart-create', function(evt, chart) {
-          datasets = chart.chart.config.data.datasets;
+          datasets = chart.data.datasets;
         });
 
         $compile(markup)(scope);

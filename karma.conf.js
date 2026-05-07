@@ -5,7 +5,7 @@ module.exports = function(config) {
     frameworks: ['mocha', 'chai', 'sinon', 'sinon-chai'],
     files: [
       'node_modules/angular/angular.min.js',
-      'node_modules/chart.js/dist/Chart.min.js',
+      'node_modules/chart.js/dist/chart.umd.js',
       'node_modules/angular-mocks/angular-mocks.js',
       'node_modules/chai-string/chai-string.js',
       'dist/angular-chart.js',
