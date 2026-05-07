@@ -1,6 +1,7 @@
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import terser from '@rollup/plugin-terser';
+import typescript from '@rollup/plugin-typescript';
 import serve from 'rollup-plugin-serve';
 import livereload from 'rollup-plugin-livereload';
 import {createRequire} from 'module';
@@ -22,7 +23,7 @@ const banner = `/*!
 `;
 
 export default {
-  input: 'src/angular-chart.js',
+  input: 'src/angular-chart.ts',
   output: [
     {
       file: 'dist/angular-chart.js',
@@ -70,6 +71,7 @@ export default {
   ],
   external: ['angular', 'chart.js'],
   plugins: [
+    typescript(),
     resolve(),
     commonjs(),
     isWatch && serve({

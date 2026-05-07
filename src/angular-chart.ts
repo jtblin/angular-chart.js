@@ -1,18 +1,8 @@
 import angular from 'angular';
-import Chart from 'chart.js';
+import { Chart, ChartConfiguration } from 'chart.js';
 
 
-Chart.defaults.global.tooltips = Chart.defaults.global.tooltips || {};
-Chart.defaults.global.tooltips.mode = 'index';
-Chart.defaults.global.elements = Chart.defaults.global.elements || {};
-Chart.defaults.global.elements.line = Chart.defaults.global.elements.line || {};
-Chart.defaults.global.elements.line.borderWidth = 2;
-Chart.defaults.global.elements.rectangle =
-  Chart.defaults.global.elements.rectangle || {};
-Chart.defaults.global.elements.rectangle.borderWidth = 2;
-Chart.defaults.global.legend = Chart.defaults.global.legend || {};
-Chart.defaults.global.legend.display = false;
-Chart.defaults.global.colors = [
+const DEFAULT_COLORS = [
   '#97BBCD', // blue
   '#DCDCDC', // light grey
   '#F7464A', // red
@@ -22,8 +12,27 @@ Chart.defaults.global.colors = [
   '#4D5360', // dark grey
 ];
 
+// @ts-expect-error
+Chart.defaults.plugins = Chart.defaults.plugins || {};
+// @ts-expect-error
+Chart.defaults.plugins.tooltip = Chart.defaults.plugins.tooltip || {};
+Chart.defaults.plugins.tooltip.mode = 'index';
+// @ts-expect-error
+Chart.defaults.elements = Chart.defaults.elements || {};
+// @ts-expect-error
+Chart.defaults.elements.line = Chart.defaults.elements.line || {};
+Chart.defaults.elements.line.borderWidth = 2;
+// @ts-expect-error
+Chart.defaults.elements.bar = Chart.defaults.elements.bar || {};
+Chart.defaults.elements.bar.borderWidth = 2;
+// @ts-expect-error
+Chart.defaults.plugins.legend = Chart.defaults.plugins.legend || {};
+Chart.defaults.plugins.legend.display = false;
+
+
+
 const moduleName = angular.module('chart.js', [])
-  .provider('ChartJs', ChartJsProvider)
+  .provider('ChartJs', ChartJsProvider as any)
   .factory('ChartJsFactory', ['ChartJs', '$timeout', ChartJsFactory])
   .directive('chartBase', ['ChartJsFactory', (ChartJsFactory) => {
     return new ChartJsFactory();
@@ -63,7 +72,7 @@ const moduleName = angular.module('chart.js', [])
  *   ChartJsProvider.setOptions('Line', { responsive: true });
  * })))
  */
-function ChartJsProvider() {
+function ChartJsProvider(this: any) {
   let options = {responsive: true};
   const ChartJs = {
     Chart: Chart,
@@ -76,7 +85,7 @@ function ChartJsProvider() {
   /**
    * Allow to set global options during configuration
    */
-  this.setOptions = function(type, customOptions) {
+  this.setOptions = function(this: any, type, customOptions) {
     // If no type was specified set option for the global object
     if (! customOptions) {
       customOptions = type;
@@ -142,7 +151,7 @@ function ChartJsFactory(ChartJs, $timeout) {
           }
         });
 
-        function watchData(newVal, oldVal) {
+        function watchData(newVal, oldVal?) {
           if (! scope.chartDisplayWhenNoData && isDataEmpty(newVal)) {
             destroyChart(scope);
             return;
@@ -216,7 +225,12 @@ function ChartJsFactory(ChartJs, $timeout) {
     const ctx = cvs.getContext('2d');
 
     scope.chartGetColor = getChartColorFn(scope);
-    const data = getChartData(type, scope);
+    let data = getChartData(type, scope);
+    if (type === 'horizontalBar') {
+      type = 'bar';
+      options.indexAxis = 'y';
+    }
+
     // Destroy old chart if it exists to avoid ghost charts issue
     // https://github.com/jtblin/angular-chart.js/issues/187
     destroyChart(scope);
@@ -253,24 +267,18 @@ function ChartJsFactory(ChartJs, $timeout) {
       points: undefined,
     };
     return function(evt) {
-      const atEvent = scope.chart.getElementAtEvent ||
-        scope.chart.getPointAtEvent;
-      const atEvents = scope.chart.getElementsAtEvent ||
-        scope.chart.getPointsAtEvent;
-      if (atEvents) {
-        const points = atEvents.call(scope.chart, evt);
-        const point = atEvent ? atEvent.call(scope.chart, evt)[0] : undefined;
+      const points = scope.chart.getElementsAtEventForMode(evt, 'nearest', {intersect: true}, false);
+      const point = points[0];
 
-        const pointsChanged = !angular.equals(lastState.points, points);
-        const pointChanged = !angular.equals(lastState.point, point);
+      const pointsChanged = !angular.equals(lastState.points, points);
+      const pointChanged = !angular.equals(lastState.point, point);
 
-        if (triggerOnlyOnChange === false ||
-          (pointsChanged && pointChanged)
-        ) {
-          lastState.point = point;
-          lastState.points = points;
-          scope[action](points, evt, point);
-        }
+      if (triggerOnlyOnChange === false ||
+        (pointsChanged && pointChanged)
+      ) {
+        lastState.point = point;
+        lastState.points = points;
+        scope[action](points, evt, point);
       }
     };
   }
@@ -278,7 +286,7 @@ function ChartJsFactory(ChartJs, $timeout) {
   function getColors(type, scope) {
     const colors = angular.copy(scope.chartColors ||
       ChartJs.getOptions(type).chartColors ||
-      Chart.defaults.global.colors,
+      DEFAULT_COLORS,
     );
     const notEnoughColors = colors.length < scope.chartData.length;
     while (colors.length < scope.chartData.length) {
