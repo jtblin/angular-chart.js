@@ -13,10 +13,12 @@
     });
     // Configure all doughnut charts
     ChartJsProvider.setOptions('doughnut', {
-      cutoutPercentage: 60,
+      cutout: '60%',
     });
     ChartJsProvider.setOptions('bubble', {
-      tooltips: {enabled: false},
+      plugins: {
+        tooltip: {enabled: false},
+      },
     });
   });
 
@@ -61,26 +63,26 @@
 
     $scope.options = {
       scales: {
-        yAxes: [
-          {
-            id: 'y-axis-1',
-            type: 'linear',
-            display: true,
-            position: 'left',
-          },
-          {
-            id: 'y-axis-2',
-            type: 'linear',
-            display: true,
-            position: 'right',
-          },
-        ],
+        'y-axis-1': {
+          type: 'linear',
+          display: true,
+          position: 'left',
+        },
+        'y-axis-2': {
+          type: 'linear',
+          display: true,
+          position: 'right',
+        },
       },
     };
   }]);
 
   app.controller('BarCtrl', ['$scope', ($scope) => {
-    $scope.options = {legend: {display: true}};
+    $scope.options = {
+      plugins: {
+        legend: {display: true},
+      },
+    };
     $scope.labels = ['2006', '2007', '2008', '2009', '2010', '2011', '2012'];
     $scope.series = ['Series A', 'Series B'];
     $scope.data = [
@@ -101,7 +103,11 @@
   app.controller('PieCtrl', ['$scope', ($scope) => {
     $scope.labels = ['Download Sales', 'In-Store Sales', 'Mail Sales'];
     $scope.data = [300, 500, 100];
-    $scope.options = {legend: {display: false}};
+    $scope.options = {
+      plugins: {
+        legend: {display: false},
+      },
+    };
   }]);
 
   app.controller('PolarAreaCtrl', ['$scope', ($scope) => {
@@ -110,7 +116,11 @@
       'Corporate Sales',
     ];
     $scope.data = [300, 500, 100, 40, 120];
-    $scope.options = {legend: {display: false}};
+    $scope.options = {
+      plugins: {
+        legend: {display: false},
+      },
+    };
   }]);
 
   app.controller('BaseCtrl', ['$scope', ($scope) => {
@@ -131,7 +141,11 @@
       'Eating', 'Drinking', 'Sleeping', 'Designing', 'Coding', 'Cycling',
       'Running',
     ];
-    $scope.options = {legend: {display: false}};
+    $scope.options = {
+      plugins: {
+        legend: {display: false},
+      },
+    };
 
     $scope.data = [
       [65, 59, 90, 81, 56, 55, 40],
@@ -152,12 +166,12 @@
     $scope.series = ['2015', '2016'];
     $scope.options = {
       scales: {
-        xAxes: [{
+        x: {
           stacked: true,
-        }],
-        yAxes: [{
+        },
+        y: {
           stacked: true,
-        }],
+        },
       },
     };
 
@@ -232,7 +246,11 @@
         pointHoverBorderColor: 'rgba(77,83,96,0.8)',
       },
     ];
-    $scope.options = {legend: {display: false}};
+    $scope.options = {
+      plugins: {
+        legend: {display: false},
+      },
+    };
     $scope.randomize = () => {
       $scope.data = $scope.data.map((data) => {
         return data.map((y) => {
@@ -246,22 +264,22 @@
   app.controller('BubbleCtrl', ['$scope', '$interval', ($scope, $interval) => {
     $scope.options = {
       scales: {
-        xAxes: [{
+        x: {
           display: false,
+          max: 125,
+          min: -125,
           ticks: {
-            max: 125,
-            min: -125,
             stepSize: 10,
           },
-        }],
-        yAxes: [{
+        },
+        y: {
           display: false,
+          max: 125,
+          min: -125,
           ticks: {
-            max: 125,
-            min: -125,
             stepSize: 10,
           },
-        }],
+        },
       },
     };
 
@@ -305,22 +323,21 @@
           radius: 0,
         },
       },
-      legend: {
-        display: false,
-      },
-      scales: {
-        xAxes: [{
-          display: false,
-        }],
-        yAxes: [{
-          display: false,
-        }],
-        gridLines: {
+      plugins: {
+        legend: {
           display: false,
         },
+        tooltip: {
+          enabled: false,
+        },
       },
-      tooltips: {
-        enabled: false,
+      scales: {
+        x: {
+          display: false,
+        },
+        y: {
+          display: false,
+        },
       },
     };
 
