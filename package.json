@@ -23,13 +23,14 @@
     "dist/*.js.map",
     "dist/*.mjs",
     "dist/*.mjs.map",
-    "src/angular-chart.js"
+    "src/angular-chart.ts"
   ],
   "scripts": {
     "test": "gulp check",
     "build": "rollup -c && gulp build",
     "dev": "rollup -c -w",
     "lint": "gulp lint",
+    "typecheck": "tsc --noEmit",
     "release:patch": "gulp deploy-patch",
     "release:minor": "gulp deploy-minor",
     "release:major": "gulp deploy-major"
@@ -45,6 +46,8 @@
     "@rollup/plugin-commonjs": "^29.0.2",
     "@rollup/plugin-node-resolve": "^16.0.3",
     "@rollup/plugin-terser": "^1.0.0",
+    "@rollup/plugin-typescript": "^12.3.0",
+    "@types/angular": "^1.8.9",
     "angular-bootstrap": "^0.12.2",
     "angular-mocks": "^1.8.3",
     "bootstrap": "^3.3.7",
@@ -83,10 +86,12 @@
     "rollup-plugin-livereload": "^2.0.5",
     "rollup-plugin-serve": "^3.0.0",
     "sinon": "^15.0.1",
-    "sinon-chai": "^3.7.0"
+    "sinon-chai": "^3.7.0",
+    "tslib": "^2.8.1",
+    "typescript": "^6.0.3"
   },
   "dependencies": {
     "angular": "^1.8.3",
-    "chart.js": "^2.9.4"
+    "chart.js": "^4.5.1"
   }
 }
