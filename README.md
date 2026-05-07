@@ -12,23 +12,15 @@ script and options.
 
 # Installation
 
-This is the `2.x` branch which requires Chart.js 2.x version and AngularJS 1.8.x.
-This version drops support for legacy browsers (IE11 and below) and uses ES6 syntax.
-Following semantic versioning, there are numerous **breaking changes** since 1.x, notably:
+This is the `2.x` branch which requires **Chart.js 4.x** and **AngularJS 1.8.x**.
+The project has been modernized to **TypeScript** and uses ES6+ syntax.
 
-* **ES6 Baseline**: The library and examples now use ES6 features (arrow functions, `const`/`let`, etc.).
-* **Dropped IE Support**: Support for IE11 and below has been removed.
+### Breaking Changes since 1.x / 2.x (v2.2.0+)
 
-* all options now need to use the `chart-` prefix
-* `chart-colours` is now `chart-colors` and `chart-get-colour` is now `chart-get-color`
-* chart types are in `camelCase` e.g. `line` and `polarArea`
-* legend is now a Chart.js option so the `chart-legend` attribute has been removed
-* events emitted on creation and update are now prefixed with `chart-` e.g. `chart-create`
-* `$scope.$apply` is not called anymore on mouse hover functions calls
-* obviously all Chart.js breaking changes as well in how options are set, etc.
-* disabling the `responsive` option doesn't work via global `Chart.defaults.global.responsive` anymore, 
-but must be set via standard options e.g. `ChartJsProvider.setOptions({ responsive: false });`
-* factory now returns a module name instead of a module instance
+* **Chart.js v4 Baseline**: The library now requires Chart.js 4.x. Many configuration options have changed (e.g., `scales` are now objects, `legend` and `tooltip` are under `plugins`).
+* **TypeScript Migration**: Source code is now in `.ts`. Directives are type-safe but remain compatible with AngularJS 1.x patterns.
+* **Horizontal Bar Chart**: The `chart-horizontal-bar` directive now maps to a `bar` chart with `indexAxis: 'y'` internally.
+* **ESM / Modern Bundlers**: Full support for ESM, CJS, and UMD via Rollup.
 
 ### npm
 
@@ -40,31 +32,25 @@ but must be set via standard options e.g. `ChartJsProvider.setOptions({ responsi
 
 If you are using a modern bundler like Vite, Webpack 5, or Rollup:
 
-```javascript
+```typescript
 import angular from 'angular';
-import Chart from 'chart.js';
+import { Chart, registerables } from 'chart.js';
 import angularChart from 'angular-chart.js';
 
+Chart.register(...registerables);
 angular.module('app', [angularChart]);
 ```
 
-### manually
+### Manually
 
-or copy the files from `dist/`. 
-
-Then add the sources to your code (adjust paths as needed) after 
-adding the dependencies for Angular and Chart.js first:
+Add the sources to your code after adding the dependencies for Angular and Chart.js (UMD bundle):
 
 ```html
 <head>
-  ...
-<head>
-<body>
-  ...
-</body>
   <script src="node_modules/angular/angular.min.js"></script>
-  <script src="node_modules/chart.js/dist/Chart.min.js"></script>
+  <script src="node_modules/chart.js/dist/chart.umd.js"></script>
   <script src="node_modules/angular-chart.js/dist/angular-chart.min.js"></script>
+</head>
 ```
 
 # Utilisation

@@ -1,23 +1,38 @@
-# Project Rules: Workflow Enforcer
+# Angular-Chart.js: Project Technical Context
 
-To ensure project stability and maintain a transparent, human-in-the-loop development process, all AI interactions MUST follow these rules:
+## Overview
+This is a legacy AngularJS 1.x wrapper for Chart.js. It has recently been modernized to **TypeScript** and **Chart.js v4**.
 
-## 1. Planning First
-- **Every task** (except trivially simple one-file fixes) **MUST** start with an `implementation_plan.md`.
-- **GATE**: Do not begin implementation until the user explicitly approves the plan.
+## Architecture & Tech Stack
+- **Core Logic**: `src/angular-chart.ts` (TypeScript, ES Modules).
+- **Chart Engine**: Chart.js v4.x (UMD bundle used in tests/examples: `chart.umd.js`).
+- **Framework**: AngularJS 1.8.x.
+- **Build System**: 
+  - **Rollup**: Bundles TypeScript into UMD, ESM, and CJS formats (`rollup.config.js`).
+  - **Gulp**: Manages secondary tasks like linting, distribution cleanup, and publishing (`gulpfile.js`).
 
-## 2. Git Permission Gates
-- **GATE (Commit)**: Before running `git commit`, show the `git diff --staged` and ask for explicit permission.
-- **GATE (Push)**: Always ask for turn-by-turn permission before running `git push`.
-- **NO FORCE PUSH**: Force pushing is strictly prohibited. Resolve divergences via merge or standard pull.
+## Key Scripts
+- `npm run dev`: Starts a watch server (Rollup + LiveReload) at `http://localhost:8045`.
+- `npm run build`: Generates production bundles in `dist/`.
+- `npm test`: Runs `gulp check` (ESLint -> Karma Unit Tests -> Playwright Integration Tests).
+- `npm run lint`: Runs `gulp lint` (ESLint with Google Style Guide).
+- `npm run typecheck`: Runs `tsc --noEmit` to verify type safety.
 
-## 3. GitHub Issue Hygiene
-- **STRICT RULE**: Never use the `issue_write` tool to add comments to an issue. This tool overwrites the original issue description.
-- **Action**: Always use `add_issue_comment` for adding feedback, progress updates, or closing remarks.
+## Coding Conventions & Patterns
+- **TypeScript**: 
+  - Using a lenient `tsconfig.json` to support legacy Angular patterns.
+  - Contextual `this: any` and `@ts-expect-error` are used sparingly for legacy provider/factory patterns.
+- **Chart.js v4 Migration**:
+  - `horizontalBar` is no longer a top-level type; it is mapped to `bar` with `indexAxis: 'y'`.
+  - Configuration structures have shifted: `scales` are now flat objects (not arrays), and `legend`/`tooltip` are moved to the `plugins` namespace.
+  - Event API: Use `getElementsAtEventForMode(evt, 'nearest', {intersect: true}, false)` for click/hover handlers.
+- **Visual Stability**: Integration tests use Playwright for pixel-perfect screenshot comparisons. Snapshots are stored in `test/integration.spec.js-snapshots/`.
 
-## 4. Skill Integration
-- This project follows the standards defined in the global `workflow-enforcer` skill.
-- Use `planning-and-task-breakdown` for all architectural changes.
+## Deployment & Versioning
+- **Trunk-Based**: Work happens on `main`.
+- **Atomic Commits**: Follow Conventional Commits.
+- **Versioning**: Automated via `gulp deploy-patch/minor/major`. Tags use the `v` prefix.
 
----
-*These rules are designed to prevent accidental regressions and ensure the human developer retains full control over the repository state.*
+## Testing Strategy
+1. **Unit Tests**: `test/test.unit.js` (Karma + Mocha + Chai + Sinon). Focuses on directive lifecycle and data binding.
+2. **Integration Tests**: `test/integration.spec.js` (Playwright). Verifies visual rendering across multiple chart configurations.
