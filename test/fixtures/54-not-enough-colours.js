@@ -1,7 +1,8 @@
 'use strict';
+Chart.defaults.animation = false;
 
 const app = angular.module('pie', ['chart.js']);
-Chart.defaults.global.legend.display = false;
+Chart.defaults.plugins.legend.display = false;
 app.controller('PieCtrl', ['$scope', function($scope) {
   let cnt = 0;
   $scope.colors = [];

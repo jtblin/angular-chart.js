@@ -1,4 +1,5 @@
 
+Chart.defaults.animation = false;
 var __cov_sIM21KhAGhzWP0B7wdkh_A = (Function('return this'))();
 if (!__cov_sIM21KhAGhzWP0B7wdkh_A.__coverage__) { __cov_sIM21KhAGhzWP0B7wdkh_A.__coverage__ = {}; }
 __cov_sIM21KhAGhzWP0B7wdkh_A = __cov_sIM21KhAGhzWP0B7wdkh_A.__coverage__;

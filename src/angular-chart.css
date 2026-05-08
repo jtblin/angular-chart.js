@@ -1,0 +1,17 @@
+.chart-xs {
+  display: block;
+  width: 200px !important;
+  height: 200px !important;
+  max-width: 200px !important;
+  max-height: 200px !important;
+  margin: 0 auto;
+  position: relative;
+  overflow: hidden;
+}
+
+.chart-xs canvas {
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+}

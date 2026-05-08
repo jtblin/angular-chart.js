@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <title>Hex colors</title>
   <link href="../../node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../../dist/angular-chart.css" rel="stylesheet">
 </head>
 <body ng-app="pie" id="top">
   <div class="container">
@@ -16,7 +17,7 @@
           <div class="panel panel-default">
             <div class="panel-heading">Pie Chart</div>
             <div class="panel-body">
-              <canvas class="chart chart-pie" chart-data="data" chart-labels="labels" chart-colors="colors"></canvas>
+              <canvas class="chart chart-pie chart-xs" chart-data="data" chart-labels="labels" chart-colors="colors"></canvas>
             </div>
             <p align="center"><a href="https://github.com/jtblin/angular-chart.js/issues/51">
               https://github.com/jtblin/angular-chart.js/issues/57
@@ -28,7 +29,7 @@
   </div>
 
   <script src="../../node_modules/angular/angular.min.js"></script>
-  <script src="../../node_modules/chart.js/dist/Chart.min.js"></script>
+  <script src="../../node_modules/chart.js/dist/chart.umd.js"></script>
   <script src="../../dist/angular-chart.js"></script>
   <script src="57-hex-colours.js"></script>
 </body>

@@ -1,4 +1,5 @@
 'use strict';
+Chart.defaults.animation = false;
 
 const app = angular.module('app', ['chart.js']);
 

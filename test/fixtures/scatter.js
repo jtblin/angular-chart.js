@@ -1,4 +1,5 @@
 'use strict';
+Chart.defaults.animation = false;
 
 const app = angular.module('app', ['chart.js']);
 
@@ -16,10 +17,10 @@ app.controller('ScatterCtrl', ['$scope', function($scope) {
 
   $scope.options = {
     scales: {
-      xAxes: [{
+      x: {
         type: 'linear',
         position: 'bottom',
-      }],
+      },
     },
   };
 }]);

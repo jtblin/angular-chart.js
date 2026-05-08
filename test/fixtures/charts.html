@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <title>Charts</title>
   <link href="../../node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../../dist/angular-chart.css" rel="stylesheet">
 </head>
 <body ng-app="charts" id="top">
   <div class="container">
@@ -33,7 +34,9 @@
           <div class="panel panel-default">
             <div class="panel-heading">Doughnut Chart</div>
             <div class="panel-body">
-              <canvas id="doughnut" class="chart chart-doughnut" chart-data="data" chart-labels="labels"></canvas>
+              <div class="chart-xs">
+                <canvas id="doughnut" class="chart chart-doughnut" chart-data="data" chart-labels="labels"></canvas>
+              </div>
             </div>
           </div>
         </div>
@@ -43,7 +46,9 @@
           <div class="panel panel-default">
             <div class="panel-heading">Radar Chart</div>
             <div class="panel-body">
-              <canvas id="area" class="chart chart-radar" chart-data="data" chart-labels="labels"></canvas>
+              <div class="chart-xs">
+                <canvas id="area" class="chart chart-radar" chart-data="data" chart-labels="labels"></canvas>
+              </div>
             </div>
           </div>
         </div>
@@ -51,7 +56,9 @@
           <div class="panel panel-default">
             <div class="panel-heading">Pie Chart</div>
             <div class="panel-body">
-              <canvas id="pie" class="chart chart-pie" chart-data="data" chart-labels="labels"></canvas>
+              <div class="chart-xs">
+                <canvas id="pie" class="chart chart-pie" chart-data="data" chart-labels="labels"></canvas>
+              </div>
             </div>
           </div>
         </div>
@@ -59,7 +66,9 @@
           <div class="panel panel-default">
             <div class="panel-heading">Polar Area Chart</div>
             <div class="panel-body">
-              <canvas id="polar" class="chart chart-polar-area" chart-data="data" chart-labels="labels"></canvas>
+              <div class="chart-xs">
+                <canvas id="polar" class="chart chart-polar-area" chart-data="data" chart-labels="labels"></canvas>
+              </div>
             </div>
           </div>
         </div>
@@ -70,7 +79,7 @@
   </div>
 
   <script src="../../node_modules/angular/angular.min.js"></script>
-  <script src="../../node_modules/chart.js/dist/Chart.min.js"></script>
+  <script src="../../node_modules/chart.js/dist/chart.umd.js"></script>
   <script src="../../dist/angular-chart.js"></script>
   <script src="charts.js"></script>
 </body>

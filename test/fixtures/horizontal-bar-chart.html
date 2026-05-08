@@ -4,6 +4,12 @@
   <meta charset="UTF-8">
   <title>Horizontal Bar Chart</title>
   <link href="../../node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .chart-container {
+      width: 100%;
+      height: 400px;
+    }
+  </style>
 </head>
 <body ng-app="horizontal" id="top">
 <div class="container">
@@ -16,8 +22,10 @@
         <div class="panel panel-default">
           <div class="panel-heading">Horizontal Bar Chart</div>
           <div class="panel-body">
-            <canvas class="chart chart-horizontal-bar " chart-options="options" chart-data="data"
-                    chart-labels="labels" chart-colors="colors"></canvas>
+            <div class="chart-container">
+              <canvas class="chart chart-horizontal-bar" chart-data="data"
+                      chart-labels="labels"></canvas>
+            </div>
           </div>
         </div>
       </div>
@@ -26,7 +34,7 @@
 </div>
 
 <script src="../../node_modules/angular/angular.min.js"></script>
-<script src="../../node_modules/chart.js/dist/Chart.min.js"></script>
+<script src="../../node_modules/chart.js/dist/chart.umd.js"></script>
 <script src="../../dist/angular-chart.js"></script>
 <script src="horizontal-bar-chart.js"></script>
 </body>

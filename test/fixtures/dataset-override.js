@@ -1,4 +1,5 @@
 'use strict';
+Chart.defaults.animation = false;
 
 angular.module('app', ['chart.js'])
   .controller('OverrideCtrl', ['$scope', function($scope) {
@@ -24,6 +25,8 @@ angular.module('app', ['chart.js'])
         hoverBackgroundColor: 'rgba(255,99,132,0.4)',
         hoverBorderColor: 'rgba(255,99,132,1)',
         type: 'line',
+        tension: 0.4,
+        fill: true,
       },
     ];
 

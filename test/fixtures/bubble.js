@@ -1,4 +1,5 @@
 'use strict';
+Chart.defaults.animation = false;
 
 angular.module('app', ['chart.js'])
   .config(['ChartJsProvider', function(ChartJsProvider) {
@@ -412,22 +413,22 @@ angular.module('app', ['chart.js'])
 
     $scope.options = {
       scales: {
-        xAxes: [{
+        x: {
           display: false,
+          max: 125,
+          min: -125,
           ticks: {
-            max: 125,
-            min: -125,
             stepSize: 10,
           },
-        }],
-        yAxes: [{
+        },
+        y: {
           display: false,
+          max: 125,
+          min: -125,
           ticks: {
-            max: 125,
-            min: -125,
             stepSize: 10,
           },
-        }],
+        },
       },
     };
 

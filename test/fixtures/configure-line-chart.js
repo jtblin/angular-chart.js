@@ -1,4 +1,5 @@
 'use strict';
+Chart.defaults.animation = false;
 
 const app = angular.module('line', ['chart.js']);
 
@@ -9,7 +10,9 @@ app.config(function(ChartJsProvider) {
   });
   // Configure all line charts
   ChartJsProvider.setOptions('line', {
-    showLines: false,
+    showLine: true,
+    tension: 0.4,
+    fill: true,
   });
 });
 
@@ -19,8 +22,10 @@ app.controller('LineCtrl', ['$scope', '$timeout', function($scope, $timeout) {
 
   // Configure only this instance
   $scope.options = {
-    legend: {
-      display: false,
+    plugins: {
+      legend: {
+        display: false,
+      },
     },
   };
 
