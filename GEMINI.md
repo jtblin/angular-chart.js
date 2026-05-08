@@ -34,9 +34,9 @@ This is a legacy AngularJS 1.x wrapper for Chart.js. It has recently been modern
 - **Visual Stability**: Integration tests use Playwright for pixel-perfect screenshot comparisons. Snapshots are stored in `test/integration.spec.ts-snapshots/`.
 
 ## Deployment & Versioning
-- **Trunk-Based**: Work happens on `main`.
+- **Trunk-Based**: Work happens on `main`. Current modernization is stabilized on `release/v3.0.0-rc.1`.
 - **Atomic Commits**: Follow Conventional Commits.
-- **Versioning**: Automated via `gulp deploy-patch/minor/major`. Tags use the `v` prefix.
+- **Versioning**: Automated via `gulp deploy-patch/minor/major`. Tags use the `v` prefix. Bumping to **v3.0.0** due to Chart.js v4 and TypeScript migration.
 
 ## Testing Strategy
 1. **Unit Tests**: `test/test.unit.ts` (Karma + Mocha + Chai + Sinon). Focuses on directive lifecycle and data binding.
