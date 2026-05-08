@@ -1,7 +1,7 @@
 import angular from 'angular';
 import { Chart, ChartConfiguration, ChartOptions, ChartType, ChartDataset, Plugin, ActiveElement } from 'chart.js';
 
-interface ChartColor {
+export interface ChartColor {
   backgroundColor: string;
   pointBackgroundColor: string;
   pointHoverBackgroundColor: string;
@@ -10,23 +10,23 @@ interface ChartColor {
   pointHoverBorderColor: string;
 }
 
-interface ChartJsProviderOptions extends Partial<ChartOptions> {
+export interface ChartJsProviderOptions extends Partial<ChartOptions> {
   chartAlpha?: number;
   chartFillAlpha?: number;
   [key: string]: unknown;
 }
 
-interface ChartJsService {
+export interface ChartJsService {
   Chart: typeof Chart;
   getOptions(type?: string): ChartJsProviderOptions;
 }
 
-interface ChartJsProviderInterface {
+export interface ChartJsProviderInterface {
   setOptions(type: string | ChartJsProviderOptions, customOptions?: ChartJsProviderOptions): void;
   $get(): ChartJsService;
 }
 
-interface DirectiveScope extends angular.IScope {
+export interface DirectiveScope extends angular.IScope {
   chartGetColor?: () => ChartColor;
   chartType: ChartType | string;
   chartData: ChartDataset['data'] | ChartDataset['data'][];
