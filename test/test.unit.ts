@@ -1,25 +1,46 @@
-/* jshint mocha:true */
-/* global module:true*/
-/* global inject:true*/
-/* global expect:true*/
-/* global sinon:true*/
+/// <reference types="angular" />
+/// <reference types="angular-mocks" />
+/// <reference types="mocha" />
+/// <reference types="chai" />
+/// <reference types="sinon" />
+/// <reference types="sinon-chai" />
 
-'use strict';
+import * as angular from 'angular';
+import { Chart } from 'chart.js';
+import * as sinon from 'sinon';
+import '../src/angular-chart';
+import { DirectiveScope, ChartJsService, ChartJsProviderInterface, ChartColor } from '../src/angular-chart';
+import { ChartDataset, ChartOptions, Plugin } from 'chart.js';
+
+declare const expect: Chai.ExpectStatic;
+
+interface TestScope extends angular.IScope {
+  data?: ChartDataset['data'] | ChartDataset['data'][];
+  labels?: (string | number | string[] | number[])[];
+  series?: string[];
+  options?: ChartOptions;
+  colors?: (string | ChartColor)[];
+  type?: string;
+  datasetOverride?: Partial<ChartDataset> | Partial<ChartDataset>[];
+  plugins?: Plugin[];
+}
 
 describe('Unit testing', function() {
-  /* jshint expr: true */
+  let $compile: angular.ICompileService;
+  let scope: TestScope;
+  let sandbox: sinon.SinonSandbox;
+  let ChartJs: ChartJsService;
+  let ChartJsProvider: ChartJsProviderInterface;
 
-  let $compile; let scope; let sandbox; let ChartJs; let ChartJsProvider;
-
-  beforeEach(module('chart.js', function(_ChartJsProvider_) {
+  beforeEach(angular.mock.module('chart.js', function(_ChartJsProvider_: ChartJsProviderInterface) {
     ChartJsProvider = _ChartJsProvider_;
     ChartJsProvider.setOptions({env: 'test', responsive: false});
   }));
 
-  beforeEach(inject(function(_$compile_, _$rootScope_, _ChartJs_) {
+  beforeEach(angular.mock.inject(function(_$compile_: angular.ICompileService, _$rootScope_: angular.IRootScopeService, _ChartJs_: ChartJsService) {
     // The injector unwraps the underscores (_) from around the parameter names when matching
     $compile = _$compile_;
-    scope = _$rootScope_;
+    scope = _$rootScope_.$new() as TestScope;
     ChartJs = _ChartJs_;
     sandbox = sinon.createSandbox();
   }));
@@ -133,7 +154,7 @@ describe('Unit testing', function() {
     describe('colors', function() {
       it('sets the chart colors when Hex colors, RGB colors, ' +
         'RGBA colors, or objects are used', function() {
-        let datasets;
+        let datasets: any;
         const markup = '<canvas class="chart chart-pie" chart-data="data" ' +
           'chart-labels="labels" chart-colors="colors"></canvas>';
         scope.colors = [
@@ -153,16 +174,16 @@ describe('Unit testing', function() {
         });
         $compile(markup)(scope);
         scope.$digest();
-        expect(datasets[0].backgroundColor[0]).to.equal('rgba(159,204,0,1)');
-        expect(datasets[0].backgroundColor[1]).to.equal('rgba(250,109,33,0.5)');
-        expect(datasets[0].backgroundColor[2]).to.equal('rgba(154,154,154,1)');
-        expect(datasets[0].backgroundColor[3]).to.equal('rgba(233,177,69,1)');
+        expect(datasets![0].backgroundColor![0]).to.equal('rgba(159,204,0,1)');
+        expect(datasets![0].backgroundColor![1]).to.equal('rgba(250,109,33,0.5)');
+        expect(datasets![0].backgroundColor![2]).to.equal('rgba(154,154,154,1)');
+        expect(datasets![0].backgroundColor![3]).to.equal('rgba(233,177,69,1)');
       });
     });
 
     describe('dataset override', function() {
       it('overrides the datasets for complex charts', function() {
-        let datasets;
+        let datasets: any;
         const markup = '<canvas class="chart chart-bar" chart-data="data" ' +
           'chart-labels="labels" ' +
           'chart-dataset-override="datasetOverride"></canvas>';
@@ -195,16 +216,16 @@ describe('Unit testing', function() {
         $compile(markup)(scope);
         scope.$digest();
 
-        expect(datasets[0].label).to.equal('Bar chart');
-        expect(datasets[1].label).to.equal('Line chart');
-        expect(datasets[0].borderWidth).to.equal(1);
-        expect(datasets[1].borderWidth).to.equal(3);
-        expect(datasets[0].type).to.equal('bar');
-        expect(datasets[1].type).to.equal('line');
+        expect(datasets![0].label).to.equal('Bar chart');
+        expect(datasets![1].label).to.equal('Line chart');
+        expect(datasets![0].borderWidth).to.equal(1);
+        expect(datasets![1].borderWidth).to.equal(3);
+        expect(datasets![0].type).to.equal('bar');
+        expect(datasets![1].type).to.equal('line');
       });
 
       it('overrides the dataset for simple charts', function() {
-        let datasets;
+        let datasets: any;
         const markup = '<canvas class="chart chart-doughnut" ' +
           'chart-data="data" chart-labels="labels" ' +
           'chart-colors="colors" ' +
@@ -227,10 +248,10 @@ describe('Unit testing', function() {
         $compile(markup)(scope);
         scope.$digest();
 
-        expect(datasets[0].hoverBackgroundColor).to.deep.equal(
+        expect(datasets![0].hoverBackgroundColor).to.deep.equal(
           ['#45b7cd', '#ff6384', '#ff8e72'],
         );
-        expect(datasets[0].hoverBorderColor).to.deep.equal(
+        expect(datasets![0].hoverBorderColor).to.deep.equal(
           ['#45b7cd', '#ff6384', '#ff8e72'],
         );
       });
@@ -398,11 +419,11 @@ describe('Unit testing', function() {
       ChartJsProvider.setOptions({responsive: false});
       expect(ChartJs.getOptions().responsive).to.equal(false);
       expect(ChartJs.getOptions('Line').responsive).to.equal(false);
-      expect(ChartJsProvider.$get().Chart.defaults.responsive).to.equal(false);
+      expect((ChartJsProvider.$get().Chart.defaults as any).responsive).to.equal(false);
       ChartJsProvider.setOptions({responsive: true});
       expect(ChartJs.getOptions().responsive).to.equal(true);
       expect(ChartJs.getOptions('Line').responsive).to.equal(true);
-      expect(ChartJsProvider.$get().Chart.defaults.responsive).to.equal(true);
+      expect((ChartJsProvider.$get().Chart.defaults as any).responsive).to.equal(true);
     });
 
     it('should allow to set a configuration for a chart type', function() {
@@ -411,7 +432,7 @@ describe('Unit testing', function() {
       ChartJsProvider.setOptions('Line', {responsive: true});
       expect(ChartJs.getOptions('Line').responsive).to.equal(true);
       ChartJsProvider.setOptions('Line', {responsive: true});
-      expect(ChartJsProvider.$get().Chart.defaults.Line.responsive)
+      expect((ChartJsProvider.$get().Chart.defaults as any).Line.responsive)
         .to.equal(true);
     });
 
@@ -423,7 +444,7 @@ describe('Unit testing', function() {
           'chart-colors="colors" chart-options="options"></canvas></div>';
         let count = 0;
 
-        scope.options = {scaleShowVerticalLines: false};
+        scope.options = {scales: {x: {grid: {display: false}}}};
         scope.labels = [
           'January', 'February', 'March', 'April', 'May', 'June', 'July',
         ];
@@ -468,7 +489,7 @@ describe('Unit testing', function() {
       let countCreate = 0;
       let countUpdate = 0;
 
-      scope.options = {scaleShowVerticalLines: false};
+      scope.options = {scales: {x: {grid: {display: false}}}};
       scope.labels = [
         'January', 'February', 'March', 'April', 'May', 'June', 'July',
       ];
@@ -488,7 +509,7 @@ describe('Unit testing', function() {
       $compile(markup)(scope);
       scope.$digest();
 
-      scope.options = {scaleShowVerticalLines: true};
+      scope.options = {scales: {x: {grid: {display: true}}}};
       scope.$digest();
 
       expect(countCreate).to.equal(1);
@@ -504,7 +525,7 @@ describe('Unit testing', function() {
           'chart-colors="colors" chart-options="options"></canvas></div>';
         let count = 0;
 
-        scope.options = {scaleShowVerticalLines: false};
+        scope.options = {scales: {x: {grid: {display: false}}}};
         scope.labels = [
           'January', 'February', 'March', 'April', 'May', 'June', 'July',
         ];
@@ -534,7 +555,7 @@ describe('Unit testing', function() {
             scope.series = ['Series A', 'Series B'];
             break;
           case 'options':
-            scope.options = {scaleShowVerticalLines: false};
+            scope.options = {scales: {x: {grid: {display: false}}}};
             break;
         }
         scope.$digest();
