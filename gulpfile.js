@@ -28,7 +28,12 @@
       .pipe(eslint.failAfterError());
   }
 
-  function unit(done) {
+  function bundleTest() {
+    return gulp.src('.', {read: false})
+      .pipe(shell(['npx rollup -c rollup.test.config.js']));
+  }
+
+  function unitTask(done) {
     new karma.Server({
       configFile: path.join(__dirname, 'karma.conf.js'),
       singleRun: true,
@@ -117,7 +122,8 @@
 
   gulp.task('clean', clean);
   gulp.task('lint', lint);
-  gulp.task('unit', unit);
+  gulp.task('bundle-test', bundleTest);
+  gulp.task('unit', gulp.series(bundleTest, unitTask));
   gulp.task('integration', integration);
   gulp.task('build', build);
   gulp.task('update', update);
@@ -131,7 +137,7 @@
   gulp.task('bump-major', bump('major'));
 
   gulp.task('assets', gulp.series(clean, rollupTask, copyCss, build));
-  gulp.task('test', gulp.series(unit, integration));
+  gulp.task('test', gulp.series('unit', integration));
   gulp.task('check', gulp.series(lint, 'test'));
 
   gulp.task('deploy-patch', gulp.series(
