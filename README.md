@@ -17,7 +17,7 @@ The project has been modernized to **TypeScript** and uses ES6+ syntax.
 
 ### Breaking Changes since 1.x / 2.x (v3.0.0+)
 
-* **Chart.js v4 Baseline**: The library now requires Chart.js 4.x. Many configuration options have changed (e.g., `scales` are now objects, `legend` and `tooltip` are under `plugins`).
+* **Chart.js v4 Baseline**: The library now requires Chart.js 4.x. Many configuration options have changed (e.g., `scales` are now objects, `legend` and `tooltip` are under `plugins`). See the [Migration Guide](docs/MIGRATION.md) for details.
 * **TypeScript Migration**: Source code is now in `.ts`. Directives are type-safe but remain compatible with AngularJS 1.x patterns.
 * **Horizontal Bar Chart**: The `chart-horizontal-bar` directive now maps to a `bar` chart with `indexAxis: 'y'` internally.
 * **ESM / Modern Bundlers**: Full support for ESM, CJS, and UMD via Rollup.
