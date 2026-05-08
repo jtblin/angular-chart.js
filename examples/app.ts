@@ -1,9 +1,44 @@
+import type { ChartJsProviderInterface, ChartJsService, DirectiveScope } from '../src/angular-chart';
+import type { ActiveElement } from 'chart.js';
+
+interface ExampleScope extends angular.IScope {
+  labels: (string | string[])[];
+  data: any;
+  series?: string[];
+  options?: any;
+  colors?: any;
+  onClick?: (points: ActiveElement[], evt: MouseEvent | TouchEvent) => void;
+  onHover?: (points: ActiveElement[]) => void;
+  datasetOverride?: any;
+}
+
+interface MenuScope extends angular.IScope {
+  isCollapsed: boolean;
+  charts: string[];
+}
+
+interface BubbleScope extends ExampleScope {
+  data: { x: number, y: number, r: number }[][];
+}
+
+interface TicksScope extends ExampleScope {
+  data: number[][];
+}
+
+interface NoDataScope extends ExampleScope {
+  type: string;
+  displayWhenNoData: boolean;
+  forceUpdate: boolean;
+  setData: () => void;
+  clearData: () => void;
+}
+
 (() => {
   'use strict';
 
   const app = angular.module('examples', ['chart.js', 'ui.bootstrap']);
 
-  app.config((ChartJsProvider) => {
+  app.config(['ChartJsProvider', (ChartJsProvider: ChartJsProviderInterface) => {
     // Configure all charts
     ChartJsProvider.setOptions({
       colors: [
@@ -27,13 +62,13 @@
     });
     ChartJsProvider.setOptions('bubble', {
       plugins: {
-        tooltip: {enabled: false},
+        tooltip: { enabled: false },
       },
     });
-  });
+  }]);
 
   app.filter('slug', () => {
-    return (input) => {
+    return (input: string) => {
       if (!input) {
         return '';
       }
@@ -41,7 +76,7 @@
     };
   });
 
-  app.controller('MenuCtrl', ['$scope', ($scope) => {
+  app.controller('MenuCtrl', ['$scope', ($scope: MenuScope) => {
     $scope.isCollapsed = true;
     $scope.charts = [
       'Line', 'Bar', 'Doughnut', 'Pie', 'Polar Area', 'Radar',
@@ -49,7 +84,7 @@
     ];
   }]);
 
-  app.controller('LineCtrl', ['$scope', ($scope) => {
+  app.controller('LineCtrl', ['$scope', ($scope: ExampleScope) => {
     $scope.labels = [
       'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday',
       'Sunday',
@@ -64,12 +99,12 @@
     };
     $scope.onHover = (points) => {
       if (points.length > 0) {
-        console.log('Point', points[0].value);
+        console.log('Point', (points[0].element as any).$context.raw);
       } else {
         console.log('No point');
       }
     };
-    $scope.datasetOverride = [{yAxisID: 'y-axis-1'}, {yAxisID: 'y-axis-2'}];
+    $scope.datasetOverride = [{ yAxisID: 'y-axis-1' }, { yAxisID: 'y-axis-2' }];
 
     $scope.options = {
       tension: 0.4,
@@ -89,10 +124,10 @@
     };
   }]);
 
-  app.controller('BarCtrl', ['$scope', ($scope) => {
+  app.controller('BarCtrl', ['$scope', ($scope: ExampleScope) => {
     $scope.options = {
       plugins: {
-        legend: {display: true},
+        legend: { display: true },
       },
     };
     $scope.labels = ['2006', '2007', '2008', '2009', '2010', '2011', '2012'];
@@ -103,7 +138,7 @@
     ];
   }]);
 
-  app.controller('DoughnutCtrl', ['$scope', '$timeout', ($scope, $timeout) => {
+  app.controller('DoughnutCtrl', ['$scope', '$timeout', ($scope: ExampleScope, $timeout: angular.ITimeoutService) => {
     $scope.labels = ['Download Sales', 'In-Store Sales', 'Mail-Order Sales'];
     $scope.data = [0, 0, 0];
 
@@ -112,17 +147,17 @@
     }, 500);
   }]);
 
-  app.controller('PieCtrl', ['$scope', ($scope) => {
+  app.controller('PieCtrl', ['$scope', ($scope: ExampleScope) => {
     $scope.labels = ['Download Sales', 'In-Store Sales', 'Mail Sales'];
     $scope.data = [300, 500, 100];
     $scope.options = {
       plugins: {
-        legend: {display: false},
+        legend: { display: false },
       },
     };
   }]);
 
-  app.controller('PolarAreaCtrl', ['$scope', ($scope) => {
+  app.controller('PolarAreaCtrl', ['$scope', ($scope: ExampleScope) => {
     $scope.labels = [
       'Download Sales', 'In-Store Sales', 'Mail Sales', 'Telesales',
       'Corporate Sales',
@@ -130,12 +165,12 @@
     $scope.data = [300, 500, 100, 40, 120];
     $scope.options = {
       plugins: {
-        legend: {display: false},
+        legend: { display: false },
       },
     };
   }]);
 
-  app.controller('BaseCtrl', ['$scope', ($scope) => {
+  app.controller('BaseCtrl', ['$scope', ($scope: ExampleScope & { type: string, toggle: () => void }) => {
     $scope.labels = [
       'Download Sales', 'Store Sales', 'Mail Sales', 'Telesales',
       'Corporate Sales',
@@ -148,14 +183,14 @@
     };
   }]);
 
-  app.controller('RadarCtrl', ['$scope', ($scope) => {
+  app.controller('RadarCtrl', ['$scope', ($scope: ExampleScope) => {
     $scope.labels = [
       'Eating', 'Drinking', 'Sleeping', 'Designing', 'Coding', 'Cycling',
       'Running',
     ];
     $scope.options = {
       plugins: {
-        legend: {display: false},
+        legend: { display: false },
       },
     };
 
@@ -169,7 +204,7 @@
     };
   }]);
 
-  app.controller('StackedBarCtrl', ['$scope', ($scope) => {
+  app.controller('StackedBarCtrl', ['$scope', ($scope: ExampleScope & { type: string }) => {
     $scope.labels = [
       'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday',
       'Sunday',
@@ -193,7 +228,7 @@
     ];
   }]);
 
-  app.controller('TabsCtrl', ['$scope', ($scope) => {
+  app.controller('TabsCtrl', ['$scope', ($scope: ExampleScope & { active: boolean }) => {
     $scope.labels = [
       'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday',
       'Sunday',
@@ -205,7 +240,7 @@
     ];
   }]);
 
-  app.controller('MixedChartCtrl', ['$scope', ($scope) => {
+  app.controller('MixedChartCtrl', ['$scope', ($scope: ExampleScope) => {
     $scope.colors = ['#45b7cd', '#ff6384', '#ff8e72'];
 
     $scope.labels = [
@@ -234,7 +269,7 @@
     ];
   }]);
 
-  app.controller('DataTablesCtrl', ['$scope', ($scope) => {
+  app.controller('DataTablesCtrl', ['$scope', ($scope: ExampleScope & { randomize: () => void }) => {
     $scope.labels = [
       'January', 'February', 'March', 'April', 'May', 'June', 'July',
     ];
@@ -262,20 +297,20 @@
     ];
     $scope.options = {
       plugins: {
-        legend: {display: false},
+        legend: { display: false },
       },
     };
     $scope.randomize = () => {
-      $scope.data = $scope.data.map((data) => {
+      $scope.data = ($scope.data as number[][]).map((data) => {
         return data.map((y) => {
           y = y + Math.random() * 10 - 5;
-          return parseInt(y < 0 ? 0 : y > 100 ? 100 : y);
+          return parseInt(y < 0 ? '0' : y > 100 ? '100' : y.toString());
         });
       });
     };
   }]);
 
-  app.controller('BubbleCtrl', ['$scope', '$interval', ($scope, $interval) => {
+  app.controller('BubbleCtrl', ['$scope', '$interval', ($scope: BubbleScope, $interval: angular.IIntervalService) => {
     $scope.options = {
       scales: {
         x: {
@@ -321,8 +356,9 @@
     }
   }]);
 
-  app.controller('TicksCtrl', ['$scope', '$interval', ($scope, $interval) => {
-    const maximum = document.getElementById('container').clientWidth / 2 || 300;
+  app.controller('TicksCtrl', ['$scope', '$interval', ($scope: TicksScope, $interval: angular.IIntervalService) => {
+    const container = document.getElementById('container');
+    const maximum = (container ? container.clientWidth / 2 : 300);
     $scope.data = [[]];
     $scope.labels = [];
     $scope.datasetOverride = [{
@@ -379,20 +415,20 @@
     }
   }]);
 
-  function getRandomValue(data) {
+  function getRandomValue(data: number[]) {
     const l = data.length;
     const previous = l ? data[l - 1] : 50;
     const y = previous + Math.random() * 10 - 5;
     return y < 0 ? 0 : y > 100 ? 100 : y;
   }
 
-  app.controller('PluginsCtrl', ['$scope', ($scope) => {
+  app.controller('PluginsCtrl', ['$scope', ($scope: ExampleScope & { plugins: any }) => {
     $scope.labels = [
       'January', 'February', 'March', 'April', 'May', 'June', 'July',
     ];
     $scope.data = [65, 59, 80, 81, 56, 55, 40];
     $scope.plugins = [{
-      afterDatasetsDraw: (chart) => {
+      afterDatasetsDraw: (chart: any) => {
         const ctx = chart.ctx;
         ctx.save();
         ctx.font = '900 40px "Helvetica Neue", Helvetica, Arial, sans-serif';
@@ -407,7 +443,7 @@
     }];
   }]);
 
-  app.controller('NoDataCtrl', ['$scope', ($scope) => {
+  app.controller('NoDataCtrl', ['$scope', ($scope: NoDataScope) => {
     $scope.labels = ['Sales', 'Support', 'Admin'];
     $scope.data = [];
     $scope.type = 'bar';

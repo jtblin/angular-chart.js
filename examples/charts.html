@@ -148,13 +148,13 @@
         <li><span style="background-color: rgba(77,83,96,1)"></span>Dark Grey</li>
       </ol>
       <p>You can also use the provider : <code>ChartJsProvider</code> in a <code>.config()</code></p>
-      <p><pre><code>(ChartJsProvider) => {
+      <p><pre><code>angular.module('app', ['chart.js']).config((ChartJsProvider) => {
   ChartJsProvider.setOptions({
     colors: ['#803690', '#00ADF9', '#DCDCDC', '#46BFBD', '#FDB45C', '#949FB1', '#4D5360'],
     tension: 0.4,
     fill: true
   });
-}</code></pre></p>
+});</code></pre></p>
     </section>
     <section id="directives">
       <div class="page-header">
@@ -196,21 +196,18 @@ chart-dataset-override=&quot;datasetOverride&quot; chart-click=&quot;onClick&quo
 </code></pre>
             </tab>
             <tab heading="Javascript">
-              <pre><code data-language="javascript">angular.module("app", ["chart.js"]).controller("LineCtrl", ($scope) => {
-
-  $scope.labels = ["January", "February", "March", "April", "May", "June", "July"];
+              <pre><code data-language="javascript">angular.module('app', ['chart.js']).controller('LineCtrl', ($scope) => {
+  $scope.labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
   $scope.series = ['Series A', 'Series B'];
   $scope.data = [
     [65, 59, 80, 81, 56, 55, 40],
     [28, 48, 40, 19, 86, 27, 90]
   ];
-  $scope.onClick = function (points, evt) {
+  $scope.onClick = (points, evt) => {
     console.log(points, evt);
   };
   $scope.datasetOverride = [{ yAxisID: 'y-axis-1' }, { yAxisID: 'y-axis-2' }];
   $scope.options = {
-    tension: 0.4,
-    fill: true,
     scales: {
       'y-axis-1': {
         type: 'linear',
@@ -225,7 +222,7 @@ chart-dataset-override=&quot;datasetOverride&quot; chart-click=&quot;onClick&quo
     }
   };
 });
-              </code></pre>
+</code></pre>
             </tab>
           </tabset>
         </div>
@@ -255,7 +252,7 @@ chart-dataset-override=&quot;datasetOverride&quot; chart-click=&quot;onClick&quo
 </code></pre>
             </tab>
             <tab heading="Javascript">
-              <pre><code data-language="javascript">angular.module("app", ["chart.js"]).controller("BarCtrl", ($scope) => {
+              <pre><code data-language="javascript">angular.module('app', ['chart.js']).controller('BarCtrl', ($scope) => {
   $scope.labels = ['2006', '2007', '2008', '2009', '2010', '2011', '2012'];
   $scope.series = ['Series A', 'Series B'];
 
@@ -264,7 +261,7 @@ chart-dataset-override=&quot;datasetOverride&quot; chart-click=&quot;onClick&quo
     [28, 48, 40, 19, 86, 27, 90]
   ];
 });
-              </code></pre>
+</code></pre>
             </tab>
           </tabset>
         </div>
@@ -313,11 +310,11 @@ chart-dataset-override=&quot;datasetOverride&quot; chart-click=&quot;onClick&quo
  </code></pre>
             </tab>
             <tab heading="Javascript">
-              <pre><code data-language="javascript">angular.module("app", ["chart.js"]).controller("DoughnutCtrl", ($scope) => {
-  $scope.labels = ["Download Sales", "In-Store Sales", "Mail-Order Sales"];
+              <pre><code data-language="javascript">angular.module('app', ['chart.js']).controller('DoughnutCtrl', ($scope) => {
+  $scope.labels = ['Download Sales', 'In-Store Sales', 'Mail-Order Sales'];
   $scope.data = [300, 500, 100];
 });
-              </code></pre>
+</code></pre>
             </tab>
           </tabset>
         </div>
@@ -347,19 +344,15 @@ chart-dataset-override=&quot;datasetOverride&quot; chart-click=&quot;onClick&quo
  </code></pre>
             </tab>
             <tab heading="Javascript">
-              <pre><code data-language="javascript">angular.module("app", ["chart.js"]).controller("RadarCtrl", ($scope) => {
-  $scope.labels =["Eating", "Drinking", "Sleeping", "Designing", "Coding", "Cycling", "Running"];
+              <pre><code data-language="javascript">angular.module('app', ['chart.js']).controller('RadarCtrl', ($scope) => {
+  $scope.labels = ['Eating', 'Drinking', 'Sleeping', 'Designing', 'Coding', 'Cycling', 'Running'];
 
   $scope.data = [
     [65, 59, 90, 81, 56, 55, 40],
     [28, 48, 40, 19, 96, 27, 100]
   ];
-  $scope.options = {
-    tension: 0.4,
-    fill: true
-  };
 });
-              </code></pre>
+</code></pre>
             </tab>
           </tabset>
         </div>
@@ -410,11 +403,11 @@ chart-dataset-override=&quot;datasetOverride&quot; chart-click=&quot;onClick&quo
  </code></pre>
             </tab>
             <tab heading="Javascript">
-              <pre><code data-language="javascript">angular.module("app", ["chart.js"]).controller("PieCtrl", ($scope) => {
-  $scope.labels = ["Download Sales", "In-Store Sales", "Mail-Order Sales"];
+              <pre><code data-language="javascript">angular.module('app', ['chart.js']).controller('PieCtrl', ($scope) => {
+  $scope.labels = ['Download Sales', 'In-Store Sales', 'Mail-Order Sales'];
   $scope.data = [300, 500, 100];
 });
-              </code></pre>
+</code></pre>
             </tab>
           </tabset>
         </div>
@@ -443,11 +436,11 @@ chart-dataset-override=&quot;datasetOverride&quot; chart-click=&quot;onClick&quo
  </code></pre>
             </tab>
             <tab heading="Javascript">
-              <pre><code data-language="javascript">angular.module("app", ["chart.js"]).controller("PolarAreaCtrl", ($scope) => {
-  $scope.labels = ["Download Sales", "In-Store Sales", "Mail-Order Sales", "Tele Sales", "Corporate Sales"];
+              <pre><code data-language="javascript">angular.module('app', ['chart.js']).controller('PolarAreaCtrl', ($scope) => {
+  $scope.labels = ['Download Sales', 'In-Store Sales', 'Mail-Order Sales', 'Tele Sales', 'Corporate Sales'];
   $scope.data = [300, 500, 100, 40, 120];
 });
-              </code></pre>
+</code></pre>
             </tab>
           </tabset>
         </div>
@@ -497,20 +490,19 @@ chart-dataset-override=&quot;datasetOverride&quot; chart-click=&quot;onClick&quo
  </code></pre>
             </tab>
             <tab heading="Javascript">
-              <pre><code data-language="javascript">angular.module("app", ["chart.js"]).controller("BarCtrl",
-  ($scope) => {
-    $scope.labels = ['2006', '2007', '2008', '2009', '2010', '2011', '2012'];
-    $scope.series = ['Series A', 'Series B'];
+              <pre><code data-language="javascript">angular.module('app', ['chart.js']).controller('BarCtrl', ($scope) => {
+  $scope.labels = ['2006', '2007', '2008', '2009', '2010', '2011', '2012'];
+  $scope.series = ['Series A', 'Series B'];
 
-    $scope.data = [
-      [65, 59, 80, 81, 56, 55, 40],
-      [28, 48, 40, 19, 86, 27, 90]
-    ];
-    $scope.options = {
-      indexAxis: 'y'
-    };
+  $scope.data = [
+    [65, 59, 80, 81, 56, 55, 40],
+    [28, 48, 40, 19, 86, 27, 90]
+  ];
+  $scope.options = {
+    indexAxis: 'y'
+  };
 });
-              </code></pre>
+</code></pre>
             </tab>
           </tabset>
         </div>
@@ -540,20 +532,15 @@ chart-dataset-override=&quot;datasetOverride&quot; chart-click=&quot;onClick&quo
 </code></pre>
             </tab>
             <tab heading="Javascript">
-              <pre><code data-language="javascript">angular.module("app", ["chart.js"]).controller("BubbleCtrl",
-  ($scope) => {
-    // see examples/bubble.js for random bubbles source code
-    $scope.series = ['Series A', 'Series B'];
+              <pre><code data-language="javascript">angular.module('app', ['chart.js']).controller('BubbleCtrl', ($scope) => {
+  $scope.series = ['Series A', 'Series B'];
 
-    $scope.data = [
-      [{ x: 40, y: 10, r: 20 }],
-      [{ x: 10, y: 40, r: 50 }]
-    ];
-    $scope.options = {
-      chartAlpha: 0.2
-    };
+  $scope.data = [
+    [{ x: 40, y: 10, r: 20 }],
+    [{ x: 10, y: 40, r: 50 }]
+  ];
 });
-              </code></pre>
+</code></pre>
             </tab>
           </tabset>
         </div>
@@ -597,18 +584,16 @@ chart-dataset-override=&quot;datasetOverride&quot; chart-click=&quot;onClick&quo
  </code></pre>
             </tab>
             <tab heading="Javascript">
-              <pre><code data-language="javascript">angular.module("app", ["chart.js"]).controller("BaseCtrl",
-  ($scope) => {
-    $scope.labels = ["Download Sales", "In-Store Sales", "Mail-Order Sales", "Tele Sales", "Corporate Sales"];
-    $scope.data = [300, 500, 100, 40, 120];
-    $scope.type = 'polarArea';
+              <pre><code data-language="javascript">angular.module('app', ['chart.js']).controller('BaseCtrl', ($scope) => {
+  $scope.labels = ['Download Sales', 'In-Store Sales', 'Mail-Order Sales', 'Tele Sales', 'Corporate Sales'];
+  $scope.data = [300, 500, 100, 40, 120];
+  $scope.type = 'polarArea';
 
-    $scope.toggle = function () {
-      $scope.type = $scope.type === 'polarArea' ?
-        'pie' : 'polarArea';
-    };
+  $scope.toggle = () => {
+    $scope.type = $scope.type === 'polarArea' ? 'pie' : 'polarArea';
+  };
 });
-              </code></pre>
+</code></pre>
             </tab>
           </tabset>
         </div>
@@ -663,33 +648,32 @@ chart-dataset-override=&quot;datasetOverride&quot; chart-click=&quot;onClick&quo
  </code></pre>
             </tab>
             <tab heading="Javascript">
-              <pre><code data-language="javascript">angular.module("app", ["chart.js"]).controller("MixedChartCtrl",
-  ($scope) => {
-    $scope.colors = ['#45b7cd', '#ff6384', '#ff8e72'];
+              <pre><code data-language="javascript">angular.module('app', ['chart.js']).controller('MixedChartCtrl', ($scope) => {
+  $scope.colors = ['#45b7cd', '#ff6384', '#ff8e72'];
 
-    $scope.labels = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-    $scope.data = [
-      [65, -59, 80, 81, -56, 55, -40],
-      [28, 48, -40, 19, 86, 27, 90]
-    ];
-    $scope.datasetOverride = [
-      {
-        label: "Bar chart",
-        borderWidth: 1,
-        type: 'bar'
-      },
-      {
-        label: "Line chart",
-        borderWidth: 3,
-        hoverBackgroundColor: "rgba(255,99,132,0.4)",
-        hoverBorderColor: "rgba(255,99,132,1)",
-        type: 'line',
-        tension: 0.4,
-        fill: true
-      }
-    ];
+  $scope.labels = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+  $scope.data = [
+    [65, -59, 80, 81, -56, 55, -40],
+    [28, 48, -40, 19, 86, 27, 90]
+  ];
+  $scope.datasetOverride = [
+    {
+      label: 'Bar chart',
+      borderWidth: 1,
+      type: 'bar'
+    },
+    {
+      label: 'Line chart',
+      borderWidth: 3,
+      hoverBackgroundColor: 'rgba(255,99,132,0.4)',
+      hoverBorderColor: 'rgba(255,99,132,1)',
+      type: 'line',
+      tension: 0.4,
+      fill: true
+    }
+  ];
 });
-              </code></pre>
+</code></pre>
             </tab>
           </tabset>
         </div>

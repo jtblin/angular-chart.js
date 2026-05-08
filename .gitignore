@@ -9,3 +9,6 @@ examples/bundle.js
 examples/commonjs.bundle.js
 .DS_Store
 .npm
+examples/app.js
+examples/app.js.map
+rollup.log
