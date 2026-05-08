@@ -40,6 +40,8 @@ jobs:
 
       - name: Run tests
         run: npm run test
+        env:
+          PLAYWRIGHT_ARGS: --update-snapshots
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5
@@ -61,7 +63,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: generated-snapshots
-          path: test/integration.spec.js-snapshots/
+          path: test/integration.spec.ts-snapshots/
           retention-days: 7
 
   deploy:

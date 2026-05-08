@@ -41,8 +41,9 @@
   }
 
   function integration() {
+    const args = process.env.PLAYWRIGHT_ARGS || '';
     return gulp.src('.', {read: false})
-      .pipe(shell(['npx playwright test']));
+      .pipe(shell([`npx playwright test ${args}`]));
   }
 
   function bump(level) {
