@@ -251,8 +251,8 @@ See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 # Development
 
-This project uses **Rollup** for bundling and **Gulp** for task automation.
-The source code is located in `src/` and uses native ES Modules.
+This project uses **Rollup** for library bundling, **esbuild** for high-speed example bundling, and **Gulp** for task automation.
+The source code is located in `src/` and uses TypeScript.
 
 ## Local Development Loop
 
@@ -263,13 +263,13 @@ npm run dev
 ```
 
 This will:
-1. Start a local server at `http://localhost:8045`.
-2. Watch `src/` for changes and rebuild the `dist/` files instantly.
+1. Start a local server at `http://localhost:8080`.
+2. Watch `src/` and `examples/` for changes and rebuild instantly.
 3. Automatically reload the browser when changes are detected.
 
 ## Building
 
-To generate the production bundles in `dist/`:
+To generate the production bundles in `dist/` and build the example application:
 
 ```bash
 npm run build
@@ -291,7 +291,7 @@ npm run lint -- --fix
 
 ## Testing
 
-To run the unit tests:
+To run the unit tests and integration tests (all written in TypeScript):
 
 ```bash
 npm test
