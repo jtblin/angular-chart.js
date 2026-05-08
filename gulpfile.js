@@ -56,6 +56,11 @@
 
   // js() task removed in favor of Rollup
 
+  function copyCss() {
+    return gulp.src('./src/*.css')
+      .pipe(gulp.dest('./dist'));
+  }
+
   function build() {
     return gulp.src(['dist/*', '!./dist/*.tar.gz'])
       .pipe(tar('angular-chart.js.tar'))
@@ -125,7 +130,7 @@
   gulp.task('bump-minor', bump('minor'));
   gulp.task('bump-major', bump('major'));
 
-  gulp.task('assets', gulp.series(clean, rollupTask, build));
+  gulp.task('assets', gulp.series(clean, rollupTask, copyCss, build));
   gulp.task('test', gulp.series(unit, integration));
   gulp.task('check', gulp.series(lint, 'test'));
 

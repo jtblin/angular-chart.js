@@ -86,7 +86,7 @@
   <div class="container-fluid">
     <div class="text-center aspect-ratio" id="container" ng-controller="TicksCtrl">
       <canvas width='1200' height='300' id="hero-bar" class="chart chart-line" chart-data="data"
-              chart-options="options" chart-labels="labels"></canvas>
+              chart-options="options" chart-labels="labels" chart-dataset-override="datasetOverride"></canvas>
       <div class="header">
         <h1>
           Angular Chart
@@ -149,7 +149,11 @@
       </ol>
       <p>You can also use the provider : <code>ChartJsProvider</code> in a <code>.config()</code></p>
       <p><pre><code>(ChartJsProvider) => {
-  ChartJsProvider.setOptions({ colors : [ '#803690', '#00ADF9', '#DCDCDC', '#46BFBD', '#FDB45C', '#949FB1', '#4D5360'] });
+  ChartJsProvider.setOptions({
+    colors: ['#803690', '#00ADF9', '#DCDCDC', '#46BFBD', '#FDB45C', '#949FB1', '#4D5360'],
+    tension: 0.4,
+    fill: true
+  });
 }</code></pre></p>
     </section>
     <section id="directives">
@@ -188,7 +192,8 @@
             <pre><code data-language="html">&lt;canvas id=&quot;line&quot; class=&quot;chart chart-line&quot; chart-data=&quot;data&quot;
 chart-labels=&quot;labels&quot; chart-series=&quot;series&quot; chart-options=&quot;options&quot;
 chart-dataset-override=&quot;datasetOverride&quot; chart-click=&quot;onClick&quot;&gt;
-&lt;/canvas&gt;</code></pre>
+&lt;/canvas&gt;
+</code></pre>
             </tab>
             <tab heading="Javascript">
               <pre><code data-language="javascript">angular.module("app", ["chart.js"]).controller("LineCtrl", ($scope) => {
@@ -204,21 +209,19 @@ chart-dataset-override=&quot;datasetOverride&quot; chart-click=&quot;onClick&quo
   };
   $scope.datasetOverride = [{ yAxisID: 'y-axis-1' }, { yAxisID: 'y-axis-2' }];
   $scope.options = {
+    tension: 0.4,
+    fill: true,
     scales: {
-      yAxes: [
-        {
-          id: 'y-axis-1',
-          type: 'linear',
-          display: true,
-          position: 'left'
-        },
-        {
-          id: 'y-axis-2',
-          type: 'linear',
-          display: true,
-          position: 'right'
-        }
-      ]
+      'y-axis-1': {
+        type: 'linear',
+        display: true,
+        position: 'left'
+      },
+      'y-axis-2': {
+        type: 'linear',
+        display: true,
+        position: 'right'
+      }
     }
   };
 });
@@ -247,8 +250,9 @@ chart-dataset-override=&quot;datasetOverride&quot; chart-click=&quot;onClick&quo
             </tab>
             <tab heading="Markup">
               <pre><code data-language="html">&lt;canvas id=&quot;bar&quot; class=&quot;chart chart-bar&quot;
-  chart-data=&quot;data&quot; chart-labels=&quot;labels&quot;&gt; chart-series=&quot;series&quot;
-&lt;/canvas&gt;</code></pre>
+  chart-data=&quot;data&quot; chart-labels=&quot;labels&quot; chart-series=&quot;series&quot;&gt;
+&lt;/canvas&gt;
+</code></pre>
             </tab>
             <tab heading="Javascript">
               <pre><code data-language="javascript">angular.module("app", ["chart.js"]).controller("BarCtrl", ($scope) => {
@@ -279,8 +283,10 @@ chart-dataset-override=&quot;datasetOverride&quot; chart-click=&quot;onClick&quo
           <div class="panel panel-default">
             <div class="panel-heading">Doughnut Chart</div>
             <div class="panel-body">
-              <canvas id="doughnut" class="chart chart-doughnut chart-xs" chart-data="data"
-                      chart-labels="labels"></canvas>
+              <div class="chart-xs">
+                <canvas id="doughnut" class="chart chart-doughnut" chart-data="data"
+                        chart-labels="labels"></canvas>
+              </div>
             </div>
           </div>
         </div>
@@ -301,9 +307,10 @@ chart-dataset-override=&quot;datasetOverride&quot; chart-click=&quot;onClick&quo
               </div>
             </tab>
             <tab heading="Markup">
-              <pre><code data-language="html">&lt;canvas id=&quot;doughnut&quot; class=&quot;chart chart-doughnut&quot;
+              <pre><code data-language="html">&lt;canvas id=&quot;doughnut&quot; class=&quot;chart chart-doughnut chart-xs&quot;
   chart-data=&quot;data&quot; chart-labels=&quot;labels&quot;&gt;
-&lt;/canvas&gt; </code></pre>
+&lt;/canvas&gt;
+ </code></pre>
             </tab>
             <tab heading="Javascript">
               <pre><code data-language="javascript">angular.module("app", ["chart.js"]).controller("DoughnutCtrl", ($scope) => {
@@ -334,9 +341,10 @@ chart-dataset-override=&quot;datasetOverride&quot; chart-click=&quot;onClick&quo
               </div>
             </tab>
             <tab heading="Markup">
-              <pre><code data-language="html">&lt;canvas id=&quot;radar&quot; class=&quot;chart chart-radar&quot;
+              <pre><code data-language="html">&lt;canvas id=&quot;radar&quot; class=&quot;chart chart-radar chart-xs&quot;
   chart-data=&quot;data&quot; chart-options=&quot;options&quot; chart-labels=&quot;labels&quot;&gt;
-&lt;/canvas&gt; </code></pre>
+&lt;/canvas&gt;
+ </code></pre>
             </tab>
             <tab heading="Javascript">
               <pre><code data-language="javascript">angular.module("app", ["chart.js"]).controller("RadarCtrl", ($scope) => {
@@ -346,6 +354,10 @@ chart-dataset-override=&quot;datasetOverride&quot; chart-click=&quot;onClick&quo
     [65, 59, 90, 81, 56, 55, 40],
     [28, 48, 40, 19, 96, 27, 100]
   ];
+  $scope.options = {
+    tension: 0.4,
+    fill: true
+  };
 });
               </code></pre>
             </tab>
@@ -355,8 +367,10 @@ chart-dataset-override=&quot;datasetOverride&quot; chart-click=&quot;onClick&quo
           <div class="panel panel-default">
             <div class="panel-heading">Radar Chart</div>
             <div class="panel-body">
-              <canvas id="area" class="chart chart-radar" chart-data="data"
-                      chart-labels="labels" chart-options="options" chart-click="onClick"></canvas>
+              <div class="chart-xs">
+                <canvas id="area" class="chart chart-radar" chart-data="data"
+                        chart-labels="labels" chart-options="options" chart-click="onClick"></canvas>
+              </div>
             </div>
           </div>
         </div>
@@ -366,8 +380,10 @@ chart-dataset-override=&quot;datasetOverride&quot; chart-click=&quot;onClick&quo
           <div class="panel panel-default">
             <div class="panel-heading">Pie Chart</div>
             <div class="panel-body">
-              <canvas id="pie" class="chart chart-pie chart-xs" chart-data="data"
-                      chart-labels="labels" chart-options="options"></canvas>
+              <div class="chart-xs">
+                <canvas id="pie" class="chart chart-pie" chart-data="data"
+                        chart-labels="labels" chart-options="options"></canvas>
+              </div>
             </div>
           </div>
         </div>
@@ -388,9 +404,10 @@ chart-dataset-override=&quot;datasetOverride&quot; chart-click=&quot;onClick&quo
               </div>
             </tab>
             <tab heading="Markup">
-              <pre><code data-language="html">&lt;canvas id=&quot;pie&quot; class=&quot;chart chart-pie&quot;
+              <pre><code data-language="html">&lt;canvas id=&quot;pie&quot; class=&quot;chart chart-pie chart-xs&quot;
   chart-data=&quot;data&quot; chart-labels=&quot;labels&quot; chart-options=&quot;options&quot;&gt;
-&lt;/canvas&gt; </code></pre>
+&lt;/canvas&gt;
+ </code></pre>
             </tab>
             <tab heading="Javascript">
               <pre><code data-language="javascript">angular.module("app", ["chart.js"]).controller("PieCtrl", ($scope) => {
@@ -420,9 +437,10 @@ chart-dataset-override=&quot;datasetOverride&quot; chart-click=&quot;onClick&quo
               </div>
             </tab>
             <tab heading="Markup">
-              <pre><code data-language="html">&lt;canvas id=&quot;polar-area&quot; class=&quot;chart chart-polar-area&quot;
+              <pre><code data-language="html">&lt;canvas id=&quot;polar-area&quot; class=&quot;chart chart-polar-area chart-xs&quot;
   chart-data=&quot;data&quot; chart-labels=&quot;labels&quot; chart-options=&quot;options&quot;&gt;
-&lt;/canvas&gt; </code></pre>
+&lt;/canvas&gt;
+ </code></pre>
             </tab>
             <tab heading="Javascript">
               <pre><code data-language="javascript">angular.module("app", ["chart.js"]).controller("PolarAreaCtrl", ($scope) => {
@@ -437,8 +455,10 @@ chart-dataset-override=&quot;datasetOverride&quot; chart-click=&quot;onClick&quo
           <div class="panel panel-default">
             <div class="panel-heading">Polar Area Chart</div>
             <div class="panel-body">
-              <canvas id="polar" class="chart chart-polar-area" chart-data="data"
-                      chart-labels="labels" chart-options="options"></canvas>
+              <div class="chart-xs">
+                <canvas id="polar" class="chart chart-polar-area" chart-data="data"
+                        chart-labels="labels" chart-options="options"></canvas>
+              </div>
             </div>
           </div>
         </div>
@@ -471,9 +491,10 @@ chart-dataset-override=&quot;datasetOverride&quot; chart-click=&quot;onClick&quo
               </div>
             </tab>
             <tab heading="Markup">
-              <pre><code data-language="html">&lt;canvas id=&quot;base&quot; class=&quot;chart-horizontal-bar&quot;
-  chart-data=&quot;data&quot; chart-labels=&quot;labels&quot; &gt;
-&lt;/canvas&gt; </code></pre>
+              <pre><code data-language="html">&lt;canvas id=&quot;horizontal&quot; class=&quot;chart chart-horizontal-bar&quot;
+  chart-data=&quot;data&quot; chart-labels=&quot;labels&quot; chart-options=&quot;options&quot;&gt;
+&lt;/canvas&gt;
+ </code></pre>
             </tab>
             <tab heading="Javascript">
               <pre><code data-language="javascript">angular.module("app", ["chart.js"]).controller("BarCtrl",
@@ -485,6 +506,9 @@ chart-dataset-override=&quot;datasetOverride&quot; chart-click=&quot;onClick&quo
       [65, 59, 80, 81, 56, 55, 40],
       [28, 48, 40, 19, 86, 27, 90]
     ];
+    $scope.options = {
+      indexAxis: 'y'
+    };
 });
               </code></pre>
             </tab>
@@ -510,10 +534,10 @@ chart-dataset-override=&quot;datasetOverride&quot; chart-click=&quot;onClick&quo
               </div>
             </tab>
             <tab heading="Markup">
-              <pre><code data-language="html"><!--see examples/bubble.html for random bubbles source code-->
-&lt;canvas id=&quot;base&quot; class=&quot;chart-bubble&quot; chart-data=&quot;data&quot;
-  chart-series=&quot;series&quot; &gt;
-&lt;/canvas&gt; </code></pre>
+              <pre><code data-language="html">&lt;canvas id=&quot;bubble&quot; class=&quot;chart chart-bubble&quot; chart-data=&quot;data&quot;
+  chart-series=&quot;series&quot; chart-options=&quot;options&quot;&gt;
+&lt;/canvas&gt;
+</code></pre>
             </tab>
             <tab heading="Javascript">
               <pre><code data-language="javascript">angular.module("app", ["chart.js"]).controller("BubbleCtrl",
@@ -522,17 +546,12 @@ chart-dataset-override=&quot;datasetOverride&quot; chart-click=&quot;onClick&quo
     $scope.series = ['Series A', 'Series B'];
 
     $scope.data = [
-      [{
-        x: 40,
-        y: 10,
-        r: 20
-      }],
-      [{
-        x: 10,
-        y: 40,
-        r: 50
-      }]
+      [{ x: 40, y: 10, r: 20 }],
+      [{ x: 10, y: 40, r: 50 }]
     ];
+    $scope.options = {
+      chartAlpha: 0.2
+    };
 });
               </code></pre>
             </tab>
@@ -552,8 +571,10 @@ chart-dataset-override=&quot;datasetOverride&quot; chart-click=&quot;onClick&quo
           <div class="panel panel-default">
             <div class="panel-heading">Dynamic Chart</div>
             <div class="panel-body">
-              <canvas id="base" class="chart chart-base" chart-type="type" chart-data="data"
-                      chart-labels="labels"></canvas>
+              <div class="chart-xs">
+                <canvas id="base" class="chart chart-base" chart-type="type" chart-data="data"
+                        chart-labels="labels"></canvas>
+              </div>
             </div>
           </div>
           <button type="button" class="btn btn-primary pull-right" ng-click="toggle()">Toggle</button>
@@ -570,9 +591,10 @@ chart-dataset-override=&quot;datasetOverride&quot; chart-click=&quot;onClick&quo
               </div>
             </tab>
             <tab heading="Markup">
-              <pre><code data-language="html">&lt;canvas id=&quot;base&quot; class=&quot;chart-base&quot; chart-type=&quot;type&quot;
-  chart-data=&quot;data&quot; chart-labels=&quot;labels&quot; &gt;
-&lt;/canvas&gt; </code></pre>
+              <pre><code data-language="html">&lt;canvas id=&quot;base&quot; class=&quot;chart-base chart-xs&quot; chart-type=&quot;type&quot;
+  chart-data=&quot;data&quot; chart-labels=&quot;labels&quot;&gt;
+&lt;/canvas&gt;
+ </code></pre>
             </tab>
             <tab heading="Javascript">
               <pre><code data-language="javascript">angular.module("app", ["chart.js"]).controller("BaseCtrl",
@@ -636,8 +658,9 @@ chart-dataset-override=&quot;datasetOverride&quot; chart-click=&quot;onClick&quo
             <tab heading="Markup">
               <pre><code data-language="html">&lt;canvas id=&quot;base&quot; class=&quot;chart-bar&quot;
   chart-data=&quot;data&quot; chart-labels=&quot;labels&quot; chart-colors=&quot;colors&quot;
-  chart-dataset-override=&quot;datasetOverride&quot; &gt;
-&lt;/canvas&gt; </code></pre>
+  chart-dataset-override=&quot;datasetOverride&quot;&gt;
+&lt;/canvas&gt;
+ </code></pre>
             </tab>
             <tab heading="Javascript">
               <pre><code data-language="javascript">angular.module("app", ["chart.js"]).controller("MixedChartCtrl",
@@ -660,7 +683,9 @@ chart-dataset-override=&quot;datasetOverride&quot; chart-click=&quot;onClick&quo
         borderWidth: 3,
         hoverBackgroundColor: "rgba(255,99,132,0.4)",
         hoverBorderColor: "rgba(255,99,132,1)",
-        type: 'line'
+        type: 'line',
+        tension: 0.4,
+        fill: true
       }
     ];
 });

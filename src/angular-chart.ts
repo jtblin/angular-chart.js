@@ -1,6 +1,38 @@
 import angular from 'angular';
 import { Chart, ChartConfiguration } from 'chart.js';
 
+interface ChartJsProviderOptions {
+  responsive?: boolean;
+  chartAlpha?: number;
+  chartFillAlpha?: number;
+  [key: string]: any;
+}
+
+interface ChartJsProviderInterface {
+  setOptions(type: string | ChartJsProviderOptions, customOptions?: ChartJsProviderOptions): void;
+  $get(): {
+    Chart: typeof Chart;
+    getOptions(type?: string): ChartJsProviderOptions;
+  };
+}
+
+interface DirectiveScope extends angular.IScope {
+  chartGetColor?: () => any;
+  chartType: string;
+  chartData: any;
+  chartLabels?: any;
+  chartOptions?: any;
+  chartSeries?: any;
+  chartColors?: any;
+  chartClick?: (points: any[], evt: any, point: any) => void;
+  chartHover?: (points: any[], evt: any, point: any) => void;
+  chartDatasetOverride?: any;
+  chartPlugins?: any;
+  chartForceUpdate?: boolean;
+  chartDisplayWhenNoData?: boolean;
+  chart?: Chart;
+}
+
 
 const DEFAULT_COLORS = [
   '#97BBCD', // blue
@@ -32,7 +64,7 @@ Chart.defaults.plugins.legend.display = false;
 
 
 const moduleName = angular.module('chart.js', [])
-  .provider('ChartJs', ChartJsProvider as any)
+  .provider('ChartJs', ChartJsProvider as unknown as angular.IServiceProvider)
   .factory('ChartJsFactory', ['ChartJs', '$timeout', ChartJsFactory])
   .directive('chartBase', ['ChartJsFactory', (ChartJsFactory) => {
     return new ChartJsFactory();
@@ -72,30 +104,48 @@ const moduleName = angular.module('chart.js', [])
  *   ChartJsProvider.setOptions('Line', { responsive: true });
  * })))
  */
-function ChartJsProvider(this: any) {
-  let options = {responsive: true};
+function ChartJsProvider(this: ChartJsProviderInterface) {
+  let options: ChartJsProviderOptions = {
+    responsive: true,
+    chartAlpha: 1,
+    chartFillAlpha: 0.2,
+  };
   const ChartJs = {
     Chart: Chart,
-    getOptions: (type) => {
-      const typeOptions = type && options[type] || {};
-      return angular.extend({}, options, typeOptions);
+    getOptions: (type?: string) => {
+      const typeOptions = (type && options[type]) || {};
+      const merged = angular.extend({}, options, typeOptions);
+      console.log(`getOptions for ${type}:`, merged);
+      return merged;
     },
   };
 
   /**
    * Allow to set global options during configuration
    */
-  this.setOptions = function(this: any, type, customOptions) {
+  this.setOptions = function(type: string | ChartJsProviderOptions, customOptions?: ChartJsProviderOptions) {
     // If no type was specified set option for the global object
     if (! customOptions) {
-      customOptions = type;
+      customOptions = type as ChartJsProviderOptions;
       options = angular.merge(options, customOptions);
     } else {
       // Set options for the specific chart
-      options[type] = angular.merge(options[type] || {}, customOptions);
+      options[type as string] = angular.merge(options[type as string] || {}, customOptions);
     }
 
-    angular.merge(ChartJs.Chart.defaults, options);
+    // Sync with Chart.js defaults
+    Object.keys(options).forEach(key => {
+      if (typeof options[key] === 'object' && key !== 'scales' && key !== 'plugins') {
+        // Assume it's a chart type
+        // For v4, we need to set both dataset defaults (for tension, fill, etc.)
+        // and chart type defaults (for responsive, etc.)
+        ChartJs.Chart.defaults.datasets[key] = angular.merge(ChartJs.Chart.defaults.datasets[key] || {}, options[key]);
+        // @ts-expect-error
+        ChartJs.Chart.defaults[key] = angular.merge(ChartJs.Chart.defaults[key] || {}, options[key]);
+      } else {
+        ChartJs.Chart.defaults[key] = options[key];
+      }
+    });
   };
 
   this.$get = () => ChartJs;
@@ -120,7 +170,7 @@ function ChartJsFactory(ChartJs, $timeout) {
         chartForceUpdate: '=?',
         chartDisplayWhenNoData: '=?',
       },
-      link: function(scope, elem/* , attrs */) {
+      link: function(scope: DirectiveScope, elem: JQuery/* , attrs */) {
         // Order of setting "watch" matter
         scope.$watch('chartData', watchData, true);
         scope.$watch('chartSeries', watchOther, true);
@@ -151,7 +201,7 @@ function ChartJsFactory(ChartJs, $timeout) {
           }
         });
 
-        function watchData(newVal, oldVal?) {
+        function watchData(newVal: any, oldVal?: any) {
           if (! scope.chartDisplayWhenNoData && isDataEmpty(newVal)) {
             destroyChart(scope);
             return;
@@ -169,12 +219,12 @@ function ChartJsFactory(ChartJs, $timeout) {
           createChart(chartType, scope, elem);
         }
 
-        function isDataEmpty(data) {
+        function isDataEmpty(data: any) {
           return ! data || ! data.length ||
               (Array.isArray(data[0]) && ! data[0].length);
         }
 
-        function watchOptions(newVal, oldVal) {
+        function watchOptions(newVal: any, oldVal: any) {
           if (isEmpty(newVal)) {
             return;
           }
@@ -184,7 +234,7 @@ function ChartJsFactory(ChartJs, $timeout) {
           updateChartOptions(newVal, scope);
         }
 
-        function watchOther(newVal, oldVal) {
+        function watchOther(newVal: any, oldVal: any) {
           if (isEmpty(newVal)) {
             return;
           }
@@ -201,7 +251,7 @@ function ChartJsFactory(ChartJs, $timeout) {
           createChart(chartType, scope, elem);
         }
 
-        function watchType(newVal, oldVal) {
+        function watchType(newVal: any, oldVal: any) {
           if (isEmpty(newVal)) {
             return;
           }
@@ -214,7 +264,11 @@ function ChartJsFactory(ChartJs, $timeout) {
     };
   };
 
-  function createChart(type, scope, elem) {
+  function createChart(type: string, scope: DirectiveScope, elem: JQuery) {
+    if (type === 'horizontalBar') {
+      type = 'bar';
+      scope.chartOptions = angular.merge({ indexAxis: 'y' }, scope.chartOptions || {});
+    }
     const options = getChartOptions(type, scope);
     if (! scope.chartDisplayWhenNoData &&
         (! hasData(scope) || ! canDisplay(type, scope, elem, options))) {
@@ -222,14 +276,10 @@ function ChartJsFactory(ChartJs, $timeout) {
     }
 
     const cvs = elem[0];
-    const ctx = cvs.getContext('2d');
+    const ctx = (cvs as HTMLCanvasElement).getContext('2d');
 
     scope.chartGetColor = getChartColorFn(scope);
-    let data = getChartData(type, scope);
-    if (type === 'horizontalBar') {
-      type = 'bar';
-      options.indexAxis = 'y';
-    }
+    const data = getChartData(type, scope);
 
     // Destroy old chart if it exists to avoid ghost charts issue
     // https://github.com/jtblin/angular-chart.js/issues/187
@@ -245,7 +295,7 @@ function ChartJsFactory(ChartJs, $timeout) {
     bindEvents(cvs, scope);
   }
 
-  function canUpdateChart(newVal, oldVal) {
+  function canUpdateChart(newVal: any, oldVal: any) {
     if (newVal && oldVal && newVal.length && oldVal.length) {
       return Array.isArray(newVal[0]) ?
         newVal.length === oldVal.length &&
@@ -261,7 +311,7 @@ function ChartJsFactory(ChartJs, $timeout) {
     return carry + val;
   }
 
-  function getEventHandler(scope, action, triggerOnlyOnChange) {
+  function getEventHandler(scope: DirectiveScope, action: string, triggerOnlyOnChange: boolean) {
     const lastState = {
       point: undefined,
       points: undefined,
@@ -283,9 +333,10 @@ function ChartJsFactory(ChartJs, $timeout) {
     };
   }
 
-  function getColors(type, scope) {
+  function getColors(type: string, scope: DirectiveScope) {
     const colors = angular.copy(scope.chartColors ||
       ChartJs.getOptions(type).chartColors ||
+      ChartJs.getOptions(type).colors ||
       DEFAULT_COLORS,
     );
     const notEnoughColors = colors.length < scope.chartData.length;
@@ -298,44 +349,48 @@ function ChartJsFactory(ChartJs, $timeout) {
     if (notEnoughColors) {
       scope.chartColors = colors;
     }
-    return colors.map(convertColor);
+    const options = getChartOptions(type, scope);
+    const alpha = options.chartAlpha;
+    const fillAlpha = options.chartFillAlpha;
+    return colors.map((color) => convertColor(color, alpha, fillAlpha));
   }
 
-  function convertColor(color) {
+  function convertColor(color, alpha, fillAlpha) {
     // Allows RGB and RGBA colors to be input as a string: e.g.: "rgb(159,204,0)", "rgba(159,204,0, 0.5)"
     if (typeof color === 'string' && color[0] === 'r') {
-      return getColor(rgbStringToRgb(color));
+      return getColor(rgbStringToRgb(color), alpha, fillAlpha);
     }
     // Allows hex colors to be input as a string.
     if (typeof color === 'string' && color[0] === '#') {
-      return getColor(hexToRgb(color.substr(1)));
+      return getColor(hexToRgb(color.substr(1)), alpha, fillAlpha);
     }
     // Allows colors to be input as an object, bypassing getColor() entirely
     if (typeof color === 'object' && color !== null) {
       return color;
     }
-    return getRandomColor();
+    return getRandomColor(alpha, fillAlpha);
   }
 
-  function getRandomColor() {
+  function getRandomColor(alpha, fillAlpha) {
     const color = [
       getRandomInt(0, 255),
       getRandomInt(0, 255),
       getRandomInt(0, 255),
     ];
-    return getColor(color);
+    return getColor(color, alpha, fillAlpha);
   }
 
-  function getColor(color) {
-    const alpha = color[3] || 1;
+  function getColor(color, alpha, fillAlpha) {
+    const a = color[3] || alpha || 1;
+    const f = fillAlpha || 0.2;
     color = color.slice(0, 3);
     return {
-      backgroundColor: rgba(color, 0.2),
-      pointBackgroundColor: rgba(color, alpha),
+      backgroundColor: rgba(color, f),
+      pointBackgroundColor: rgba(color, a),
       pointHoverBackgroundColor: rgba(color, 0.8),
-      borderColor: rgba(color, alpha),
+      borderColor: rgba(color, a),
       pointBorderColor: '#fff',
-      pointHoverBorderColor: rgba(color, alpha),
+      pointHoverBorderColor: rgba(color, a),
     };
   }
 
@@ -385,24 +440,34 @@ function ChartJsFactory(ChartJs, $timeout) {
         scope.chartSeries || [],
         colors,
         scope.chartDatasetOverride,
+        type,
       ) :
       getData(
         scope.chartLabels,
         scope.chartData,
         colors,
         scope.chartDatasetOverride,
+        type,
       );
   }
 
-  function getDataSets(labels, data, series, colors, datasetOverride) {
+  function getDataSets(labels, data, series, colors, datasetOverride, type) {
+    const typeOptions = ChartJs.getOptions(type);
     return {
       labels: labels,
       datasets: data.map((item, i) => {
-        const dataset = angular.extend({}, colors[i], {
+        const color = colors[i];
+        const dataset = angular.extend({}, typeOptions, color, {
           label: series[i],
           data: item,
         });
-        if (datasetOverride && datasetOverride.length >= i) {
+        if (type === 'bubble') {
+          dataset.pointBackgroundColor = dataset.backgroundColor;
+        }
+        if (type === 'bar') {
+          dataset.backgroundColor = color.pointBackgroundColor;
+        }
+        if (datasetOverride && datasetOverride.length > i) {
           angular.merge(dataset, datasetOverride[i]);
         }
 
@@ -411,7 +476,7 @@ function ChartJsFactory(ChartJs, $timeout) {
     };
   }
 
-  function getData(labels, data, colors, datasetOverride) {
+  function getData(labels, data, colors, datasetOverride, type) {
     const dataset = {
       labels: labels,
       datasets: [{
@@ -420,6 +485,9 @@ function ChartJsFactory(ChartJs, $timeout) {
         hoverBackgroundColor: colors.map((color) => color.backgroundColor),
       }],
     };
+    if (type === 'bubble') {
+      dataset.datasets[0].backgroundColor = colors.map((color) => color.backgroundColor);
+    }
     if (datasetOverride) {
       angular.merge(dataset.datasets[0], datasetOverride);
     }
@@ -450,7 +518,7 @@ function ChartJsFactory(ChartJs, $timeout) {
       angular.noop;
   }
 
-  function updateChart(values, scope) {
+  function updateChart(values: any, scope: DirectiveScope) {
     if (Array.isArray(scope.chartData[0])) {
       scope.chart.data.datasets.forEach((dataset, i) => {
         dataset.data = values[i];
@@ -481,7 +549,7 @@ function ChartJsFactory(ChartJs, $timeout) {
     return true;
   }
 
-  function destroyChart(scope) {
+  function destroyChart(scope: DirectiveScope) {
     if (! scope.chart) {
       return;
     }

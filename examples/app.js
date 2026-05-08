@@ -10,6 +10,16 @@
         '#97BBCD', '#DCDCDC', '#F7464A', '#46BFBD', '#FDB45C', '#949FB1',
         '#4D5360',
       ],
+      chartAlpha: 1,
+      chartFillAlpha: 0.2,
+    });
+    ChartJsProvider.setOptions('line', {
+      tension: 0.4,
+      fill: true,
+    });
+    ChartJsProvider.setOptions('radar', {
+      tension: 0.4,
+      fill: true,
     });
     // Configure all doughnut charts
     ChartJsProvider.setOptions('doughnut', {
@@ -62,6 +72,8 @@
     $scope.datasetOverride = [{yAxisID: 'y-axis-1'}, {yAxisID: 'y-axis-2'}];
 
     $scope.options = {
+      tension: 0.4,
+      fill: true,
       scales: {
         'y-axis-1': {
           type: 'linear',
@@ -216,6 +228,8 @@
         hoverBackgroundColor: 'rgba(255,99,132,0.4)',
         hoverBorderColor: 'rgba(255,99,132,1)',
         type: 'line',
+        tension: 0.4,
+        fill: true,
       },
     ];
   }]);
@@ -311,6 +325,11 @@
     const maximum = document.getElementById('container').clientWidth / 2 || 300;
     $scope.data = [[]];
     $scope.labels = [];
+    $scope.datasetOverride = [{
+      fill: true,
+      backgroundColor: 'rgba(151,187,205,0.2)',
+      borderColor: 'rgba(151,187,205,1)',
+    }];
     $scope.options = {
       animation: {
         duration: 0,
@@ -318,6 +337,7 @@
       elements: {
         line: {
           borderWidth: 0.5,
+          tension: 0.4,
         },
         point: {
           radius: 0,

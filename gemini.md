@@ -12,7 +12,7 @@ This is a legacy AngularJS 1.x wrapper for Chart.js. It has recently been modern
   - **Gulp**: Manages secondary tasks like linting, distribution cleanup, and publishing (`gulpfile.js`).
 
 ## Key Scripts
-- `npm run dev`: Starts a watch server (Rollup + LiveReload) at `http://localhost:8045`.
+- `npm run dev`: Starts a watch server (Rollup + LiveReload) at `http://localhost:8080`.
 - `npm run build`: Generates production bundles in `dist/`.
 - `npm test`: Runs `gulp check` (ESLint -> Karma Unit Tests -> Playwright Integration Tests).
 - `npm run lint`: Runs `gulp lint` (ESLint with Google Style Guide).
@@ -26,6 +26,10 @@ This is a legacy AngularJS 1.x wrapper for Chart.js. It has recently been modern
   - `horizontalBar` is no longer a top-level type; it is mapped to `bar` with `indexAxis: 'y'`.
   - Configuration structures have shifted: `scales` are now flat objects (not arrays), and `legend`/`tooltip` are moved to the `plugins` namespace.
   - Event API: Use `getElementsAtEventForMode(evt, 'nearest', {intersect: true}, false)` for click/hover handlers.
+  - **Transparency Settings**:
+    - `chartAlpha`: Alpha value for borders and point backgrounds (default: 1).
+    - `chartFillAlpha`: Alpha value for area fills (default: 0.2).
+    - Configurable via `ChartJsProvider.setOptions`.
 - **Visual Stability**: Integration tests use Playwright for pixel-perfect screenshot comparisons. Snapshots are stored in `test/integration.spec.js-snapshots/`.
 
 ## Deployment & Versioning
