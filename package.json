@@ -1,6 +1,6 @@
 {
   "name": "angular-chart.js",
-  "version": "2.1.2",
+  "version": "3.0.0-rc.1",
   "description": "An angular.js wrapper for Chart.js",
   "engines": {
     "node": ">=24"
