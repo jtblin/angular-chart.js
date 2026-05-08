@@ -1,33 +1,43 @@
 import angular from 'angular';
-import { Chart, ChartConfiguration } from 'chart.js';
+import { Chart, ChartConfiguration, ChartOptions, ChartType, ChartDataset, Plugin, ActiveElement } from 'chart.js';
 
-interface ChartJsProviderOptions {
-  responsive?: boolean;
+interface ChartColor {
+  backgroundColor: string;
+  pointBackgroundColor: string;
+  pointHoverBackgroundColor: string;
+  borderColor: string;
+  pointBorderColor: string;
+  pointHoverBorderColor: string;
+}
+
+interface ChartJsProviderOptions extends Partial<ChartOptions> {
   chartAlpha?: number;
   chartFillAlpha?: number;
-  [key: string]: any;
+  [key: string]: unknown;
+}
+
+interface ChartJsService {
+  Chart: typeof Chart;
+  getOptions(type?: string): ChartJsProviderOptions;
 }
 
 interface ChartJsProviderInterface {
   setOptions(type: string | ChartJsProviderOptions, customOptions?: ChartJsProviderOptions): void;
-  $get(): {
-    Chart: typeof Chart;
-    getOptions(type?: string): ChartJsProviderOptions;
-  };
+  $get(): ChartJsService;
 }
 
 interface DirectiveScope extends angular.IScope {
-  chartGetColor?: () => any;
-  chartType: string;
-  chartData: any;
-  chartLabels?: any;
-  chartOptions?: any;
-  chartSeries?: any;
-  chartColors?: any;
-  chartClick?: (points: any[], evt: any, point: any) => void;
-  chartHover?: (points: any[], evt: any, point: any) => void;
-  chartDatasetOverride?: any;
-  chartPlugins?: any;
+  chartGetColor?: () => ChartColor;
+  chartType: ChartType | string;
+  chartData: ChartDataset['data'] | ChartDataset['data'][];
+  chartLabels?: (string | number | string[] | number[])[];
+  chartOptions?: ChartOptions;
+  chartSeries?: string[];
+  chartColors?: (string | ChartColor)[];
+  chartClick?: (points: ActiveElement[], evt: MouseEvent | TouchEvent, point: ActiveElement) => void;
+  chartHover?: (points: ActiveElement[], evt: MouseEvent | TouchEvent, point: ActiveElement) => void;
+  chartDatasetOverride?: Partial<ChartDataset> | Partial<ChartDataset>[];
+  chartPlugins?: Plugin[];
   chartForceUpdate?: boolean;
   chartDisplayWhenNoData?: boolean;
   chart?: Chart;
@@ -44,20 +54,14 @@ const DEFAULT_COLORS = [
   '#4D5360', // dark grey
 ];
 
-// @ts-expect-error
 Chart.defaults.plugins = Chart.defaults.plugins || {};
-// @ts-expect-error
 Chart.defaults.plugins.tooltip = Chart.defaults.plugins.tooltip || {};
 Chart.defaults.plugins.tooltip.mode = 'index';
-// @ts-expect-error
 Chart.defaults.elements = Chart.defaults.elements || {};
-// @ts-expect-error
 Chart.defaults.elements.line = Chart.defaults.elements.line || {};
 Chart.defaults.elements.line.borderWidth = 2;
-// @ts-expect-error
 Chart.defaults.elements.bar = Chart.defaults.elements.bar || {};
 Chart.defaults.elements.bar.borderWidth = 2;
-// @ts-expect-error
 Chart.defaults.plugins.legend = Chart.defaults.plugins.legend || {};
 Chart.defaults.plugins.legend.display = false;
 
@@ -114,9 +118,7 @@ function ChartJsProvider(this: ChartJsProviderInterface) {
     Chart: Chart,
     getOptions: (type?: string) => {
       const typeOptions = (type && options[type]) || {};
-      const merged = angular.extend({}, options, typeOptions);
-      console.log(`getOptions for ${type}:`, merged);
-      return merged;
+      return angular.extend({}, options, typeOptions);
     },
   };
 
@@ -139,11 +141,11 @@ function ChartJsProvider(this: ChartJsProviderInterface) {
         // Assume it's a chart type
         // For v4, we need to set both dataset defaults (for tension, fill, etc.)
         // and chart type defaults (for responsive, etc.)
-        ChartJs.Chart.defaults.datasets[key] = angular.merge(ChartJs.Chart.defaults.datasets[key] || {}, options[key]);
-        // @ts-expect-error
-        ChartJs.Chart.defaults[key] = angular.merge(ChartJs.Chart.defaults[key] || {}, options[key]);
+        const defaults = ChartJs.Chart.defaults as unknown as Record<string, Record<string, unknown>>;
+        defaults.datasets[key] = angular.merge(defaults.datasets[key] || {}, options[key]);
+        (defaults as unknown as Record<string, unknown>)[key] = angular.merge((defaults as unknown as Record<string, unknown>)[key] || {}, options[key]);
       } else {
-        ChartJs.Chart.defaults[key] = options[key];
+        (ChartJs.Chart.defaults as unknown as Record<string, unknown>)[key] = options[key];
       }
     });
   };
@@ -151,8 +153,8 @@ function ChartJsProvider(this: ChartJsProviderInterface) {
   this.$get = () => ChartJs;
 }
 
-function ChartJsFactory(ChartJs, $timeout) {
-  return function chart(type) {
+function ChartJsFactory(ChartJs: ChartJsService, $timeout: angular.ITimeoutService) {
+  return function chart(type?: string) {
     return {
       restrict: 'CA',
       scope: {
@@ -170,7 +172,7 @@ function ChartJsFactory(ChartJs, $timeout) {
         chartForceUpdate: '=?',
         chartDisplayWhenNoData: '=?',
       },
-      link: function(scope: DirectiveScope, elem: JQuery/* , attrs */) {
+      link: function(scope: DirectiveScope, elem: angular.IAugmentedJQuery/* , attrs */) {
         // Order of setting "watch" matter
         scope.$watch('chartData', watchData, true);
         scope.$watch('chartSeries', watchOther, true);
@@ -201,7 +203,7 @@ function ChartJsFactory(ChartJs, $timeout) {
           }
         });
 
-        function watchData(newVal: any, oldVal?: any) {
+        function watchData(newVal: unknown, oldVal?: unknown) {
           if (! scope.chartDisplayWhenNoData && isDataEmpty(newVal)) {
             destroyChart(scope);
             return;
@@ -212,19 +214,22 @@ function ChartJsFactory(ChartJs, $timeout) {
           }
 
           if (scope.chart &&
-              (canUpdateChart(newVal, oldVal) || scope.chartForceUpdate)) {
-            return updateChart(newVal, scope);
+              (canUpdateChart(newVal as unknown[] | undefined, oldVal as unknown[] | undefined) || scope.chartForceUpdate)) {
+            return updateChart(newVal as ChartDataset['data'], scope);
           }
 
           createChart(chartType, scope, elem);
         }
 
-        function isDataEmpty(data: any) {
-          return ! data || ! data.length ||
+        function isDataEmpty(data: unknown) {
+          if (! Array.isArray(data)) {
+            return ! data;
+          }
+          return ! data.length ||
               (Array.isArray(data[0]) && ! data[0].length);
         }
 
-        function watchOptions(newVal: any, oldVal: any) {
+        function watchOptions(newVal: ChartOptions, oldVal: ChartOptions) {
           if (isEmpty(newVal)) {
             return;
           }
@@ -234,7 +239,7 @@ function ChartJsFactory(ChartJs, $timeout) {
           updateChartOptions(newVal, scope);
         }
 
-        function watchOther(newVal: any, oldVal: any) {
+        function watchOther(newVal: unknown, oldVal: unknown) {
           if (isEmpty(newVal)) {
             return;
           }
@@ -251,7 +256,7 @@ function ChartJsFactory(ChartJs, $timeout) {
           createChart(chartType, scope, elem);
         }
 
-        function watchType(newVal: any, oldVal: any) {
+        function watchType(newVal: string, oldVal: string) {
           if (isEmpty(newVal)) {
             return;
           }
@@ -264,7 +269,7 @@ function ChartJsFactory(ChartJs, $timeout) {
     };
   };
 
-  function createChart(type: string, scope: DirectiveScope, elem: JQuery) {
+  function createChart(type: string, scope: DirectiveScope, elem: angular.IAugmentedJQuery) {
     if (type === 'horizontalBar') {
       type = 'bar';
       scope.chartOptions = angular.merge({ indexAxis: 'y' }, scope.chartOptions || {});
@@ -277,6 +282,9 @@ function ChartJsFactory(ChartJs, $timeout) {
 
     const cvs = elem[0];
     const ctx = (cvs as HTMLCanvasElement).getContext('2d');
+    if (! ctx) {
+      return;
+    }
 
     scope.chartGetColor = getChartColorFn(scope);
     const data = getChartData(type, scope);
@@ -286,37 +294,40 @@ function ChartJsFactory(ChartJs, $timeout) {
     destroyChart(scope);
 
     scope.chart = new ChartJs.Chart(ctx, {
-      type: type,
-      data: data,
+      type: type as ChartType,
+      data: data as ChartConfiguration['data'],
       options: options,
       plugins: scope.chartPlugins,
     });
     scope.$emit('chart-create', scope.chart);
-    bindEvents(cvs, scope);
+    bindEvents(cvs as HTMLCanvasElement, scope);
   }
 
-  function canUpdateChart(newVal: any, oldVal: any) {
+  function canUpdateChart(newVal: unknown[] | undefined, oldVal: unknown[] | undefined) {
     if (newVal && oldVal && newVal.length && oldVal.length) {
       return Array.isArray(newVal[0]) ?
         newVal.length === oldVal.length &&
-        newVal.every((element, index) =>
-          element.length === oldVal[index].length) :
-        oldVal.reduce(sum, 0) > 0 ?
+        (newVal as unknown[][]).every((element: unknown[], index: number) =>
+          element.length === (oldVal[index] as unknown[]).length) :
+        (oldVal as number[]).reduce(sum, 0) > 0 ?
           newVal.length === oldVal.length : false;
     }
     return false;
   }
 
-  function sum(carry, val) {
+  function sum(carry: number, val: number) {
     return carry + val;
   }
 
   function getEventHandler(scope: DirectiveScope, action: string, triggerOnlyOnChange: boolean) {
-    const lastState = {
+    const lastState: { point?: ActiveElement, points?: ActiveElement[] } = {
       point: undefined,
       points: undefined,
     };
-    return function(evt) {
+    return function(evt: MouseEvent | TouchEvent) {
+      if (! scope.chart) {
+        return;
+      }
       const points = scope.chart.getElementsAtEventForMode(evt, 'nearest', {intersect: true}, false);
       const point = points[0];
 
@@ -326,22 +337,24 @@ function ChartJsFactory(ChartJs, $timeout) {
       if (triggerOnlyOnChange === false ||
         (pointsChanged && pointChanged)
       ) {
-        lastState.point = point;
-        lastState.points = points;
-        scope[action](points, evt, point);
+        lastState.point = point as ActiveElement;
+        lastState.points = points as ActiveElement[];
+        if (scope[action as keyof DirectiveScope]) {
+          (scope[action as keyof DirectiveScope] as Function)(points, evt, point);
+        }
       }
     };
   }
 
   function getColors(type: string, scope: DirectiveScope) {
-    const colors = angular.copy(scope.chartColors ||
+    const colors = angular.copy((scope.chartColors ||
       ChartJs.getOptions(type).chartColors ||
       ChartJs.getOptions(type).colors ||
-      DEFAULT_COLORS,
-    );
-    const notEnoughColors = colors.length < scope.chartData.length;
-    while (colors.length < scope.chartData.length) {
-      colors.push(scope.chartGetColor());
+      DEFAULT_COLORS) as (string | ChartColor)[]);
+    const data = scope.chartData as unknown[];
+    const notEnoughColors = colors.length < data.length;
+    while (colors.length < data.length) {
+      colors.push(scope.chartGetColor!());
     }
 
     // mutate colors in this case as we don't want
@@ -352,10 +365,10 @@ function ChartJsFactory(ChartJs, $timeout) {
     const options = getChartOptions(type, scope);
     const alpha = options.chartAlpha;
     const fillAlpha = options.chartFillAlpha;
-    return colors.map((color) => convertColor(color, alpha, fillAlpha));
+    return colors.map((color: string | ChartColor) => convertColor(color, alpha, fillAlpha));
   }
 
-  function convertColor(color, alpha, fillAlpha) {
+  function convertColor(color: string | ChartColor, alpha?: number, fillAlpha?: number): ChartColor {
     // Allows RGB and RGBA colors to be input as a string: e.g.: "rgb(159,204,0)", "rgba(159,204,0, 0.5)"
     if (typeof color === 'string' && color[0] === 'r') {
       return getColor(rgbStringToRgb(color), alpha, fillAlpha);
@@ -366,12 +379,12 @@ function ChartJsFactory(ChartJs, $timeout) {
     }
     // Allows colors to be input as an object, bypassing getColor() entirely
     if (typeof color === 'object' && color !== null) {
-      return color;
+      return color as ChartColor;
     }
     return getRandomColor(alpha, fillAlpha);
   }
 
-  function getRandomColor(alpha, fillAlpha) {
+  function getRandomColor(alpha?: number, fillAlpha?: number) {
     const color = [
       getRandomInt(0, 255),
       getRandomInt(0, 255),
@@ -380,7 +393,7 @@ function ChartJsFactory(ChartJs, $timeout) {
     return getColor(color, alpha, fillAlpha);
   }
 
-  function getColor(color, alpha, fillAlpha) {
+  function getColor(color: number[], alpha?: number, fillAlpha?: number) {
     const a = color[3] || alpha || 1;
     const f = fillAlpha || 0.2;
     color = color.slice(0, 3);
@@ -394,16 +407,16 @@ function ChartJsFactory(ChartJs, $timeout) {
     };
   }
 
-  function getRandomInt(min, max) {
+  function getRandomInt(min: number, max: number) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
-  function rgba(color, alpha) {
+  function rgba(color: number[], alpha: number) {
     return `rgba(${color.concat(alpha).join(',')})`;
   }
 
   // Credit: http://stackoverflow.com/a/11508164/1190235
-  function hexToRgb(hex) {
+  function hexToRgb(hex: string) {
     const bigint = parseInt(hex, 16);
     const r = (bigint >> 16) & 255;
     const g = (bigint >> 8) & 255;
@@ -412,31 +425,31 @@ function ChartJsFactory(ChartJs, $timeout) {
     return [r, g, b];
   }
 
-  function rgbStringToRgb(color) {
+  function rgbStringToRgb(color: string) {
     const match = color.match(/^rgba?\(([\d,.]+)\)$/);
     if (! match) {
       throw new Error('Cannot parse rgb value');
     }
-    color = match[1].split(',');
-    return color.map(Number);
+    const colorArr = match[1].split(',');
+    return colorArr.map(Number);
   }
 
-  function hasData(scope) {
-    return scope.chartData && scope.chartData.length;
+  function hasData(scope: DirectiveScope) {
+    return !!(scope.chartData && (scope.chartData as unknown[]).length);
   }
 
-  function getChartColorFn(scope) {
+  function getChartColorFn(scope: DirectiveScope) {
     return typeof scope.chartGetColor === 'function' ?
       scope.chartGetColor :
       getRandomColor;
   }
 
-  function getChartData(type, scope) {
+  function getChartData(type: string, scope: DirectiveScope) {
     const colors = getColors(type, scope);
-    return Array.isArray(scope.chartData[0]) ?
+    return Array.isArray((scope.chartData as unknown[])[0]) ?
       getDataSets(
         scope.chartLabels,
-        scope.chartData,
+        scope.chartData as ChartDataset['data'][],
         scope.chartSeries || [],
         colors,
         scope.chartDatasetOverride,
@@ -444,14 +457,21 @@ function ChartJsFactory(ChartJs, $timeout) {
       ) :
       getData(
         scope.chartLabels,
-        scope.chartData,
+        scope.chartData as ChartDataset['data'],
         colors,
         scope.chartDatasetOverride,
         type,
       );
   }
 
-  function getDataSets(labels, data, series, colors, datasetOverride, type) {
+  function getDataSets(
+    labels: DirectiveScope['chartLabels'],
+    data: ChartDataset['data'][],
+    series: string[],
+    colors: ChartColor[],
+    datasetOverride: DirectiveScope['chartDatasetOverride'],
+    type: string,
+  ) {
     const typeOptions = ChartJs.getOptions(type);
     return {
       labels: labels,
@@ -460,15 +480,19 @@ function ChartJsFactory(ChartJs, $timeout) {
         const dataset = angular.extend({}, typeOptions, color, {
           label: series[i],
           data: item,
-        });
-        if (type === 'bubble') {
-          dataset.pointBackgroundColor = dataset.backgroundColor;
-        }
-        if (type === 'bar') {
-          dataset.backgroundColor = color.pointBackgroundColor;
-        }
-        if (datasetOverride && datasetOverride.length > i) {
+        }) as ChartDataset;
+        if (datasetOverride && Array.isArray(datasetOverride) && datasetOverride.length > i) {
           angular.merge(dataset, datasetOverride[i]);
+        }
+        const actualType = (dataset as { type?: string }).type || type;
+        if (actualType === 'bar' || actualType === 'horizontalBar') {
+          if (! (datasetOverride && Array.isArray(datasetOverride) && datasetOverride[i].backgroundColor)) {
+            (dataset as ChartDataset<'bar'>).backgroundColor = color.pointBackgroundColor;
+          }
+        }
+        if (actualType === 'bubble') {
+          dataset.backgroundColor = color.backgroundColor;
+          (dataset as unknown as Record<string, unknown>).pointBackgroundColor = color.backgroundColor;
         }
 
         return dataset;
@@ -476,40 +500,50 @@ function ChartJsFactory(ChartJs, $timeout) {
     };
   }
 
-  function getData(labels, data, colors, datasetOverride, type) {
+  function getData(
+    labels: DirectiveScope['chartLabels'],
+    data: ChartDataset['data'],
+    colors: ChartColor[],
+    datasetOverride: DirectiveScope['chartDatasetOverride'],
+    type: string,
+  ) {
+    const isSolid = type === 'pie' || type === 'doughnut' || type === 'polarArea' || type === 'bar' || type === 'horizontalBar';
     const dataset = {
       labels: labels,
       datasets: [{
         data: data,
-        backgroundColor: colors.map((color) => color.pointBackgroundColor),
-        hoverBackgroundColor: colors.map((color) => color.backgroundColor),
-      }],
+        backgroundColor: colors.map((color: ChartColor) =>
+          isSolid ? color.pointBackgroundColor : color.backgroundColor),
+        hoverBackgroundColor: colors.map((color: ChartColor) => color.backgroundColor),
+      }] as ChartDataset[],
     };
     if (type === 'bubble') {
-      dataset.datasets[0].backgroundColor = colors.map((color) => color.backgroundColor);
+      dataset.datasets[0].backgroundColor = colors.map((color: ChartColor) => color.backgroundColor);
+      (dataset.datasets[0] as unknown as Record<string, unknown>).pointBackgroundColor = colors.map((color: ChartColor) => color.backgroundColor);
     }
-    if (datasetOverride) {
+    if (datasetOverride && ! Array.isArray(datasetOverride)) {
       angular.merge(dataset.datasets[0], datasetOverride);
     }
 
     return dataset;
   }
 
-  function getChartOptions(type, scope) {
+  function getChartOptions(type: string, scope: DirectiveScope) {
     return angular.extend({}, ChartJs.getOptions(type), scope.chartOptions);
   }
 
-  function updateChartOptions(values, scope) {
+  function updateChartOptions(values: Partial<ChartOptions>, scope: DirectiveScope) {
     if (values && scope.chart) {
+      const options = scope.chart.options as Record<string, unknown>;
       Object.keys(values).forEach((key) => {
-        scope.chart.options[key] = values[key];
+        options[key] = (values as Record<string, unknown>)[key];
       });
       scope.chart.update();
       scope.$emit('chart-update', scope.chart);
     }
   }
 
-  function bindEvents(cvs, scope) {
+  function bindEvents(cvs: HTMLCanvasElement, scope: DirectiveScope) {
     cvs.onclick = scope.chartClick ?
       getEventHandler(scope, 'chartClick', false) :
       angular.noop;
@@ -518,13 +552,19 @@ function ChartJsFactory(ChartJs, $timeout) {
       angular.noop;
   }
 
-  function updateChart(values: any, scope: DirectiveScope) {
-    if (Array.isArray(scope.chartData[0])) {
+  function updateChart(values: ChartDataset['data'] | ChartDataset['data'][], scope: DirectiveScope) {
+    if (! scope.chart) {
+      return;
+    }
+    if (Array.isArray((scope.chartData as unknown[])[0])) {
       scope.chart.data.datasets.forEach((dataset, i) => {
-        dataset.data = values[i];
+        dataset.data = (values as ChartDataset['data'][])[i];
       });
     } else {
-      scope.chart.data.datasets[0].data = values;
+      const dataset = scope.chart.data.datasets[0];
+      if (dataset) {
+        dataset.data = values as ChartDataset['data'];
+      }
     }
 
 
@@ -532,15 +572,16 @@ function ChartJsFactory(ChartJs, $timeout) {
     scope.$emit('chart-update', scope.chart);
   }
 
-  function isEmpty(value) {
+  function isEmpty(value: unknown) {
     return ! value ||
       (Array.isArray(value) && ! value.length) ||
-      (typeof value === 'object' && ! Object.keys(value).length);
+      (typeof value === 'object' && value !== null && ! Object.keys(value).length);
   }
 
-  function canDisplay(type, scope, elem, options) {
+  function canDisplay(type: string, scope: DirectiveScope, elem: angular.IAugmentedJQuery, options: ChartJsProviderOptions) {
     // TODO: check parent?
-    if (options.responsive && elem[0].clientHeight === 0) {
+    const cvs = elem[0] as HTMLCanvasElement;
+    if (options.responsive && cvs.clientHeight === 0) {
       $timeout(() => {
         createChart(type, scope, elem);
       }, 50, false);
