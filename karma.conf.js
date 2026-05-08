@@ -12,9 +12,13 @@ module.exports = function(config) {
     ],
     exclude: [],
     reporters: ['progress', 'coverage'],
+    preprocessors: {
+      'dist/test.unit.bundled.js': ['coverage'],
+    },
     coverageReporter: {
       type: 'lcov',
       dir: 'coverage/',
+      subdir: '.',
     },
     port: 9876,
     colors: true,
