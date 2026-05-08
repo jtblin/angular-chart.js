@@ -11,6 +11,7 @@ This is a legacy AngularJS 1.x wrapper for Chart.js. It has recently been modern
   - **Rollup**: Bundles TypeScript into UMD, ESM, and CJS formats for the core library (`rollup.config.js`).
   - **esbuild**: Bundles the example application (`examples/app.ts`) for high performance during development.
   - **Gulp**: Manages secondary tasks like linting, distribution cleanup, and publishing (`gulpfile.js`).
+- **Observability**: **Codecov** for code coverage tracking (reports generated via Karma).
 
 ## Key Scripts
 - `npm run dev`: Starts a watch server (Rollup + LiveReload) at `http://localhost:8080`.
@@ -37,6 +38,7 @@ This is a legacy AngularJS 1.x wrapper for Chart.js. It has recently been modern
 - **Trunk-Based**: Work happens on `main`. Current modernization is stabilized on `release/v3.0.0-rc.1`.
 - **Atomic Commits**: Follow Conventional Commits.
 - **Versioning**: Automated via `gulp deploy-patch/minor/major`. Tags use the `v` prefix. Bumping to **v3.0.0** due to Chart.js v4 and TypeScript migration.
+- **CI/CD Releases**: GitHub Actions automatically creates **draft** releases when a version tag (`v*`) is pushed, allowing for manual review of release notes before publishing.
 
 ## Testing Strategy
 1. **Unit Tests**: `test/test.unit.ts` (Karma + Mocha + Chai + Sinon). Focuses on directive lifecycle and data binding.
