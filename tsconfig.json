@@ -12,7 +12,9 @@
     "declaration": true,
     "sourceMap": true,
     "outDir": "dist",
-    "lib": ["DOM", "ES2020"]
+    "rootDir": "./",
+    "lib": ["DOM", "ES2020"],
+    "types": ["mocha", "chai", "sinon", "sinon-chai", "angular", "angular-mocks"]
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*", "test/**/*", "examples/**/*"]
 }

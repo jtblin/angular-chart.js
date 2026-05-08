@@ -71,7 +71,11 @@ export default {
   ],
   external: ['angular', 'chart.js'],
   plugins: [
-    typescript(),
+    typescript({
+      tsconfig: './tsconfig.json',
+      declaration: true,
+      outDir: 'dist',
+    }),
     resolve(),
     commonjs(),
     isWatch && serve({

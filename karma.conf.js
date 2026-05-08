@@ -8,13 +8,9 @@ module.exports = function(config) {
       'node_modules/chart.js/dist/chart.umd.js',
       'node_modules/angular-mocks/angular-mocks.js',
       'node_modules/chai-string/chai-string.js',
-      'dist/angular-chart.js',
-      'test/test.unit.js',
+      'dist/test.unit.bundled.js',
     ],
     exclude: [],
-    preprocessors: {
-      'dist/angular-chart.js': ['coverage'],
-    },
     reporters: ['progress', 'coverage'],
     coverageReporter: {
       type: 'lcov',
@@ -23,7 +19,7 @@ module.exports = function(config) {
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
-    autoWatch: false,
+    autoWatch: true,
     browsers: ['ChromeHeadless'],
     singleRun: true,
     concurrency: Infinity,
