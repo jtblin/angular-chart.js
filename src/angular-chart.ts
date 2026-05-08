@@ -135,17 +135,22 @@ function ChartJsProvider(this: ChartJsProviderInterface) {
       options[type as string] = angular.merge(options[type as string] || {}, customOptions);
     }
 
+    interface InternalChartDefaults {
+      datasets: Record<string, Record<string, unknown>>;
+      [key: string]: unknown;
+    }
+
     // Sync with Chart.js defaults
     Object.keys(options).forEach(key => {
+      const chartDefaults = ChartJs.Chart.defaults as unknown as InternalChartDefaults;
       if (typeof options[key] === 'object' && key !== 'scales' && key !== 'plugins') {
         // Assume it's a chart type
         // For v4, we need to set both dataset defaults (for tension, fill, etc.)
         // and chart type defaults (for responsive, etc.)
-        const defaults = ChartJs.Chart.defaults as unknown as Record<string, Record<string, unknown>>;
-        defaults.datasets[key] = angular.merge(defaults.datasets[key] || {}, options[key]);
-        (defaults as unknown as Record<string, unknown>)[key] = angular.merge((defaults as unknown as Record<string, unknown>)[key] || {}, options[key]);
+        chartDefaults.datasets[key] = angular.merge(chartDefaults.datasets[key] || {}, options[key]);
+        chartDefaults[key] = angular.merge((chartDefaults[key] as Record<string, unknown>) || {}, options[key]);
       } else {
-        (ChartJs.Chart.defaults as unknown as Record<string, unknown>)[key] = options[key];
+        chartDefaults[key] = options[key];
       }
     });
   };
@@ -174,25 +179,25 @@ function ChartJsFactory(ChartJs: ChartJsService, $timeout: angular.ITimeoutServi
       },
       link: function(scope: DirectiveScope, elem: angular.IAugmentedJQuery/* , attrs */) {
         // Order of setting "watch" matter
-        scope.$watch('chartData', watchData, true);
-        scope.$watch('chartSeries', watchOther, true);
-        scope.$watch('chartLabels', watchOther, true);
+        scope.$watch('chartData', watchDataUpdate, true);
+        scope.$watch('chartSeries', watchRecreation, true);
+        scope.$watch('chartLabels', watchRecreation, true);
         scope.$watch('chartOptions', watchOptions, true);
-        scope.$watch('chartColors', watchOther, true);
-        scope.$watch('chartDatasetOverride', watchOther, true);
+        scope.$watch('chartColors', watchRecreation, true);
+        scope.$watch('chartDatasetOverride', watchRecreation, true);
         scope.$watch('chartType', watchType, false);
-        scope.$watch('chartPlugins', watchOther, true);
+        scope.$watch('chartPlugins', watchRecreation, true);
         scope.$watch('chartDisplayWhenNoData', (newVal, oldVal) => {
           if (newVal === oldVal) {
             return;
           }
-          watchData(scope.chartData);
+          watchDataUpdate(scope.chartData);
         }, false);
         scope.$watch('chartForceUpdate', (newVal, oldVal) => {
           if (newVal === oldVal) {
             return;
           }
-          watchData(scope.chartData);
+          watchDataUpdate(scope.chartData);
         }, false);
 
         scope.$on('$destroy', () => destroyChart(scope));
@@ -203,7 +208,8 @@ function ChartJsFactory(ChartJs: ChartJsService, $timeout: angular.ITimeoutServi
           }
         });
 
-        function watchData(newVal: unknown, oldVal?: unknown) {
+
+        function watchDataUpdate(newVal: unknown, oldVal?: unknown) {
           if (! scope.chartDisplayWhenNoData && isDataEmpty(newVal)) {
             destroyChart(scope);
             return;
@@ -239,7 +245,7 @@ function ChartJsFactory(ChartJs: ChartJsService, $timeout: angular.ITimeoutServi
           updateChartOptions(newVal, scope);
         }
 
-        function watchOther(newVal: unknown, oldVal: unknown) {
+        function watchRecreation(newVal: unknown, oldVal: unknown) {
           if (isEmpty(newVal)) {
             return;
           }
@@ -579,12 +585,19 @@ function ChartJsFactory(ChartJs: ChartJsService, $timeout: angular.ITimeoutServi
   }
 
   function canDisplay(type: string, scope: DirectiveScope, elem: angular.IAugmentedJQuery, options: ChartJsProviderOptions) {
-    // TODO: check parent?
     const cvs = elem[0] as HTMLCanvasElement;
     if (options.responsive && cvs.clientHeight === 0) {
-      $timeout(() => {
-        createChart(type, scope, elem);
-      }, 50, false);
+      let attempts = 0;
+      const checkDimensions = () => {
+        if (cvs.clientHeight > 0) {
+          return createChart(type, scope, elem);
+        }
+        if (attempts < 5) {
+          attempts++;
+          window.requestAnimationFrame(checkDimensions);
+        }
+      };
+      window.requestAnimationFrame(checkDimensions);
       return false;
     }
     return true;
