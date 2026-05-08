@@ -1,7 +1,18 @@
 'use strict';
+Chart.defaults.animation = false;
 
 const app = angular.module('charts', ['chart.js']);
-Chart.defaults.global.legend.display = false;
+app.config(['ChartJsProvider', function(ChartJsProvider) {
+  ChartJsProvider.setOptions('line', {
+    tension: 0.4,
+    fill: true,
+  });
+  ChartJsProvider.setOptions('radar', {
+    tension: 0.4,
+    fill: true,
+  });
+}]);
+Chart.defaults.plugins.legend.display = false;
 
 app.controller('LineCtrl', ['$scope', '$timeout', function($scope, $timeout) {
   $scope.labels = [
