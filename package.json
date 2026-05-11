@@ -1,6 +1,6 @@
 {
   "name": "angular-chart.js",
-  "version": "3.0.0-rc.1",
+  "version": "3.0.0-rc.2",
   "type": "module",
   "description": "An angular.js wrapper for Chart.js",
   "engines": {

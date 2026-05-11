@@ -48,9 +48,9 @@ This is a legacy AngularJS 1.x wrapper for Chart.js. It has recently been modern
   - **Opt-in Deep Watch**: If deep mutations are required, users can set `chart-dataset-watch-deep="true"` on the directive or `datasetWatchDeep: true` globally via `ChartJsProvider`.
 
 ## Deployment & Versioning
-- **Trunk-Based**: Work happens on `main`. Current modernization is stabilized on `release/v3.0.0-rc.1`.
+- **Trunk-Based**: Work happens on `main`. Current modernization is stabilized on `release/v3.0.0-rc`.
 - **Atomic Commits**: Follow Conventional Commits.
-- **Versioning**: Automated via `gulp deploy-patch/minor/major`. Tags use the `v` prefix. Bumping to **v3.0.0** due to Chart.js v4 and TypeScript migration.
+- **Versioning**: Automated via `gulp deploy-patch/minor/major`. Tags use the `v` prefix. Bumping to **v3.0.0-rc.2** due to Chart.js v4 and TypeScript migration.
 - **CI/CD Releases**: GitHub Actions automatically creates **draft** releases when a version tag (`v*`) is pushed, allowing for manual review of release notes before publishing.
 
 ## Testing Strategy
