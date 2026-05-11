@@ -416,14 +416,15 @@ describe('Unit testing', function() {
     });
 
     it('should allow to set a configuration', function() {
+      const originalResponsive = (ChartJsProvider.$get().Chart.defaults as any).responsive;
       ChartJsProvider.setOptions({responsive: false});
       expect(ChartJs.getOptions().responsive).to.equal(false);
       expect(ChartJs.getOptions('Line').responsive).to.equal(false);
-      expect((ChartJsProvider.$get().Chart.defaults as any).responsive).to.equal(false);
+      // Verify Chart.defaults is NOT modified
+      expect((ChartJsProvider.$get().Chart.defaults as any).responsive).to.equal(originalResponsive);
       ChartJsProvider.setOptions({responsive: true});
       expect(ChartJs.getOptions().responsive).to.equal(true);
       expect(ChartJs.getOptions('Line').responsive).to.equal(true);
-      expect((ChartJsProvider.$get().Chart.defaults as any).responsive).to.equal(true);
     });
 
     it('should allow to set a configuration for a chart type', function() {
@@ -431,9 +432,8 @@ describe('Unit testing', function() {
       expect(ChartJs.getOptions('Line').responsive).to.equal(false);
       ChartJsProvider.setOptions('Line', {responsive: true});
       expect(ChartJs.getOptions('Line').responsive).to.equal(true);
-      ChartJsProvider.setOptions('Line', {responsive: true});
-      expect((ChartJsProvider.$get().Chart.defaults as any).Line.responsive)
-        .to.equal(true);
+      // Verify Chart.defaults.Line is NOT created/modified
+      expect((ChartJsProvider.$get().Chart.defaults as any).Line).to.be.undefined;
     });
 
     ['labels', 'colors', 'series'].forEach(function(attr) {

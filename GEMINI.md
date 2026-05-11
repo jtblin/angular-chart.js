@@ -14,7 +14,7 @@ This is a legacy AngularJS 1.x wrapper for Chart.js. It has recently been modern
 - **Observability**: **Codecov** for code coverage tracking (reports generated via Karma).
 
 ## Key Scripts
-- `npm run dev`: Starts a watch server (Rollup + LiveReload) at `http://localhost:8080`.
+- `npm run dev`: Starts a watch server (Rollup + LiveReload) at `http://localhost:8080/examples/charts.html`.
 - `npm run build`: Generates production bundles in `dist/` and bundles the example app.
 - `npm test`: Runs `gulp check` (ESLint -> Karma Unit Tests -> Playwright Integration Tests). Note: All tests are now in TypeScript.
 - `npm run lint`: Runs `gulp lint` (ESLint with Google Style Guide).

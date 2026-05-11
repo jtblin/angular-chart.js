@@ -54,16 +54,7 @@ const DEFAULT_COLORS = [
   '#4D5360', // dark grey
 ];
 
-Chart.defaults.plugins = Chart.defaults.plugins || {};
-Chart.defaults.plugins.tooltip = Chart.defaults.plugins.tooltip || {};
-Chart.defaults.plugins.tooltip.mode = 'index';
-Chart.defaults.elements = Chart.defaults.elements || {};
-Chart.defaults.elements.line = Chart.defaults.elements.line || {};
-Chart.defaults.elements.line.borderWidth = 2;
-Chart.defaults.elements.bar = Chart.defaults.elements.bar || {};
-Chart.defaults.elements.bar.borderWidth = 2;
-Chart.defaults.plugins.legend = Chart.defaults.plugins.legend || {};
-Chart.defaults.plugins.legend.display = false;
+
 
 
 
@@ -113,6 +104,22 @@ function ChartJsProvider(this: ChartJsProviderInterface) {
     responsive: true,
     chartAlpha: 1,
     chartFillAlpha: 0.2,
+    plugins: {
+      tooltip: {
+        mode: 'index',
+      },
+      legend: {
+        display: false,
+      },
+    },
+    elements: {
+      line: {
+        borderWidth: 2,
+      },
+      bar: {
+        borderWidth: 2,
+      },
+    },
   };
   const ChartJs = {
     Chart: Chart,
@@ -135,24 +142,6 @@ function ChartJsProvider(this: ChartJsProviderInterface) {
       options[type as string] = angular.merge(options[type as string] || {}, customOptions);
     }
 
-    interface InternalChartDefaults {
-      datasets: Record<string, Record<string, unknown>>;
-      [key: string]: unknown;
-    }
-
-    // Sync with Chart.js defaults
-    Object.keys(options).forEach(key => {
-      const chartDefaults = ChartJs.Chart.defaults as unknown as InternalChartDefaults;
-      if (typeof options[key] === 'object' && key !== 'scales' && key !== 'plugins') {
-        // Assume it's a chart type
-        // For v4, we need to set both dataset defaults (for tension, fill, etc.)
-        // and chart type defaults (for responsive, etc.)
-        chartDefaults.datasets[key] = angular.merge(chartDefaults.datasets[key] || {}, options[key]);
-        chartDefaults[key] = angular.merge((chartDefaults[key] as Record<string, unknown>) || {}, options[key]);
-      } else {
-        chartDefaults[key] = options[key];
-      }
-    });
   };
 
   this.$get = () => ChartJs;

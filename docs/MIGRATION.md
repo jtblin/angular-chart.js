@@ -94,4 +94,5 @@ If you are using TypeScript, `angular-chart.js` now provides built-in types. Not
 ## 4. Breaking Changes Summary
 - **Minimum Requirements**: AngularJS 1.8.x and Chart.js 4.x.
 - **Global `Chart`**: The library no longer attempts to auto-inject Chart.js; it expects the `Chart` class to be available in the environment.
+- **Encapsulated Defaults**: The library no longer mutates `Chart.defaults`. Opinionated defaults are now internal to `ChartJsProvider`. If you relied on `angular-chart.js` to configure other non-Angular charts globally, you must now configure them manually in `Chart.defaults`.
 - **Events**: Event arguments (like `points` in `chart-click`) now match the Chart.js 4.x `ActiveElement` structure.
