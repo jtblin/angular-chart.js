@@ -53,10 +53,6 @@ export default {
       format: 'es',
       banner,
       sourcemap: true,
-      globals: {
-        'angular': 'angular',
-        'chart.js': 'Chart',
-      },
     },
     {
       file: 'dist/angular-chart.cjs.js',

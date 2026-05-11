@@ -1,6 +1,7 @@
 {
   "name": "angular-chart.js",
   "version": "3.0.0-rc.1",
+  "type": "module",
   "description": "An angular.js wrapper for Chart.js",
   "engines": {
     "node": ">=24"
@@ -26,14 +27,14 @@
     "src/angular-chart.ts"
   ],
   "scripts": {
-    "test": "gulp check",
-    "build": "rollup -c && npx esbuild examples/app.ts --bundle --outfile=examples/app.js --format=iife --global-name=examples --external:angular --external:chart.js --sourcemap --target=es2020 && gulp build",
+    "test": "gulp --gulpfile gulpfile.cjs check",
+    "build": "rollup -c && npx esbuild examples/app.ts --bundle --outfile=examples/app.js --format=iife --global-name=examples --external:angular --external:chart.js --sourcemap --target=es2020 && gulp --gulpfile gulpfile.cjs build",
     "dev": "rollup -c -w",
-    "lint": "gulp lint",
+    "lint": "gulp --gulpfile gulpfile.cjs lint",
     "typecheck": "tsc --noEmit",
-    "release:patch": "gulp deploy-patch",
-    "release:minor": "gulp deploy-minor",
-    "release:major": "gulp deploy-major"
+    "release:patch": "gulp --gulpfile gulpfile.cjs deploy-patch",
+    "release:minor": "gulp --gulpfile gulpfile.cjs deploy-minor",
+    "release:major": "gulp --gulpfile gulpfile.cjs deploy-major"
   },
   "author": "Jerome Touffe-Blin <jtblin@gmail.com>",
   "repository": {
@@ -53,6 +54,8 @@
     "@types/mocha": "^10.0.10",
     "@types/sinon": "^21.0.1",
     "@types/sinon-chai": "^4.0.0",
+    "@typescript-eslint/eslint-plugin": "^8.59.2",
+    "@typescript-eslint/parser": "^8.59.2",
     "angular-bootstrap": "^0.12.2",
     "angular-mocks": "^1.8.3",
     "bootstrap": "^3.3.7",
@@ -69,6 +72,7 @@
     "gulp-git": "^2.11.0",
     "gulp-gzip": "^1.4.2",
     "gulp-header": "^2.0.12",
+    "gulp-if": "^3.0.0",
     "gulp-mocha": "^10.0.1",
     "gulp-rename": "^2.1.0",
     "gulp-rimraf": "^1.0.0",

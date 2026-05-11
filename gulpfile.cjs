@@ -11,6 +11,7 @@
   const rimraf = require('gulp-rimraf');
   const shell = require('gulp-shell');
 
+  const gulpIf = require('gulp-if');
   const tar = require('gulp-tar');
   const karma = require('karma');
 
@@ -22,9 +23,11 @@
   }
 
   function lint() {
-    return gulp.src(['**/*.js', '!node_modules/**', '!dist/**'])
-      .pipe(eslint())
+    const fix = process.argv.includes('--fix');
+    return gulp.src(['**/*.{js,cjs,ts}', '!node_modules/**', '!dist/**'])
+      .pipe(eslint({fix: fix}))
       .pipe(eslint.format())
+      .pipe(gulpIf(fix, gulp.dest('.')))
       .pipe(eslint.failAfterError());
   }
 
@@ -35,7 +38,7 @@
 
   function unitTask(done) {
     new karma.Server({
-      configFile: path.join(__dirname, 'karma.conf.js'),
+      configFile: path.join(__dirname, 'karma.conf.cjs'),
       singleRun: true,
     }, done).start();
   }

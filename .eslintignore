@@ -8,5 +8,6 @@ test/fixtures/coverage.js
 examples/app.js
 rollup.test.config.js
 rollup.config.js
-playwright.config.js
-karma.conf.js
+playwright.config.cjs
+karma.conf.cjs
+gulpfile.cjs

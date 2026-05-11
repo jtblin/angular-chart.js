@@ -79,6 +79,19 @@
       "rules": {
         "strict": ["error", "global"]
       }
+    },
+    {
+      "files": ["**/*.ts"],
+      "parser": "@typescript-eslint/parser",
+      "plugins": ["@typescript-eslint"],
+      "parserOptions": {
+        "sourceType": "module"
+      },
+      "rules": {
+        "no-undef": "off",
+        "strict": "off",
+        "max-len": ["error", {"code": 120, "ignoreComments": true, "ignoreRegExpLiterals": true}]
+      }
     }
   ]
 }
