@@ -12,3 +12,4 @@ examples/commonjs.bundle.js
 examples/app.js
 examples/app.js.map
 rollup.log
+karma.log
