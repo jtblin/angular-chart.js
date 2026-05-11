@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head lang="en">
   <meta charset="UTF-8">
   <title>Charts</title>
@@ -12,14 +13,15 @@
       list-style-type: none;
       margin-top: 5px;
       text-align: center;
-    /* NOTE: Browsers automatically add 40px of padding-left to all lists, so we should offset that, otherwise the legend is off-center */
+      /* NOTE: Browsers automatically add 40px of padding-left to all lists, so we should offset that, otherwise the legend is off-center */
       -webkit-padding-start: 0;
-    /* Webkit */
+      /* Webkit */
       -moz-padding-start: 0;
-    /* Mozilla */
+      /* Mozilla */
       padding-left: 0;
-    /* IE (handles all cases, really, but we should also include the vendor-specific properties just to be safe) */
+      /* IE (handles all cases, really, but we should also include the vendor-specific properties just to be safe) */
     }
+
     .chart-legend li {
       display: inline-block;
       white-space: nowrap;
@@ -30,6 +32,7 @@
       font-size: smaller;
       cursor: default;
     }
+
     .chart-legend li span {
       display: block;
       position: absolute;
@@ -41,6 +44,7 @@
     }
   </style>
 </head>
+
 <body ng-app="examples" id="top">
   <div class="navbar navbar-default navbar-fixed-top">
     <div class="container" ng-controller="MenuCtrl">
@@ -85,17 +89,19 @@
   </div>
   <div class="container-fluid">
     <div class="text-center aspect-ratio" id="container" ng-controller="TicksCtrl">
-      <canvas width='1200' height='300' id="hero-bar" class="chart chart-line" chart-data="data"
-              chart-options="options" chart-labels="labels" chart-dataset-override="datasetOverride"></canvas>
+      <canvas width='1200' height='300' id="hero-bar" class="chart chart-line" chart-data="data" chart-options="options"
+        chart-labels="labels" chart-dataset-override="datasetOverride"></canvas>
       <div class="header">
         <h1>
           Angular Chart
         </h1>
 
-        <p>Reactive, responsive, beautiful charts for <a href="http://angularjs.org">AngularJS</a> based on <a href="http://www.chartjs.org">Chart.js</a></p>
+        <p>Reactive, responsive, beautiful charts for <a href="http://angularjs.org">AngularJS</a> based on <a
+            href="http://www.chartjs.org">Chart.js</a></p>
 
         <p>
-          <a class="btn btn-default btn-lg" href="https://github.com/jtblin/angular-chart"><i class="icon-github"></i>Code on Github</a>
+          <a class="btn btn-default btn-lg" href="https://github.com/jtblin/angular-chart"><i
+              class="icon-github"></i>Code on Github</a>
           <a class="btn btn-success btn-lg" href="../dist/angular-chart.js.tar.gz" download="angular-chart.js.tar.gz">
             <i class="fa fa-download"></i> Download <small>(2.1.2)</small>
           </a>
@@ -110,7 +116,8 @@
       </div>
       <h3>Dependencies</h3>
       <p>
-        This repository contains a set of <strong>native AngularJS directives</strong> for Chart.js. The <strong>only required dependencies</strong> are:
+        This repository contains a set of <strong>native AngularJS directives</strong> for Chart.js. The <strong>only
+          required dependencies</strong> are:
       </p>
       <ul>
         <li><a href="http://angularjs.org" target="_blank">AngularJS</a> (requires at least 1.8.x)</li>
@@ -119,9 +126,10 @@
       <h3>Files to download</h3>
       <p>
         The easiest is to download with <strong>npm</strong>:
-        <pre>npm install angular-chart.js --save</pre>
-        Alternatively files can be <a href="https://github.com/jtblin/angular-chart.js">downloaded from Github</a> or via PolarArea.
-        See <a href="https://github.com/jtblin/angular-chart.js">readme</a> for more information.
+      <pre>npm install angular-chart.js --save</pre>
+      Alternatively files can be <a href="https://github.com/jtblin/angular-chart.js">downloaded from Github</a> or via
+      PolarArea.
+      See <a href="https://github.com/jtblin/angular-chart.js">readme</a> for more information.
       </p>
       <p>Whichever method you choose the good news is that the overall size is very small:
         &lt;5kb for all directives (~1kb with gzip compression!)</p>
@@ -131,7 +139,8 @@
 &lt;script src="node_modules/angular-chart.js/dist/angular-chart.min.js">&lt;/script&gt;</code></pre>
       <p>As soon as you've got all the files downloaded and included in your page you just need to declare
         a dependency on the <code>chart.js</code> <a href="http://docs.angularjs.org/guide/module">module</a>:<br>
-      </p><pre><code>angular.module('myModule', ['chart.js']);</code></pre>
+      </p>
+      <pre><code>angular.module('myModule', ['chart.js']);</code></pre>
       <p></p>
       <h3>CSS</h3>
       <p></p>
@@ -148,13 +157,15 @@
         <li><span style="background-color: rgba(77,83,96,1)"></span>Dark Grey</li>
       </ol>
       <p>You can also use the provider : <code>ChartJsProvider</code> in a <code>.config()</code></p>
-      <p><pre><code>angular.module('app', ['chart.js']).config((ChartJsProvider) => {
+      <p>
+      <pre><code>angular.module('app', ['chart.js']).config((ChartJsProvider) => {
   ChartJsProvider.setOptions({
     colors: ['#803690', '#00ADF9', '#DCDCDC', '#46BFBD', '#FDB45C', '#949FB1', '#4D5360'],
     tension: 0.4,
     fill: true
   });
-});</code></pre></p>
+});</code></pre>
+      </p>
     </section>
     <section id="directives">
       <div class="page-header">
@@ -165,9 +176,9 @@
           <div class="panel panel-default">
             <div class="panel-heading">Line Chart</div>
             <div class="panel-body">
-              <canvas id="line" class="chart chart-line" chart-data="data" chart-labels="labels"
-                      chart-click="onClick" chart-hover="onHover" chart-series="series" chart-options="options"
-                      chart-dataset-override="datasetOverride"></canvas>
+              <canvas id="line" class="chart chart-line" chart-data="data" chart-labels="labels" chart-click="onClick"
+                chart-hover="onHover" chart-series="series" chart-options="options"
+                chart-dataset-override="datasetOverride"></canvas>
             </div>
           </div>
         </div>
@@ -189,7 +200,7 @@
               </div>
             </tab>
             <tab heading="Markup">
-            <pre><code data-language="html">&lt;canvas id=&quot;line&quot; class=&quot;chart chart-line&quot; chart-data=&quot;data&quot;
+              <pre><code data-language="html">&lt;canvas id=&quot;line&quot; class=&quot;chart chart-line&quot; chart-data=&quot;data&quot;
 chart-labels=&quot;labels&quot; chart-series=&quot;series&quot; chart-options=&quot;options&quot;
 chart-dataset-override=&quot;datasetOverride&quot; chart-click=&quot;onClick&quot;&gt;
 &lt;/canvas&gt;
@@ -269,8 +280,8 @@ chart-dataset-override=&quot;datasetOverride&quot; chart-click=&quot;onClick&quo
           <div class="panel panel-default">
             <div class="panel-heading">Bar Chart</div>
             <div class="panel-body">
-              <canvas id="bar" class="chart chart-bar" chart-data="data" chart-labels="labels"
-                      chart-series="series" chart-options="options"></canvas>
+              <canvas id="bar" class="chart chart-bar" chart-data="data" chart-labels="labels" chart-series="series"
+                chart-options="options"></canvas>
             </div>
           </div>
         </div>
@@ -281,8 +292,7 @@ chart-dataset-override=&quot;datasetOverride&quot; chart-click=&quot;onClick&quo
             <div class="panel-heading">Doughnut Chart</div>
             <div class="panel-body">
               <div class="chart-xs">
-                <canvas id="doughnut" class="chart chart-doughnut" chart-data="data"
-                        chart-labels="labels"></canvas>
+                <canvas id="doughnut" class="chart chart-doughnut" chart-data="data" chart-labels="labels"></canvas>
               </div>
             </div>
           </div>
@@ -361,8 +371,8 @@ chart-dataset-override=&quot;datasetOverride&quot; chart-click=&quot;onClick&quo
             <div class="panel-heading">Radar Chart</div>
             <div class="panel-body">
               <div class="chart-xs">
-                <canvas id="area" class="chart chart-radar" chart-data="data"
-                        chart-labels="labels" chart-options="options" chart-click="onClick"></canvas>
+                <canvas id="area" class="chart chart-radar" chart-data="data" chart-labels="labels"
+                  chart-options="options" chart-click="onClick"></canvas>
               </div>
             </div>
           </div>
@@ -374,8 +384,8 @@ chart-dataset-override=&quot;datasetOverride&quot; chart-click=&quot;onClick&quo
             <div class="panel-heading">Pie Chart</div>
             <div class="panel-body">
               <div class="chart-xs">
-                <canvas id="pie" class="chart chart-pie" chart-data="data"
-                        chart-labels="labels" chart-options="options"></canvas>
+                <canvas id="pie" class="chart chart-pie" chart-data="data" chart-labels="labels"
+                  chart-options="options"></canvas>
               </div>
             </div>
           </div>
@@ -449,8 +459,8 @@ chart-dataset-override=&quot;datasetOverride&quot; chart-click=&quot;onClick&quo
             <div class="panel-heading">Polar Area Chart</div>
             <div class="panel-body">
               <div class="chart-xs">
-                <canvas id="polar" class="chart chart-polar-area" chart-data="data"
-                        chart-labels="labels" chart-options="options"></canvas>
+                <canvas id="polar" class="chart chart-polar-area" chart-data="data" chart-labels="labels"
+                  chart-options="options"></canvas>
               </div>
             </div>
           </div>
@@ -462,7 +472,7 @@ chart-dataset-override=&quot;datasetOverride&quot; chart-click=&quot;onClick&quo
             <div class="panel-heading">Horizontal Bar Chart</div>
             <div class="panel-body">
               <canvas id="horizontal" class="chart chart-horizontal-bar" chart-data="data"
-                      chart-labels="labels"></canvas>
+                chart-labels="labels"></canvas>
             </div>
           </div>
         </div>
@@ -560,7 +570,7 @@ chart-dataset-override=&quot;datasetOverride&quot; chart-click=&quot;onClick&quo
             <div class="panel-body">
               <div class="chart-xs">
                 <canvas id="base" class="chart chart-base" chart-type="type" chart-data="data"
-                        chart-labels="labels"></canvas>
+                  chart-labels="labels"></canvas>
               </div>
             </div>
           </div>
@@ -610,7 +620,7 @@ chart-dataset-override=&quot;datasetOverride&quot; chart-click=&quot;onClick&quo
             <div class="panel-heading">Reactive Chart</div>
             <div class="panel-body">
               <canvas id="tables" class="chart chart-line" chart-data="data" chart-options="options"
-                      chart-labels="labels" chart-colors="colors"></canvas>
+                chart-labels="labels" chart-colors="colors"></canvas>
             </div>
           </div>
         </div>
@@ -623,7 +633,8 @@ chart-dataset-override=&quot;datasetOverride&quot; chart-click=&quot;onClick&quo
                   <th ng-repeat="label in labels">{{label}}</th>
                 </tr>
                 <tr ng-repeat="dataSet in data">
-                  <td ng-repeat="set in dataSet track by $index"><span style="text-align: right;">{{data[$parent.$index][$index]}}</span></td>
+                  <td ng-repeat="set in dataSet track by $index"><span
+                      style="text-align: right;">{{data[$parent.$index][$index]}}</span></td>
                 </tr>
               </table>
               <button type="button" class="btn btn-primary pull-right" ng-click="randomize()">Randomize</button>
@@ -660,7 +671,8 @@ chart-dataset-override=&quot;datasetOverride&quot; chart-click=&quot;onClick&quo
     {
       label: 'Bar chart',
       borderWidth: 1,
-      type: 'bar'
+      type: 'bar',
+      backgroundColor: 'rgba(69, 183, 205, 0.2)'
     },
     {
       label: 'Line chart',
@@ -679,10 +691,10 @@ chart-dataset-override=&quot;datasetOverride&quot; chart-click=&quot;onClick&quo
         </div>
         <div class="col-lg-6 col-sm-12">
           <div class="panel panel-default">
-            <div class="panel-heading">Bar line Chart</div>
+            <div class="panel-heading">Bar Line Chart</div>
             <div class="panel-body">
-              <canvas class="chart chart-bar" chart-data="data" chart-labels="labels"
-                      chart-colors="colors" chart-dataset-override="datasetOverride"></canvas>
+              <canvas class="chart chart-bar" chart-data="data" chart-labels="labels" chart-colors="colors"
+                chart-dataset-override="datasetOverride"></canvas>
             </div>
           </div>
         </div>
@@ -698,8 +710,7 @@ chart-dataset-override=&quot;datasetOverride&quot; chart-click=&quot;onClick&quo
           <div class="panel panel-default" style="display: flex; flex-direction: column; width: 100%;">
             <div class="panel-heading">Plugins Support</div>
             <div class="panel-body" style="flex: 1;">
-              <canvas class="chart chart-line" chart-data="data" chart-labels="labels"
-                      chart-plugins="plugins"></canvas>
+              <canvas class="chart chart-line" chart-data="data" chart-labels="labels" chart-plugins="plugins"></canvas>
             </div>
             <div class="panel-footer">
               Using <code>chart-plugins</code> to draw a watermark.
@@ -711,14 +722,14 @@ chart-dataset-override=&quot;datasetOverride&quot; chart-click=&quot;onClick&quo
             <div class="panel-heading">Lifecycle Management</div>
             <div class="panel-body" style="flex: 1; min-height: 300px;">
               <canvas class="chart chart-base" chart-type="type" chart-data="data" chart-labels="labels"
-                      chart-display-when-no-data="displayWhenNoData"
-                      chart-force-update="forceUpdate"
-                      style="border: 1px dashed #ccc;"></canvas>
+                chart-display-when-no-data="displayWhenNoData" chart-force-update="forceUpdate"
+                style="border: 1px dashed #ccc;"></canvas>
             </div>
             <div class="panel-footer">
               <button class="btn btn-sm btn-default" ng-click="setData()">Set Data</button>
               <button class="btn btn-sm btn-default" ng-click="clearData()">Clear Data</button>
-              <label style="font-weight: normal;"><input type="checkbox" ng-model="displayWhenNoData"> Display when no data</label>
+              <label style="font-weight: normal;"><input type="checkbox" ng-model="displayWhenNoData"> Display when no
+                data</label>
               <select ng-model="type" class="form-control input-sm" style="display: inline-block; width: auto;">
                 <option value="bar">Bar</option>
                 <option value="line">Line</option>
@@ -735,7 +746,8 @@ chart-dataset-override=&quot;datasetOverride&quot; chart-click=&quot;onClick&quo
       <p>Designed and built by <a href="https://github.com/jtblin" target="_blank">Jerome Touffe-Blin</a></p>
       <p>Code licensed under <a href="https://github.com/jtblin/angular-chart.js/blob/main/LICENSE">BSD License</a>.</p>
       <p><a href="https://github.com/jtblin/angular-chart.js/issues?state=open">Issues</a></p>
-      <p><strong>Credits</strong>: <a href="http://www.chartjs.org/">Chart.js</a> and <a href="https://angularjs.org/">AngularJS</a></p>
+      <p><strong>Credits</strong>: <a href="http://www.chartjs.org/">Chart.js</a> and <a
+          href="https://angularjs.org/">AngularJS</a></p>
     </div>
   </footer>
 
@@ -749,13 +761,16 @@ chart-dataset-override=&quot;datasetOverride&quot; chart-click=&quot;onClick&quo
   <script src="../dist/angular-chart.js"></script>
   <script src="app.js"></script>
   <script>
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    (function (i, s, o, g, r, a, m) {
+      i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+        (i[r].q = i[r].q || []).push(arguments)
+      }, i[r].l = 1 * new Date(); a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
 
     ga('create', 'UA-53037324-1', 'auto');
     ga('send', 'pageview');
   </script>
 </body>
+
 </html>

@@ -1,5 +1,6 @@
-import type { ChartJsProviderInterface, ChartJsService, DirectiveScope } from '../src/angular-chart';
-import type { ActiveElement } from 'chart.js';
+// / <reference types="angular" />
+import type {ChartJsProviderInterface} from '../src/angular-chart';
+import type {ActiveElement} from 'chart.js';
 
 interface ExampleScope extends angular.IScope {
   labels: (string | string[])[];
@@ -36,6 +37,7 @@ interface NoDataScope extends ExampleScope {
 (() => {
   'use strict';
 
+  const angular = (window as any).angular as angular.IAngularStatic;
   const app = angular.module('examples', ['chart.js', 'ui.bootstrap']);
 
   app.config(['ChartJsProvider', (ChartJsProvider: ChartJsProviderInterface) => {
@@ -62,7 +64,8 @@ interface NoDataScope extends ExampleScope {
     });
     ChartJsProvider.setOptions('bubble', {
       plugins: {
-        tooltip: { enabled: false },
+        legend: {display: false},
+        tooltip: {enabled: false},
       },
     });
   }]);
@@ -104,7 +107,7 @@ interface NoDataScope extends ExampleScope {
         console.log('No point');
       }
     };
-    $scope.datasetOverride = [{ yAxisID: 'y-axis-1' }, { yAxisID: 'y-axis-2' }];
+    $scope.datasetOverride = [{yAxisID: 'y-axis-1'}, {yAxisID: 'y-axis-2'}];
 
     $scope.options = {
       tension: 0.4,
@@ -127,7 +130,7 @@ interface NoDataScope extends ExampleScope {
   app.controller('BarCtrl', ['$scope', ($scope: ExampleScope) => {
     $scope.options = {
       plugins: {
-        legend: { display: true },
+        legend: {display: true},
       },
     };
     $scope.labels = ['2006', '2007', '2008', '2009', '2010', '2011', '2012'];
@@ -152,7 +155,7 @@ interface NoDataScope extends ExampleScope {
     $scope.data = [300, 500, 100];
     $scope.options = {
       plugins: {
-        legend: { display: false },
+        legend: {display: false},
       },
     };
   }]);
@@ -165,7 +168,7 @@ interface NoDataScope extends ExampleScope {
     $scope.data = [300, 500, 100, 40, 120];
     $scope.options = {
       plugins: {
-        legend: { display: false },
+        legend: {display: false},
       },
     };
   }]);
@@ -190,7 +193,7 @@ interface NoDataScope extends ExampleScope {
     ];
     $scope.options = {
       plugins: {
-        legend: { display: false },
+        legend: {display: false},
       },
     };
 
@@ -256,6 +259,7 @@ interface NoDataScope extends ExampleScope {
         label: 'Bar chart',
         borderWidth: 1,
         type: 'bar',
+        backgroundColor: 'rgba(69, 183, 205, 0.2)',
       },
       {
         label: 'Line chart',
@@ -297,7 +301,7 @@ interface NoDataScope extends ExampleScope {
     ];
     $scope.options = {
       plugins: {
-        legend: { display: false },
+        legend: {display: false},
       },
     };
     $scope.randomize = () => {
@@ -336,14 +340,15 @@ interface NoDataScope extends ExampleScope {
     $interval(createChart, 2000);
 
     function createChart() {
-      $scope.data = [];
+      const data = [];
       for (let i = 0; i < 50; i++) {
-        $scope.data.push([{
+        data.push({
           x: randomScalingFactor(),
           y: randomScalingFactor(),
           r: randomRadius(),
-        }]);
+        });
       }
+      $scope.data = [data];
     }
 
     function randomScalingFactor() {

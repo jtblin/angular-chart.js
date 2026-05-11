@@ -4,8 +4,8 @@
   require.config({
     paths: {
       'angular': '../node_modules/angular/angular.min',
-      'chart': '../node_modules/chart.js/dist/Chart.min',
-      'angular-chart': '../src/angular-chart',
+      'chart': '../node_modules/chart.js/dist/chart.umd',
+      'angular-chart': '../dist/angular-chart',
     },
     shim: {
       'angular': {

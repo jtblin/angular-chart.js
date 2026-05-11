@@ -17,10 +17,10 @@
 
     $scope.options = {
       scales: {
-        xAxes: [{
+        x: {
           type: 'linear',
           position: 'bottom',
-        }],
+        },
       },
     };
   }]);

@@ -10,22 +10,21 @@ angular.module('app', ['chart.js'])
 
     $scope.options = {
       scales: {
-        xAxes: [{
+        x: {
+          type: 'linear',
+          position: 'bottom',
+          min: -125,
+          max: 125,
+        },
+        y: {
+          min: -125,
+          max: 125,
+        },
+      },
+      plugins: {
+        legend: {
           display: false,
-          ticks: {
-            max: 125,
-            min: -125,
-            stepSize: 10,
-          },
-        }],
-        yAxes: [{
-          display: false,
-          ticks: {
-            max: 125,
-            min: -125,
-            stepSize: 10,
-          },
-        }],
+        },
       },
     };
 
@@ -33,16 +32,16 @@ angular.module('app', ['chart.js'])
     $interval(createChart, 2000);
 
     function createChart() {
-      $scope.series = [];
-      $scope.data = [];
+      $scope.series = ['Series A'];
+      const data = [];
       for (let i = 0; i < 50; i++) {
-        $scope.series.push(`Series ${i}`);
-        $scope.data.push([{
+        data.push({
           x: randomScalingFactor(),
           y: randomScalingFactor(),
           r: randomRadius(),
-        }]);
+        });
       }
+      $scope.data = [data];
     }
 
     function randomScalingFactor() {

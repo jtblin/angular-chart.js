@@ -9,10 +9,10 @@ angular.module('app', ['chart.js'])
     ];
     $scope.options = {
       scales: {
-        xAxes: [{
+        x: {
           type: 'linear',
           position: 'bottom',
-        }],
+        },
       },
     };
   }]);
