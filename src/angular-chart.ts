@@ -1,5 +1,5 @@
 import angular from 'angular';
-import { Chart, ChartConfiguration, ChartOptions, ChartType, ChartDataset, Plugin, ActiveElement } from 'chart.js';
+import {Chart, ChartConfiguration, ChartOptions, ChartType, ChartDataset, Plugin, ActiveElement} from 'chart.js';
 
 export interface ChartColor {
   backgroundColor: string;
@@ -23,6 +23,8 @@ export interface ChartJsService {
 
 export interface ChartJsProviderInterface {
   setOptions(type: string | ChartJsProviderOptions, customOptions?: ChartJsProviderOptions): void;
+  setChart(ChartConstructor: typeof Chart): void;
+  register(...components: any[]): void;
   $get(): ChartJsService;
 }
 
@@ -53,9 +55,6 @@ const DEFAULT_COLORS = [
   '#949FB1', // grey
   '#4D5360', // dark grey
 ];
-
-
-
 
 
 const moduleName = angular.module('chart.js', [])
@@ -100,6 +99,7 @@ const moduleName = angular.module('chart.js', [])
  * })))
  */
 function ChartJsProvider(this: ChartJsProviderInterface) {
+  let chartConstructor: typeof Chart = Chart;
   let options: ChartJsProviderOptions = {
     responsive: true,
     chartAlpha: 1,
@@ -121,14 +121,6 @@ function ChartJsProvider(this: ChartJsProviderInterface) {
       },
     },
   };
-  const ChartJs = {
-    Chart: Chart,
-    getOptions: (type?: string) => {
-      const typeOptions = (type && options[type]) || {};
-      return angular.extend({}, options, typeOptions);
-    },
-  };
-
   /**
    * Allow to set global options during configuration
    */
@@ -141,10 +133,25 @@ function ChartJsProvider(this: ChartJsProviderInterface) {
       // Set options for the specific chart
       options[type as string] = angular.merge(options[type as string] || {}, customOptions);
     }
-
   };
 
-  this.$get = () => ChartJs;
+  this.setChart = function(CustomChart: typeof Chart) {
+    chartConstructor = CustomChart;
+  };
+
+  this.register = function(...components: any[]) {
+    chartConstructor.register(...components);
+  };
+
+  this.$get = function() {
+    return {
+      Chart: chartConstructor,
+      getOptions: function(type?: string) {
+        const typeOptions = (type && options[type]) || {};
+        return angular.extend({}, options, typeOptions);
+      },
+    };
+  };
 }
 
 function ChartJsFactory(ChartJs: ChartJsService, $timeout: angular.ITimeoutService) {
@@ -209,7 +216,8 @@ function ChartJsFactory(ChartJs: ChartJsService, $timeout: angular.ITimeoutServi
           }
 
           if (scope.chart &&
-              (canUpdateChart(newVal as unknown[] | undefined, oldVal as unknown[] | undefined) || scope.chartForceUpdate)) {
+              (canUpdateChart(newVal as unknown[] | undefined, oldVal as unknown[] | undefined) ||
+               scope.chartForceUpdate)) {
             return updateChart(newVal as ChartDataset['data'], scope);
           }
 
@@ -267,7 +275,7 @@ function ChartJsFactory(ChartJs: ChartJsService, $timeout: angular.ITimeoutServi
   function createChart(type: string, scope: DirectiveScope, elem: angular.IAugmentedJQuery) {
     if (type === 'horizontalBar') {
       type = 'bar';
-      scope.chartOptions = angular.merge({ indexAxis: 'y' }, scope.chartOptions || {});
+      scope.chartOptions = angular.merge({indexAxis: 'y'}, scope.chartOptions || {});
     }
     const options = getChartOptions(type, scope);
     if (! scope.chartDisplayWhenNoData &&
@@ -476,23 +484,37 @@ function ChartJsFactory(ChartJs: ChartJsService, $timeout: angular.ITimeoutServi
           label: series[i],
           data: item,
         }) as ChartDataset;
-        if (datasetOverride && Array.isArray(datasetOverride) && datasetOverride.length > i) {
-          angular.merge(dataset, datasetOverride[i]);
-        }
-        const actualType = (dataset as { type?: string }).type || type;
-        if (actualType === 'bar' || actualType === 'horizontalBar') {
-          if (! (datasetOverride && Array.isArray(datasetOverride) && datasetOverride[i].backgroundColor)) {
-            (dataset as ChartDataset<'bar'>).backgroundColor = color.pointBackgroundColor;
-          }
-        }
-        if (actualType === 'bubble') {
-          dataset.backgroundColor = color.backgroundColor;
-          (dataset as unknown as Record<string, unknown>).pointBackgroundColor = color.backgroundColor;
-        }
-
+        applyDatasetOverride(dataset, i, datasetOverride);
+        applyTypeSpecificDefaults(dataset, i, type, color, datasetOverride);
         return dataset;
       }),
     };
+  }
+
+  function applyDatasetOverride(dataset: ChartDataset, i: number, datasetOverride: any) {
+    if (datasetOverride && Array.isArray(datasetOverride) && datasetOverride.length > i) {
+      angular.merge(dataset, datasetOverride[i]);
+    }
+  }
+
+  function applyTypeSpecificDefaults(
+    dataset: ChartDataset,
+    i: number,
+    type: string,
+    color: ChartColor,
+    datasetOverride: any,
+  ) {
+    const actualType = (dataset as { type?: string }).type || type;
+    if (actualType === 'bar' || actualType === 'horizontalBar') {
+      if (! (datasetOverride && Array.isArray(datasetOverride) && (datasetOverride[i] as any).backgroundColor)) {
+        (dataset as ChartDataset<'bar'>).backgroundColor = color.pointBackgroundColor;
+      }
+    }
+
+    if (actualType === 'bubble') {
+      dataset.backgroundColor = color.backgroundColor;
+      (dataset as unknown as Record<string, any>).pointBackgroundColor = color.backgroundColor;
+    }
   }
 
   function getData(
@@ -502,7 +524,8 @@ function ChartJsFactory(ChartJs: ChartJsService, $timeout: angular.ITimeoutServi
     datasetOverride: DirectiveScope['chartDatasetOverride'],
     type: string,
   ) {
-    const isSolid = type === 'pie' || type === 'doughnut' || type === 'polarArea' || type === 'bar' || type === 'horizontalBar';
+    const isSolid = type === 'pie' || type === 'doughnut' || type === 'polarArea' ||
+      type === 'bar' || type === 'horizontalBar';
     const dataset = {
       labels: labels,
       datasets: [{
@@ -514,7 +537,8 @@ function ChartJsFactory(ChartJs: ChartJsService, $timeout: angular.ITimeoutServi
     };
     if (type === 'bubble') {
       dataset.datasets[0].backgroundColor = colors.map((color: ChartColor) => color.backgroundColor);
-      (dataset.datasets[0] as unknown as Record<string, unknown>).pointBackgroundColor = colors.map((color: ChartColor) => color.backgroundColor);
+      (dataset.datasets[0] as unknown as Record<string, unknown>).pointBackgroundColor =
+        colors.map((color: ChartColor) => color.backgroundColor);
     }
     if (datasetOverride && ! Array.isArray(datasetOverride)) {
       angular.merge(dataset.datasets[0], datasetOverride);
@@ -573,7 +597,12 @@ function ChartJsFactory(ChartJs: ChartJsService, $timeout: angular.ITimeoutServi
       (typeof value === 'object' && value !== null && ! Object.keys(value).length);
   }
 
-  function canDisplay(type: string, scope: DirectiveScope, elem: angular.IAugmentedJQuery, options: ChartJsProviderOptions) {
+  function canDisplay(
+    type: string,
+    scope: DirectiveScope,
+    elem: angular.IAugmentedJQuery,
+    options: ChartJsProviderOptions,
+  ) {
     const cvs = elem[0] as HTMLCanvasElement;
     if (options.responsive && cvs.clientHeight === 0) {
       let attempts = 0;

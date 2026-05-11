@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import {test, expect} from '@playwright/test';
 
 const pages = [
   'bubble',
@@ -15,7 +15,7 @@ const pages = [
 ];
 
 pages.forEach((name) => {
-  test(`compares screenshots for: ${name}`, async ({ page }) => {
+  test(`compares screenshots for: ${name}`, async ({page}) => {
     await page.goto(`/test/fixtures/${name}.html`);
     // Wait for animations to finish
     await page.waitForTimeout(2000);
