@@ -284,10 +284,16 @@ To run the linter:
 npm run lint
 ```
 
-To automatically fix some linting issues:
-
 ```bash
 npm run lint -- --fix
+```
+
+## Typechecking
+
+To verify type safety without building:
+
+```bash
+npm run typecheck
 ```
 
 ## Testing

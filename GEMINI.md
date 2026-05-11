@@ -10,20 +10,24 @@ This is a legacy AngularJS 1.x wrapper for Chart.js. It has recently been modern
 - **Build System**: 
   - **Rollup**: Bundles TypeScript into UMD, ESM, and CJS formats for the core library (`rollup.config.js`).
   - **esbuild**: Bundles the example application (`examples/app.ts`) for high performance during development.
-  - **Gulp**: Manages secondary tasks like linting, distribution cleanup, and publishing (`gulpfile.js`).
+  - **Gulp**: Manages secondary tasks like linting, distribution cleanup, and publishing (`gulpfile.cjs`).
 - **Observability**: **Codecov** for code coverage tracking (reports generated via Karma).
 
 ## Key Scripts
 - `npm run dev`: Starts a watch server (Rollup + LiveReload) at `http://localhost:8080/examples/charts.html`.
 - `npm run build`: Generates production bundles in `dist/` and bundles the example app.
 - `npm test`: Runs `gulp check` (ESLint -> Karma Unit Tests -> Playwright Integration Tests). Note: All tests are now in TypeScript.
-- `npm run lint`: Runs `gulp lint` (ESLint with Google Style Guide).
+- `npm run lint`: Runs `gulp lint` (ESLint with Google Style Guide). Supports `-- --fix` for automated formatting.
 - `npm run typecheck`: Runs `tsc --noEmit` to verify type safety.
 
 ## Coding Conventions & Patterns
 - **TypeScript**: 
   - Using a lenient `tsconfig.json` to support legacy Angular patterns.
   - Contextual `this: any` and `@ts-expect-error` are used sparingly for legacy provider/factory patterns.
+  - **ESLint**: Integration via `@typescript-eslint/parser`. Redundant rules like `no-undef` are disabled for TS files as the compiler handles them.
+- **Refactoring for Complexity**:
+  - To maintain zero-error lint status, functions exceeding the `complexity: 10` threshold should be refactored into smaller helper functions. 
+  - Example: `createDataSet` refactored into `applyDatasetOverride` and `applyTypeSpecificDefaults`.
 - **Chart.js v4 Migration**:
   - `horizontalBar` is no longer a top-level type; it is mapped to `bar` with `indexAxis: 'y'`.
   - Configuration structures have shifted: `scales` are now flat objects (not arrays), and `legend`/`tooltip` are moved to the `plugins` namespace.
@@ -33,6 +37,12 @@ This is a legacy AngularJS 1.x wrapper for Chart.js. It has recently been modern
     - `chartFillAlpha`: Alpha value for area fills (default: 0.2).
     - Configurable via `ChartJsProvider.setOptions`.
 - **Visual Stability**: Integration tests use Playwright for pixel-perfect screenshot comparisons. Snapshots are stored in `test/integration.spec.ts-snapshots/`.
+- **Example Suite Modernization**:
+  - **Asset Paths**: Standalone examples must reference `../dist/angular-chart.js` and `../node_modules/chart.js/dist/chart.umd.js` for proper browser execution.
+  - **Bubble Chart Pattern**: High-density charts (like the 50-point bubble demo) should use a single dataset with multiple points rather than separate datasets to prevent legend overflow and performance degradation.
+  - **Scale Configuration**: All examples have been updated to the v4 object-based scale syntax.
+  - **Mixed Chart Transparency**: When creating mixed-type charts (e.g., Bar + Line), ensure that bar transparency is explicitly set in the `chart-dataset-override` using `backgroundColor` with an alpha channel (e.g., `rgba(69, 183, 205, 0.2)`). This prevents the library's default color logic from potentially applying a solid color over the intended transparent bar.
+- **Test-Driven Refactoring**: The `ChartJs` service is returned as a fresh object from `$get` instead of an object with getters. This ensures compatibility with mocking libraries like **Sinon**, which can have issues spying on or stubbing getter properties.
 
 ## Deployment & Versioning
 - **Trunk-Based**: Work happens on `main`. Current modernization is stabilized on `release/v3.0.0-rc.1`.
