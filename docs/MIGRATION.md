@@ -96,3 +96,7 @@ If you are using TypeScript, `angular-chart.js` now provides built-in types. Not
 - **Global `Chart`**: The library no longer attempts to auto-inject Chart.js; it expects the `Chart` class to be available in the environment.
 - **Encapsulated Defaults**: The library no longer mutates `Chart.defaults`. Opinionated defaults are now internal to `ChartJsProvider`. If you relied on `angular-chart.js` to configure other non-Angular charts globally, you must now configure them manually in `Chart.defaults`.
 - **Events**: Event arguments (like `points` in `chart-click`) now match the Chart.js 4.x `ActiveElement` structure.
+- **Watch Strategy (Performance)**:
+  - **Default**: The library now uses `$watchCollection` (shallow watch) for `chart-data`, `chart-labels`, etc. This significantly improves performance for large datasets.
+  - **Action Required**: If you were mutating nested arrays/objects *without* changing the top-level reference, the chart will no longer update automatically.
+  - **Workaround**: Either update the array reference (preferred) or enable deep watching via `chart-dataset-watch-deep="true"` or `ChartJsProvider.setOptions({datasetWatchDeep: true})`.

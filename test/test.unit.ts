@@ -659,6 +659,74 @@ describe('Unit testing', function() {
             expect(updated).to.be.true;
           });
         });
+
+        describe('chart-dataset-watch-deep (#728)', function() {
+          it('does not update chart on deep data mutations by default', function() {
+            const markup = '<canvas class="chart chart-line" chart-data="data" ' +
+              'chart-labels="labels"></canvas>';
+            scope.labels = ['Monday'];
+            scope.data = [[1]];
+
+            $compile(markup)(scope);
+            scope.$digest();
+
+            let updated = false;
+            scope.$on('chart-update', function() {
+              updated = true;
+            });
+
+            // Deep mutation
+            (scope.data as number[][])[0][0] = 2;
+            scope.$digest();
+
+            expect(updated).to.be.false;
+          });
+
+          it('updates chart on deep data mutations when chart-dataset-watch-deep is true', function() {
+            const markup = '<canvas class="chart chart-line" chart-data="data" ' +
+              'chart-labels="labels" chart-dataset-watch-deep="true"></canvas>';
+            scope.labels = ['Monday'];
+            scope.data = [[1]];
+
+            $compile(markup)(scope);
+            scope.$digest();
+
+            let updated = false;
+            scope.$on('chart-update', function() {
+              updated = true;
+            });
+
+            // Deep mutation
+            (scope.data as number[][])[0][0] = 2;
+            scope.$digest();
+
+            expect(updated).to.be.true;
+          });
+
+          it('updates chart on deep data mutations when datasetWatchDeep is true globally', function() {
+            ChartJsProvider.setOptions({datasetWatchDeep: true});
+            const markup = '<canvas class="chart chart-line" chart-data="data" ' +
+              'chart-labels="labels"></canvas>';
+            scope.labels = ['Monday'];
+            scope.data = [[1]];
+
+            $compile(markup)(scope);
+            scope.$digest();
+
+            let updated = false;
+            scope.$on('chart-update', function() {
+              updated = true;
+            });
+
+            // Deep mutation
+            (scope.data as number[][])[0][0] = 2;
+            scope.$digest();
+
+            expect(updated).to.be.true;
+            // Reset global option for other tests
+            ChartJsProvider.setOptions({datasetWatchDeep: false});
+          });
+        });
       });
     });
   });

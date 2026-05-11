@@ -13,6 +13,7 @@ export interface ChartColor {
 export interface ChartJsProviderOptions extends Partial<ChartOptions> {
   chartAlpha?: number;
   chartFillAlpha?: number;
+  datasetWatchDeep?: boolean;
   [key: string]: unknown;
 }
 
@@ -41,6 +42,7 @@ export interface DirectiveScope extends angular.IScope {
   chartDatasetOverride?: Partial<ChartDataset> | Partial<ChartDataset>[];
   chartPlugins?: Plugin[];
   chartForceUpdate?: boolean;
+  chartDatasetWatchDeep?: boolean;
   chartDisplayWhenNoData?: boolean;
   chart?: Chart;
 }
@@ -172,17 +174,22 @@ function ChartJsFactory(ChartJs: ChartJsService, $timeout: angular.ITimeoutServi
         chartPlugins: '=?',
         chartForceUpdate: '=?',
         chartDisplayWhenNoData: '=?',
+        chartDatasetWatchDeep: '=?',
       },
       link: function(scope: DirectiveScope, elem: angular.IAugmentedJQuery/* , attrs */) {
+        const deepWatch = scope.chartDatasetWatchDeep ?? ChartJs.getOptions().datasetWatchDeep ?? false;
+        const watchFn = deepWatch ? '$watch' : '$watchCollection';
+        const watchEquality = deepWatch ? true : undefined;
+
         // Order of setting "watch" matter
-        scope.$watch('chartData', watchDataUpdate, true);
-        scope.$watch('chartSeries', watchRecreation, true);
-        scope.$watch('chartLabels', watchRecreation, true);
-        scope.$watch('chartOptions', watchOptions, true);
-        scope.$watch('chartColors', watchRecreation, true);
-        scope.$watch('chartDatasetOverride', watchRecreation, true);
+        (scope as any)[watchFn]('chartData', watchDataUpdate, watchEquality);
+        (scope as any)[watchFn]('chartSeries', watchRecreation, watchEquality);
+        (scope as any)[watchFn]('chartLabels', watchRecreation, watchEquality);
+        (scope as any)[watchFn]('chartOptions', watchOptions, watchEquality);
+        (scope as any)[watchFn]('chartColors', watchRecreation, watchEquality);
+        (scope as any)[watchFn]('chartDatasetOverride', watchRecreation, watchEquality);
         scope.$watch('chartType', watchType, false);
-        scope.$watch('chartPlugins', watchRecreation, true);
+        (scope as any)[watchFn]('chartPlugins', watchRecreation, watchEquality);
         scope.$watch('chartDisplayWhenNoData', (newVal, oldVal) => {
           if (newVal === oldVal) {
             return;

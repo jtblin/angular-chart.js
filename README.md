@@ -73,6 +73,7 @@ Here are the options for all directives:
 - `chart-plugins`: (default: `[]`): array of [Chart.js plugins](http://www.chartjs.org/docs/latest/developers/plugins.html)
 - `chart-display-when-no-data`: (default: `false`): whether to create the chart even if data is empty or undefined
 - `chart-force-update`: (default: `false`): whether to force a chart update even if data references have not changed
+- `chart-dataset-watch-deep`: (default: `false`): whether to use recursive deep watching ($watch with objectEquality: true) for data. By default, the library uses $watchCollection for better performance with large datasets.
 
 There is another directive `chart-base` that takes an extra attribute `chart-type` to define the type
 dynamically. 
@@ -101,6 +102,8 @@ angular.module("app", ["chart.js"])
     ChartJsProvider.setOptions({
       chartColors: ['#FF5252', '#FF8A80'],
       responsive: false,
+      // Enable deep watching for all charts (performance cost on large datasets)
+      datasetWatchDeep: false,
     });
     // Configure all line charts
     ChartJsProvider.setOptions('line', {

@@ -43,6 +43,9 @@ This is a legacy AngularJS 1.x wrapper for Chart.js. It has recently been modern
   - **Scale Configuration**: All examples have been updated to the v4 object-based scale syntax.
   - **Mixed Chart Transparency**: When creating mixed-type charts (e.g., Bar + Line), ensure that bar transparency is explicitly set in the `chart-dataset-override` using `backgroundColor` with an alpha channel (e.g., `rgba(69, 183, 205, 0.2)`). This prevents the library's default color logic from potentially applying a solid color over the intended transparent bar.
 - **Test-Driven Refactoring**: The `ChartJs` service is returned as a fresh object from `$get` instead of an object with getters. This ensures compatibility with mocking libraries like **Sinon**, which can have issues spying on or stubbing getter properties.
+- **Performance Optimization (Shallow Watches)**:
+  - By default, directives now use `$watchCollection` (shallow) for data attributes to avoid the high overhead of recursive deep-equality checks on large datasets.
+  - **Opt-in Deep Watch**: If deep mutations are required, users can set `chart-dataset-watch-deep="true"` on the directive or `datasetWatchDeep: true` globally via `ChartJsProvider`.
 
 ## Deployment & Versioning
 - **Trunk-Based**: Work happens on `main`. Current modernization is stabilized on `release/v3.0.0-rc.1`.
